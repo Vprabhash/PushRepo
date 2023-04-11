@@ -57,6 +57,25 @@ export default {
     upcoming_Evn_Img4: require('./Image/upcoming_Evn_Img4.png'),
     // watchIcon
     watchIcon: require('./Image/watchIcon.png'),
+    menuUser: require('./Image/menuUser.png'),
+    menuUser1: require('./Image/menuUser1.png'),
+    menuUser2: require('./Image/menuUser2.png'),
+    menuUser3: require('./Image/menuUser3.png'),
+    menuUser4: require('./Image/menuUser4.png'),
+    
+    direction: require('./Image/direction.png'),
+    WhatsApp: require('./Image/WhatsApp.png'),
+    food: require('./Image/food.png'),
+    callIcon: require('./Image/callIcon.png'),
+    lightHoush: require('./Image/lightHoush.png'),
+    goBack: require('./Image/goBack.png'),
+    //
+    
+    aadat: require('./Image/aadat.png'),
+    play_pause: require('./Image/play_pause.png'),
+
+    
+    
     
    
 }

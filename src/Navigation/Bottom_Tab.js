@@ -60,34 +60,7 @@ function BottomTab() {
                         <Image style={styles.tab_Icon} source={focused ? ImagePath.location : ImagePath.location} />
                     ),
                 }} />
-            {/* <Tab.Screen name="Otp_Screen" component={Otp_Screen}
-                options={{
-                    headerShown: false,
-                    tabBarLabel: 'New Task',
-                    tabBarIcon: ({ focused }) => (
-                        // <TouchableOpacity onpress_btn={() => setModalVisible(true) == !setModalVisible(false)}>
-                            <Image style={styles.tab_Icon_Ae} source={focused ? ImagePath.Plus_Active : ImagePath.Plus_Active} />
-                        // </TouchableOpacity>
-                    ),
-                }} />
-            <Tab.Screen name="Forgot_Password_Screen" component={Forgot_Password_Screen}
-                options={{
-                    headerShown: false,
-                    tabBarLabel: 'Explore',
-                    tabBarIcon: ({ focused }) => (
-                        <Image style={styles.tab_Icon} source={focused ? ImagePath.Explor_Icon : ImagePath.Explor_Icon} />
-                    ),
-                }} />
-            <Tab.Screen name="Change_Password_Screen" component={Change_Password_Screen}
-                options={{
-                    headerShown: false,
-                    tabBarLabel: 'Profile',
-                    tabBarIcon: ({ focused }) => (
-                        // <TouchableOpacity onpress_btn={() => setModalVisible(true)}>
-                        <Image style={styles.tab_Icon} source={focused ? ImagePath.Profile_icon : ImagePath.Profile_icon} />
-                        // </TouchableOpacity>
-                    ),
-                }} /> */}
+           
         </Tab.Navigator>
     );
 }

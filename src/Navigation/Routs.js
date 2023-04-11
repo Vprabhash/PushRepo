@@ -13,6 +13,9 @@ import ResetPassword from '../Screen/User_Auth/ResetPassword';
 import PasswordSuccessful from '../Screen/User_Auth/PasswordSuccessful';
 import BottomTab from './Bottom_Tab';
 import Otp from '../Screen/User_Auth/Otp';
+import ArtisrDetail from '../Screen/ArtistDetails/ArtistDetail';
+import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
+import FilterScreen from '../Screen/Filter/FilterScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,6 +33,11 @@ function Routes() {
         <Stack.Screen name="ResetPassword" component={ResetPassword} options={{headerShown:false}}/>
         <Stack.Screen name="PasswordSuccessful" component={PasswordSuccessful} options={{headerShown:false}}/>
         <Stack.Screen name="BottomTab" component={BottomTab} options={{headerShown:false}}/>
+        <Stack.Screen name="ArtisrDetail" component={ArtisrDetail} options={{headerShown:false}}/>
+        <Stack.Screen name="ArtistPlayingDetail" component={ArtistPlayingDetail} options={{headerShown:false}}/>
+        <Stack.Screen name="FilterScreen" component={FilterScreen} options={{headerShown:false}}/>
+
+        
       </Stack.Navigator>
      
     </NavigationContainer>

@@ -1,12 +1,13 @@
 
 import React from "react";
-import { Image, ImageBackground, Dimensions, FlatList, ScrollView, StatusBar, StyleSheet, Text, View, } from "react-native";
+import { Image, ImageBackground, Dimensions, FlatList, ScrollView, StatusBar, StyleSheet, Text, View, TouchableOpacity, } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Header from "../../Components/Header";
 import ImagePath from "../../assets/ImagePath";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LinearGradient from 'react-native-linear-gradient';
 import Swiper from 'react-native-swiper'
+import MenuCard from "../../Components/MenuCard";
 
 
 
@@ -16,76 +17,28 @@ const ClubDetails = (props) => {
     const ENTRIES1 = [
         {
             mapIcon: ImagePath.upcoming_Evn_Img,
-            title: "Justice Tour",
-            singerName: 'By Arijit Singh',
-            barLocation: 'Colaba, Mumbai',
-            price: '₹1499',
-            priceText: "onwards",
-            cardDAte: '07',
-            cardDAte1: 'APR',
-        },
-        {
-            mapIcon: ImagePath.upcoming_Evn_Img1,
-            title: "Runaway",
-            singerName: 'By Arijit Singh',
-            barLocation: 'Colaba, Mumbai',
-            price: '₹1499',
-            priceText: "onwards",
-            cardDAte: '07',
-            cardDAte1: 'APR',
+            title: "Fabulous friday",
+            singerName: 'By AVGSS Group',
+            singerNameIcon:ImagePath.Explore,
+            musicIcon:ImagePath.Explore,
+            musicText:'Bollywood, Commercial',  
         },
 
-        {
-            mapIcon: ImagePath.upcoming_Evn_Img2,
-            title: "Sweetener",
-            singerName: 'By Ariana Grande',
-            barLocation: 'Colaba, Mumbai',
-            price: '₹1499',
-            priceText: "onwards",
-            cardDAte: '07',
-            cardDAte1: 'APR',
-        },
-        {
-            mapIcon: ImagePath.upcoming_Evn_Img3,
-            title: "Red",
-            singerName: 'By Taylor Swift',
-            barLocation: 'Colaba, Mumbai',
-            price: '₹1499',
-            priceText: "onwards",
-            cardDAte: '07',
-            cardDAte1: 'APR',
-        },
-        {
-            mapIcon: ImagePath.upcoming_Evn_Img4,
-            title: "Happier Than Ever",
-            singerName: 'By Billie Eilish',
-            barLocation: 'Colaba, Mumbai',
-            price: '₹1499',
-            priceText: "onwards",
-            cardDAte: '07',
-            cardDAte1: 'APR',
-        },
     ];
     const _renderItem = ({ item, index }) => {
         return (
             <View style={{ flex: 1, width: "100%", marginBottom: hp(3) }}>
                 <View style={{ marginHorizontal: wp(2), borderRadius: 10, backgroundColor: '#FFFFFF', elevation: 4, }}>
                     <Image style={{ height: hp(29), width: "100%", borderTopRightRadius: 10, borderTopLeftRadius: 10, }} source={item.mapIcon} />
-                    <Image style={{ height: 20, width: 20, resizeMode: 'contain', position: 'absolute', top: 10, right: 10 }} source={item.heartIcon} />
-
-                    <View style={{ height: 47, width: 38, justifyContent: 'center', borderRadius: 10, backgroundColor: '#FFFFFF', position: 'absolute', top: 10, right: 10 }}>
-                        <Text style={{ color: "#666666", textAlign: 'center', fontFamily: 'Metropolis-Bold' }}>{item.cardDAte}</Text>
-                        <Text style={{ color: "#666666", textAlign: 'center', fontFamily: 'Metropolis-Medium' }}>APR</Text>
-                    </View>
-                    <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
+                    <View style={{ paddingHorizontal: wp(3), paddingVertical: hp(3) }}>
                         <Text style={styles.listinhHeading}>{item.title}</Text>
-                        <Text style={[styles.singerName,]}>{item.singerName}</Text>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Text style={[styles.listinhText1, {}]}>{item.barLocation}</Text>
-                            <View style={{ marginTop: -10 }}>
-                                <Text style={[styles.listinhHeading1, { fontSize: 12, fontFamily: 'Metropolis-Medium' }]}>{item.price}</Text>
-                                <Text style={[styles.listinhText, { marginTop: 0 }]}>{item.priceText}</Text>
-                            </View>
+                        <View style={{ flexDirection: 'row',marginTop:hp(2) }}>
+                            <Image style={{ height: 17, width: 17, borderRadius: 10, resizeMode: 'contain' }} source={item.singerNameIcon} />
+                            <Text style={[styles.singerName,]}>{item.singerName}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row',marginTop:10 }}>
+                            <Image style={{ height: 17, width: 17, borderRadius: 10, resizeMode: 'contain' }} source={item.mapIcon} />
+                            <Text style={[styles.singerName,]}>{item.musicText}</Text>
                         </View>
                     </View>
                 </View>
@@ -93,41 +46,41 @@ const ClubDetails = (props) => {
         );
     }
     const MenuData = [
-        {
-            mapIcon: ImagePath.watchIcon,
-            title: "Arambh ft. Nucleya",
-            date: 'Fri, 09 Apr',
-            time: '02:00 PM - 10:00 PM',
-            location: 'Gomti Nagar, Lucknow',
-            price: '₹1499',
-            priceText: "onwards",
-        },
-
+       
+        { menuImg: ImagePath.clubLocation, title: 'Food' },
+        { menuImg: ImagePath.food, title: 'Beverages' },
     ];
-    const MenuDataRenderItem = ({ item, index }) => {
+    const MenuDatarenderItem = ({ item, index }) => {
         return (
-            <View style={{ flex: 1,  backgroundColor:'red' }}>
-                {/* <View style={{ marginHorizontal: wp(2),width: "98%", borderRadius: 10, backgroundColor: 'red', elevation: 4, }}> */}
-                <View style={{ flexDirection: 'row',alignItems:'center', justifyContent: 'space-between', }}>
-                    <View style={{flexDirection: 'row',alignItems:'center', justifyContent: 'space-between',}}>
-                        <Image style={{ height: 22, width: 20, borderTopRightRadius: 10, borderTopLeftRadius: 10, }} source={item.mapIcon} />
-                        <Text style={[styles.listinhHeading1, { marginBottom: hp(1) }]}>{item.title}</Text>
-                    </View>
-                    <View>
-                    <Image style={{ height: 22, width: 20, borderTopRightRadius: 10, borderTopLeftRadius: 10, }} source={item.mapIcon} />
-                        <Text style={[styles.listinhHeading1, { marginBottom: hp(1) }]}>{item.title}</Text>
-                       
-                    </View>
-                </View>
-                {/* <View style={{ padding: wp(3), }}>
-                        <Text style={[styles.listinhHeading1, { marginBottom: hp(1) }]}>{item.title}</Text>
-                        <Text style={styles.listinhText}>{item.date}</Text>
-                        <Text style={styles.listinhText}>{item.time}</Text>
-                        <Text style={styles.listinhText}>{item.location}</Text>
-                        <Text style={[styles.listinhHeading1, { marginTop: hp(2) }]}>{item.price}</Text>
-                        <Text style={[styles.listinhText, { marginTop: 0 }]}>{item.priceText}</Text>
-                    </View> */}
-                {/* </View> */}
+            <View style={{}}>
+                <Image style={{ height: hp(20), width: wp(50), marginLeft: wp(4), resizeMode: 'cover', borderRadius: 10 }} source={item.menuImg} />
+                <Text style={styles.titleText}>{item.title}</Text>
+            </View>
+        );
+    }
+    
+    const ClubNarData = [
+        { menuImg: ImagePath.lightHoush, 
+            title: 'Light house- the club',
+            Loction:'6.9 km| Sayaji Hotel, Vijay nagar'
+         },
+         { menuImg: ImagePath.lightHoush, 
+            title: 'Light house- the club',
+            Loction:'6.9 km| Sayaji Hotel, Vijay nagar'
+         },
+         { menuImg: ImagePath.lightHoush, 
+            title: 'Light house- the club',
+            Loction:'6.9 km| Sayaji Hotel, Vijay nagar'
+         },
+      
+    ];
+    const ClubNarDatarenderItem = ({ item, index }) => {
+        return (
+            <View style={{}}>
+                <Image style={{ height: hp(20), width: wp(50), marginLeft: wp(4), resizeMode: 'cover', borderRadius: 10 }} source={item.menuImg} />
+                <Text style={styles.titleText}>{item.title}</Text>
+                <Text style={styles.LoctionText}>{item.Loction}</Text>
+
             </View>
         );
     }
@@ -171,26 +124,43 @@ const ClubDetails = (props) => {
                             <Text style={{ fontWeight: '700', color: '#FFFFFF', fontSize: 12 }}>5</Text>
                             <Image style={{ height: 13, width: 13, tintColor: '#FFFFFF', }} source={ImagePath.star} />
                         </LinearGradient>
-                    </View>
+                    </View> 
+                    <Text style={{ fontSize: 14, lineHeight: hp(3), marginTop: hp(1.7), color: '#000000', marginHorizontal: 10, fontFamily: 'Metropolis-Medium' }}>
+                        Dhanraj Mahal, Next to The Bentley Showroom, Colaba, Mumbai, Maharashtra 400005
+                    </Text>
+                    <Text style={styles.aboutText}>About the Club </Text>
+                    <MenuCard />
 
-                    <Text style={{ color: '#202020', fontSize: 18, marginLeft: 10, marginTop: hp(3), fontFamily: 'Metropolis-SemiBold' }}>About the Club </Text>
-
-                    <SafeAreaView>
-                        <FlatList
-                            horizontal
-                            data={MenuData}
-                            renderItem={MenuDataRenderItem}
-                        />
-                    </SafeAreaView>
-                   
-                    <View style={{}}>
-                        <Text style={[styles.cardText, { fontSize: 15 }]}>UPCOMING EVENTS IN TOWN</Text>
-                    </View>
+                    <Text style={styles.aboutText}>Whats Happening Today </Text>
 
                     <SafeAreaView>
                         <FlatList
                             data={ENTRIES1}
                             renderItem={_renderItem}
+                        />
+                    </SafeAreaView>
+                    <TouchableOpacity style={{alignSelf:'center'}}>
+                    <LinearGradient style={{height: hp(6), width: wp(50), justifyContent: 'center',  alignItems: 'center',borderRadius:20 }}
+                            start={{ x: 0.3, y: 0.5 }}
+                            colors={['mediumorchid', 'dodgerblue']} >
+                            <Text style={{ fontWeight: '700', color: '#FFFFFF', fontSize: 12 }}>Events For the month</Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                    <Text style={styles.aboutText}>Menu </Text>
+
+                    <SafeAreaView>
+                        <FlatList
+                            horizontal={true}
+                            data={MenuData}
+                            renderItem={MenuDatarenderItem}
+                        />
+                    </SafeAreaView>
+                    <Text style={styles.aboutText}>Clubs Nearby </Text>
+                    <SafeAreaView>
+                        <FlatList
+                            horizontal={true}
+                            data={ClubNarData}
+                            renderItem={ClubNarDatarenderItem}
                         />
                     </SafeAreaView>
                 </ImageBackground>
@@ -205,6 +175,7 @@ const styles = StyleSheet.create({
     //     backgroundColor:'yellow',
     //      width: 8, height: 8,borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3
     // },
+    aboutText: { color: '#202020', fontSize: 18, marginLeft: 10, marginVertical: hp(3), fontFamily: 'Metropolis-SemiBold' },
     wrapper: { height: 200, },
     slide1: {
         flex: 1,
@@ -230,8 +201,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     //
-    singerName: { fontSize: 12, marginVertical: hp(0.7), fontFamily: "Metropolis-SemiBold", color: '#5B5959' },
-
+    titleText: { marginLeft: wp(4), color: '#000', fontFamily: "Metropolis-SemiBold", fontSize: 16, marginTop: hp(1) },
+    LoctionText:{fontWeight:'400',fontSize:12,color: '#5B5959',marginLeft: wp(4),},
+    //
+    singerName: { fontSize: 12, marginLeft: 8, fontFamily: "Metropolis-SemiBold", color: '#5B5959' },
     listinhHeading1: { fontSize: 12, fontFamily: "Metropolis-SemiBold", color: '#202020' },
     listinhText: { fontSize: 12, fontFamily: "Metropolis-Medium", color: '#575757', marginTop: hp(0.5) },
 

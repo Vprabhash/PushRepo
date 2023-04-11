@@ -1,10 +1,7 @@
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Image, Dimensions, FlatList, SafeAreaView, StyleSheet } from 'react-native';
-// import Header from '../components/Header';
-// import Swiper from 'react-native-swiper';
 import Carousel from 'react-native-snap-carousel';
 import ImagePath from '../assets/ImagePath';
-import { beginAsyncEvent } from 'react-native/Libraries/Performance/Systrace';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 function wp(percentage) {
