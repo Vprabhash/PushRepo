@@ -196,7 +196,7 @@ const Home = (props) => {
                                             title='Cancel'
                                             flex={0.47}
                                             bgColor='#fff'
-                                            Textcolor="#000000"
+                                            textColor="#000000"
                                         />
                                         <CustomButton
                                             onclick={() => { props.navigation.navigate('Login') }}
@@ -204,7 +204,7 @@ const Home = (props) => {
                                             title='Submit'
                                             borderColor='#000'
                                             bgColor='#000'
-                                            Textcolor='#FAFAFA'
+                                            textColor='#FAFAFA'
                                         />
                                     </View>
                                 </View>

@@ -1,15 +1,52 @@
-import React, {useState} from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import React, { memo } from 'react';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
-const CustomButton = ({onclick, title,bgColor,Textcolor,flex,Top,   }) => {
+const CustomButton = ({
+  onclick,
+  title,
+  bgColor,
+  textColor,
+  flex,
+  top,
+  isLoading = false,
+}) => {
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={onclick} style={{ flex:flex,marginTop:Top, backgroundColor:bgColor,borderWidth:1,height:hp("5.5%"),borderRadius:hp(1), borderColor:"#00000",justifyContent:"center"}}>
-        <Text style={[styles.buttonText,{color:Textcolor}]}>{title}</Text>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onclick}
+      style={{
+        flex: flex,
+        marginTop: top,
+        backgroundColor: bgColor,
+        borderWidth: 1,
+        height: hp('5.5%'),
+        borderRadius: hp(1),
+        borderColor: '#00000',
+        justifyContent: 'center',
+      }}>
+      {isLoading ? <ActivityIndicator size="small" color={textColor} />
+        : <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
+      }
     </TouchableOpacity>
   );
 };
-export default CustomButton;
+
+export default memo(CustomButton);
+
 const styles = StyleSheet.create({
-  buttonText:{ textAlign:'center', fontSize: hp(2.1), fontFamily:"Metropolis-Medium",letterSpacing:0.3 },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: hp(2.1),
+    fontFamily: 'Metropolis-Medium',
+    letterSpacing: 0.3,
+  },
 });

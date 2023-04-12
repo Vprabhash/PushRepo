@@ -1,11 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
-import Routes from './src/Navigation/Routs';
+import Routes from './src/Navigation/Routes';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 const App = () => {
   return (
-    <View style={{flex:1}}>
+    <Provider store={store}>
       <Routes />
-    </View>
+      </Provider>
   );
 };
 export default App;
