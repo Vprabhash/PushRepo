@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator();
 function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Splash_Screen" component={Splash_Screen} options={{headerShown:false}}/>
         <Stack.Screen name="Explore" component={Explore} options={{headerShown:false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>

@@ -10,13 +10,13 @@ const Header = (props) => {
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',marginTop:hp(7),marginHorizontal:10,paddingBottom:5 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0.9 }}>
-                <TouchableOpacity onPress={props.onclick} style={{ backgroundColor: '#F8F8FB', justifyContent: 'center', alignItems: 'center', }}>
+            {props.Back_Arrow &&<TouchableOpacity onPress={props.onclick} style={{marginRight:10, backgroundColor: '#F8F8FB', justifyContent: 'center', alignItems: 'center', }}>
                         <Image style={{ height: 18, width: 18, resizeMode: 'contain' }}
                             source={props.Back_Arrow}
                         />
-                </TouchableOpacity>
-                <View style={{marginLeft:10}}>
-                <Text style={{ color: '#000000',fontFamily: "Metropolis-SemiBold",  fontSize: 16,  }}>{props.tital}</Text>
+                </TouchableOpacity>}
+                <View style={{}}>
+                {props.tital&&   <Text style={{ color: '#000000',fontFamily: "Metropolis-SemiBold",  fontSize: 16,  }}>{props.tital}</Text>}
                 {props.titalTwo&&   <Text style={{ color: '#000000', fontFamily: "Metropolis-SemiBold", fontSize: 12,  }}>{props.titalTwo}</Text>}
                 </View>
                

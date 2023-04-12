@@ -48,7 +48,10 @@ const ClubListing = (props) => {
         return (
             <View style={{ flex: 1, width: "100%", marginBottom: hp(3) }}>
                 <View style={{ marginHorizontal: wp(2), borderRadius: 10, backgroundColor: '#FFFFFF', elevation: 4, }}>
-                    <Image style={{ height: hp(29), width: "100%", borderTopRightRadius: 10, borderTopLeftRadius: 10, }} source={item.mapIcon} />
+                    <TouchableOpacity onPress={() => { props.navigation.navigate("ClubDetails") }}
+                        activeOpacity={0.7}>
+                        <Image style={{ height: hp(29), width: "100%", borderTopRightRadius: 10, borderTopLeftRadius: 10, }} source={item.mapIcon} />
+                    </TouchableOpacity>
                     <Image style={{ height: 20, width: 20, resizeMode: 'contain', position: 'absolute', top: 10, right: 10 }} source={item.heartIcon} />
                     <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

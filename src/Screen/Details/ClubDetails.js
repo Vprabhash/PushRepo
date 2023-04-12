@@ -1,8 +1,7 @@
 
 import React from "react";
-import { Image, ImageBackground, Dimensions, FlatList, ScrollView, StatusBar, StyleSheet, Text, View, TouchableOpacity, } from "react-native";
+import { Image, ImageBackground, Dimensions, FlatList, ScrollView, StatusBar, StyleSheet, Text, TextInput, View, TouchableOpacity, } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Header from "../../Components/Header";
 import ImagePath from "../../assets/ImagePath";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,9 +18,9 @@ const ClubDetails = (props) => {
             mapIcon: ImagePath.upcoming_Evn_Img,
             title: "Fabulous friday",
             singerName: 'By AVGSS Group',
-            singerNameIcon:ImagePath.Explore,
-            musicIcon:ImagePath.Explore,
-            musicText:'Bollywood, Commercial',  
+            singerNameIcon: ImagePath.Explore,
+            musicIcon: ImagePath.Explore,
+            musicText: 'Bollywood, Commercial',
         },
 
     ];
@@ -32,11 +31,11 @@ const ClubDetails = (props) => {
                     <Image style={{ height: hp(29), width: "100%", borderTopRightRadius: 10, borderTopLeftRadius: 10, }} source={item.mapIcon} />
                     <View style={{ paddingHorizontal: wp(3), paddingVertical: hp(3) }}>
                         <Text style={styles.listinhHeading}>{item.title}</Text>
-                        <View style={{ flexDirection: 'row',marginTop:hp(2) }}>
+                        <View style={{ flexDirection: 'row', marginTop: hp(2) }}>
                             <Image style={{ height: 17, width: 17, borderRadius: 10, resizeMode: 'contain' }} source={item.singerNameIcon} />
                             <Text style={[styles.singerName,]}>{item.singerName}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row',marginTop:10 }}>
+                        <View style={{ flexDirection: 'row', marginTop: 10 }}>
                             <Image style={{ height: 17, width: 17, borderRadius: 10, resizeMode: 'contain' }} source={item.mapIcon} />
                             <Text style={[styles.singerName,]}>{item.musicText}</Text>
                         </View>
@@ -46,7 +45,7 @@ const ClubDetails = (props) => {
         );
     }
     const MenuData = [
-       
+
         { menuImg: ImagePath.clubLocation, title: 'Food' },
         { menuImg: ImagePath.food, title: 'Beverages' },
     ];
@@ -58,21 +57,24 @@ const ClubDetails = (props) => {
             </View>
         );
     }
-    
+
     const ClubNarData = [
-        { menuImg: ImagePath.lightHoush, 
+        {
+            menuImg: ImagePath.lightHoush,
             title: 'Light house- the club',
-            Loction:'6.9 km| Sayaji Hotel, Vijay nagar'
-         },
-         { menuImg: ImagePath.lightHoush, 
+            Loction: '6.9 km| Sayaji Hotel, Vijay nagar'
+        },
+        {
+            menuImg: ImagePath.lightHoush,
             title: 'Light house- the club',
-            Loction:'6.9 km| Sayaji Hotel, Vijay nagar'
-         },
-         { menuImg: ImagePath.lightHoush, 
+            Loction: '6.9 km| Sayaji Hotel, Vijay nagar'
+        },
+        {
+            menuImg: ImagePath.lightHoush,
             title: 'Light house- the club',
-            Loction:'6.9 km| Sayaji Hotel, Vijay nagar'
-         },
-      
+            Loction: '6.9 km| Sayaji Hotel, Vijay nagar'
+        },
+
     ];
     const ClubNarDatarenderItem = ({ item, index }) => {
         return (
@@ -85,21 +87,38 @@ const ClubDetails = (props) => {
         );
     }
     return (
-        <View style={{ flex: 1, paddingBottom: 10 }}>
-            <Header
+        <View style={{ flex: 1 }}>
+            {/* <Header
                 // Back_Arrow={ImagePath.manueIcon}
                 searchIcon={ImagePath.searchIcon}
                 placeholder='Search'
             // profileIcon={ImagePath.profilePic}
-            />
+            /> */}
+            <View style={[styles.inputMain, { marginTop: hp(6) }]}>
+                <TextInput
+                    style={[styles.textInput, { color: "rgba(0, 0, 0, 0.7)" }]}
+                    placeholderTextColor="rgba(0, 0, 0, 0.7)"
+                    placeholder={'Search'}
+                // onChangeText={onChangeText}
+                // value={value}
+                />
+                <TouchableOpacity activeOpacity={0.5} onPress={() => { ('') }}>
+                    <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
+                </TouchableOpacity>
+            </View>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <StatusBar barStyle="dark-content" hidden={false} backgroundColor="transparent" translucent={true} />
                 <ImageBackground source={ImagePath.Azzir_Bg} resizeMode="cover" style={{ height: "100%", }}>
-                    <View style={{ marginHorizontal: 10 }}>
+                    <View style={{ marginHorizontal: 10, justifyContent: "center" }}>
                         <Swiper style={styles.wrapper}
-                            activeDotStyle={{ backgroundColor: "black", bottom: hp(-7), borderRadius: 4, }}
-                            dotStyle={{ backgroundColor: "blue", padding: 4, width: 8, height: 8, borderRadius: 4, bottom: hp(-7) }}
-                            showsButtons={true} >
+                            paginationStyle={{ bottom: hp(-3),}}
+                            activeDotStyle={{ backgroundColor: "black", borderRadius: 4, }}
+                            dotStyle={{ backgroundColor: "blue", padding: 4, width: 8, height: 8, borderRadius: 4, }}
+                            showsButtons={true}
+                            showsPagination={true}
+                            prevButton={<Image source={ImagePath.prew} style={{ height: 20, width: 20, resizeMode: "contain" }} />}
+                            nextButton={<Image source={ImagePath.next} style={{ height: 20, width: 20, resizeMode: "contain" }} />}
+                        >
                             <View style={styles.slide1}>
                                 <Image style={{ resizeMode: 'contain', width: "100%" }} source={ImagePath.Explore} />
                             </View>
@@ -124,7 +143,7 @@ const ClubDetails = (props) => {
                             <Text style={{ fontWeight: '700', color: '#FFFFFF', fontSize: 12 }}>5</Text>
                             <Image style={{ height: 13, width: 13, tintColor: '#FFFFFF', }} source={ImagePath.star} />
                         </LinearGradient>
-                    </View> 
+                    </View>
                     <Text style={{ fontSize: 14, lineHeight: hp(3), marginTop: hp(1.7), color: '#000000', marginHorizontal: 10, fontFamily: 'Metropolis-Medium' }}>
                         Dhanraj Mahal, Next to The Bentley Showroom, Colaba, Mumbai, Maharashtra 400005
                     </Text>
@@ -139,8 +158,8 @@ const ClubDetails = (props) => {
                             renderItem={_renderItem}
                         />
                     </SafeAreaView>
-                    <TouchableOpacity style={{alignSelf:'center'}}>
-                    <LinearGradient style={{height: hp(6), width: wp(50), justifyContent: 'center',  alignItems: 'center',borderRadius:20 }}
+                    <TouchableOpacity style={{ alignSelf: 'center' }}>
+                        <LinearGradient style={{ height: hp(6), width: wp(50), justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}
                             start={{ x: 0.3, y: 0.5 }}
                             colors={['mediumorchid', 'dodgerblue']} >
                             <Text style={{ fontWeight: '700', color: '#FFFFFF', fontSize: 12 }}>Events For the month</Text>
@@ -202,13 +221,34 @@ const styles = StyleSheet.create({
     },
     //
     titleText: { marginLeft: wp(4), color: '#000', fontFamily: "Metropolis-SemiBold", fontSize: 16, marginTop: hp(1) },
-    LoctionText:{fontWeight:'400',fontSize:12,color: '#5B5959',marginLeft: wp(4),},
+    LoctionText: { fontWeight: '400', fontSize: 12, color: '#5B5959', marginLeft: wp(4), },
     //
     singerName: { fontSize: 12, marginLeft: 8, fontFamily: "Metropolis-SemiBold", color: '#5B5959' },
     listinhHeading1: { fontSize: 12, fontFamily: "Metropolis-SemiBold", color: '#202020' },
     listinhText: { fontSize: 12, fontFamily: "Metropolis-Medium", color: '#575757', marginTop: hp(0.5) },
 
+    inputMain: {
+        backgroundColor: '#fff',
+        flexDirection: "row",
+        alignItems: "center",
+        elevation: 16,
+        marginHorizontal: wp(2.5),
+        borderRadius: 30,
+        paddingHorizontal: wp(4),
+        height: hp(6),
+        marginBottom: hp(4),
 
+    },
+    textInput: {
+        fontFamily: 'Metropolis-Regular',
+        fontSize: hp(2), padding: 0, height: hp(6), flex: 1, fontSize: 14, paddingRight: 10,
+    },
+    iconStyle: {
+        tintColor: "#000000",
+        width: 18,
+        resizeMode: 'contain',
+        height: 18,
+    },
 
     listinhHeading: { fontSize: 18, fontWeight: '700', color: '#000000' },
     listinhText1: { fontSize: 14, fontWeight: '400', color: '#575757' },

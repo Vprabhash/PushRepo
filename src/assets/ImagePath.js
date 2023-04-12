@@ -62,6 +62,12 @@ export default {
     menuUser2: require('./Image/menuUser2.png'),
     menuUser3: require('./Image/menuUser3.png'),
     menuUser4: require('./Image/menuUser4.png'),
+    emog: require('./Image/emog.png'),
+    deer: require('./Image/deer.png'),
+    hookah: require('./Image/hookah.png'),
+    prew: require('./Image/prew.png'),
+    next: require('./Image/next.png'),
+    
     
     direction: require('./Image/direction.png'),
     WhatsApp: require('./Image/WhatsApp.png'),
@@ -73,6 +79,10 @@ export default {
     
     aadat: require('./Image/aadat.png'),
     play_pause: require('./Image/play_pause.png'),
+// checkBox
+
+checkBox: require('./Image/checkBox.png'),
+checkSelected: require('./Image/checkSelected.png'),
 
     
     

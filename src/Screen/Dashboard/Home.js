@@ -52,23 +52,23 @@ const Home = (props) => {
             icon: ImagePath.location,
             Location: '10 Downing Street, Near Bombay hospital'
         },
-        
+
     ];
 
 
 
     const UpcomingData_RenderItem = ({ item, index }) => {
         return (
-            <View style={{ marginLeft: wp(4),}}>
+            <View style={{ marginLeft: wp(4), }}>
                 <Image style={{ height: hp(20), width: wp(50), resizeMode: 'cover', borderRadius: 10 }} source={item.mapIcon} />
-                <View style={{ position: 'absolute',left:8,bottom:9}} >
-                    <TouchableOpacity style={{borderRadius:10, backgroundColor:'#5B5959',alignSelf:'flex-start',paddingHorizontal:wp(3),paddingVertical:wp(1),}}>
-                    <Text style={[ { color: '#fff',fontSize:8,fontFamily:'Metropolis-Medium' }]}>{item.button}</Text>
+                <View style={{ position: 'absolute', left: 8, bottom: 9 }} >
+                    <TouchableOpacity style={{ borderRadius: 10, backgroundColor: '#5B5959', alignSelf: 'flex-start', paddingHorizontal: wp(3), paddingVertical: wp(1), }}>
+                        <Text style={[{ color: '#fff', fontSize: 8, fontFamily: 'Metropolis-Medium' }]}>{item.button}</Text>
                     </TouchableOpacity>
-                    <Text style={{ fontSize:12,color: '#fff',fontFamily: "Metropolis-Bold",marginVertical:hp(1.5) }}>{item.Name}</Text>
+                    <Text style={{ fontSize: 12, color: '#fff', fontFamily: "Metropolis-Bold", marginVertical: hp(1.5) }}>{item.Name}</Text>
                     <View style={{ flexDirection: 'row', }}>
-                        <Image style={{ height: 10, width: 10,tintColor:'rgba(255, 175, 175, 1)',resizeMode:'contain' }} source={item.icon} />
-                        <Text style={[{ fontSize: 7.5, color: '#fff',marginLeft:3,fontFamily: "Metropolis-Medium", }]}>{item.Location}</Text>
+                        <Image style={{ height: 10, width: 10, tintColor: 'rgba(255, 175, 175, 1)', resizeMode: 'contain' }} source={item.icon} />
+                        <Text style={[{ fontSize: 7.5, color: '#fff', marginLeft: 3, fontFamily: "Metropolis-Medium", }]}>{item.Location}</Text>
 
                     </View>
                 </View>
@@ -94,19 +94,19 @@ const Home = (props) => {
             Name: 'Azzir Events',
             Location: 'Sector 52, Near Ahuja Tower'
         },
-        
+
     ];
 
 
-    
+
     const SpotlightData_RenderItem = ({ item, index }) => {
         return (
-            <View style={{ marginLeft: wp(2.5),marginRight:wp(2.5)}}>
+            <View style={{ marginLeft: wp(2.5), marginRight: wp(2.5) }}>
                 <Image style={{ height: hp(26), width: wp(83), resizeMode: 'cover', borderRadius: 10 }} source={item.mapIcon} />
-                <View style={{ position: 'absolute',left:15,bottom:30}} >
-                    <Text style={[ { color: '#fff',fontSize:12,fontWeight:'600' }]}>{item.button}</Text>
-                    <Text style={{ fontSize:18,color: '#fff',marginVertical:hp(1),fontWeight:'700'  }}>{item.Name}</Text>
-                        <Text style={[{ fontSize: 10, color: '#fff',marginLeft:3,fontWeight:'400'  }]}>{item.Location}</Text>
+                <View style={{ position: 'absolute', left: 15, bottom: 30 }} >
+                    <Text style={[{ color: '#fff', fontSize: 12, fontWeight: '600' }]}>{item.button}</Text>
+                    <Text style={{ fontSize: 18, color: '#fff', marginVertical: hp(1), fontWeight: '700' }}>{item.Name}</Text>
+                    <Text style={[{ fontSize: 10, color: '#fff', marginLeft: 3, fontWeight: '400' }]}>{item.Location}</Text>
                 </View>
             </View>
         );
@@ -123,7 +123,7 @@ const Home = (props) => {
             />
             <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                 <StatusBar barStyle="dark-content" hidden={false} backgroundColor="transparent" translucent={true} />
-                <ImageBackground source={ImagePath.Azzir_Bg} resizeMode="cover" style={{ height: "100%",paddingBottom: 20  }}>
+                <ImageBackground source={ImagePath.Azzir_Bg} resizeMode="cover" style={{ height: "100%", paddingBottom: 20 }}>
                     <View style={[styles.inputMain, { marginTop: 10 }]}>
                         <TextInput
                             style={[styles.textInput, {}]}
@@ -216,14 +216,15 @@ const Home = (props) => {
                         </TouchableOpacity> */}
 
                     </View>
-                    <TouchableOpacity style={[styles.fllter,]} activeOpacity={0.5} onPress={() => { setModalVisible(true) }}>
+                    <TouchableOpacity
+                        style={[styles.fllter,]} activeOpacity={0.5} onPress={() => {props.navigation.navigate("FilterScreen")}}>
                         <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
                         <Text style={styles.filtersText}>Filters</Text>
                     </TouchableOpacity>
 
                     <View style={styles.hedingTextMain}>
                         <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-                            <Text style={styles.cardText}>IN THE SPOTLIGHT</Text>
+                        <Text style={styles.cardText}>IN THE SPOTLIGHT</Text>
                         <Image style={styles.hedingImg} source={ImagePath.rightLine} />
                     </View>
                     {/* <SliderCompo /> */}
@@ -239,7 +240,7 @@ const Home = (props) => {
 
                     <View style={styles.hedingTextMain}>
                         <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-                            <Text style={styles.cardText}>THE CLUB NEARBY YOUR LOCATION </Text>
+                        <Text style={styles.cardText}>THE CLUB NEARBY YOUR LOCATION </Text>
                         <Image style={styles.hedingImg} source={ImagePath.rightLine} />
                     </View>
                     <SafeAreaView>
@@ -250,11 +251,11 @@ const Home = (props) => {
                         />
                     </SafeAreaView>
                     <SafeAreaView>
-                    <View style={styles.hedingTextMain}>
-                        <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+                        <View style={styles.hedingTextMain}>
+                            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
                             <Text style={styles.cardText}>ARTIST PLAYING NEARBY </Text>
-                        <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-                    </View>
+                            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+                        </View>
 
                         <FlatList
                             horizontal={true}
@@ -268,7 +269,7 @@ const Home = (props) => {
                     </TouchableOpacity>
                     <View style={styles.hedingTextMain}>
                         <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-                            <Text style={styles.cardText}>Up Coming Events </Text>
+                        <Text style={styles.cardText}>Up Coming Events </Text>
                         <Image style={styles.hedingImg} source={ImagePath.rightLine} />
                     </View>
                     <SafeAreaView>
@@ -285,10 +286,10 @@ const Home = (props) => {
 }
 export default Home;
 const styles = StyleSheet.create({
-    hedingTextMain: { marginTop: hp(4),flexDirection: 'row', justifyContent: 'center',alignItems:'center' },
-   
+    hedingTextMain: { marginTop: hp(4), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
+
     hedingImg: { width: "30%", resizeMode: 'contain' },
-    cardText: { fontFamily: "Metropolis-SemiBold", fontSize: 10,marginHorizontal:5, textAlign: 'center', color: '#000000',  letterSpacing: 4, },
+    cardText: { fontFamily: "Metropolis-SemiBold", fontSize: 10, marginHorizontal: 5, textAlign: 'center', color: '#000000', letterSpacing: 4, },
 
     // cardText1: { fontFamily: "Metropolis-SemiBold", fontSize: 18, color: 'rgba(32, 32, 32, 1)', },
     // modal css 

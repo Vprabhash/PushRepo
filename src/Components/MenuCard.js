@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     menuText2: { color: '#BBBBBB', fontSize: 12, fontWeight: '500', marginLeft: hp(1.6) },
     //btn
     btnmain:{flexDirection:'row',flex:0.4, alignItems:'center',  backgroundColor: "#000", borderWidth: 1, height: hp("5.5%"),  borderColor: "#00000",justifyContent:'center' },
-    buttonText: {fontSize: 14,marginLeft:5, fontFamily: "Metropolis-Medium", letterSpacing: 0.3 },
+    buttonText: {fontSize: 14,marginLeft:5, fontFamily: "Metropolis-Medium",color:'#fff', letterSpacing: 0.3 },
     btnIcon :{height:16,width:16,resizeMode:'contain'},
 });
 export default MenuCard;
