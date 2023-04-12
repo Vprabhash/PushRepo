@@ -42,32 +42,32 @@ const Login = (props) => {
                      title='Enter password'
                      onChangeText={(text) => { setPassword(text) }}
                      value={password}
-                     iconPath={eyeShow?ImagePath.eyeIcon:ImagePath.closeEye}
+                     iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
                      secureTextEntry={eyeShow ? false : true}
                      onClickEye={() => { onClickEye() }}
                   />
                   <CustomButton
-                      onclick={() => {props.navigation.navigate('BottomTab')}}
-                     Top={30}
+                     onclick={() => { props.navigation.navigate('BottomTab') }}
+                     top={30}
                      title='Sign in'
                      bgColor='#000'
-                     Textcolor='#fff'
+                     textColor='#fff'
                   />
-                  <TouchableOpacity style={{alignSelf:"flex-end"}} onPress={() => { props.navigation.navigate('ForgetPassword') }}>
+                  <TouchableOpacity style={{ alignSelf: "flex-end" }} onPress={() => { props.navigation.navigate('ForgetPassword') }}>
                      <Text style={styles.forgetText}>Forgot password</Text>
                   </TouchableOpacity>
-                  <Text style={[styles.withText,{color:"#797979"}]}>Or Sign in with</Text>
+                  <Text style={[styles.withText, { color: "#797979" }]}>Or Sign in with</Text>
                </View>
-               <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15,marginHorizontal:wp(7) }}>
+               <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15, marginHorizontal: wp(7) }}>
                   <Image source={ImagePath.google} style={styles.googleLogo} />
                   <Image source={ImagePath.apple} style={styles.googleLogo} />
                </View>
 
-               <View style={{ flexDirection: 'row', justifyContent: 'center',marginBottom:10}}>
-                  <Text style={[styles.withText, { color: "#000000" }]}>
+               <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
+                  <Text style={styles.withText}>
                      Don’t have an account </Text>
                   <TouchableOpacity onPress={() => { props.navigation.navigate('SignUp') }}>
-                     <Text style={[styles.withText, {textDecorationLine:"underline"}]}>Sign Up</Text>
+                     <Text style={[styles.withText, { textDecorationLine: "underline" }]}>Sign Up</Text>
                   </TouchableOpacity>
                </View>
             </ImageBackground>
@@ -75,7 +75,9 @@ const Login = (props) => {
       </View>
    );
 }
+
 export default Login;
+
 const styles = StyleSheet.create({
    dot: { backgroundColor: '#FFFFFF', width: 100, height: 100, borderRadius: 100, alignSelf: 'center', justifyContent: 'center', position: "absolute", bottom: hp(-6) },
    signIn: { fontFamily: "Metropolis-SemiBold", fontSize: 18, color: '#000000', marginBottom: 15 },
@@ -85,5 +87,5 @@ const styles = StyleSheet.create({
       fontSize: 13,
       color: '#797979', marginVertical: 20,
    },
-   withText: { fontWeight: '500', fontSize: 13, alignSelf: "center",color:"#000"}
+   withText: { fontWeight: '500', fontSize: 13, alignSelf: "center", color: "#000" }
 });

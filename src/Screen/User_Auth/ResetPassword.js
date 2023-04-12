@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, ImageBackground,Dimensions, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, Dimensions, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ImagePath from "../../assets/ImagePath";
 import CustomTextInput from "../../Components/TextInput_And_Button/CustomTextInput";
 import CustomButton from "../../Components/TextInput_And_Button/CustomButton";
@@ -17,15 +17,15 @@ const ResetPassword = (props) => {
     }
     return (
         <View style={{ flex: 1, }}>
-            <ScrollView contentContainerStyle={{flexGrow:1}}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <StatusBar barStyle="dark-content" hidden={false} backgroundColor="transparent" translucent={true} />
-                <ImageBackground source={ImagePath.Azzir_Bg} resizeMode="cover" style={{ height: "100%",justifyContent:'center' }}>
+                <ImageBackground source={ImagePath.Azzir_Bg} resizeMode="cover" style={{ height: "100%", justifyContent: 'center' }}>
 
-                    <View style={{ marginHorizontal: 20,  }}>
-                       <Text style={styles.signIn}>Reset Password </Text>
-                        <Text style={[styles.signIn,{fontWeight:'400',fontSize:18,letterSpacing:0.3,}]}>Your new password must be different from previous password</Text>
+                    <View style={{ marginHorizontal: 20, }}>
+                        <Text style={styles.signIn}>Reset Password </Text>
+                        <Text style={[styles.signIn, { fontWeight: '400', fontSize: 18, letterSpacing: 0.3, }]}>Your new password must be different from previous password</Text>
                         <CustomTextInput
-                         marginTop={20}
+                            marginTop={20}
                             title='Create new password'
                             onChangeText={(text) => { setCreatPassword(text) }}
                             value={creatPassword}
@@ -33,22 +33,22 @@ const ResetPassword = (props) => {
                             secureTextEntry={eyeShow ? false : true}
                             onClickEye={() => { onClickEye() }}
                         />
-                         <CustomTextInput
-                         marginTop={20}
-                        title='Enter new password again'
-                        onChangeText={(text) => { setNewPassword(text) }}
-                        value={newPassword}
-                        iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
+                        <CustomTextInput
+                            marginTop={20}
+                            title='Enter new password again'
+                            onChangeText={(text) => { setNewPassword(text) }}
+                            value={newPassword}
+                            iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
                             secureTextEntry={eyeShow ? false : true}
                             onClickEye={() => { onClickEye() }}
-                    />
+                        />
                         <CustomButton
-                          onclick={() => {props.navigation.navigate('PasswordSuccessful') }}
+                            onclick={() => { props.navigation.navigate('PasswordSuccessful') }}
                             // flex={1}
-                            Top={30}
+                            top={30}
                             title='Submit'
                             bgColor='#000'
-                            Textcolor='#fff'
+                            textColor='#fff'
                         />
                     </View>
                 </ImageBackground>
@@ -61,5 +61,5 @@ const styles = StyleSheet.create({
     // signIn: { fontWeight: '500', fontSize: 24, color: '#000000', marginBottom: 22 },
     signIn: { fontFamily: "Metropolis-SemiBold", fontSize: 28, color: '#000000', marginBottom: 15 },
 
-   
+
 });
