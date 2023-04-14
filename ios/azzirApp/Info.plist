@@ -59,6 +59,38 @@
 		<string>Metropolis-Medium.ttf</string>
 		<string>Metropolis-Regular.ttf</string>
 		<string>Metropolis-SemiBold.ttf</string>
+		<string>HankenGrotesk-VariableFont_wght.ttf</string>
+		<string>HankenGrotesk-Black.ttf</string>
+		<string>HankenGrotesk-Bold.ttf</string>
+		<string>HankenGrotesk-ExtraBold.ttf</string>
+		<string>HankenGrotesk-ExtraLight.ttf</string>
+		<string>HankenGrotesk-Light.ttf</string>
+		<string>HankenGrotesk-Medium.ttf</string>
+		<string>HankenGrotesk-Regular.ttf</string>
+		<string>HankenGrotesk-SemiBold.ttf</string>
+		<string>HankenGrotesk-Thin.ttf</string>
+		<string>PTSerif-Bold.ttf</string>
+		<string>PTSerif-Italic.ttf</string>
+		<string>PTSerif-Regular.ttf</string>
+		<string>Roboto-Black.ttf</string>
+		<string>Roboto-Bold.ttf</string>
+		<string>Roboto-Light.ttf</string>
+		<string>Roboto-Medium.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+		<string>Roboto-Thin.ttf</string>
+		<string>DMSans-Bold.ttf</string>
+		<string>DMSans-Medium.ttf</string>
+		<string>DMSans-Regular.ttf</string>
+		<string>Inter-VariableFont_slnt,wght.ttf</string>
+		<string>Inter-Black.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-ExtraBold.ttf</string>
+		<string>Inter-ExtraLight.ttf</string>
+		<string>Inter-Light.ttf</string>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Inter-Thin.ttf</string>
 	</array>
 </dict>
 </plist>

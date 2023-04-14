@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { FONTS } from "../constants";
 
 const CustomTextInput = ({
   title,
@@ -22,7 +23,7 @@ const CustomTextInput = ({
       <TextInput
         style={styles.textInput}
         placeholder={title}
-        placeholderTextColor="gray"
+        placeholderTextColor="rgba(0, 0, 0, 0.3);"
         onChangeText={onChangeText}
         value={value}
         secureTextEntry={secureTextEntry}
@@ -45,12 +46,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
+    borderBottomColor:'rgba(0, 0, 0, 0.5);',
     paddingHorizontal: wp(2),
     height: hp(6),
   },
   textInput: {
-    fontFamily: "Metropolis-Regular",
-    fontSize: hp(2),
+    fontFamily:FONTS.RobotoRegular,
+    fontSize: 16,
     padding: 0,
     height: hp(6),
     flex: 1,

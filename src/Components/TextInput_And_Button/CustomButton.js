@@ -9,6 +9,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { FONTS } from '../constants';
 
 const CustomButton = ({
   onclick,
@@ -45,8 +46,8 @@ export default memo(CustomButton);
 const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
-    fontSize: hp(2.1),
-    fontFamily: 'Metropolis-Medium',
+    fontSize:16,
+    fontFamily: FONTS.RobotoRegular,
     letterSpacing: 0.3,
   },
 });
