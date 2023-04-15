@@ -41,7 +41,7 @@ const Login = props => {
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{height: '100%'}}>
+        style={{height: height * 1.1, width: width}}>
         <Image
           resizeMode={'cover'}
           source={ImagePath.dancePic}

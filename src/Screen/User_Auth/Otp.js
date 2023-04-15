@@ -13,6 +13,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
+
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
 
@@ -28,13 +30,27 @@ const Otp = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%', justifyContent: 'center'}}>
-        <View
+        {/* <View
           style={{
             paddingHorizontal: 20,
             height: '100%',
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
             justifyContent: 'center',
-          }}>
+          }}> */}
+        <LinearGradient
+          style={{
+            paddingHorizontal: 20,
+            height: height * 0.7,
+            justifyContent: 'center',
+          }}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}
+          colors={[
+            'rgba(255, 255, 255, 0.1)',
+            'rgba(255, 255, 255, 0.6)',
+            'rgba(255, 255, 255, 0.6)',
+            'rgba(255, 255, 255, 0.1)',
+          ]}>
           <Text style={styles.signIn}>Enter OTP</Text>
           <Text
             style={[
@@ -85,7 +101,8 @@ const Otp = props => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </LinearGradient>
+        {/* </View> */}
       </ImageBackground>
     </View>
   );

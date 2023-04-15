@@ -13,8 +13,6 @@ const Tab = createBottomTabNavigator();
 function BottomTab() {
   return (
     <Tab.Navigator
-      // initialRouteName='Explore'
-
       screenOptions={({focused}) => ({
         tabBarActiveTintColor: '#9700AF',
         tabBarInactiveTintColor: '#000',
@@ -40,7 +38,6 @@ function BottomTab() {
               style={styles.tab_Icon}
               source={focused ? ImagePath.homeActive : ImagePath.homeIcon}
             />
-            // <Image style={[focused ? styles = { tab_Icon } : styles = { tab_Icon }]} source={focused ? ImagePath.homeActive : ImagePath.homeIcon} />
           ),
         }}
       />
@@ -75,7 +72,6 @@ function BottomTab() {
               ]}
               source={focused ? ImagePath.calendarIcon : ImagePath.calendarIcon}
             />
-            // <Image style={[focused ? styles = { tab_Icon } : styles = { tab_Icon }]} source={focused ? ImagePath.homeActive : ImagePath.homeIcon} />
           ),
         }}
       />

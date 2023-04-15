@@ -37,13 +37,27 @@ const ForgetPassword = props => {
           source={ImagePath.Azzir_Bg}
           resizeMode="cover"
           style={{height: '100%', justifyContent: 'center'}}>
-          <View
+          {/* <View
             style={{
               paddingHorizontal: 20,
               height: '100%',
-              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              // backgroundColor: 'rgba(255, 255, 255, 0.7)',
               justifyContent: 'center',
-            }}>
+            }}> */}
+          <LinearGradient
+            style={{
+              paddingHorizontal: 20,
+              height: height * 0.7,
+              justifyContent: 'center',
+            }}
+            start={{x: 0, y: 0}}
+            end={{x: 0, y: 1}}
+            colors={[
+              'rgba(255, 255, 255, 0.1)',
+              'rgba(255, 255, 255, 0.6)',
+              'rgba(255, 255, 255, 0.6)',
+              'rgba(255, 255, 255, 0.1)',
+            ]}>
             <Text style={styles.signIn}>Forget Password</Text>
             <Text
               style={[
@@ -75,7 +89,8 @@ const ForgetPassword = props => {
                 textColor="#fff"
               />
             </View>
-          </View>
+          </LinearGradient>
+          {/* </View> */}
         </ImageBackground>
       </ScrollView>
     </View>

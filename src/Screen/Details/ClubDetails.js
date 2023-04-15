@@ -195,74 +195,69 @@ const ClubDetails = props => {
           source={ImagePath.Azzir_Bg}
           resizeMode="cover"
           style={{height: '100%'}}>
-          <View
-            style={{
-              marginHorizontal: 15,
+          <Swiper
+            style={[styles.wrapper]}
+            containerStyle={{
+              borderRadius: 8,
               marginTop: 26,
+              marginHorizontal: 15,
+              overflow: 'hidden',
+            }}
+            paginationStyle={{
+              bottom: hp(0),
+              zIndex: 9,
+              backgroundColor: '#C9C9C9',
               borderRadius: 20,
-            }}>
-            <Swiper
-              style={[styles.wrapper]}
-              paginationStyle={{
-                bottom: hp(-3.1),
-                backgroundColor: '#C9C9C9',
-                borderRadius: 20,
-                height: 18,
-                marginHorizontal: '40%',
-                alignSelf: 'center',
-              }}
-              activeDotStyle={{
-                backgroundColor: '#717171',
-                width: 6,
-                height: 6,
-                borderRadius: 4,
-              }}
-              dotStyle={{
-                backgroundColor: COLORS.white,
-                width: 6,
-                height: 6,
-                borderRadius: 4,
-              }}
-              horizontal={true}
-              showsButtons={true}
-              showsPagination={true}
-              prevButton={
-                <Image
-                  source={ImagePath.prew}
-                  style={{height: 20, width: 20, resizeMode: 'contain'}}
-                />
-              }
-              nextButton={
-                <Image
-                  source={ImagePath.next}
-                  style={{height: 20, width: 20, resizeMode: 'contain'}}
-                />
-              }>
-              <View style={styles.slide1}>
-                <Image
-                  style={{
-                    resizeMode: 'contain',
-                    borderRadius: 90,
-                    overflow: 'hidden',
-                    width: '100%',
-                  }}
-                  source={ImagePath.Explore}
-                />
-              </View>
-              <View style={styles.slide2}>
-                <Image
-                  style={{resizeMode: 'contain', width: '100%'}}
-                  source={ImagePath.eventImg}
-                />
-              </View>
-              <View style={styles.slide3}>
-                <Image
-                  style={{resizeMode: 'contain', width: '100%'}}
-                  source={ImagePath.eventImg1}
-                />
-              </View>
-            </Swiper>
-          </View>
+              height: 18,
+              marginHorizontal: '40%',
+            }}
+            activeDotStyle={{
+              backgroundColor: '#717171',
+              width: 6,
+              height: 6,
+              borderRadius: 4,
+            }}
+            dotStyle={{
+              backgroundColor: COLORS.white,
+              width: 6,
+              height: 6,
+              borderRadius: 4,
+            }}
+            autoplay={true}
+            showsButtons={true}
+            showsPagination={true}
+            prevButton={
+              <Image
+                source={ImagePath.prew}
+                style={{
+                  height: 20,
+                  width: 20,
+                  marginBottom: 20,
+                  resizeMode: 'contain',
+                }}
+              />
+            }
+            nextButton={
+              <Image
+                source={ImagePath.next}
+                style={{
+                  height: 20,
+                  width: 20,
+                  marginBottom: 20,
+                  resizeMode: 'contain',
+                }}
+              />
+            }>
+            <View style={styles.slide}>
+              <Image style={styles.slideImg} source={ImagePath.Explore} />
+            </View>
+            <View style={styles.slide}>
+              <Image style={styles.slideImg} source={ImagePath.eventImg} />
+            </View>
+            <View style={styles.slide}>
+              <Image style={styles.slideImg} source={ImagePath.eventImg1} />
+            </View>
+          </Swiper>
 
           <View
             style={{
@@ -392,25 +387,19 @@ const styles = StyleSheet.create({
     marginTop: hp(4),
     fontFamily: FONTS.AxiformaBold,
   },
-  wrapper: {height: 200},
-  slide1: {
-    flex: 1,
+  wrapper: {height: 230},
+  slide: {
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#9DD6EB',
   },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: '#97CAE5',
+  slideImg: {
+    resizeMode: 'cover',
+    borderRadius: 8,
+    width: '100%',
+    height: 200,
   },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: '#92BBD9',
-  },
+
   text: {
     color: '#fff',
     fontSize: 30,
@@ -452,7 +441,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     elevation: 5,
-    marginHorizontal: wp(2.5),
+    marginHorizontal: 15,
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),
@@ -478,5 +467,4 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.AxiformaBold,
     color: COLORS.black,
   },
-  listinhText1: {fontSize: 14, fontWeight: '400', color: '#575757'},
 });

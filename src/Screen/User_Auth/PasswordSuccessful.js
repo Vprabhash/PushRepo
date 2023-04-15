@@ -17,6 +17,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
 
 const width = Dimensions.get('window').width;
@@ -35,13 +36,21 @@ const PasswordSuccessful = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View
+        <LinearGradient
           style={{
             paddingHorizontal: 20,
-            height: '100%',
-            backgroundColor: 'rgba(255, 255, 255, 0.5)',
-            paddingTop: 122,
-          }}>
+            marginTop: 122,
+            height: height * 0.65,
+            // justifyContent: 'center',
+          }}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}
+          colors={[
+            'rgba(255, 255, 255, 0.1)',
+            'rgba(255, 255, 255, 0.6)',
+            'rgba(255, 255, 255, 0.6)',
+            'rgba(255, 255, 255, 0.1)',
+          ]}>
           <Text style={[styles.signIn, {textAlign: 'center', lineHeight: 52}]}>
             Password Reset{'\n'}Successful
           </Text>
@@ -66,7 +75,8 @@ const PasswordSuccessful = props => {
               marginTop: hp(10),
             }}
           />
-        </View>
+        </LinearGradient>
+
         <View
           style={{
             position: 'absolute',
