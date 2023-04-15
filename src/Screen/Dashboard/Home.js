@@ -231,25 +231,28 @@ const Home = props => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={{flex: 1}}>
-      <View style={{marginHorizontal: 5}}>
-        <Header
-          Back_Arrow={ImagePath.manueIcon}
-          tital="Near me"
-          titalTwo="Sector 52, Noida, UP 435464"
-          profileIcon={ImagePath.profilePic}
-        />
-      </View>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
-        />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%', paddingBottom: 20}}>
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: '100%'}}>
+        <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
+          <Header
+            Back_Arrow={ImagePath.manueIcon}
+            tital="Near me"
+            titalTwo="Sector 52, Noida, UP 435464"
+            iconHeight={12}
+            iconWidth={18}
+            profileIcon={ImagePath.profilePic}
+          />
+        </View>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={false}
+            backgroundColor="transparent"
+            translucent={true}
+          />
+
           <View style={[styles.inputMain, {marginTop: 10}]}>
             <TextInput
               style={[styles.textInput, {}]}
@@ -440,7 +443,9 @@ const Home = props => {
               styles.fllter,
               {
                 width: wp(33),
+                elevation: 0,
                 alignSelf: 'center',
+                backgroundColor: 'transparent ',
                 borderWidth: 1,
                 borderRadius: 20,
               },
@@ -462,15 +467,15 @@ const Home = props => {
             <Text style={styles.cardText}>UP COMING EVENTS</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
-          <SafeAreaView>
+          <SafeAreaView style={{marginBottom: 20}}>
             <FlatList
               horizontal={true}
               data={UpcomingData}
               renderItem={UpcomingData_RenderItem}
             />
           </SafeAreaView>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
@@ -537,7 +542,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     elevation: 16,
-    marginHorizontal: wp(2.5),
+    marginHorizontal: 15,
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),

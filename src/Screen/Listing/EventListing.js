@@ -238,25 +238,29 @@ const EventListing = props => {
   };
   return (
     <View style={{flex: 1}}>
-      <View style={{marginHorizontal: 5}}>
-        <Header
-          Back_Arrow={ImagePath.manueIcon}
-          searchIcon={ImagePath.searchIcon}
-          placeholder="Search"
-          profileIcon={ImagePath.profilePic}
-        />
-      </View>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
-        />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%'}}>
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: '100%'}}>
+        <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
+          <Header
+            Back_Arrow={ImagePath.manueIcon}
+            searchIcon={ImagePath.searchIcon}
+            placeholder="Search"
+            iconHeight={12}
+            iconWidth={18}
+            profileIcon={ImagePath.profilePic}
+          />
+        </View>
+
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={false}
+            backgroundColor="transparent"
+            translucent={true}
+          />
+
           <View style={styles.hedingTextMain}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <View style={{}}>
@@ -271,7 +275,7 @@ const EventListing = props => {
               renderItem={eventRenderItem}
             />
           </SafeAreaView>
-          <View style={styles.hedingTextMain}>
+          <View style={[styles.hedingTextMain, {}]}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <View style={{}}>
               <Text
@@ -287,14 +291,14 @@ const EventListing = props => {
           <SafeAreaView>
             <FlatList data={ENTRIES1} renderItem={_renderItem} />
           </SafeAreaView>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
 export default EventListing;
 const styles = StyleSheet.create({
-  //
+  //event
   singerName: {
     fontSize: 12,
     marginVertical: hp(0.5),
@@ -302,7 +306,7 @@ const styles = StyleSheet.create({
     color: '#575757',
   },
   hedingTextMain: {
-    marginTop: hp(3),
+    marginTop: 24,
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',

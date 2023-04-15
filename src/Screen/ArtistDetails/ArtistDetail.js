@@ -40,12 +40,13 @@ const ArtistDetail = props => {
         <View
           style={{
             marginHorizontal: 15,
-            borderRadius: 10,
+            borderBottomEndRadius: 16,
+            borderBottomStartRadius: 16,
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
           <Image
-            style={{height: hp(29), width: '100%', borderRadius: 10}}
+            style={{height: hp(29), width: '100%', borderRadius: 16}}
             source={item.mapIcon}
           />
           <View style={{paddingHorizontal: wp(3), paddingVertical: hp(2)}}>
@@ -122,18 +123,24 @@ const ArtistDetail = props => {
   ];
   const TimerenderItem = ({item, index}) => {
     return (
-      <View style={{flexDirection: 'row', padding: 10, paddingLeft: 15}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          padding: 5,
+          alignItems: index == 1 ? 'flex-start' : 'center',
+          marginTop: index == 1 ? 4 : 0,
+          paddingLeft: 16,
+        }}>
         <Image
           style={{
             height: 17,
             tintColor: COLORS.black,
             width: 17,
-            top: 4,
             resizeMode: 'contain',
           }}
           source={item.mapIcon}
         />
-        <View style={{flex: 0.6}}>
+        <View style={{flex: 0.7}}>
           <Text style={styles.listinhHeading1}>{item.title}</Text>
           {item.dis && <Text style={styles.dicText}>{item.dis}</Text>}
         </View>
@@ -142,15 +149,26 @@ const ArtistDetail = props => {
   };
   return (
     <View style={{flex: 1, paddingBottom: 10}}>
-      <Header
-        Back_Arrow={ImagePath.goBack}
-        tital="Artist Details"
-        onclick={() => {
-          props.navigation.goBack();
-        }}
+      <View
+        style={{
+          backgroundColor: '#fff',
+          elevation: 10,
+          paddingTop: 46,
+          paddingBottom: 14,
+          paddingHorizontal: 15,
+        }}>
+        <Header
+          Back_Arrow={ImagePath.goBack}
+          titalTwo="Artist Details"
+          iconHeight={13}
+          iconWidth={30}
+          onclick={() => {
+            props.navigation.goBack();
+          }}
 
-        //  profileIcon={ImagePath.profilePic}
-      />
+          //  profileIcon={ImagePath.profilePic}
+        />
+      </View>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <StatusBar
           barStyle="dark-content"
@@ -200,19 +218,19 @@ const styles = StyleSheet.create({
   listinhHeading1: {
     fontSize: 16,
     marginLeft: 15,
-    fontFamily: FONTS.RobotoMedium,
+    fontFamily: FONTS.RobotoRegular,
     color: COLORS.black,
   },
   dicText: {
     color: '#909090',
     fontSize: 12,
     marginLeft: 15,
-    fontFamily: FONTS.RobotoMedium,
+    fontFamily: FONTS.RobotoRegular,
   },
   aboutText: {
     color: COLORS.black,
     fontSize: 20,
-    marginLeft: 10,
+    marginLeft: 15,
     marginVertical: hp(1),
     fontFamily: FONTS.AxiformaBold,
   },
@@ -221,7 +239,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.black,
     marginLeft: 5,
-    fontFamily: FONTS.RobotoMedium,
+    fontFamily: FONTS.RobotoRegular,
     letterSpacing: 0.3,
   },
   singerName: {

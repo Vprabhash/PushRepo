@@ -92,7 +92,14 @@ const FilterScreen = props => {
           paddingVertical: 12,
         }}>
         <Image
-          style={{height: 11, width: 11, resizeMode: 'contain'}}
+          style={{
+            height: 11,
+            width: 11,
+            resizeMode: 'contain',
+            tintColor: '#202020',
+            borderWidth: item.checked ? 0 : 0.5,
+            borderColor: item.checked ? '#202020' : '#202020',
+          }}
           source={item.checked ? ImagePath.checkSelected : ImagePath.checkBox}
         />
         <View style={{flex: 0.6}}>
@@ -119,19 +126,23 @@ const FilterScreen = props => {
           style={{
             backgroundColor: '#FFFFFF',
             elevation: 5,
-            padding: 10,
-            paddingTop: hp(5),
+            paddingVertical: 10,
+            paddingTop: hp(7),
           }}>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              marginHorizontal: 24,
               justifyContent: 'space-between',
             }}>
             <Text style={styles.aboutText}>Filters </Text>
             <GradientText
-              style={[styles.textStyle, {fontFamily: FONTS.InterMedium}]}>
-              Clear All
+              style={[
+                styles.textStyle,
+                {fontFamily: FONTS.InterSemiBold, fontSize: 12},
+              ]}>
+              CLEAR ALL
             </GradientText>
           </View>
         </View>
@@ -254,17 +265,13 @@ const FilterScreen = props => {
                     marginHorizontal: 10,
                   }}>
                   <Image
-                    style={[styles.searchIcon, {tintColor: '#000'}]}
+                    style={[
+                      styles.searchIcon,
+                      {borderWidth: 1, borderColor: '#000'},
+                    ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text
-                    style={{
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 8,
-                    }}>
-                    selectAll
-                  </Text>
+                  <Text style={styles.selectAllText}>select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -303,17 +310,13 @@ const FilterScreen = props => {
                     marginHorizontal: 10,
                   }}>
                   <Image
-                    style={[styles.searchIcon, {tintColor: '#000'}]}
+                    style={[
+                      styles.searchIcon,
+                      {borderWidth: 1, borderColor: '#000'},
+                    ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text
-                    style={{
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 8,
-                    }}>
-                    selectAll
-                  </Text>
+                  <Text style={styles.selectAllText}>select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -352,17 +355,13 @@ const FilterScreen = props => {
                     marginHorizontal: 10,
                   }}>
                   <Image
-                    style={[styles.searchIcon, {tintColor: '#000'}]}
+                    style={[
+                      styles.searchIcon,
+                      {borderWidth: 1, borderColor: '#000'},
+                    ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text
-                    style={{
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 8,
-                    }}>
-                    selectAll
-                  </Text>
+                  <Text style={styles.selectAllText}>select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -401,17 +400,13 @@ const FilterScreen = props => {
                     marginHorizontal: 10,
                   }}>
                   <Image
-                    style={[styles.searchIcon, {tintColor: '#000'}]}
+                    style={[
+                      styles.searchIcon,
+                      {borderWidth: 1, borderColor: '#000'},
+                    ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text
-                    style={{
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 8,
-                    }}>
-                    selectAll
-                  </Text>
+                  <Text style={styles.selectAllText}>select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -450,17 +445,13 @@ const FilterScreen = props => {
                     marginHorizontal: 10,
                   }}>
                   <Image
-                    style={[styles.searchIcon, {tintColor: '#000'}]}
+                    style={[
+                      styles.searchIcon,
+                      {borderWidth: 1, borderColor: '#000'},
+                    ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text
-                    style={{
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 8,
-                    }}>
-                    selectAll
-                  </Text>
+                  <Text style={styles.selectAllText}>select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -499,17 +490,13 @@ const FilterScreen = props => {
                     marginHorizontal: 10,
                   }}>
                   <Image
-                    style={[styles.searchIcon, {tintColor: '#000'}]}
+                    style={[
+                      styles.searchIcon,
+                      {borderWidth: 1, borderColor: '#000'},
+                    ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text
-                    style={{
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 8,
-                    }}>
-                    selectAll
-                  </Text>
+                  <Text style={styles.selectAllText}>select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -548,17 +535,13 @@ const FilterScreen = props => {
                     marginHorizontal: 10,
                   }}>
                   <Image
-                    style={[styles.searchIcon, {tintColor: '#000'}]}
+                    style={[
+                      styles.searchIcon,
+                      {borderWidth: 1, borderColor: '#000'},
+                    ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text
-                    style={{
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 8,
-                    }}>
-                    selectAll
-                  </Text>
+                  <Text style={styles.selectAllText}>select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -616,16 +599,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   searchIcon: {
-    height: 17,
+    height: 11,
     tintColor: '#A5A5A5',
-    width: 17,
-    resizeMode: 'cover',
+    width: 11,
+    resizeMode: 'contain',
   },
   locationText: {
     fontSize: 16,
     color: COLORS.black,
     fontFamily: FONTS.InterMedium,
     marginLeft: 5,
+  },
+  selectAllText: {
+    color: '#202020',
+    marginLeft: 14,
   },
   filterIcon: {
     height: 17,
@@ -647,6 +634,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
     flexDirection: 'row',
     borderBottomWidth: 0.5,
+    alignItems: 'center',
   },
   listinhHeading1: {
     fontSize: 12,
@@ -656,8 +644,8 @@ const styles = StyleSheet.create({
   },
   aboutText: {
     color: COLORS.black,
-    fontSize: 17,
-    fontFamily: 'Metropolis-SemiBold',
+    fontSize: 20,
+    fontFamily: FONTS.InterSemiBold,
   },
   btnIcon: {height: 16, width: 16, resizeMode: 'contain', tintColor: '#FF00B7'},
   //

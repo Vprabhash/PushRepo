@@ -79,9 +79,8 @@ const SignUp = props => {
       setEyeShow2(!eyeShow2);
     }
   };
-
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <View style={{flex: 1}}>
       <StatusBar
         barStyle="dark-content"
         hidden={false}
@@ -113,7 +112,7 @@ const SignUp = props => {
             }}
           />
         </View>
-        <View style={{marginHorizontal: 20, marginTop: hp(7)}}>
+        <View style={{marginHorizontal: 20, marginTop: -55}}>
           <Text style={styles.signIn}>Sign Up</Text>
           <CustomTextInput
             title="Enter your email"
@@ -159,10 +158,11 @@ const SignUp = props => {
             textColor="#fff"
             isLoading={authStatus === 'loading'}
           />
-          <Text style={[styles.withText, {color: '#797979', top: hp(4)}]}>
-            Or Sign up with
-          </Text>
         </View>
+        <Text style={[styles.withText, {color: '#797979', top: hp(4)}]}>
+          Or Sign up with
+        </Text>
+
         <View
           style={{
             flexDirection: 'row',
@@ -187,7 +187,7 @@ const SignUp = props => {
           </TouchableOpacity>
         </View>
       </ImageBackground>
-    </ScrollView>
+    </View>
   );
 };
 export default SignUp;
@@ -199,8 +199,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignSelf: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    top: '20%',
+    position: 'relative',
+    top: -55,
   },
   signIn: {
     fontFamily: FONTS.AxiformaSemiBold,

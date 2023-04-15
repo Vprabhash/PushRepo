@@ -41,7 +41,13 @@ const ArtistPlayingDetail = props => {
   ];
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{flex: 1, width: '100%', marginBottom: 7}}>
+      <View
+        style={{
+          flex: 1,
+          width: '100%',
+          marginBottom: 7,
+          // backgroundColor: 'red',
+        }}>
         <View
           style={{
             marginHorizontal: 15,
@@ -183,25 +189,37 @@ const ArtistPlayingDetail = props => {
 
   return (
     <View style={{flex: 1}}>
-      <Header
-        Back_Arrow={ImagePath.goBack}
-        tital="Artist playing Nearby"
-        titalTwo="DJ NYK- Wort the shot"
-        onclick={() => {
-          props.navigation.goBack();
-        }}
-      />
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
-        />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%', paddingBottom: 20}}>
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: '100%'}}>
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            marginTop: 32,
+            paddingVertical: 13,
+            marginHorizontal: 15,
+            elevation: 19,
+          }}>
+          <Header
+            Back_Arrow={ImagePath.goBack}
+            tital="Artist playing Nearby"
+            titalTwo="DJ NYK- Wort the shot"
+            iconHeight={20}
+            iconWidth={29}
+            onclick={() => {
+              props.navigation.goBack();
+            }}
+          />
+        </View>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={false}
+            backgroundColor="transparent"
+            translucent={true}
+          />
+
           <SafeAreaView>
             <FlatList data={ENTRIES1} renderItem={_renderItem} />
           </SafeAreaView>
@@ -209,9 +227,11 @@ const ArtistPlayingDetail = props => {
           <View
             style={{
               backgroundColor: '#FFFFFF',
-              paddingVertical: 10,
+              paddingVertical: 22,
+              paddingHorizontal: 14,
               borderRadius: 10,
               marginTop: 8,
+              marginBottom: 20,
               elevation: 5,
               marginHorizontal: 15,
             }}>
@@ -219,9 +239,8 @@ const ArtistPlayingDetail = props => {
             <Text
               style={{
                 color: COLORS.black,
-                marginHorizontal: 10,
                 fontSize: 16,
-                marginVertical: 12,
+                marginVertical: 5,
                 fontFamily: FONTS.RobotoRegular,
               }}>
               experience the mesmerizing voice of darshan raval live in concert!
@@ -229,7 +248,6 @@ const ArtistPlayingDetail = props => {
             <Text
               style={{
                 color: COLORS.black,
-                marginHorizontal: 10,
                 fontSize: 16,
                 marginBottom: 12,
                 fontFamily: FONTS.RobotoRegular,
@@ -238,8 +256,8 @@ const ArtistPlayingDetail = props => {
               will open at 6:00 PM, and the show will start at 8:00 PM.{' '}
             </Text>
           </View>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
@@ -254,15 +272,15 @@ const styles = StyleSheet.create({
   aboutText: {
     color: COLORS.black,
     fontSize: 24,
-    marginLeft: 10,
-    marginVertical: hp(1),
+    // marginLeft: 10,
+    // marginVertical: hp(1),
     fontFamily: FONTS.AxiformaBold,
   },
   btnIcon: {height: 16, width: 16, resizeMode: 'contain', tintColor: '#FF00B7'},
   buttonText: {
     fontSize: 16,
     color: COLORS.black,
-    marginLeft: 5,
+    marginLeft: 9,
     fontFamily: FONTS.RobotoRegular,
     letterSpacing: 0.3,
   },

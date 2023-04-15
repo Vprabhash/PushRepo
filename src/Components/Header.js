@@ -25,9 +25,9 @@ const Header = props => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: hp(7),
-        marginHorizontal: 10,
-        paddingBottom: 5,
+        // marginTop: hp(7),
+        // marginHorizontal: 10,
+        // paddingBottom: 5,
       }}>
       <View style={{flexDirection: 'row', alignItems: 'center', flex: 0.9}}>
         {props.Back_Arrow && (
@@ -35,12 +35,15 @@ const Header = props => {
             onPress={props.onclick}
             style={{
               marginRight: 10,
-              backgroundColor: '#F8F8FB',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
             <Image
-              style={{height: 18, width: 18, resizeMode: 'contain'}}
+              style={{
+                height: props.iconHeight,
+                width: props.iconWidth,
+                resizeMode: 'contain',
+              }}
               source={props.Back_Arrow}
             />
           </TouchableOpacity>
@@ -71,8 +74,8 @@ const Header = props => {
         {props.searchIcon && (
           <View style={[styles.inputMain, {marginLeft: 8}]}>
             <TextInput
-              style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
-              placeholderTextColor="rgba(0, 0, 0, 0.7)"
+              style={[styles.textInput, {color: '#A3A3A3'}]}
+              placeholderTextColor="#A3A3A3"
               placeholder={props.placeholder}
               // onChangeText={onChangeText}
               // value={value}
@@ -82,7 +85,10 @@ const Header = props => {
               onPress={() => {
                 ('');
               }}>
-              <Image source={props.searchIcon} style={styles.iconStyle} />
+              <Image
+                source={props.searchIcon}
+                style={[styles.iconStyle, {tintColor: '#A3A3A3'}]}
+              />
             </TouchableOpacity>
           </View>
         )}
@@ -93,7 +99,7 @@ const Header = props => {
             width: 30,
             height: 30,
             resizeMode: 'contain',
-            borderRadius: 26,
+            borderRadius: 30,
           }}
           source={props.profileIcon}
         />
@@ -115,16 +121,16 @@ const styles = StyleSheet.create({
     // marginHorizontal: wp(2.5),
     borderRadius: 30,
     paddingHorizontal: wp(4),
-    height: hp(4.6),
+    height: 37,
   },
 
   textInput: {
-    fontFamily: 'Metropolis-Regular',
+    fontFamily: FONTS.AxiformaMedium,
     fontSize: hp(2),
     padding: 0,
     height: hp(6),
     flex: 1,
-    fontSize: 14,
+    fontSize: 16,
     paddingRight: 10,
   },
   iconStyle: {

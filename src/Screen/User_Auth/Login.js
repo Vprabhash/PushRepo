@@ -32,115 +32,111 @@ const Login = props => {
 
   return (
     <View style={{flex: 1}}>
-      <ScrollView>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
+      <StatusBar
+        barStyle="dark-content"
+        hidden={false}
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: '100%'}}>
+        <Image
+          resizeMode={'cover'}
+          source={ImagePath.dancePic}
+          style={{
+            width: width,
+            height: height * 0.29,
+            borderBottomLeftRadius: 80,
+            borderBottomRightRadius: 80,
+          }}
         />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%'}}>
+        <View style={styles.dot}>
           <Image
-            resizeMode={'cover'}
-            source={ImagePath.dancePic}
+            source={ImagePath.star_logo}
             style={{
-              width: width,
-              height: height * 0.29,
-              borderBottomLeftRadius: 80,
-              borderBottomRightRadius: 80,
+              resizeMode: 'contain',
+              height: 70,
+              width: 70,
+              alignSelf: 'center',
             }}
           />
-          <View style={styles.dot}>
-            <Image
-              source={ImagePath.star_logo}
-              style={{
-                resizeMode: 'contain',
-                height: 70,
-                width: 70,
-                alignSelf: 'center',
-              }}
-            />
-          </View>
+        </View>
 
-          <View style={{marginHorizontal: 20, marginTop: hp(6)}}>
-            <Text style={[styles.signIn, {marginBottom: hp(4)}]}>Sign In</Text>
-            <CustomTextInput
-              title="Enter your email"
-              iconPath={ImagePath.msgIcon}
-              onChangeText={text => {
-                setEmail(text);
-              }}
-              value={email}
-              keyboardType={'email-address'}
-              returnKeyType={'next'}
-            />
-            <CustomTextInput
-              marginTop={20}
-              title="Enter password"
-              onChangeText={text => {
-                setPassword(text);
-              }}
-              value={password}
-              iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
-              secureTextEntry={eyeShow ? false : true}
-              onClickEye={() => {
-                onClickEye();
-              }}
-            />
-            <CustomButton
-              onclick={() => {
-                props.navigation.navigate('BottomTab');
-              }}
-              top={30}
-              title="Sign in"
-              bgColor="#000"
-              textColor="#fff"
-            />
-            <TouchableOpacity
-              style={{alignSelf: 'flex-end'}}
-              onPress={() => {
-                props.navigation.navigate('ForgetPassword');
-              }}>
-              <Text style={styles.forgetText}>Forgot password</Text>
-            </TouchableOpacity>
-            <Text
-              style={[styles.withText, {color: '#797979', marginTop: hp(3)}]}>
-              Or Sign in with
+        <View style={{marginHorizontal: 20, marginTop: -55}}>
+          <Text style={[styles.signIn, {marginBottom: hp(4)}]}>Sign In</Text>
+          <CustomTextInput
+            title="Enter your email"
+            iconPath={ImagePath.msgIcon}
+            onChangeText={text => {
+              setEmail(text);
+            }}
+            value={email}
+            keyboardType={'email-address'}
+            returnKeyType={'next'}
+          />
+          <CustomTextInput
+            marginTop={20}
+            title="Enter password"
+            onChangeText={text => {
+              setPassword(text);
+            }}
+            value={password}
+            iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
+            secureTextEntry={eyeShow ? false : true}
+            onClickEye={() => {
+              onClickEye();
+            }}
+          />
+          <CustomButton
+            onclick={() => {
+              props.navigation.navigate('BottomTab');
+            }}
+            top={30}
+            title="Sign in"
+            bgColor="#000"
+            textColor="#fff"
+          />
+          <TouchableOpacity
+            style={{alignSelf: 'flex-end'}}
+            onPress={() => {
+              props.navigation.navigate('ForgetPassword');
+            }}>
+            <Text style={styles.forgetText}>Forgot password</Text>
+          </TouchableOpacity>
+          <Text style={[styles.withText, {color: '#797979', marginTop: hp(3)}]}>
+            Or Sign in with
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            marginTop: 10,
+            marginHorizontal: wp(7),
+          }}>
+          <Image source={ImagePath.google} style={styles.googleLogo} />
+          <Image source={ImagePath.apple} style={styles.googleLogo} />
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginBottom: 10,
+          }}>
+          <Text style={styles.withText}>Don’t have an account </Text>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('SignUp');
+            }}>
+            <Text style={[styles.withText, {textDecorationLine: 'underline'}]}>
+              Sign Up
             </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginTop: 10,
-              marginHorizontal: wp(7),
-            }}>
-            <Image source={ImagePath.google} style={styles.googleLogo} />
-            <Image source={ImagePath.apple} style={styles.googleLogo} />
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginBottom: 10,
-            }}>
-            <Text style={styles.withText}>Don’t have an account </Text>
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('SignUp');
-              }}>
-              <Text
-                style={[styles.withText, {textDecorationLine: 'underline'}]}>
-                Sign Up
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
-      </ScrollView>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -155,8 +151,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignSelf: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    top: '20%',
+    position: 'relative',
+    top: -55,
   },
   signIn: {
     fontFamily: FONTS.AxiformaSemiBold,

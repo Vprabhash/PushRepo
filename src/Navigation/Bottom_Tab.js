@@ -3,10 +3,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ImagePath from '../assets/ImagePath';
-import SignUp from '../Screen/User_Auth/SignUp';
-import Login from '../Screen/User_Auth/Login';
 import Home from '../Screen/Dashboard/Home';
-import PasswordSuccessful from '../Screen/User_Auth/PasswordSuccessful';
 import ClubListing from '../Screen/Listing/ClubListing';
 import EventListing from '../Screen/Listing/EventListing';
 import ClubDetails from '../Screen/Details/ClubDetails';
@@ -17,6 +14,7 @@ function BottomTab() {
   return (
     <Tab.Navigator
       // initialRouteName='Explore'
+
       screenOptions={({focused}) => ({
         tabBarActiveTintColor: '#9700AF',
         tabBarInactiveTintColor: '#000',
@@ -25,9 +23,10 @@ function BottomTab() {
           borderTopWidth: 1,
           marginTop: 0.5,
           height: 60,
-          //   borderRadius: 65,
+          borderRadius: 65,
           backgroundColor: '#fff',
         },
+
         tabBarLabelStyle: {paddingBottom: 10, fontSize: 10, fontWeight: '700'},
       })}>
       <Tab.Screen

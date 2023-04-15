@@ -12,6 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {COLORS, FONTS} from './constants';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ModalComponent = props => {

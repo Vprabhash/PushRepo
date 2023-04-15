@@ -30,7 +30,7 @@ const ClubDetails = props => {
     {
       mapIcon: ImagePath.upcoming_Evn_Img,
       title: 'Fabulous friday',
-      singerName: 'By AVGSS Group',
+      singerName: 'by ',
       singerNameIcon: ImagePath.Explore,
       musicIcon: ImagePath.menuUser3,
       musicText: 'Bollywood, Commercial',
@@ -38,7 +38,7 @@ const ClubDetails = props => {
   ];
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
+      <View style={{flex: 1, width: '100%', marginBottom: 31}}>
         <View
           style={{
             marginHorizontal: 15,
@@ -67,7 +67,16 @@ const ClubDetails = props => {
                 }}
                 source={item.singerNameIcon}
               />
-              <Text style={[styles.singerName]}>{item.singerName}</Text>
+              <Text style={[styles.singerName]}>
+                {item.singerName}
+                <Text
+                  style={[
+                    styles.singerName,
+                    {textDecorationLine: 'underline'},
+                  ]}>
+                  AVGSS Group
+                </Text>
+              </Text>
             </View>
             <View style={{flexDirection: 'row', marginTop: 10}}>
               <Image
@@ -156,13 +165,7 @@ const ClubDetails = props => {
   };
   return (
     <View style={{flex: 1}}>
-      {/* <Header
-                // Back_Arrow={ImagePath.manueIcon}
-                searchIcon={ImagePath.searchIcon}
-                placeholder='Search'
-            // profileIcon={ImagePath.profilePic}
-            /> */}
-      <View style={[styles.inputMain, {marginTop: hp(6)}]}>
+      <View style={[styles.inputMain, {marginTop: 50}]}>
         <TextInput
           style={[styles.textInput, {color: COLORS.black}]}
           placeholder={'Search'}
@@ -196,25 +199,31 @@ const ClubDetails = props => {
             style={{
               marginHorizontal: 15,
               marginTop: 26,
-              justifyContent: 'center',
+              borderRadius: 20,
             }}>
             <Swiper
-              style={styles.wrapper}
+              style={[styles.wrapper]}
               paginationStyle={{
-                bottom: hp(-3),
+                bottom: hp(-3.1),
                 backgroundColor: '#C9C9C9',
                 borderRadius: 20,
+                height: 18,
                 marginHorizontal: '40%',
                 alignSelf: 'center',
               }}
-              activeDotStyle={{backgroundColor: '#717171', borderRadius: 4}}
-              dotStyle={{
-                backgroundColor: COLORS.white,
-                padding: 4,
+              activeDotStyle={{
+                backgroundColor: '#717171',
                 width: 6,
                 height: 6,
                 borderRadius: 4,
               }}
+              dotStyle={{
+                backgroundColor: COLORS.white,
+                width: 6,
+                height: 6,
+                borderRadius: 4,
+              }}
+              horizontal={true}
               showsButtons={true}
               showsPagination={true}
               prevButton={
@@ -231,7 +240,12 @@ const ClubDetails = props => {
               }>
               <View style={styles.slide1}>
                 <Image
-                  style={{resizeMode: 'contain', width: '100%'}}
+                  style={{
+                    resizeMode: 'contain',
+                    borderRadius: 90,
+                    overflow: 'hidden',
+                    width: '100%',
+                  }}
                   source={ImagePath.Explore}
                 />
               </View>
@@ -254,10 +268,10 @@ const ClubDetails = props => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginTop: hp(3),
+              marginTop: 16.35,
               marginHorizontal: 15,
             }}>
-            <View>
+            <View style={{marginTop: -5.5}}>
               <Text
                 style={{
                   color: '#202020',
@@ -287,12 +301,18 @@ const ClubDetails = props => {
                 alignItems: 'center',
               }}
               start={{x: 0.3, y: 0.5}}
-              colors={['deeppink', 'dodgerblue']}>
-              <Text style={{fontWeight: '700', color: '#FFFFFF', fontSize: 12}}>
+              // colors={['deeppink', 'dodgerblue']}
+              colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
+              <Text
+                style={{
+                  fontFamily: FONTS.DMSansBold,
+                  color: '#FFFFFF',
+                  fontSize: 12,
+                }}>
                 5
               </Text>
               <Image
-                style={{height: 13, width: 13, tintColor: '#FFFFFF'}}
+                style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
                 source={ImagePath.star}
               />
             </LinearGradient>
@@ -300,8 +320,8 @@ const ClubDetails = props => {
           <Text
             style={{
               fontSize: 16,
-              lineHeight: hp(3),
-              marginTop: hp(1.7),
+              lineHeight: 22,
+              marginTop: 9,
               color: COLORS.black,
               marginHorizontal: 15,
               fontFamily: FONTS.HankenGroteskReglur,
@@ -320,20 +340,27 @@ const ClubDetails = props => {
           <TouchableOpacity style={{alignSelf: 'center'}}>
             <LinearGradient
               style={{
-                height: hp(6),
-                width: wp(50),
+                height: 43,
+                width: 176,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 20,
+                borderRadius: 40,
               }}
-              start={{x: 0.3, y: 0.5}}
-              colors={['deeppink', 'dodgerblue']}>
-              <Text style={{fontWeight: '700', color: '#FFFFFF', fontSize: 12}}>
+              start={{x: 0.4, y: 0}}
+              // start={{x: 0.1, y: 0}}
+              // end={{x: 1.1, y: 0.9}}
+              colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
+              <Text
+                style={{
+                  fontFamily: FONTS.AxiformaBlack,
+                  color: '#FFFFFF',
+                  fontSize: 14,
+                }}>
                 Events For the month
               </Text>
             </LinearGradient>
           </TouchableOpacity>
-          <Text style={styles.aboutText}>Menu </Text>
+          <Text style={[styles.aboutText, {marginTop: 31}]}>Menu </Text>
 
           <View style={{}}>
             <FlatList
@@ -365,24 +392,24 @@ const styles = StyleSheet.create({
     marginTop: hp(4),
     fontFamily: FONTS.AxiformaBold,
   },
-  wrapper: {height: 200, alignItems: 'center', justifyContent: 'center'},
+  wrapper: {height: 200},
   slide1: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#9DD6EB',
+    // backgroundColor: '#9DD6EB',
   },
   slide2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#97CAE5',
+    // backgroundColor: '#97CAE5',
   },
   slide3: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#92BBD9',
+    // backgroundColor: '#92BBD9',
   },
   text: {
     color: '#fff',

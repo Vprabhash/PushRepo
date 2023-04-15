@@ -97,24 +97,32 @@ const ClubListing = props => {
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.listinhHeading}>{item.title}</Text>
+
               <LinearGradient
                 style={{
                   flexDirection: 'row',
                   height: 20,
                   width: 40,
                   borderRadius: 8,
-                  alignSelf: 'flex-end',
                   justifyContent: 'center',
                   backgroundColor: 'red',
                   alignItems: 'center',
                 }}
-                start={{x: 0.3, y: 0.5}}
-                colors={['deeppink', 'dodgerblue']}>
+                start={{x: 0.3, y: 0.4}}
+                // colors={['deeppink', 'dodgerblue']}
+                colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
                 <Text
-                  style={{fontWeight: '700', color: '#FFFFFF', fontSize: 12}}>
+                  style={{
+                    fontFamily: FONTS.DMSansBold,
+                    color: '#FFFFFF',
+                    fontSize: 12,
+                  }}>
                   {item.starText}
                 </Text>
-                <Image style={{height: 13, width: 13}} source={item.starIcon} />
+                <Image
+                  style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
+                  source={item.starIcon}
+                />
               </LinearGradient>
             </View>
             <Text style={[styles.listinhText, {marginVertical: hp(0.3)}]}>
@@ -131,24 +139,30 @@ const ClubListing = props => {
     );
   };
   return (
-    <View style={{flex: 1, marginHorizontal: 5}}>
-      <Header
-        Back_Arrow={ImagePath.manueIcon}
-        tital="Near me"
-        titalTwo="Sector 52, Noida, UP 435464"
-        profileIcon={ImagePath.profilePic}
-      />
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
-        />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%'}}>
+    <View style={{flex: 1}}>
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: '100%'}}>
+        <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
+          <Header
+            Back_Arrow={ImagePath.manueIcon}
+            tital="Near me"
+            titalTwo="Sector 52, Noida, UP 435464"
+            iconHeight={12}
+            iconWidth={18}
+            profileIcon={ImagePath.profilePic}
+          />
+        </View>
+
+        <ScrollView contentContainerStyle={{flexGrow: 1, marginHorizontal: 5}}>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={false}
+            backgroundColor="transparent"
+            translucent={true}
+          />
+
           <View style={[styles.inputMain, {marginTop: 10}]}>
             <TextInput
               style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
@@ -168,8 +182,8 @@ const ClubListing = props => {
           <SafeAreaView>
             <FlatList data={ENTRIES1} renderItem={_renderItem} />
           </SafeAreaView>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };

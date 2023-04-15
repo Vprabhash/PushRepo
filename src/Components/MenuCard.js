@@ -54,8 +54,9 @@ const MenuCard = ({navigation}, props) => {
       <View
         style={{
           width: '100%',
-          marginVertical: hp(1.5),
-          paddingHorizontal: wp(5),
+          marginBottom: index == 1 ? 11 : 0,
+          marginTop: index == 3 ? 22 : 11,
+          paddingHorizontal: 16,
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
@@ -136,10 +137,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 0.4,
     alignItems: 'center',
-    backgroundColor: COLORS.black,
+    backgroundColor: '#202020',
     borderWidth: 1,
     height: hp('6.5%'),
-    borderColor: '#00000',
+    borderColor: '#000',
     justifyContent: 'center',
   },
   buttonText: {
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontFamily: FONTS.RobotoRegular,
     color: COLORS.white,
-    letterSpacing: 0.3,
+    // letterSpacing: 0.3,
   },
   btnIcon: {height: 16, width: 16, resizeMode: 'contain'},
 });
