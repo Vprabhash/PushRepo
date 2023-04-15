@@ -1,30 +1,30 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import api from '../../services/restService';
-import {SIGN_UP} from '../../services/Apis';
+import {LIST} from '../../services/Apis';
 
-export const signUp = createAsyncThunk('auth/signUp', async userDetails => {
-  const response = await api.post(SIGN_UP, userDetails);
+export const listApi = createAsyncThunk('home/listApi', async userDetails => {
+  const response = await api.post(LIST, userDetails);
   console.log(response);
   return response.data;
 });
 
-const authSlice = createSlice({
-  name: 'auth',
+const listSlice = createSlice({
+  name: 'home',
   initialState: {user: null, status: 'idle', error: null},
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(signUp.pending, state => {
+      .addCase(listApi.pending, state => {
         state.status = 'loading';
       })
-      .addCase(signUp.fulfilled, (state, action) => {
+      .addCase(listApi.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload;
       })
-      .addCase(signUp.rejected, (state, action) => {
+      .addCase(listApi.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
-export default authSlice.reducer;
+export default listSlice.reducer;

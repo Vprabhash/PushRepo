@@ -1,24 +1,27 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import api from '../../services/restService';
-import { PROFILE } from '../../services/Apis';
+import {PROFILE} from '../../services/Apis';
 
 // Async thunk to fetch the profile details
-export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (userId) => {
-  try {
-    const response = await api.get(`${PROFILE}${userId}`);
-    return response.data;
-  } catch (error) {
-    console.log("profile/fetchProfile error:", error);
-  }
-});
+export const fetchProfile = createAsyncThunk(
+  'profile/fetchProfile',
+  async userId => {
+    try {
+      const response = await api.get(`${PROFILE}${userId}`);
+      return response.data;
+    } catch (error) {
+      console.log('profile/fetchProfile error:', error);
+    }
+  },
+);
 
 const profileSlice = createSlice({
   name: 'profile',
-  initialState: { data: {}, isLoading: false, status: 'idle', error: null },
+  initialState: {data: {}, isLoading: false, status: 'idle', error: null},
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchProfile.pending, (state) => {
+      .addCase(fetchProfile.pending, state => {
         state.isLoading = true;
         state.status = 'loading';
       })

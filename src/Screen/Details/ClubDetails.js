@@ -223,7 +223,6 @@ const ClubDetails = props => {
               height: 6,
               borderRadius: 4,
             }}
-            autoplay={true}
             showsButtons={true}
             showsPagination={true}
             prevButton={
@@ -249,13 +248,13 @@ const ClubDetails = props => {
               />
             }>
             <View style={styles.slide}>
-              <Image style={styles.slideImg} source={ImagePath.Explore} />
+              <Image style={styles.slideImg} source={ImagePath.swiperItem} />
             </View>
             <View style={styles.slide}>
               <Image style={styles.slideImg} source={ImagePath.eventImg} />
             </View>
             <View style={styles.slide}>
-              <Image style={styles.slideImg} source={ImagePath.eventImg1} />
+              <Image style={styles.slideImg} source={ImagePath.swiperItem} />
             </View>
           </Swiper>
 
@@ -263,7 +262,7 @@ const ClubDetails = props => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginTop: 16.35,
+              marginTop: -2,
               marginHorizontal: 15,
             }}>
             <View style={{marginTop: -5.5}}>
@@ -296,7 +295,6 @@ const ClubDetails = props => {
                 alignItems: 'center',
               }}
               start={{x: 0.3, y: 0.5}}
-              // colors={['deeppink', 'dodgerblue']}
               colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
               <Text
                 style={{
@@ -387,7 +385,7 @@ const styles = StyleSheet.create({
     marginTop: hp(4),
     fontFamily: FONTS.AxiformaBold,
   },
-  wrapper: {height: 230},
+  wrapper: {height: 223},
   slide: {
     height: 200,
     justifyContent: 'center',

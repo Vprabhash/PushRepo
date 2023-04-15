@@ -1,30 +1,30 @@
+//signInSlice
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import api from '../../services/restService';
-import {SIGN_UP} from '../../services/Apis';
+import {SIGN_IN} from '../../services/Apis';
 
-export const signUp = createAsyncThunk('auth/signUp', async userDetails => {
-  const response = await api.post(SIGN_UP, userDetails);
+export const signIn = createAsyncThunk('auth/signIn', async userDetails => {
+  const response = await api.post(SIGN_IN, userDetails);
   console.log(response);
   return response.data;
 });
-
-const authSlice = createSlice({
+const signInSlice = createSlice({
   name: 'auth',
   initialState: {user: null, status: 'idle', error: null},
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(signUp.pending, state => {
+      .addCase(signIn.pending, state => {
         state.status = 'loading';
       })
-      .addCase(signUp.fulfilled, (state, action) => {
+      .addCase(signIn.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload;
       })
-      .addCase(signUp.rejected, (state, action) => {
+      .addCase(signIn.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
-export default authSlice.reducer;
+export default signInSlice.reducer;
