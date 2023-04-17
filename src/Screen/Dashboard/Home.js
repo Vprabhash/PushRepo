@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Modal,
@@ -22,10 +22,44 @@ import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import {COLORS, FONTS} from '../../Components/constants';
-import ModalComponent from '../../Components/ModalComponent';
+import {useDispatch} from 'react-redux';
+import {spotLightApi} from '../../redux/reducers/listApi/spotLightList';
+import {UpComingEventApi} from '../../redux/reducers/listApi/UpComingEventList';
+import {artistApi} from '../../redux/reducers/listApi/artistList';
+import {LocationApi} from '../../redux/reducers/listApi/clubLocationList';
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const Home = props => {
+  const dispatch = useDispatch();
+
+  const spotLightList = async () => {
+    const data = await dispatch(spotLightApi()).then(data => {
+      console.log('------spotLightList data--------', data.payload.movies);
+    });
+  };
+  const clubLocationList = async () => {
+    const data = await dispatch(LocationApi()).then(data => {
+      console.log('------clubLocationList data--------', data.payload.movies);
+    });
+  };
+  const artistList = async () => {
+    const data = await dispatch(artistApi()).then(data => {
+      console.log('------artistList data--------', data.payload.movies);
+    });
+  };
+  const UpComingEventList = async () => {
+    const data = await dispatch(UpComingEventApi()).then(data => {
+      console.log('------UpComingEventList data--------', data.payload.movies);
+    });
+  };
+  useEffect(() => {
+    spotLightList();
+    clubLocationList();
+    artistList();
+    UpComingEventList();
+  }, []);
+
   const ENTRIES1 = [
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail Bar'},
     {mapIcon: ImagePath.clubLocation, title: 'Nightclub'},

@@ -1,39 +1,39 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import api from '../../services/restService';
-import {PROFILE} from '../../services/Apis';
+import api from '../../../services/restService';
+import {BASE_URL, CLUBLOCATION} from '../../../services/Apis';
 
-// Async thunk to fetch the profile details
-export const fetchProfile = createAsyncThunk(
-  'profile/fetchProfile',
+// Async thunk to fetch the LocationApi
+export const LocationApi = createAsyncThunk(
+  'list/LocationApi',
   async userId => {
     try {
-      const response = await api.get(`${PROFILE}${userId}`);
+      const response = await api.get(`${BASE_URL}${CLUBLOCATION}`);
       return response.data;
     } catch (error) {
-      console.log('profile/fetchProfile error:', error);
+      console.log('list/LocationApi error:', error);
     }
   },
 );
-const profileSlice = createSlice({
-  name: 'profile',
+const clubLocationList = createSlice({
+  name: 'list',
   initialState: {data: {}, isLoading: false, status: 'idle', error: null},
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchProfile.pending, state => {
+      .addCase(LocationApi.pending, state => {
         state.isLoading = true;
         state.status = 'loading';
       })
-      .addCase(fetchProfile.fulfilled, (state, action) => {
+      .addCase(LocationApi.fulfilled, (state, action) => {
         state.isLoading = false;
         state.status = 'succeeded';
         state.data = action.payload;
       })
-      .addCase(fetchProfile.rejected, (state, action) => {
+      .addCase(LocationApi.rejected, (state, action) => {
         state.isLoading = false;
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
-export default profileSlice.reducer;
+export default clubLocationList.reducer;

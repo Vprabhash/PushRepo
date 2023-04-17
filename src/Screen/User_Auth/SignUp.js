@@ -40,7 +40,6 @@ const SignUp = props => {
       Alert.alert('Invalid email', 'Please enter a valid email address.');
       return;
     }
-
     // Password validation
     const minPasswordLength = 6;
     if (creatPassword.length < minPasswordLength) {
@@ -50,12 +49,11 @@ const SignUp = props => {
       );
       return;
     }
-
     if (creatPassword === password) {
       dispatch(signUp({email: email.toLowerCase(), password}))
         .unwrap()
         .then(response => {
-          //TODO: handle response
+          // TODO: handle response
           // props.navigation.navigate('Otp');
           console.log(response);
         })

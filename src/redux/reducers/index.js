@@ -7,6 +7,11 @@ import resetReducer from './resetSlice';
 import signInReducer from './signInSlice';
 import listReducer from './listSlice';
 import logOutReducer from './logOutSlice';
+import artistListReducer from './listApi/artistList';
+
+import spotLightReducer from './listApi/spotLightList';
+import clubLocationReducer from './listApi/clubLocationList';
+import upComingEventReducer from './listApi/UpComingEventList';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -17,6 +22,10 @@ const rootReducer = combineReducers({
   signIn: signInReducer,
   list: listReducer,
   logOut: logOutReducer,
+  artist: artistListReducer,
+  spotLight: spotLightReducer,
+  clubLocation: clubLocationReducer,
+  upComingEvent: upComingEventReducer,
 });
 
 export default rootReducer;
