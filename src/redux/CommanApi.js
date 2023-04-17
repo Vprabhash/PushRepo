@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {BASE_URL} from '../services/Apis';
-
 const ApiCall = async (Url, Method, Data) => {
   let CompleteUrl = BASE_URL + Url;
   var HeaderToken = {
@@ -27,6 +26,5 @@ const ApiCall = async (Url, Method, Data) => {
       console.log('---------------Api error: ' + error);
       return {message: error, status: 'false'};
     });
-  //   }
 };
 export default ApiCall;

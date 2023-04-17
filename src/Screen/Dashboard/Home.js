@@ -26,7 +26,7 @@ import {useDispatch} from 'react-redux';
 import {spotLightApi} from '../../redux/reducers/spotLightSlice';
 import {artistApi} from '../../redux/reducers/artistSlice';
 import {LocationApi} from '../../redux/reducers/clubLocationSlice';
-// import { upComingEventApi } from '../../redux/reducers/UpComingEventSlice';
+import {upComingEventApi} from '../../redux/reducers/upComingEventSlice';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -48,16 +48,16 @@ const Home = props => {
       console.log('------artistList data--------', data.payload.movies);
     });
   };
-  // const UpComingEventList = async () => {
-  //   const data = await dispatch(upComingEventApi()).then(data => {
-  //     console.log('------UpComingEventList data--------', data.payload.movies);
-  //   });
-  // };
+  const UpComingEventList = async () => {
+    const data = await dispatch(upComingEventApi()).then(data => {
+      console.log('------UpComingEventList data--------', data.payload.movies);
+    });
+  };
   useEffect(() => {
     spotLightList();
     clubLocationList();
     artistList();
-    // UpComingEventList();
+    UpComingEventList();
   }, []);
 
   const ENTRIES1 = [

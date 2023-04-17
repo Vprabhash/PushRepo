@@ -31,9 +31,10 @@ const Login = props => {
   const onClickEye = () => {
     setEyeShow(!eyeShow);
   };
-  const signin = props => {
-    const res = ApiCall(ARTIST);
-    console.log('---res----artist---', ARTIST);
+
+  const signin = async () => {
+    const res = await ApiCall(ARTIST, 'GET');
+    console.log('---res--logIn--artist---', res);
   };
   useEffect(() => {
     signin();
