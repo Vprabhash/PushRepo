@@ -1,10 +1,10 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import api from '../../../services/restService';
-import {BASE_URL, CLUBLOCATION} from '../../../services/Apis';
+import api from '../../services/restService';
+import {BASE_URL, CLUBLOCATION} from '../../services/Apis';
 
 // Async thunk to fetch the LocationApi
 export const LocationApi = createAsyncThunk(
-  'list/LocationApi',
+  'clubLocation/LocationApi',
   async userId => {
     try {
       const response = await api.get(`${BASE_URL}${CLUBLOCATION}`);
@@ -14,8 +14,8 @@ export const LocationApi = createAsyncThunk(
     }
   },
 );
-const clubLocationList = createSlice({
-  name: 'list',
+const clubLocationSlice = createSlice({
+  name: 'clubLocation',
   initialState: {data: {}, isLoading: false, status: 'idle', error: null},
   reducers: {},
   extraReducers: builder => {
@@ -36,4 +36,4 @@ const clubLocationList = createSlice({
       });
   },
 });
-export default clubLocationList.reducer;
+export default clubLocationSlice.reducer;

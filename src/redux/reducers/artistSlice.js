@@ -1,9 +1,9 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import api from '../../../services/restService';
-import {BASE_URL, ARTIST} from '../../../services/Apis';
+import api from '../../services/restService';
+import {BASE_URL, ARTIST} from '../../services/Apis';
 
 // Async thunk to fetch the artistApi
-export const artistApi = createAsyncThunk('list/artistApi', async userId => {
+export const artistApi = createAsyncThunk('artist/artistApi', async userId => {
   try {
     const response = await api.get(`${BASE_URL}${ARTIST}`);
     return response.data;
@@ -11,8 +11,8 @@ export const artistApi = createAsyncThunk('list/artistApi', async userId => {
     console.log('list/artistApi error:', error);
   }
 });
-const artistList = createSlice({
-  name: 'list',
+const artistSlice = createSlice({
+  name: 'artist',
   initialState: {data: {}, isLoading: false, status: 'idle', error: null},
   reducers: {},
   extraReducers: builder => {
@@ -33,4 +33,4 @@ const artistList = createSlice({
       });
   },
 });
-export default artistList.reducer;
+export default artistSlice.reducer;

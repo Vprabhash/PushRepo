@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -18,6 +18,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {FONTS} from '../../Components/constants';
+import ApiCall from '../../redux/CommanApi';
+import {ARTIST} from '../../services/Apis';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -29,6 +31,13 @@ const Login = props => {
   const onClickEye = () => {
     setEyeShow(!eyeShow);
   };
+  const signin = props => {
+    const res = ApiCall(ARTIST);
+    console.log('---res----artist---', ARTIST);
+  };
+  useEffect(() => {
+    signin();
+  }, []);
 
   return (
     <View style={{flex: 1}}>

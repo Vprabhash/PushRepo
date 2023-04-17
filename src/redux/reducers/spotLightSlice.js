@@ -1,10 +1,10 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import api from '../../../services/restService';
-import {BASE_URL, SPOTLIGHT} from '../../../services/Apis';
+import api from '../../services/restService';
+import {BASE_URL, SPOTLIGHT} from '../../services/Apis';
 
 // Async thunk to fetch the spotLightApi
 export const spotLightApi = createAsyncThunk(
-  'list/spotLightApi',
+  'spotLight/spotLightApi',
   async userId => {
     try {
       console.log('--Complete url---', BASE_URL, SPOTLIGHT);
@@ -16,8 +16,8 @@ export const spotLightApi = createAsyncThunk(
     }
   },
 );
-const spotLightList = createSlice({
-  name: 'list',
+const spotLightSlice = createSlice({
+  name: 'spotLight',
   initialState: {data: {}, isLoading: false, status: 'idle', error: null},
   reducers: {},
   extraReducers: builder => {
@@ -38,4 +38,4 @@ const spotLightList = createSlice({
       });
   },
 });
-export default spotLightList.reducer;
+export default spotLightSlice.reducer;
