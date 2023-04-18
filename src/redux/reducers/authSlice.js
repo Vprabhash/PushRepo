@@ -1,9 +1,11 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import api from '../../services/restService';
-import {SIGN_IN, SIGN_UP} from '../../services/Apis';
+import {BASE_URL, SIGN_UP} from '../../services/Apis';
 
 export const signUp = createAsyncThunk('auth/signUp', async userDetails => {
-  const response = await api.post(SIGN_UP, userDetails);
+  console.log('--Complete url---', BASE_URL, SIGN_UP);
+
+  const response = await api.post(`${BASE_URL}${SIGN_UP}`, userDetails);
   console.log(response);
   return response.data;
 });

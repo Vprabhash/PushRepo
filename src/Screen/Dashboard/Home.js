@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -27,6 +28,8 @@ import {spotLightApi} from '../../redux/reducers/spotLightSlice';
 import {artistApi} from '../../redux/reducers/artistSlice';
 import {LocationApi} from '../../redux/reducers/clubLocationSlice';
 import {upComingEventApi} from '../../redux/reducers/upComingEventSlice';
+import ApiCall from '../../redux/CommanApi';
+import {ARTIST} from '../../services/Apis';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -60,13 +63,53 @@ const Home = props => {
     UpComingEventList();
   }, []);
 
-  const ENTRIES1 = [
+  const [
+    onEndReachedCalledDuringMomentum,
+    setonEndReachedCalledDuringMomentum,
+  ] = useState(true);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const renderFooter = () => {
+    return (
+      <View>
+        {loading ? (
+          <ActivityIndicator
+            color={'#fff'}
+            size={'large'}
+            style={{marginLeft: 8}}
+          />
+        ) : null}
+      </View>
+    );
+  };
+  const location = async () => {
+    let data = {
+      page: page + 1,
+    };
+    const res = await ApiCall(ARTIST, 'GET', data);
+    console.log('---res--logIn--artist---', res);
+  };
+  useEffect(() => {
+    location();
+  }, []);
+
+  const fetchMoreData = () => {
+    if (!onEndReachedCalledDuringMomentum) {
+      location();
+      setLoading(true);
+      setonEndReachedCalledDuringMomentum(true);
+    } else {
+      setLoading(false);
+    }
+  };
+  const [ENTRIES1, setENTRIES1] = useState([
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail Bar'},
     {mapIcon: ImagePath.clubLocation, title: 'Nightclub'},
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail'},
     {mapIcon: ImagePath.clubLocation, title: 'Nightclub'},
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail'},
-  ];
+  ]);
+
   const _renderItem = ({item, index}) => {
     return (
       <View style={{}}>
@@ -85,14 +128,50 @@ const Home = props => {
       </View>
     );
   };
-  const DATA = [
+  const [onEndReachedCalledDuringArtist, setonEndReachedCalledDuringArtist] =
+    useState(true);
+  const [artistPage, setArtistPage] = useState(1);
+  const [artistLoading, setArtistLoading] = useState(true);
+  const artistRenderFooter = () => {
+    return (
+      <View>
+        {artistLoading ? (
+          <ActivityIndicator
+            color={'#fff'}
+            size={'large'}
+            style={{marginLeft: 8}}
+          />
+        ) : null}
+      </View>
+    );
+  };
+  const artistDataList = async () => {
+    let data = {
+      page: artistPage + 1,
+    };
+    const res = await ApiCall(ARTIST, 'GET', data);
+    console.log('---res--logIn--artist---', res);
+  };
+  useEffect(() => {
+    artistDataList();
+  }, []);
+  const fetchArtistData = () => {
+    if (!onEndReachedCalledDuringArtist) {
+      artistDataList();
+      setArtistLoading(true);
+      setonEndReachedCalledDuringArtist(true);
+    } else {
+      setArtistLoading(false);
+    }
+  };
+  const [artistData, setArtistData] = useState([
     {Bar_Icon: ImagePath.listImg},
     {Bar_Icon: ImagePath.artistImg},
     {Bar_Icon: ImagePath.artistImg1},
     {Bar_Icon: ImagePath.listImg},
     {Bar_Icon: ImagePath.artistImg},
-  ];
-  const renderItem = ({item, index}) => (
+  ]);
+  const artistRenderItem = ({item, index}) => (
     <View style={{flexDirection: 'row'}}>
       <Image
         style={{
@@ -106,8 +185,46 @@ const Home = props => {
       />
     </View>
   );
+  const [
+    onEndReachedCalledDuringUpcoming,
+    setonEndReachedCalledDuringUpcoming,
+  ] = useState(true);
+  const [Upcomingpage, setupcomingPage] = useState(1);
+  const [Upcomingloading, setupcomingLoading] = useState(true);
+  const UpcomingrenderFooter = () => {
+    return (
+      <View>
+        {Upcomingloading ? (
+          <ActivityIndicator
+            color={'#fff'}
+            size={'large'}
+            style={{marginLeft: 8}}
+          />
+        ) : null}
+      </View>
+    );
+  };
+  const UpcomingDataList = async () => {
+    let data = {
+      page: Upcomingpage + 1,
+    };
+    const res = await ApiCall(ARTIST, 'GET', data);
+    console.log('---res--logIn--artist---', res);
+  };
+  useEffect(() => {
+    UpcomingDataList();
+  }, []);
+  const fetchUpcomingData = () => {
+    if (!onEndReachedCalledDuringUpcoming) {
+      UpcomingDataList();
+      setupcomingLoading(true);
+      setonEndReachedCalledDuringUpcoming(true);
+    } else {
+      setupcomingLoading(false);
+    }
+  };
 
-  const UpcomingData = [
+  const [UpcomingData, setupcomingData] = useState([
     {
       mapIcon: ImagePath.eventImg,
       button: 'CONCERT',
@@ -122,7 +239,7 @@ const Home = props => {
       icon: ImagePath.location,
       Location: '10 Downing Street, Near Bombay hospital',
     },
-  ];
+  ]);
 
   const UpcomingData_RenderItem = ({item, index}) => {
     return (
@@ -193,27 +310,65 @@ const Home = props => {
       </View>
     );
   };
-  const SpotlightData = [
-    {
-      mapIcon: ImagePath.slider_img,
-      button: 'Get 20% off on Drinks',
-      Name: 'Azzir Events',
-      Location: 'Sector 52, Near Ahuja Tower',
-    },
-    {
-      mapIcon: ImagePath.slider_img,
-      button: 'Get 20% off on Drinks',
-      Name: 'Azzir Events',
-      Location: 'Sector 52, Near Ahuja Tower',
-    },
-    {
-      mapIcon: ImagePath.slider_img,
-      button: 'Get 20% off on Drinks',
-      Name: 'Azzir Events',
-      Location: 'Sector 52, Near Ahuja Tower',
-    },
-  ];
 
+  const [
+    onEndReachedCalledDuringspotLight,
+    setonEndReachedCalledDuringspotLight,
+  ] = useState(true);
+  const [spotLightpage, setspotLightpage] = useState(1);
+  const [spotLightloading, setSpotLightloading] = useState(true);
+  const spotLightrenderFooter = () => {
+    return (
+      <View>
+        {spotLightloading ? (
+          <ActivityIndicator
+            color={'#fff'}
+            size={'large'}
+            style={{marginLeft: 8}}
+          />
+        ) : null}
+      </View>
+    );
+  };
+  const spotLightDataList = async () => {
+    let data = {
+      page: spotLightpage + 1,
+    };
+    const res = await ApiCall(ARTIST, 'GET', data);
+    console.log('---res--logIn--artist---', res);
+  };
+  useEffect(() => {
+    spotLightDataList();
+  }, []);
+  const fetchSpotlightData = () => {
+    if (!onEndReachedCalledDuringspotLight) {
+      spotLightDataList();
+      setSpotLightloading(true);
+      setonEndReachedCalledDuringspotLight(true);
+    } else {
+      setSpotLightloading(false);
+    }
+  };
+  const [SpotlightData, setSpotlightData] = useState([
+    {
+      mapIcon: ImagePath.slider_img,
+      button: 'Get 20% off on Drinks',
+      Name: 'Azzir Events',
+      Location: 'Sector 52, Near Ahuja Tower',
+    },
+    {
+      mapIcon: ImagePath.slider_img,
+      button: 'Get 20% off on Drinks',
+      Name: 'Azzir Events',
+      Location: 'Sector 52, Near Ahuja Tower',
+    },
+    {
+      mapIcon: ImagePath.slider_img,
+      button: 'Get 20% off on Drinks',
+      Name: 'Azzir Events',
+      Location: 'Sector 52, Near Ahuja Tower',
+    },
+  ]);
   const SpotlightData_RenderItem = ({item, index}) => {
     return (
       <View
@@ -261,8 +416,6 @@ const Home = props => {
       </View>
     );
   };
-
-  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -303,130 +456,7 @@ const Home = props => {
               <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
             </TouchableOpacity>
           </View>
-          {/* // modal */}
-          <View style={styles.centeredView}>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-                setModalVisible(!modalVisible);
-              }}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <View
-                    style={{
-                      height: 2,
-                      marginTop: 10,
-                      width: wp(16),
-                      backgroundColor: '#000',
-                      alignSelf: 'center',
-                    }}></View>
-                  <View
-                    style={[
-                      styles.textModal,
-                      {borderBottomWidth: 1, paddingBottom: hp(3)},
-                    ]}>
-                    <Text
-                      style={{
-                        color: '#000000',
-                        fontWeight: '600',
-                        fontSize: 16,
-                      }}>
-                      Sort By
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        ('');
-                      }}>
-                      <Text style={{color: 'red'}}>Clear All</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={[styles.textModal, {}]}>
-                    <Text style={styles.redioText}>Top Rated</Text>
-                    <TouchableOpacity>
-                      <Image
-                        style={[styles.redioImg, {tintColor: 'red'}]}
-                        source={ImagePath.redioRed}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={[styles.textModal, {}]}>
-                    <Text style={styles.redioText}>Rating High to Low</Text>
-                    <TouchableOpacity>
-                      <Image
-                        style={[styles.redioImg, {}]}
-                        source={ImagePath.redio}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={[styles.textModal, {}]}>
-                    <Text style={styles.redioText}>Nearest</Text>
-                    <TouchableOpacity>
-                      <Image
-                        style={[styles.redioImg, {}]}
-                        source={ImagePath.redio}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={[styles.textModal, {}]}>
-                    <Text style={styles.redioText}>Event</Text>
-                    <TouchableOpacity>
-                      <Image
-                        style={[styles.redioImg, {}]}
-                        source={ImagePath.redio}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={[styles.textModal, {}]}>
-                    <Text style={styles.redioText}>Artist</Text>
-                    <TouchableOpacity>
-                      <Image
-                        style={[styles.redioImg, {}]}
-                        source={ImagePath.redio}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={[styles.textModal, {}]}>
-                    <Text style={styles.redioText}>Distance</Text>
-                    <TouchableOpacity>
-                      <Image
-                        style={[styles.redioImg, {}]}
-                        source={ImagePath.redio}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      marginTop: hp(3),
-                    }}>
-                    <CustomButton
-                      onclick={() => {
-                        setModalVisible(!modalVisible);
-                      }}
-                      title="Cancel"
-                      flex={0.47}
-                      bgColor="#fff"
-                      textColor="#000000"
-                    />
-                    <CustomButton
-                      onclick={() => {
-                        props.navigation.navigate('Login');
-                      }}
-                      flex={0.47}
-                      title="Submit"
-                      borderColor="#000"
-                      bgColor="#000"
-                      textColor="#FAFAFA"
-                    />
-                  </View>
-                </View>
-              </View>
-            </Modal>
-          </View>
+
           <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
@@ -448,6 +478,12 @@ const Home = props => {
               horizontal={true}
               data={SpotlightData}
               renderItem={SpotlightData_RenderItem}
+              ListFooterComponent={spotLightrenderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringspotLight(false);
+              }}
+              onEndReached={fetchSpotlightData}
             />
           </SafeAreaView>
 
@@ -461,6 +497,12 @@ const Home = props => {
               horizontal={true}
               data={ENTRIES1}
               renderItem={_renderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
             />
           </SafeAreaView>
           <SafeAreaView>
@@ -469,8 +511,17 @@ const Home = props => {
               <Text style={styles.cardText}>ARTIST PLAYING NEARBY </Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
-
-            <FlatList horizontal={true} data={DATA} renderItem={renderItem} />
+            <FlatList
+              horizontal={true}
+              data={artistData}
+              renderItem={artistRenderItem}
+              ListFooterComponent={artistRenderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringArtist(false);
+              }}
+              onEndReached={fetchArtistData}
+            />
           </SafeAreaView>
           <TouchableOpacity
             style={[
@@ -506,6 +557,12 @@ const Home = props => {
               horizontal={true}
               data={UpcomingData}
               renderItem={UpcomingData_RenderItem}
+              ListFooterComponent={UpcomingrenderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringUpcoming(false);
+              }}
+              onEndReached={fetchUpcomingData}
             />
           </SafeAreaView>
         </ScrollView>

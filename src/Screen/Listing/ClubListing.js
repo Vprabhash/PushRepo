@@ -26,13 +26,6 @@ import {COLORS, FONTS} from '../../Components/constants';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = props => {
-  const [
-    onEndReachedCalledDuringMomentum,
-    setonEndReachedCalledDuringMomentum,
-  ] = useState(true);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-
   const [ENTRIES1, setENTRIES1] = useState([
     {
       mapIcon: ImagePath.barImg,
@@ -66,6 +59,12 @@ const ClubListing = props => {
     },
   ]);
 
+  const [
+    onEndReachedCalledDuringMomentum,
+    setonEndReachedCalledDuringMomentum,
+  ] = useState(true);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const renderFooter = () => {
     return (
       <View>

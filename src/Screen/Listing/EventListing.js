@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -25,7 +26,47 @@ import {COLORS, FONTS} from '../../Components/constants';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const EventListing = props => {
-  const ENTRIES1 = [
+  const [
+    onEndReachedCalledDuringMomentum,
+    setonEndReachedCalledDuringMomentum,
+  ] = useState(true);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const renderFooter = () => {
+    return (
+      <View>
+        {loading ? (
+          <ActivityIndicator
+            color={'#fff'}
+            size={'large'}
+            style={{marginLeft: 8}}
+          />
+        ) : null}
+      </View>
+    );
+  };
+
+  const list = async () => {
+    let data = {
+      page: page + 1,
+    };
+    const res = await ApiCall(ARTIST, 'GET', data);
+    console.log('---res--logIn--artist---', res);
+  };
+  useEffect(() => {
+    list();
+  }, []);
+
+  const fetchMoreData = () => {
+    if (!onEndReachedCalledDuringMomentum) {
+      list();
+      setLoading(true);
+      setonEndReachedCalledDuringMomentum(true);
+    } else {
+      setLoading(false);
+    }
+  };
+  const [ENTRIES1, setENTRIES1] = useState([
     {
       mapIcon: ImagePath.upcoming_Evn_Img,
       title: 'Justice Tour',
@@ -77,7 +118,7 @@ const EventListing = props => {
       cardDAte: '07',
       cardDAte1: 'APR',
     },
-  ];
+  ]);
   const _renderItem = ({item, index}) => {
     return (
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
@@ -289,7 +330,16 @@ const EventListing = props => {
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
           <SafeAreaView>
-            <FlatList data={ENTRIES1} renderItem={_renderItem} />
+            <FlatList
+              data={ENTRIES1}
+              renderItem={_renderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
+            />
           </SafeAreaView>
         </ScrollView>
       </ImageBackground>

@@ -54,8 +54,8 @@ const SignUp = props => {
         .unwrap()
         .then(response => {
           // TODO: handle response
-          // props.navigation.navigate('Otp');
-          console.log(response);
+          props.navigation.navigate('Otp');
+          console.log('---responsesignUp----', response);
         })
         .catch(error => {
           Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
@@ -148,7 +148,7 @@ const SignUp = props => {
         />
         <CustomButton
           onclick={() => {
-            props.navigation.navigate('Otp');
+            handleSignUp();
           }}
           top={30}
           title="Sign up"
