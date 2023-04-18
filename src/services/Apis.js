@@ -1,6 +1,5 @@
 // base url
 export const BASE_URL = 'https://api.azzirevents.com/';
-// 'https://reactnative.dev/'; // demo baseUrl
 
 // api endpoints
 export const SIGN_UP = 'register';
