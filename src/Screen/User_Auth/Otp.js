@@ -23,6 +23,8 @@ const height = Dimensions.get('window').height;
 
 const Otp = props => {
   const [Otp, setOtp] = useState('');
+  const [email, setemail] = useState(props.route?.params?.email);
+  console.log(email, '-------');
 
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
@@ -62,7 +64,7 @@ const Otp = props => {
                 lineHeight: 30,
               },
             ]}>
-            Check your email, we’ve sent you the pin at example@mail.com
+            Check your email, we’ve sent you the pin at {email}
           </Text>
           <OTPTextInput
             inputCount={4}

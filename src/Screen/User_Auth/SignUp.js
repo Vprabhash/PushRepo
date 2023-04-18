@@ -50,11 +50,20 @@ const SignUp = props => {
       return;
     }
     if (creatPassword === password) {
-      dispatch(signUp({email: email.toLowerCase(), password}))
+      dispatch(
+        signUp({
+          email: email.toLowerCase(),
+          password,
+          firstName: 'Vikas',
+          lastName: 'Gupta 5',
+          phoneNumber: '8604233015',
+          gender: 'Male',
+        }),
+      )
         .unwrap()
         .then(response => {
           // TODO: handle response
-          props.navigation.navigate('Otp');
+          props.navigation.navigate('Otp', {email: email});
           console.log('---responsesignUp----', response);
         })
         .catch(error => {

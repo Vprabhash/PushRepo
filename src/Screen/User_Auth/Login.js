@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
   Dimensions,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
@@ -19,27 +20,41 @@ import {
 } from 'react-native-responsive-screen';
 import {FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
-import {ARTIST} from '../../services/Apis';
+import {ARTIST, SIGN_IN} from '../../services/Apis';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Login = props => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('akshay.jumbade@thinkbar.in');
   const [password, setPassword] = useState('');
   const [eyeShow, setEyeShow] = useState('');
   const onClickEye = () => {
     setEyeShow(!eyeShow);
   };
-
   const signin = async () => {
-    const res = await ApiCall(ARTIST, 'GET');
-    console.log('---res--logIn--artist---', res);
+    var data = {
+      email: email,
+      password: password,
+    };
+    const minPasswordLength = 6;
+    if (password.length < minPasswordLength) {
+      Alert.alert(
+        'Invalid password',
+        `Password must be at least ${minPasswordLength} characters long.`,
+      );
+      return;
+    }
+
+    const res = await ApiCall('api/user', 'POST', data);
+    console.log('---res--logIn-----', res);
+    if (res.ok) {
+      props.navigation.navigate('BottomTab');
+    }
   };
   useEffect(() => {
-    signin();
+    // signin();
   }, []);
-
   return (
     <View style={{flex: 1}}>
       <StatusBar
@@ -101,7 +116,7 @@ const Login = props => {
           />
           <CustomButton
             onclick={() => {
-              props.navigation.navigate('BottomTab');
+              signin();
             }}
             top={30}
             title="Sign in"

@@ -22,41 +22,42 @@ import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
+import ApiCall from '../../redux/CommanApi';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = props => {
   const [ENTRIES1, setENTRIES1] = useState([
-    {
-      mapIcon: ImagePath.barImg,
-      title: "Geoffrey's",
-      starIcon: ImagePath.star,
-      starText: '5',
-      barNamr: 'Retrobar',
-      barLocation: 'Colaba, Mumbai',
-      price: 'Rs. 3000 for 2',
-      heartIcon: ImagePath.heartIcon,
-    },
-    {
-      mapIcon: ImagePath.cocktailbar,
-      title: 'Bombay cocktail bar',
-      starIcon: ImagePath.star,
-      starText: '5',
-      barNamr: 'Barclub',
-      barLocation: 'Colaba, Mumbai',
-      price: 'Rs. 3000 for 2',
-      heartIcon: ImagePath.heartIcon,
-    },
-    {
-      mapIcon: ImagePath.Effingutbarclub,
-      title: 'Effingut',
-      starIcon: ImagePath.star,
-      starText: '5',
-      barNamr: 'club',
-      barLocation: 'Colaba, Mumbai',
-      price: 'Rs. 3000 for 2',
-      heartIcon: ImagePath.heartIcon,
-    },
+    // {
+    //   mapIcon: ImagePath.barImg,
+    //   title: "Geoffrey's",
+    //   starIcon: ImagePath.star,
+    //   starText: '5',
+    //   barNamr: 'Retrobar',
+    //   barLocation: 'Colaba, Mumbai',
+    //   price: 'Rs. 3000 for 2',
+    //   heartIcon: ImagePath.heartIcon,
+    // },
+    // {
+    //   mapIcon: ImagePath.cocktailbar,
+    //   title: 'Bombay cocktail bar',
+    //   starIcon: ImagePath.star,
+    //   starText: '5',
+    //   barNamr: 'Barclub',
+    //   barLocation: 'Colaba, Mumbai',
+    //   price: 'Rs. 3000 for 2',
+    //   heartIcon: ImagePath.heartIcon,
+    // },
+    // {
+    //   mapIcon: ImagePath.Effingutbarclub,
+    //   title: 'Effingut',
+    //   starIcon: ImagePath.star,
+    //   starText: '5',
+    //   barNamr: 'club',
+    //   barLocation: 'Colaba, Mumbai',
+    //   price: 'Rs. 3000 for 2',
+    //   heartIcon: ImagePath.heartIcon,
+    // },
   ]);
 
   const [
@@ -83,8 +84,9 @@ const ClubListing = props => {
     let data = {
       page: page + 1,
     };
-    const res = await ApiCall(ARTIST, 'GET', data);
-    console.log('---res--logIn--artist---', res);
+    const res = await ApiCall('api/clubs', 'GET');
+    setENTRIES1(res.data);
+    console.log('---res--club listin--artist---', res.data);
   };
   useEffect(() => {
     list();
@@ -139,7 +141,7 @@ const ClubListing = props => {
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.listinhHeading}>{item.title}</Text>
+              <Text style={styles.listinhHeading}>{item.name}</Text>
 
               <LinearGradient
                 style={{
@@ -173,7 +175,7 @@ const ClubListing = props => {
             </Text>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.listinhText}>{item.barLocation}</Text>
+              <Text style={styles.listinhText}>{item.city}</Text>
               <Text style={styles.listinhText}>{item.price}</Text>
             </View>
           </View>
