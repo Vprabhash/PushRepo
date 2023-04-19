@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -10,7 +10,9 @@ import {
   Text,
   TextInput,
   View,
+  Linking,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -22,10 +24,18 @@ import LinearGradient from 'react-native-linear-gradient';
 import Swiper from 'react-native-swiper';
 import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
+import ApiCall from '../../redux/CommanApi';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
+  // console.log(
+  //   '--ClubDetails--=----',
+  //   props.route.params.listDetail?._doc?.menu,
+  // );
+  const [detailData, setDetailData] = useState(
+    props?.route?.params?.listDetail,
+  );
   const ENTRIES1 = [
     {
       mapIcon: ImagePath.upcoming_Evn_Img,
@@ -36,6 +46,7 @@ const ClubDetails = props => {
       musicText: 'Bollywood, Commercial',
     },
   ];
+
   const _renderItem = ({item, index}) => {
     return (
       <View style={{flex: 1, width: '100%', marginBottom: 31}}>
@@ -96,32 +107,6 @@ const ClubDetails = props => {
       </View>
     );
   };
-  const MenuData = [
-    {menuImg: ImagePath.clubLocation, title: 'Food'},
-    {menuImg: ImagePath.food, title: 'Beverages'},
-  ];
-  const MenuDatarenderItem = ({item, index}) => {
-    return (
-      <View
-        style={{
-          marginLeft: index == 0 ? 15 : 0,
-          marginRight: index == 1 ? 15 : 15,
-        }}>
-        <Image
-          style={{
-            height: hp(20),
-            width: wp(50),
-            // marginLeft: wp(4),
-            // marginRight: index == 1 ? 15 : 0,
-            resizeMode: 'cover',
-            borderRadius: 10,
-          }}
-          source={item.menuImg}
-        />
-        <Text style={styles.titleText}>{item.title}</Text>
-      </View>
-    );
-  };
 
   const ClubNarData = [
     {
@@ -140,6 +125,20 @@ const ClubDetails = props => {
       Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
     },
   ];
+  const ClubNarDataApi = async () => {
+    let data = {
+      coordinates: '8.932234775831695,72.83360714102714',
+    };
+    const res = await ApiCall(
+      `api/nearby-clubs?coordinates=${8.932234775831695},${72.83360714102714}`,
+      'GET',
+    );
+    // setENTRIES1(res.data);
+    console.log('---res--club ClubNarData--artist---', res.data);
+  };
+  useEffect(() => {
+    ClubNarDataApi();
+  }, []);
   const ClubNarDatarenderItem = ({item, index}) => {
     return (
       <View
@@ -262,7 +261,7 @@ const ClubDetails = props => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginTop: -2,
+              marginTop: 5,
               marginHorizontal: 15,
             }}>
             <View style={{marginTop: -5.5}}>
@@ -272,7 +271,7 @@ const ClubDetails = props => {
                   fontSize: 20,
                   fontFamily: FONTS.AxiformaBold,
                 }}>
-                Effingut
+                {detailData?._doc.name}
               </Text>
               <Text
                 style={{
@@ -280,7 +279,7 @@ const ClubDetails = props => {
                   fontSize: 12,
                   fontFamily: FONTS.RobotoMedium,
                 }}>
-                Restobar
+                Restobar no velue
               </Text>
             </View>
 
@@ -302,7 +301,7 @@ const ClubDetails = props => {
                   color: '#FFFFFF',
                   fontSize: 12,
                 }}>
-                5
+                {detailData?._doc?.zomatoRating}
               </Text>
               <Image
                 style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
@@ -319,11 +318,10 @@ const ClubDetails = props => {
               marginHorizontal: 15,
               fontFamily: FONTS.HankenGroteskReglur,
             }}>
-            Dhanraj Mahal, Next to The Bentley Showroom, Colaba, Mumbai,
-            Maharashtra 400005
+            {detailData?._doc?.address}
           </Text>
           <Text style={styles.aboutText}>About the Club </Text>
-          <MenuCard />
+          <MenuCard itemdata={detailData} />
 
           <Text style={styles.aboutText}>Whats Happening Today </Text>
 
@@ -355,13 +353,36 @@ const ClubDetails = props => {
           </TouchableOpacity>
           <Text style={[styles.aboutText, {marginTop: 31}]}>Menu </Text>
 
-          <View style={{}}>
-            <FlatList
-              horizontal={true}
-              data={MenuData}
-              renderItem={MenuDatarenderItem}
-            />
-          </View>
+          <ScrollView style={{flexDirection: 'row'}} horizontal>
+            <View
+              style={{
+                marginHorizontal: 15,
+                // marginRight: index == 1 ? 15 : 15,
+              }}>
+              <Image
+                style={{
+                  height: hp(20),
+                  width: wp(50),
+                  resizeMode: 'cover',
+                  borderRadius: 10,
+                }}
+                source={{uri: detailData?._doc?.media?.drinkMenuImages[0]}}
+              />
+              <Text style={styles.titleText}>Beverages</Text>
+            </View>
+            <View style={{marginRight: 15}}>
+              <Image
+                style={{
+                  height: hp(20),
+                  width: wp(50),
+                  resizeMode: 'cover',
+                  borderRadius: 10,
+                }}
+                source={{uri: detailData?._doc?.media?.foodMenuImages[0]}}
+              />
+              <Text style={styles.titleText}>menu</Text>
+            </View>
+          </ScrollView>
           <Text style={[styles.aboutText]}>Clubs Nearby </Text>
           <View style={{}}>
             <FlatList

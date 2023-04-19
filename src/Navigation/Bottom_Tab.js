@@ -6,7 +6,7 @@ import ImagePath from '../assets/ImagePath';
 import Home from '../Screen/Dashboard/Home';
 import ClubListing from '../Screen/Listing/ClubListing';
 import EventListing from '../Screen/Listing/EventListing';
-import ClubDetails from '../Screen/Details/ClubDetails';
+import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';;
 
 const Tab = createBottomTabNavigator();
 
@@ -77,8 +77,8 @@ function BottomTab() {
         }}
       />
       <Tab.Screen
-        name="ClubDetails"
-        component={ClubDetails}
+        name="ArtistDetail"
+        component={ArtistDetail}
         options={{
           headerShown: false,
           tabBarLabel: 'VANUE',

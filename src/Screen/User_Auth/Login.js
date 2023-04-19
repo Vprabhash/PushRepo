@@ -26,17 +26,17 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Login = props => {
-  const [email, setEmail] = useState('akshay.jumbade@thinkbar.in');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('saddam.khan1@gmail.com');
+  const [password, setPassword] = useState('12345678');
   const [eyeShow, setEyeShow] = useState('');
   const onClickEye = () => {
     setEyeShow(!eyeShow);
   };
   const signin = async () => {
-    var data = {
-      email: email,
-      password: password,
-    };
+    // var data = {
+    //   email: email,
+    //   password: password,
+    // };
     const minPasswordLength = 6;
     if (password.length < minPasswordLength) {
       Alert.alert(
@@ -45,12 +45,26 @@ const Login = props => {
       );
       return;
     }
-
-    const res = await ApiCall('api/user', 'POST', data);
-    console.log('---res--logIn-----', res);
-    if (res.ok) {
-      props.navigation.navigate('BottomTab');
-    }
+    fetch('https://api.azzirevents.com/api/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.ok == true) {
+          props.navigation.navigate('BottomTab');
+        } else {
+          alert('Invalid username or password.');
+        }
+        console.log('Response msgg======= -> ' + JSON.stringify(responseData));
+      });
   };
   useEffect(() => {
     // signin();

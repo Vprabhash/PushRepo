@@ -20,20 +20,21 @@ import {useDispatch, useSelector} from 'react-redux';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
-import {signUp} from '../../redux/reducers/authSlice';
+// import {signUp} from '../../redux/reducers/authSlice';
 import {FONTS} from '../../Components/constants';
+// import ApiCall from '../../redux/CommanApi';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const SignUp = props => {
-  const [email, setEmail] = useState('');
-  const [creatPassword, setCreatpassword] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('saddam.husain@gmail.com');
+  const [password, setPassword] = useState('12345678');
+  const [confirmPassword, setConfirmPassword] = useState('12345678');
 
   const dispatch = useDispatch();
   const authStatus = useSelector(state => state.auth.status);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     // Email validation
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     if (!emailRegex.test(email)) {
@@ -42,34 +43,71 @@ const SignUp = props => {
     }
     // Password validation
     const minPasswordLength = 6;
-    if (creatPassword.length < minPasswordLength) {
+    if (confirmPassword.length < minPasswordLength) {
       Alert.alert(
         'Invalid password',
         `Password must be at least ${minPasswordLength} characters long.`,
       );
       return;
     }
-    if (creatPassword === password) {
-      dispatch(
-        signUp({
-          email: email.toLowerCase(),
-          password,
-          firstName: 'Vikas',
-          lastName: 'Gupta 5',
-          phoneNumber: '8604233015',
-          gender: 'Male',
+    if (confirmPassword === password) {
+      fetch('https://api.azzirevents.com/api/send-otp', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
         }),
-      )
-        .unwrap()
-        .then(response => {
-          // TODO: handle response
-          props.navigation.navigate('Otp', {email: email});
-          console.log('---responsesignUp----', response);
-        })
-        .catch(error => {
-          Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
-          console.error('Sign up error:', error.message);
+      })
+        .then(response => response.json())
+        .then(responseData => {
+          if (responseData.ok == true) {
+            props.navigation.navigate('Otp', {
+              email: email,
+              password: password,
+            });
+          } else {
+            alert('Invalid username or password.');
+          }
+          console.log(
+            'Response msgg======= -> ' + JSON.stringify(responseData),
+          );
         });
+
+      // try {
+      //   var data = {
+      //     email: 'saddam.husa@gmail.com',
+      //     // password: password,
+      //   };
+      //   const res = await ApiCall('api/send-otp', 'POST', data);
+      //   console.log('---res--otp-----', res);
+      //   if (res.ok == true) {
+      //     props.navigation.navigate('Otp', {email, password});
+      //   } else {
+      //     alert('Invalid username or password.');
+      //   }
+      // } catch (error) {
+      //   Alert.alert('Error', error.message);
+      // }
+
+      // dispatch(
+      //   signUp({
+      //     email: email.toLowerCase(),
+      //     password,
+      //   }),
+      // )
+      //   .unwrap()
+      //   .then(response => {
+      //     // TODO: handle response
+      //     props.navigation.navigate('Otp', {email: email});
+      //     console.log('---responsesignUp----', response);
+      //   })
+      //   .catch(error => {
+      //     Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      //     console.error('Sign up error:', error.message);
+      //   });
     } else {
       Alert.alert(
         "Passwords don't match",
@@ -80,7 +118,7 @@ const SignUp = props => {
   const [eyeShow, setEyeShow] = useState('');
   const [eyeShow2, setEyeShow2] = useState('');
   const onClickEye = value => {
-    if (value === 'createPassword') {
+    if (value === 'password') {
       setEyeShow(!eyeShow);
     } else {
       setEyeShow2(!eyeShow2);
@@ -133,26 +171,26 @@ const SignUp = props => {
           marginTop={20}
           title="Create password"
           onChangeText={text => {
-            setCreatpassword(text);
+            setPassword(text);
           }}
-          value={creatPassword}
+          value={password}
           iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
           secureTextEntry={!eyeShow}
           onClickEye={() => {
-            onClickEye('createPassword');
+            onClickEye('password');
           }}
         />
         <CustomTextInput
           marginTop={20}
           title=" Enter password again"
           onChangeText={text => {
-            setPassword(text);
+            setConfirmPassword(text);
           }}
-          value={password}
+          value={confirmPassword}
           iconPath={eyeShow2 ? ImagePath.eyeIcon : ImagePath.closeEye}
           secureTextEntry={!eyeShow2}
           onClickEye={() => {
-            onClickEye('password');
+            onClickEye('confirmPassword');
           }}
         />
         <CustomButton

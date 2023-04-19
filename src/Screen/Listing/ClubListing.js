@@ -27,7 +27,7 @@ import ApiCall from '../../redux/CommanApi';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = props => {
-  const [ENTRIES1, setENTRIES1] = useState([
+  const [clubs, setClubs] = useState([
     // {
     //   mapIcon: ImagePath.barImg,
     //   title: "Geoffrey's",
@@ -81,13 +81,11 @@ const ClubListing = props => {
   };
 
   const list = async () => {
-    let data = {
-      page: page + 1,
-    };
     const res = await ApiCall('api/clubs', 'GET');
-    setENTRIES1(res.data);
+    setClubs(res.data);
     console.log('---res--club listin--artist---', res.data);
   };
+
   useEffect(() => {
     list();
   }, []);
@@ -103,6 +101,7 @@ const ClubListing = props => {
   };
 
   const _renderItem = ({item, index}) => {
+    console.log('==---item---', item);
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
@@ -114,17 +113,27 @@ const ClubListing = props => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('ClubDetails');
+              props.navigation.navigate('ClubDetails', {listDetail: item});
             }}
             activeOpacity={0.7}>
             <Image
               style={{
                 height: hp(29),
-                width: '100%',
+                width: 300,
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
+                resizeMode: 'cover',
               }}
-              source={item.mapIcon}
+              source={{
+                // uri: item?._doc?.media?.ambienceImages.length
+                //   ? item?._doc?.media?.ambienceImages[0]
+                //   : '',
+                uri: item?._doc?.mediaDir?.ambienc
+                  ? item?._doc?.mediaDir?.ambienc
+                  : '',
+                // uri: item?._doc?.mediaDir?.ambienc,
+                // uri: item?._doc?.media?.ambienceImages[0],
+              }}
             />
           </TouchableOpacity>
           <Image
@@ -141,8 +150,7 @@ const ClubListing = props => {
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.listinhHeading}>{item.name}</Text>
-
+              <Text style={styles.listinhHeading}>{item?._doc?.name}</Text>
               <LinearGradient
                 style={{
                   flexDirection: 'row',
@@ -162,7 +170,7 @@ const ClubListing = props => {
                     color: '#FFFFFF',
                     fontSize: 12,
                   }}>
-                  {item.starText}
+                  {item?._doc?.zomatoRating}
                 </Text>
                 <Image
                   style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
@@ -175,7 +183,7 @@ const ClubListing = props => {
             </Text>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.listinhText}>{item.city}</Text>
+              <Text style={styles.listinhText}>{item?._doc?.city}</Text>
               <Text style={styles.listinhText}>{item.price}</Text>
             </View>
           </View>
@@ -227,7 +235,7 @@ const ClubListing = props => {
           </View>
           <SafeAreaView>
             <FlatList
-              data={ENTRIES1}
+              data={clubs}
               renderItem={_renderItem}
               ListFooterComponent={renderFooter}
               onEndReachedThreshold={0.7}

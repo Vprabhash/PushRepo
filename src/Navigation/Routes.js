@@ -17,13 +17,14 @@ import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';
 import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
 import FilterScreen from '../Components/Filter/FilterScreen';
 import Home from '../Screen/Dashboard/Home';
+import ClubDetails from '../Screen/Details/ClubDetails';
 
 const Stack = createNativeStackNavigator();
 
 function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="BottomTab">
         <Stack.Screen
           name="Splash_Screen"
           component={Splash_Screen}
@@ -87,6 +88,12 @@ function Routes() {
         <Stack.Screen
           name="Home"
           component={Home}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="ClubDetails"
+          component={ClubDetails}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

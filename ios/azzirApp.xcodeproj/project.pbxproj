@@ -11,7 +11,6 @@
 		00E356F31AD99517003FC87E /* azzirAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* azzirAppTests.m */; };
 		0B6AA09BC10645E385A3BDFB /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A653D2ADE5F54B1A87885CAC /* Inter-ExtraBold.ttf */; };
 		0BA2EEABF9CB46ACB9DEBFA4 /* Metropolis-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3EB574F89913405C92973717 /* Metropolis-Bold.ttf */; };
-		0C80B921A6F3F58F76C31292 /* libPods-azzirApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-azzirApp.a */; };
 		10D55EC9101345EF9F2CCC35 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C74CBCC9D1F41388C39C5BB /* Inter-Black.ttf */; };
 		124AD0141461401D88A62FB4 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A29273591EE4207A68D325B /* Inter-Medium.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
@@ -30,10 +29,10 @@
 		5699693C17B041EC8B58EB29 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F88CE21EBE8B462DA3721FA9 /* Roboto-Thin.ttf */; };
 		59D35737A68C426189DBD045 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE54E0D6A433487BAA5AFD9A /* Inter-ExtraLight.ttf */; };
 		5B0D7093795A44BCA9DB8F7A /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43D2E87DD33440988E5EF7D6 /* DMSans-Medium.ttf */; };
+		5BF1E38E8F862B9DE343A713 /* libPods-azzirApp-azzirAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DABA2014C2D22A56B9A4CA5 /* libPods-azzirApp-azzirAppTests.a */; };
 		6DCAED4087894DBF82FAF6C1 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D5ECC51E857479E943FCCBD /* DMSans-Regular.ttf */; };
 		73276142C3F744C5A4439410 /* HankenGrotesk-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */; };
 		74D4943A3E4144408CF84612 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */; };
-		7699B88040F8A987B510C191 /* libPods-azzirApp-azzirAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-azzirApp-azzirAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9739240FE8554D0D9187E3AC /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C49E850DC7BF4B5E84F0E741 /* Inter-Light.ttf */; };
 		974738060CC5426E9DBB7F0D /* Inter-VariableFont_slnt,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA3C1421A195474B9BEB3BF2 /* Inter-VariableFont_slnt,wght.ttf */; };
@@ -51,6 +50,7 @@
 		E8F8D5E594C54D3195BE3A47 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C9BCF2059143A4916919F2 /* Roboto-Regular.ttf */; };
 		EF3CAB4EBA7E414AA5009FF8 /* Metropolis-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2000C2FAE335404C857822EC /* Metropolis-Regular.ttf */; };
 		F79644FDBDCD487D9A623E13 /* PTSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C26705880C09491ABCA2A7AE /* PTSerif-Regular.ttf */; };
+		FB077ADD14E7A42EF57DD95B /* libPods-azzirApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF5C0A20CA5845B07C312287 /* libPods-azzirApp.a */; };
 		FE54491C691D45BAB1ED4B88 /* PTSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CBAFDCB21524D138AC748EB /* PTSerif-Bold.ttf */; };
 /* End PBXBuildFile section */
 
@@ -68,9 +68,11 @@
 		00E356EE1AD99517003FC87E /* azzirAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = azzirAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* azzirAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = azzirAppTests.m; sourceTree = "<group>"; };
+		0DABA2014C2D22A56B9A4CA5 /* libPods-azzirApp-azzirAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-azzirApp-azzirAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E01C5B396BC42829AB75416 /* HankenGrotesk-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-ExtraLight.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-ExtraLight.ttf"; sourceTree = "<group>"; };
 		104CB82E1BE14084B7479457 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Bold.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		11C9BCF2059143A4916919F2 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		132FD2BEBB586487F64D028C /* Pods-azzirApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp.release.xcconfig"; path = "Target Support Files/Pods-azzirApp/Pods-azzirApp.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* azzirApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = azzirApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = azzirApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = azzirApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -78,7 +80,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = azzirApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = azzirApp/main.m; sourceTree = "<group>"; };
 		185FF0BC53E449578E33BDB2 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Black.ttf"; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-azzirApp-azzirAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-azzirApp-azzirAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-ExtraBold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-ExtraBold.ttf"; sourceTree = "<group>"; };
 		1F39B53B00EF4F3CB16E3473 /* Metropolis-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Light.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Light.ttf"; sourceTree = "<group>"; };
 		1F6BD729D9AA45CB847F02CF /* Metropolis-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-SemiBold.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -90,22 +91,18 @@
 		33640C7D8B044106B19939AE /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		398821EAEC1E47259AA54280 /* HankenGrotesk-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-VariableFont_wght.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/HankenGrotesk-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		3A29273591EE4207A68D325B /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Medium.ttf"; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-azzirApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp.debug.xcconfig"; path = "Target Support Files/Pods-azzirApp/Pods-azzirApp.debug.xcconfig"; sourceTree = "<group>"; };
 		3C74CBCC9D1F41388C39C5BB /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Black.ttf"; sourceTree = "<group>"; };
 		3EB574F89913405C92973717 /* Metropolis-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Bold.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Bold.ttf"; sourceTree = "<group>"; };
 		43D2E87DD33440988E5EF7D6 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Medium.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Medium.ttf"; sourceTree = "<group>"; };
 		448744E87E59483CB4AE1F03 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		4BACEDAAD1164B13BBC2E308 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		4CBAFDCB21524D138AC748EB /* PTSerif-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Bold.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Bold.ttf"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-azzirApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp.release.xcconfig"; path = "Target Support Files/Pods-azzirApp/Pods-azzirApp.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp-azzirAppTests.debug.xcconfig"; path = "Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-azzirApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-azzirApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ECC6ED6A62C75A0686991FF /* Pods-azzirApp-azzirAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp-azzirAppTests.release.xcconfig"; path = "Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		63ECA6D793F444B38D8D8546 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Bold.ttf"; sourceTree = "<group>"; };
 		672110960D5049EB81CF45F2 /* HankenGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Light.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Light.ttf"; sourceTree = "<group>"; };
 		7B680208BC6F42E4AA88508B /* HankenGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Medium.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Medium.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = azzirApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		868A123A3F014FB2A78B650C /* HankenGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Bold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Bold.ttf"; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-azzirApp-azzirAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp-azzirAppTests.release.xcconfig"; path = "Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		932924A87F414BEABFEB6B18 /* HankenGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-SemiBold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
 		A0CE97380D7A42D38F12AA80 /* Metropolis-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Medium.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Medium.ttf"; sourceTree = "<group>"; };
@@ -114,9 +111,12 @@
 		C26705880C09491ABCA2A7AE /* PTSerif-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Regular.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Regular.ttf"; sourceTree = "<group>"; };
 		C49E850DC7BF4B5E84F0E741 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Light.ttf"; sourceTree = "<group>"; };
 		C7087A67D500488CB8F1206A /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Thin.ttf"; sourceTree = "<group>"; };
+		D655E637DCF0B675400CEA14 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp-azzirAppTests.debug.xcconfig"; path = "Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DA3C1421A195474B9BEB3BF2 /* Inter-VariableFont_slnt,wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-VariableFont_slnt,wght.ttf"; path = "../src/assets/fonts/Inter/Inter-VariableFont_slnt,wght.ttf"; sourceTree = "<group>"; };
 		DD12A3E750EA4663A4BC3337 /* HankenGrotesk-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Black.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Black.ttf"; sourceTree = "<group>"; };
 		DE54E0D6A433487BAA5AFD9A /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../src/assets/fonts/Inter/static/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
+		DF5C0A20CA5845B07C312287 /* libPods-azzirApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-azzirApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC7FAA7876844E130D568FC1 /* Pods-azzirApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp.debug.xcconfig"; path = "Target Support Files/Pods-azzirApp/Pods-azzirApp.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F88CE21EBE8B462DA3721FA9 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		FB45E28371AE45608546E824 /* HankenGrotesk-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Thin.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Thin.ttf"; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-azzirApp-azzirAppTests.a in Frameworks */,
+				5BF1E38E8F862B9DE343A713 /* libPods-azzirApp-azzirAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-azzirApp.a in Frameworks */,
+				FB077ADD14E7A42EF57DD95B /* libPods-azzirApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,8 +176,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-azzirApp.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-azzirApp-azzirAppTests.a */,
+				DF5C0A20CA5845B07C312287 /* libPods-azzirApp.a */,
+				0DABA2014C2D22A56B9A4CA5 /* libPods-azzirApp-azzirAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -262,10 +262,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-azzirApp.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-azzirApp.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-azzirApp-azzirAppTests.release.xcconfig */,
+				EC7FAA7876844E130D568FC1 /* Pods-azzirApp.debug.xcconfig */,
+				132FD2BEBB586487F64D028C /* Pods-azzirApp.release.xcconfig */,
+				D655E637DCF0B675400CEA14 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */,
+				4ECC6ED6A62C75A0686991FF /* Pods-azzirApp-azzirAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -277,12 +277,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "azzirAppTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				5BF101FBC8E9B689A091EF09 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				6DDB283AB0FEA3CB044B7191 /* [CP] Embed Pods Frameworks */,
+				BAD5C8F31C34CAAECB3AE823 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -298,14 +298,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "azzirApp" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				AC6E8AEB5A4675526682667E /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				3C62A1E5EB053B613A9EBF46 /* [CP] Embed Pods Frameworks */,
+				5B4D57741D2933F68784E40F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -426,7 +426,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		3C62A1E5EB053B613A9EBF46 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -443,7 +443,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
+		5B4D57741D2933F68784E40F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5BF101FBC8E9B689A091EF09 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -465,7 +482,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		6DDB283AB0FEA3CB044B7191 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC6E8AEB5A4675526682667E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -487,41 +521,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
+		BAD5C8F31C34CAAECB3AE823 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -590,7 +590,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */;
+			baseConfigurationReference = D655E637DCF0B675400CEA14 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -617,7 +617,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-azzirApp-azzirAppTests.release.xcconfig */;
+			baseConfigurationReference = 4ECC6ED6A62C75A0686991FF /* Pods-azzirApp-azzirAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -641,7 +641,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-azzirApp.debug.xcconfig */;
+			baseConfigurationReference = EC7FAA7876844E130D568FC1 /* Pods-azzirApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -670,7 +670,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-azzirApp.release.xcconfig */;
+			baseConfigurationReference = 132FD2BEBB586487F64D028C /* Pods-azzirApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

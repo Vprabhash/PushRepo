@@ -17,15 +17,51 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
+import ApiCall from '../../redux/CommanApi';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Otp = props => {
+  console.log('props signOtp--------', props.route.params);
   const [Otp, setOtp] = useState('');
-  const [email, setemail] = useState(props.route?.params?.email);
+  const [password, setPassword] = useState(props?.route?.params?.password);
+  const [email, setemail] = useState(props?.route?.params?.email);
   console.log(email, '-------');
+  const OtpApi = async () => {
+    fetch('https://api.azzirevents.com/api/register', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        if (responseData.ok == true) {
+          props.navigation.navigate('Login');
+        } else {
+          alert('Invalid username or password.');
+        }
+        console.log('Response msgg======= -> ' + JSON.stringify(responseData));
+      });
 
+    // var data = {
+    //   email: email,
+    //   password: password,
+    // };
+    // console.log('---data', data);
+
+    // const res = await ApiCall('api/register', 'POST', data);
+    // console.log('---res--otp-----', res);
+    // if (res.ok == true) {
+    //   props.navigation.navigate('LogIn');
+    // }
+  };
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
       <ImageBackground
@@ -67,7 +103,7 @@ const Otp = props => {
             Check your email, we’ve sent you the pin at {email}
           </Text>
           <OTPTextInput
-            inputCount={4}
+            inputCount={6}
             returnKeyType={'next'}
             handleTextChange={text => setOtp(text)}
             defaultValue={Otp}
@@ -76,7 +112,8 @@ const Otp = props => {
           />
           <CustomButton
             onclick={() => {
-              props.navigation.navigate('Login');
+              OtpApi();
+              // props.navigation.navigate('Login');
             }}
             top={30}
             title="Otp"

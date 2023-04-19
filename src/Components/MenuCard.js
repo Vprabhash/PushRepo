@@ -9,6 +9,7 @@ import {
   FlatList,
   SafeAreaView,
   StyleSheet,
+  Linking,
 } from 'react-native';
 import ImagePath from '../assets/ImagePath';
 
@@ -19,34 +20,39 @@ import {
 import {COLORS, FONTS} from './constants';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const MenuCard = ({navigation}, props) => {
+const MenuCard = ({navigation, itemdata}, props) => {
+  console.log('==itemdatamenu----', itemdata);
   const MenuData = [
     {
       menuIcon: ImagePath.watchIcon,
       menuTitle: 'Mon-Fri',
-      menuTitleText: '(6:00pm - 11:00pm)',
+      menuTitleText: itemdata?._doc?.timings,
       menuIcon1: ImagePath.menuUser,
       menuTitle1: '₹ 2000',
-      menuTitleText1: '(for two)',
+      menuTitleText1: itemdata?._doc?.averageCost2People,
     },
     {
       menuIcon: ImagePath.menuUser1,
       menuTitle: 'Fri, Sat',
-      menuTitleText: '(6:00pm - 11:00pm)',
+      menuTitleText: itemdata?._doc?.timings,
       menuIcon1: ImagePath.menuUser2,
       menuTitle1: 'VEG & NON-VEG',
+      menuTitleText1: itemdata?._doc?.vegNonVeg,
     },
     {
       menuIcon: ImagePath.menuUser3,
       menuTitle: 'POP, BLUES, EDM',
+      menuTitleText: itemdata?._doc?.musicGenre,
       menuIcon1: ImagePath.doneIcon,
       menuTitle1: 'Stags ',
+      menuTitleText1: itemdata?._doc?.stagsAllowed,
     },
     {
       menuIcon: ImagePath.doneIcon,
       menuTitle: 'Sheesha',
       menuIcon1: ImagePath.menuUser4,
       menuTitle1: 'Kids Friendly',
+      menuTitleText1: itemdata?._doc?.kidsFriendly,
     },
   ];
   const MenuDataRenderItem = ({item, index}) => {
@@ -56,11 +62,17 @@ const MenuCard = ({navigation}, props) => {
           width: '100%',
           marginBottom: index == 1 ? 11 : 0,
           marginTop: index == 3 ? 22 : 11,
-          paddingHorizontal: 16,
+          // paddingLeft: 15,
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <View style={{flexDirection: 'row', flex: 0.45, alignItems: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginLeft: 15,
+            flex: 0.45,
+            alignItems: 'center',
+          }}>
           <Image style={styles.menuIconCss} source={item.menuIcon} />
           <View>
             <Text style={styles.menuText}>{item.menuTitle}</Text>
@@ -69,7 +81,13 @@ const MenuCard = ({navigation}, props) => {
             )}
           </View>
         </View>
-        <View style={{flexDirection: 'row', flex: 0.45, alignItems: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginRight: 20,
+            flex: 0.45,
+            alignItems: 'center',
+          }}>
           <Image style={styles.menuIconCss} source={item.menuIcon1} />
           <View>
             <Text style={styles.menuText}>{item.menuTitle1}</Text>
@@ -95,21 +113,32 @@ const MenuCard = ({navigation}, props) => {
       <View style={{flexDirection: 'row', marginTop: hp(4)}}>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={props.onclick}
+          onPress={() => {
+            Linking.openURL(
+              'google.navigation:q=100+101' + itemdata.googleMapLink,
+            );
+          }}
           style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
           <Image style={styles.btnIcon} source={ImagePath.direction} />
           <Text style={[styles.buttonText, {}]}>Direction</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={props.onclick1}
+          onPress={() => {
+            Linking.openURL(
+              'http://api.whatsapp.com/send?phone=91' + itemdata.whatsappNumber,
+            );
+          }}
           style={[styles.btnmain, {marginHorizontal: 1}]}>
           <Image style={styles.btnIcon} source={ImagePath.WhatsApp} />
           <Text style={[styles.buttonText, {}]}>WhatsApp</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={props.onclick2}
+          onPress={() => {
+            alert('ok');
+            Linking.openURL('tel:' + itemdata.phoneNumber);
+          }}
           style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
           <Image style={styles.btnIcon} source={ImagePath.callIcon} />
           <Text style={[styles.buttonText, {}]}>Call</Text>
