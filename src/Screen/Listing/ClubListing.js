@@ -119,7 +119,7 @@ const ClubListing = props => {
             <Image
               style={{
                 height: hp(29),
-                width: 300,
+                width: '100%',
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
                 resizeMode: 'cover',
@@ -128,11 +128,6 @@ const ClubListing = props => {
                 uri: item?._doc?.media?.ambienceImages.length
                   ? item?._doc?.media?.ambienceImages[0]
                   : '',
-                // uri: item?._doc?.mediaDir?.ambienc
-                //   ? item?._doc?.mediaDir?.ambienc
-                //   : '',
-                // uri: item?._doc?.mediaDir?.ambienc,
-                // uri: item?._doc?.media?.ambienceImages[0],
               }}
             />
           </TouchableOpacity>
@@ -162,7 +157,6 @@ const ClubListing = props => {
                   alignItems: 'center',
                 }}
                 start={{x: 0.3, y: 0.4}}
-                // colors={['deeppink', 'dodgerblue']}
                 colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
                 <Text
                   style={{
@@ -179,7 +173,7 @@ const ClubListing = props => {
               </LinearGradient>
             </View>
             <Text style={[styles.listinhText, {marginVertical: hp(0.3)}]}>
-              {item.barNamr}
+              Retrobar
             </Text>
             <View
               style={{

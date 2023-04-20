@@ -383,12 +383,12 @@ const ClubDetails = props => {
           <Text style={styles.aboutText}>About the Club </Text>
           <MenuCard itemdata={detailData} />
 
-          <Text style={styles.aboutText}>Whats Happening Today </Text>
+          {/* <Text style={styles.aboutText}>Whats Happening Today </Text>
 
           <View style={{marginHorizontal: 0}}>
             <FlatList data={ENTRIES1} renderItem={_renderItem} />
-          </View>
-          <TouchableOpacity style={{alignSelf: 'center'}}>
+          </View> */}
+          <TouchableOpacity style={{alignSelf: 'center', marginTop: 20}}>
             <LinearGradient
               style={{
                 height: 43,
@@ -526,7 +526,7 @@ const ClubDetails = props => {
                   source={ImagePath.lightHoush}
                 />
               </TouchableOpacity>
-              <Text style={styles.titleText}>menu</Text>
+              <Text style={styles.titleText}>Food</Text>
             </View>
           </ScrollView>
           <Text style={[styles.aboutText]}>Clubs Nearby </Text>

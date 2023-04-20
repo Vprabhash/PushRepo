@@ -25,34 +25,53 @@ const MenuCard = ({navigation, itemdata}, props) => {
   const MenuData = [
     {
       menuIcon: ImagePath.watchIcon,
-      menuTitle: 'Mon-Fri',
+      menuTitle: 'Timings',
       menuTitleText: itemdata?._doc?.timings,
-      menuIcon1: ImagePath.menuUser,
-      menuTitle1: '₹ 2000',
-      menuTitleText1: itemdata?._doc?.averageCost2People,
+    },
+    {
+      menuIcon: ImagePath.menuUser,
+      menuTitle: `₹${itemdata?._doc?.cost}`,
+      menuTitleText: itemdata?._doc?.averageCost2People,
     },
     {
       menuIcon: ImagePath.menuUser1,
-      menuTitle: 'Fri, Sat',
-      menuTitleText: itemdata?._doc?.timings,
-      menuIcon1: ImagePath.menuUser2,
-      menuTitle1: 'VEG & NON-VEG',
-      menuTitleText1: itemdata?._doc?.vegNonVeg,
+      menuTitle: 'Happy Hours',
+      menuTitleText: itemdata?._doc?.happyHoursTimings,
+    },
+    {
+      menuIcon: ImagePath.menuUser2,
+      menuTitle: 'VEG & NON-VEG',
+      menuTitleText: itemdata?._doc?.vegNonVeg,
     },
     {
       menuIcon: ImagePath.menuUser3,
       menuTitle: 'POP, BLUES, EDM',
       menuTitleText: itemdata?._doc?.musicGenre,
-      menuIcon1: ImagePath.doneIcon,
-      menuTitle1: 'Stags ',
-      menuTitleText1: itemdata?._doc?.stagsAllowed,
     },
     {
-      menuIcon: ImagePath.doneIcon,
+      menuIcon:
+        itemdata?._doc?.stagsAllowed === 'Yes'
+          ? ImagePath.doneIcon
+          : ImagePath.menuUser4,
+      menuTitle: 'Stags',
+      menuTitleText: itemdata?._doc?.stagsAllowed,
+    },
+
+    {
+      menuIcon:
+        itemdata?._doc?.seeshaServe === 'Yes'
+          ? ImagePath.doneIcon
+          : ImagePath.menuUser4,
       menuTitle: 'Sheesha',
-      menuIcon1: ImagePath.menuUser4,
-      menuTitle1: 'Kids Friendly',
-      menuTitleText1: itemdata?._doc?.kidsFriendly,
+      menuTitleText: itemdata?._doc?.seeshaServe,
+    },
+    {
+      menuIcon:
+        itemdata?._doc?.kidsFriendly === 'Yes'
+          ? ImagePath.doneIcon
+          : ImagePath.menuUser4,
+      menuTitle: 'Kids Friendly',
+      menuTitleText: itemdata?._doc?.kidsFriendly,
     },
   ];
   const MenuDataRenderItem = ({item, index}) => {
@@ -99,6 +118,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
       </View>
     );
   };
+
   return (
     <View
       style={{
@@ -108,7 +128,13 @@ const MenuCard = ({navigation, itemdata}, props) => {
         borderRadius: 10,
       }}>
       <SafeAreaView>
-        <FlatList data={MenuData} renderItem={MenuDataRenderItem} />
+        <FlatList
+          data={MenuData}
+          numColumns={2}
+          // numberOfColums={2}
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={MenuDataRenderItem}
+        />
       </SafeAreaView>
       <View style={{flexDirection: 'row', marginTop: hp(4)}}>
         <TouchableOpacity
