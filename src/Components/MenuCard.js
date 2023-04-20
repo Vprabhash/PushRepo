@@ -26,93 +26,72 @@ const MenuCard = ({navigation, itemdata}, props) => {
     {
       menuIcon: ImagePath.watchIcon,
       menuTitle: 'Timings',
-      menuTitleText: itemdata?._doc?.timings,
+      menuTitleText: itemdata?.timings || 'N/A',
     },
     {
       menuIcon: ImagePath.menuUser,
-      menuTitle: `₹${itemdata?._doc?.cost}`,
-      menuTitleText: itemdata?._doc?.averageCost2People,
+      menuTitle: `₹${itemdata?.cost}`,
+      menuTitleText: itemdata?.averageCost2People || 'N/A',
     },
     {
       menuIcon: ImagePath.menuUser1,
       menuTitle: 'Happy Hours',
-      menuTitleText: itemdata?._doc?.happyHoursTimings,
+      menuTitleText: itemdata?.happyHoursTimings || 'N/A',
     },
     {
       menuIcon: ImagePath.menuUser2,
       menuTitle: 'VEG & NON-VEG',
-      menuTitleText: itemdata?._doc?.vegNonVeg,
+      menuTitleText: itemdata?.vegNonVeg || 'N/A',
     },
     {
       menuIcon: ImagePath.menuUser3,
       menuTitle: 'POP, BLUES, EDM',
-      menuTitleText: itemdata?._doc?.musicGenre,
+      menuTitleText: itemdata?.musicGenre || 'N/A',
     },
     {
       menuIcon:
-        itemdata?._doc?.stagsAllowed === 'Yes'
+        itemdata?.stagsAllowed === 'Yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Stags',
-      menuTitleText: itemdata?._doc?.stagsAllowed,
+      menuTitleText: itemdata?.stagsAllowed || 'N/A',
     },
 
     {
       menuIcon:
-        itemdata?._doc?.seeshaServe === 'Yes'
+        itemdata?.seeshaServe === 'Yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Sheesha',
-      menuTitleText: itemdata?._doc?.seeshaServe,
+      menuTitleText: itemdata?.seeshaServe || 'N/A',
     },
     {
       menuIcon:
-        itemdata?._doc?.kidsFriendly === 'Yes'
+        itemdata?.kidsFriendly === 'Yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Kids Friendly',
-      menuTitleText: itemdata?._doc?.kidsFriendly,
+      menuTitleText: itemdata?.kidsFriendly || 'N/A',
     },
   ];
   const MenuDataRenderItem = ({item, index}) => {
     return (
       <View
         style={{
-          width: '100%',
-          marginBottom: index == 1 ? 11 : 0,
-          marginTop: index == 3 ? 22 : 11,
-          // paddingLeft: 15,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          flex: 1,
+          paddingVertical: 7,
         }}>
         <View
           style={{
             flexDirection: 'row',
-            marginLeft: 15,
-            flex: 0.45,
             alignItems: 'center',
           }}>
           <Image style={styles.menuIconCss} source={item.menuIcon} />
           <View>
             <Text style={styles.menuText}>{item.menuTitle}</Text>
-            {item.menuTitleText && (
+            <View style={{width: '100%', paddingLeft: hp(1.6)}}>
               <Text style={styles.menuText2}>{item.menuTitleText}</Text>
-            )}
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginRight: 20,
-            flex: 0.45,
-            alignItems: 'center',
-          }}>
-          <Image style={styles.menuIconCss} source={item.menuIcon1} />
-          <View>
-            <Text style={styles.menuText}>{item.menuTitle1}</Text>
-            {item.menuTitleText1 && (
-              <Text style={styles.menuText2}>{item.menuTitleText1}</Text>
-            )}
+            </View>
           </View>
         </View>
       </View>
@@ -131,18 +110,19 @@ const MenuCard = ({navigation, itemdata}, props) => {
         <FlatList
           data={MenuData}
           numColumns={2}
-          // numberOfColums={2}
           keyExtractor={(_, i) => i.toString()}
           renderItem={MenuDataRenderItem}
+          style={{
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+          }}
         />
       </SafeAreaView>
-      <View style={{flexDirection: 'row', marginTop: hp(4)}}>
+      <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            Linking.openURL(
-              'google.navigation:q=100+101' + itemdata?._doc?.googleMapLink,
-            );
+            Linking.openURL(itemdata?.googleMapLink);
           }}
           style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
           <Image style={styles.btnIcon} source={ImagePath.direction} />
@@ -153,7 +133,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
           onPress={() => {
             Linking.openURL(
               'http://api.whatsapp.com/send?phone=91' +
-                itemdata?._doc?.whatsappNumber,
+                itemdata?.whatsappNumber,
             );
           }}
           style={[styles.btnmain, {marginHorizontal: 1}]}>
@@ -163,8 +143,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            alert('ok');
-            Linking.openURL('tel:' + itemdata?._doc?.phoneNumber);
+            Linking.openURL('tel:' + itemdata?.phoneNumber);
           }}
           style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
           <Image style={styles.btnIcon} source={ImagePath.callIcon} />
@@ -186,7 +165,6 @@ const styles = StyleSheet.create({
     color: '#BBBBBB',
     fontSize: 12,
     fontFamily: FONTS.RobotoRegular,
-    marginLeft: hp(1.6),
   },
   //btn
   btnmain: {

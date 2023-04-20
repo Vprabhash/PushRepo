@@ -38,30 +38,30 @@ const Home = props => {
 
   const spotLightList = async () => {
     const data = await dispatch(spotLightApi()).then(data => {
-      console.log('------spotLightList data--------', data.payload.movies);
+      console.log('------spotLightList data--------', data.payload);
     });
   };
   const clubLocationList = async () => {
     const data = await dispatch(LocationApi()).then(data => {
-      console.log('------clubLocationList data--------', data.payload.movies);
+      console.log('------clubLocationList data--------', data.payload);
     });
   };
   const artistList = async () => {
     const data = await dispatch(artistApi()).then(data => {
-      console.log('------artistList data--------', data.payload.movies);
+      console.log('------artistList data--------', data.payload);
     });
   };
   const UpComingEventList = async () => {
     const data = await dispatch(upComingEventApi()).then(data => {
-      console.log('------UpComingEventList data--------', data.payload.movies);
+      console.log('------UpComingEventList data--------', data.payload);
     });
   };
-  useEffect(() => {
-    spotLightList();
-    clubLocationList();
-    artistList();
-    UpComingEventList();
-  }, []);
+  // useEffect(() => {
+  //   spotLightList();
+  //   clubLocationList();
+  //   artistList();
+  //   UpComingEventList();
+  // }, []);
 
   const [
     onEndReachedCalledDuringMomentum,
@@ -89,9 +89,6 @@ const Home = props => {
     const res = await ApiCall(ARTIST, 'GET', data);
     console.log('---res--logIn--artist---', res);
   };
-  useEffect(() => {
-    location();
-  }, []);
 
   const fetchMoreData = () => {
     if (!onEndReachedCalledDuringMomentum) {
@@ -102,13 +99,13 @@ const Home = props => {
       setLoading(false);
     }
   };
-  const [ENTRIES1, setENTRIES1] = useState([
+  const Tabs = [
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail Bar'},
     {mapIcon: ImagePath.clubLocation, title: 'Nightclub'},
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail'},
     {mapIcon: ImagePath.clubLocation, title: 'Nightclub'},
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail'},
-  ]);
+  ];
 
   const _renderItem = ({item, index}) => {
     return (
@@ -152,9 +149,7 @@ const Home = props => {
     const res = await ApiCall(ARTIST, 'GET', data);
     console.log('---res--logIn--artist---', res);
   };
-  useEffect(() => {
-    artistDataList();
-  }, []);
+
   const fetchArtistData = () => {
     if (!onEndReachedCalledDuringArtist) {
       artistDataList();
@@ -211,9 +206,7 @@ const Home = props => {
     const res = await ApiCall(ARTIST, 'GET', data);
     console.log('---res--logIn--artist---', res);
   };
-  useEffect(() => {
-    UpcomingDataList();
-  }, []);
+
   const fetchUpcomingData = () => {
     if (!onEndReachedCalledDuringUpcoming) {
       UpcomingDataList();
@@ -337,9 +330,7 @@ const Home = props => {
     const res = await ApiCall(ARTIST, 'GET', data);
     console.log('---res--logIn--artist---', res);
   };
-  useEffect(() => {
-    spotLightDataList();
-  }, []);
+
   const fetchSpotlightData = () => {
     if (!onEndReachedCalledDuringspotLight) {
       spotLightDataList();
@@ -495,7 +486,7 @@ const Home = props => {
           <SafeAreaView style={{}}>
             <FlatList
               horizontal={true}
-              data={ENTRIES1}
+              data={Tabs}
               renderItem={_renderItem}
               ListFooterComponent={renderFooter}
               onEndReachedThreshold={0.7}

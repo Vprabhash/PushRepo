@@ -40,11 +40,9 @@ const ClubDetails = props => {
   console.log('+++++++++((((((((-----', Helper.location);
   // console.log(
   //   '--ClubDetails--=----',
-  //   props.route.params.listDetail?._doc?.menu,
+  //   props.route.params.listDetail?.menu,
   // );
-  const [detailData, setDetailData] = useState(
-    props?.route?.params?.listDetail,
-  );
+  const detailData = props?.route?.params?.listDetail;
 
   const ENTRIES1 = [
     {
@@ -170,7 +168,7 @@ const ClubDetails = props => {
     );
   };
   const [BeverageData, setBeverageData] = useState(
-    detailData?._doc?.media?.drinkMenuImages,
+    detailData?.media?.drinkMenuImages,
   );
   const BeverageDataRender = ({item, index}) => {
     return (
@@ -186,7 +184,7 @@ const ClubDetails = props => {
               }}
               source={{
                 uri: item,
-                //  detailData?._doc?.media?.drinkMenuImages[0],
+                //  detailData?.media?.drinkMenuImages[0],
               }}
             />
           )}
@@ -196,7 +194,7 @@ const ClubDetails = props => {
     );
   };
   const [manuRenderData, setManuRenderData] = useState(
-    detailData?._doc?.media?.foodMenuImages,
+    detailData?.media?.foodMenuImages,
   );
 
   const manuRender = ({item, index}) => {
@@ -213,7 +211,7 @@ const ClubDetails = props => {
               }}
               source={{
                 uri: item,
-                //  detailData?._doc?.media?.drinkMenuImages[0],
+                //  detailData?.media?.drinkMenuImages[0],
               }}
             />
           )}
@@ -255,6 +253,8 @@ const ClubDetails = props => {
           resizeMode="cover"
           style={{height: '100%'}}>
           <Swiper
+            autoplay={true}
+            autoplayTimeout={4}
             style={[styles.wrapper]}
             containerStyle={{
               borderRadius: 8,
@@ -306,15 +306,15 @@ const ClubDetails = props => {
                 }}
               />
             }>
-            <View style={styles.slide}>
-              <Image style={styles.slideImg} source={ImagePath.swiperItem} />
-            </View>
-            <View style={styles.slide}>
-              <Image style={styles.slideImg} source={ImagePath.eventImg} />
-            </View>
-            <View style={styles.slide}>
-              <Image style={styles.slideImg} source={ImagePath.swiperItem} />
-            </View>
+            {detailData?.media?.ambienceImages.length ? (
+              detailData?.media?.ambienceImages?.map(item => (
+                <View style={styles.slide}>
+                  <Image style={styles.slideImg} source={{uri: item}} />
+                </View>
+              ))
+            ) : (
+              <View />
+            )}
           </Swiper>
 
           <View
@@ -331,42 +331,42 @@ const ClubDetails = props => {
                   fontSize: 20,
                   fontFamily: FONTS.AxiformaBold,
                 }}>
-                {detailData?._doc.name}
+                {detailData?.name}
               </Text>
               <Text
                 style={{
                   color: '#5B5959',
-                  fontSize: 12,
+                  fontSize: 14,
                   fontFamily: FONTS.RobotoMedium,
                 }}>
-                Restobar no velue
+                Restobar
               </Text>
             </View>
 
             <LinearGradient
               style={{
                 flexDirection: 'row',
-                height: 20,
+                height: 24,
                 width: 40,
-                borderRadius: 8,
+                borderRadius: 5,
                 justifyContent: 'center',
                 backgroundColor: 'red',
                 alignItems: 'center',
               }}
               start={{x: 0.3, y: 0.5}}
               colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
-              <Text
-                style={{
-                  fontFamily: FONTS.DMSansBold,
-                  color: '#FFFFFF',
-                  fontSize: 12,
-                }}>
-                {detailData?._doc?.zomatoRating}
-              </Text>
               <Image
                 style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
                 source={ImagePath.star}
               />
+              <Text
+                style={{
+                  fontFamily: FONTS.RobotoBold,
+                  color: '#FFFFFF',
+                  fontSize: 12,
+                }}>
+                {detailData?.zomatoRating}
+              </Text>
             </LinearGradient>
           </View>
           <Text
@@ -376,11 +376,12 @@ const ClubDetails = props => {
               marginTop: 9,
               color: COLORS.black,
               marginHorizontal: 15,
+              marginTop: 20,
               fontFamily: FONTS.HankenGroteskReglur,
             }}>
-            {detailData?._doc?.address}
+            {detailData?.address}
           </Text>
-          <Text style={styles.aboutText}>About the Club </Text>
+          <Text style={styles.aboutText}>About the Club</Text>
           <MenuCard itemdata={detailData} />
 
           {/* <Text style={styles.aboutText}>Whats Happening Today </Text>
@@ -407,7 +408,7 @@ const ClubDetails = props => {
                   color: '#FFFFFF',
                   fontSize: 14,
                 }}>
-                Events For the month
+                Events for the month
               </Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -418,7 +419,6 @@ const ClubDetails = props => {
               transparent={true}
               visible={modalVisible}
               onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
                 setModalVisible(!modalVisible);
               }}>
               <View style={styles.centeredView}>
@@ -459,11 +459,11 @@ const ClubDetails = props => {
                 <Image
                   style={{
                     height: hp(20),
-                    width: wp(50),
+                    width: wp(44),
                     resizeMode: 'cover',
                     borderRadius: 10,
                   }}
-                  source={ImagePath.food}
+                  source={{uri: detailData?.media?.drinkMenuImages[0] || ''}}
                 />
               </TouchableOpacity>
               <Text style={styles.titleText}>Beverages</Text>
@@ -473,7 +473,6 @@ const ClubDetails = props => {
               transparent={true}
               visible={modalVisibletwo}
               onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
                 setModalVisibletwo(!modalVisibletwo);
               }}>
               <View style={styles.centeredView}>
@@ -519,26 +518,35 @@ const ClubDetails = props => {
                 <Image
                   style={{
                     height: hp(20),
-                    width: wp(50),
+                    width: wp(44),
                     resizeMode: 'cover',
                     borderRadius: 10,
                   }}
-                  source={ImagePath.lightHoush}
+                  source={{uri: detailData?.media?.foodMenuImages[0] || ''}}
                 />
               </TouchableOpacity>
               <Text style={styles.titleText}>Food</Text>
             </View>
           </ScrollView>
           <Text style={[styles.aboutText]}>Clubs Nearby </Text>
-          <View style={{}}>
-            <FlatList
-              horizontal={true}
-              data={ClubNarData}
-              renderItem={ClubNarDatarenderItem}
-            />
-          </View>
+          <FlatList
+            horizontal={true}
+            data={ClubNarData}
+            renderItem={ClubNarDatarenderItem}
+          />
         </ImageBackground>
       </ScrollView>
+      {/* <FlatList
+              horizontal={true}
+              data={Tabs}
+              renderItem={_renderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
+            /> */}
     </View>
   );
 };
@@ -574,8 +582,8 @@ const styles = StyleSheet.create({
     color: '#202020',
     fontSize: 20,
     marginLeft: 15,
-    marginBottom: hp(2.5),
-    marginTop: hp(4),
+    marginBottom: 10,
+    marginTop: 20,
     fontFamily: FONTS.AxiformaBold,
   },
   wrapper: {height: 223},

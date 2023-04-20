@@ -6,7 +6,7 @@ import ImagePath from '../assets/ImagePath';
 import Home from '../Screen/Dashboard/Home';
 import ClubListing from '../Screen/Listing/ClubListing';
 import EventListing from '../Screen/Listing/EventListing';
-import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';;
+import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -81,7 +81,7 @@ function BottomTab() {
         component={ArtistDetail}
         options={{
           headerShown: false,
-          tabBarLabel: 'VANUE',
+          tabBarLabel: 'VENUE',
           tabBarIcon: ({focused}) => (
             <Image
               style={[
