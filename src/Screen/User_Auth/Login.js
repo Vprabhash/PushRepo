@@ -21,13 +21,15 @@ import {
 import {FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import {ARTIST, SIGN_IN} from '../../services/Apis';
-
+import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Helper from '../../Components/Helper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Login = props => {
-  const [email, setEmail] = useState('saddam.khan1@gmail.com');
-  const [password, setPassword] = useState('12345678');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [eyeShow, setEyeShow] = useState('');
   const onClickEye = () => {
     setEyeShow(!eyeShow);
@@ -45,30 +47,26 @@ const Login = props => {
       );
       return;
     }
-    fetch('https://api.azzirevents.com/api/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.ok == true) {
-          props.navigation.navigate('BottomTab');
-        } else {
-          alert('Invalid username or password.');
-        }
-        console.log('Response msgg======= -> ' + JSON.stringify(responseData));
+    var data = JSON.stringify({
+      username: email,
+      password: password,
+      pushNotificationToken: '<device-token>',
+    });
+    const res = await ApiCall('api/login', 'POST', data);
+    console.log('---res--Lohin-----', res);
+    if (res.ok == true) {
+      Helper.setData('userData', res);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'BottomTab'}],
       });
+      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+    } else {
+      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+    }
   };
-  useEffect(() => {
-    // signin();
-  }, []);
+  useEffect(() => {}, []);
+
   return (
     <View style={{flex: 1}}>
       <StatusBar

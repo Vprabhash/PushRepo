@@ -101,7 +101,7 @@ const ClubListing = props => {
   };
 
   const _renderItem = ({item, index}) => {
-    console.log('==---item---', item);
+    // console.log('==---item---', item);
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
@@ -125,12 +125,12 @@ const ClubListing = props => {
                 resizeMode: 'cover',
               }}
               source={{
-                // uri: item?._doc?.media?.ambienceImages.length
-                //   ? item?._doc?.media?.ambienceImages[0]
-                //   : '',
-                uri: item?._doc?.mediaDir?.ambienc
-                  ? item?._doc?.mediaDir?.ambienc
+                uri: item?._doc?.media?.ambienceImages.length
+                  ? item?._doc?.media?.ambienceImages[0]
                   : '',
+                // uri: item?._doc?.mediaDir?.ambienc
+                //   ? item?._doc?.mediaDir?.ambienc
+                //   : '',
                 // uri: item?._doc?.mediaDir?.ambienc,
                 // uri: item?._doc?.media?.ambienceImages[0],
               }}
@@ -182,9 +182,20 @@ const ClubListing = props => {
               {item.barNamr}
             </Text>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
               <Text style={styles.listinhText}>{item?._doc?.city}</Text>
-              <Text style={styles.listinhText}>{item.price}</Text>
+              <Text
+                style={[
+                  styles.listinhText,
+                  {marginHorizontal: 10, width: '60%'},
+                ]}
+                numberOfLines={1}>
+                {item?._doc?.averageCost2People}
+              </Text>
             </View>
           </View>
         </View>

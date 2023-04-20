@@ -22,18 +22,16 @@ import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInp
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 // import {signUp} from '../../redux/reducers/authSlice';
 import {FONTS} from '../../Components/constants';
+import ApiCall from '../../redux/CommanApi';
 // import ApiCall from '../../redux/CommanApi';
-
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const SignUp = props => {
-  const [email, setEmail] = useState('saddam.husain@gmail.com');
-  const [password, setPassword] = useState('12345678');
-  const [confirmPassword, setConfirmPassword] = useState('12345678');
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const dispatch = useDispatch();
   const authStatus = useSelector(state => state.auth.status);
-
   const handleSignUp = async () => {
     // Email validation
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -51,47 +49,21 @@ const SignUp = props => {
       return;
     }
     if (confirmPassword === password) {
-      fetch('https://api.azzirevents.com/api/send-otp', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      var data = {
+        email: email,
+      };
+      const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
+      console.log('---res--otp-----', res);
+      if (res.ok == true) {
+        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+
+        props.navigation.navigate('Otp', {
           email: email,
-        }),
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          if (responseData.ok == true) {
-            props.navigation.navigate('Otp', {
-              email: email,
-              password: password,
-            });
-          } else {
-            alert('Invalid username or password.');
-          }
-          console.log(
-            'Response msgg======= -> ' + JSON.stringify(responseData),
-          );
+          password: password,
         });
-
-      // try {
-      //   var data = {
-      //     email: 'saddam.husa@gmail.com',
-      //     // password: password,
-      //   };
-      //   const res = await ApiCall('api/send-otp', 'POST', data);
-      //   console.log('---res--otp-----', res);
-      //   if (res.ok == true) {
-      //     props.navigation.navigate('Otp', {email, password});
-      //   } else {
-      //     alert('Invalid username or password.');
-      //   }
-      // } catch (error) {
-      //   Alert.alert('Error', error.message);
-      // }
-
+      } else {
+        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+      }
       // dispatch(
       //   signUp({
       //     email: email.toLowerCase(),
@@ -135,7 +107,6 @@ const SignUp = props => {
         backgroundColor="transparent"
         translucent={true}
       />
-
       <Image
         resizeMode={'cover'}
         source={ImagePath.dancePic}

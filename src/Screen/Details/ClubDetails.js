@@ -8,6 +8,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Modal,
   TextInput,
   View,
   Linking,
@@ -25,10 +26,18 @@ import Swiper from 'react-native-swiper';
 import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
+import {LetLong} from '../../services/Apis';
+
+import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
+import Helper from '../../Components/Helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibletwo, setModalVisibletwo] = useState(false);
+  // letLeng
+  console.log('+++++++++((((((((-----', Helper.location);
   // console.log(
   //   '--ClubDetails--=----',
   //   props.route.params.listDetail?._doc?.menu,
@@ -36,6 +45,7 @@ const ClubDetails = props => {
   const [detailData, setDetailData] = useState(
     props?.route?.params?.listDetail,
   );
+
   const ENTRIES1 = [
     {
       mapIcon: ImagePath.upcoming_Evn_Img,
@@ -126,11 +136,8 @@ const ClubDetails = props => {
     },
   ];
   const ClubNarDataApi = async () => {
-    let data = {
-      coordinates: '8.932234775831695,72.83360714102714',
-    };
     const res = await ApiCall(
-      `api/nearby-clubs?coordinates=${8.932234775831695},${72.83360714102714}`,
+      `api/nearby-clubs?coordinates=${Helper.location?.latitude},${Helper.location?.longitude}`,
       'GET',
     );
     // setENTRIES1(res.data);
@@ -159,6 +166,59 @@ const ClubDetails = props => {
         />
         <Text style={styles.titleText}>{item.title}</Text>
         <Text style={styles.LoctionText}>{item.Loction}</Text>
+      </View>
+    );
+  };
+  const [BeverageData, setBeverageData] = useState(
+    detailData?._doc?.media?.drinkMenuImages,
+  );
+  const BeverageDataRender = ({item, index}) => {
+    return (
+      <View style={{flexDirection: 'row'}} horizontal>
+        <View style={{marginRight: 15}}>
+          {item && (
+            <Image
+              style={{
+                height: hp(22),
+                width: wp(50),
+                resizeMode: 'cover',
+                borderRadius: 10,
+              }}
+              source={{
+                uri: item,
+                //  detailData?._doc?.media?.drinkMenuImages[0],
+              }}
+            />
+          )}
+          {/* <Text style={styles.titleText}>menu</Text> */}
+        </View>
+      </View>
+    );
+  };
+  const [manuRenderData, setManuRenderData] = useState(
+    detailData?._doc?.media?.foodMenuImages,
+  );
+
+  const manuRender = ({item, index}) => {
+    return (
+      <View style={{flexDirection: 'row'}} horizontal>
+        <View style={{marginRight: 15}}>
+          {item && (
+            <Image
+              style={{
+                height: hp(20),
+                width: wp(50),
+                resizeMode: 'cover',
+                borderRadius: 10,
+              }}
+              source={{
+                uri: item,
+                //  detailData?._doc?.media?.drinkMenuImages[0],
+              }}
+            />
+          )}
+          {/* <Text style={styles.titleText}>menu</Text> */}
+        </View>
       </View>
     );
   };
@@ -351,35 +411,121 @@ const ClubDetails = props => {
               </Text>
             </LinearGradient>
           </TouchableOpacity>
-          <Text style={[styles.aboutText, {marginTop: 31}]}>Menu </Text>
-
+          <Text style={[styles.aboutText, {marginTop: 31}]}>Menu</Text>
+          <View style={styles.centeredView}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                Alert.alert('Modal has been closed.');
+                setModalVisible(!modalVisible);
+              }}>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <FlatList
+                    horizontal={true}
+                    data={BeverageData}
+                    renderItem={BeverageDataRender}
+                  />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <CustomButton
+                      onclick={() => {
+                        setModalVisible(!modalVisible);
+                      }}
+                      title="Cancel"
+                      flex={1}
+                      bgColor="#fff"
+                      textColor="#000000"
+                    />
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          </View>
           <ScrollView style={{flexDirection: 'row'}} horizontal>
             <View
               style={{
                 marginHorizontal: 15,
-                // marginRight: index == 1 ? 15 : 15,
               }}>
-              <Image
-                style={{
-                  height: hp(20),
-                  width: wp(50),
-                  resizeMode: 'cover',
-                  borderRadius: 10,
-                }}
-                source={{uri: detailData?._doc?.media?.drinkMenuImages[0]}}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(true);
+                }}>
+                <Image
+                  style={{
+                    height: hp(20),
+                    width: wp(50),
+                    resizeMode: 'cover',
+                    borderRadius: 10,
+                  }}
+                  source={ImagePath.food}
+                />
+              </TouchableOpacity>
               <Text style={styles.titleText}>Beverages</Text>
             </View>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisibletwo}
+              onRequestClose={() => {
+                Alert.alert('Modal has been closed.');
+                setModalVisibletwo(!modalVisibletwo);
+              }}>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <FlatList
+                    horizontal={true}
+                    data={manuRenderData}
+                    renderItem={manuRender}
+                  />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <CustomButton
+                      onclick={() => {
+                        setModalVisibletwo(!modalVisibletwo);
+                      }}
+                      title="Cancel"
+                      flex={1}
+                      bgColor="#fff"
+                      textColor="#000000"
+                    />
+                    {/* <CustomButton
+                      onclick={() => {
+                        setModalVisible(!modalVisible);
+                      }}
+                      flex={0.47}
+                      title="ok"
+                      borderColor="#000"
+                      bgColor="#fff"
+                      textColor="#000"
+                    /> */}
+                  </View>
+                </View>
+              </View>
+            </Modal>
             <View style={{marginRight: 15}}>
-              <Image
-                style={{
-                  height: hp(20),
-                  width: wp(50),
-                  resizeMode: 'cover',
-                  borderRadius: 10,
-                }}
-                source={{uri: detailData?._doc?.media?.foodMenuImages[0]}}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisibletwo(true);
+                }}>
+                <Image
+                  style={{
+                    height: hp(20),
+                    width: wp(50),
+                    resizeMode: 'cover',
+                    borderRadius: 10,
+                  }}
+                  source={ImagePath.lightHoush}
+                />
+              </TouchableOpacity>
               <Text style={styles.titleText}>menu</Text>
             </View>
           </ScrollView>
@@ -398,6 +544,32 @@ const ClubDetails = props => {
 };
 export default ClubDetails;
 const styles = StyleSheet.create({
+  // modal css
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.9,
+    backgroundColor: '#000',
+  },
+  modalView: {
+    // margin: 20,
+    width: wp(100),
+    height: hp(30),
+    // backgroundColor: '#fff',
+    paddingHorizontal: wp(4),
+    // alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  //
+
   aboutText: {
     color: '#202020',
     fontSize: 20,

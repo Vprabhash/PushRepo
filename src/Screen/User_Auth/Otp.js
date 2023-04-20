@@ -14,10 +14,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+import Toast from 'react-native-simple-toast';
 
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
+import Helper from '../../Components/Helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -29,38 +31,31 @@ const Otp = props => {
   const [email, setemail] = useState(props?.route?.params?.email);
   console.log(email, '-------');
   const OtpApi = async () => {
-    fetch('https://api.azzirevents.com/api/register', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then(response => response.json())
-      .then(responseData => {
-        if (responseData.ok == true) {
-          props.navigation.navigate('Login');
-        } else {
-          alert('Invalid username or password.');
-        }
-        console.log('Response msgg======= -> ' + JSON.stringify(responseData));
+    var data = JSON.stringify({
+      email: email,
+      password: password,
+    });
+    const res = await ApiCall('api/register', 'POST', data);
+    console.log('---res--otp-----', res);
+    if (res.ok == true) {
+      Helper.setData('userData', res);
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'BottomTab'}],
       });
-
-    // var data = {
-    //   email: email,
-    //   password: password,
-    // };
-    // console.log('---data', data);
-
-    // const res = await ApiCall('api/register', 'POST', data);
-    // console.log('---res--otp-----', res);
-    // if (res.ok == true) {
-    //   props.navigation.navigate('LogIn');
-    // }
+    }
+  };
+  const resendOtp = async () => {
+    var data = {
+      email: email,
+    };
+    const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
+    console.log('---send--otp-----', res);
+    if (res.ok == true) {
+      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+    } else {
+      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+    }
   };
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
@@ -103,6 +98,7 @@ const Otp = props => {
             Check your email, we’ve sent you the pin at {email}
           </Text>
           <OTPTextInput
+            textInputStyle={{width: 40}}
             inputCount={6}
             returnKeyType={'next'}
             handleTextChange={text => setOtp(text)}
@@ -129,7 +125,7 @@ const Otp = props => {
             <Text style={[styles.withText]}>Didn’t received pin </Text>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Login');
+                resendOtp();
               }}>
               <Text
                 style={[

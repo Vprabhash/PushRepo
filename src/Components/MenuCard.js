@@ -115,7 +115,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
           activeOpacity={0.7}
           onPress={() => {
             Linking.openURL(
-              'google.navigation:q=100+101' + itemdata.googleMapLink,
+              'google.navigation:q=100+101' + itemdata?._doc?.googleMapLink,
             );
           }}
           style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
@@ -126,7 +126,8 @@ const MenuCard = ({navigation, itemdata}, props) => {
           activeOpacity={0.7}
           onPress={() => {
             Linking.openURL(
-              'http://api.whatsapp.com/send?phone=91' + itemdata.whatsappNumber,
+              'http://api.whatsapp.com/send?phone=91' +
+                itemdata?._doc?.whatsappNumber,
             );
           }}
           style={[styles.btnmain, {marginHorizontal: 1}]}>
@@ -137,7 +138,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
           activeOpacity={0.7}
           onPress={() => {
             alert('ok');
-            Linking.openURL('tel:' + itemdata.phoneNumber);
+            Linking.openURL('tel:' + itemdata?._doc?.phoneNumber);
           }}
           style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
           <Image style={styles.btnIcon} source={ImagePath.callIcon} />

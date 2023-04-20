@@ -254,6 +254,7 @@ const EventListing = props => {
             style={{
               height: hp(22),
               width: '100%',
+              resizeMode: 'cover',
               borderTopRightRadius: 10,
               borderTopLeftRadius: 10,
             }}
