@@ -20,7 +20,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import ImagePath from '../../assets/ImagePath';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-simple-toast';
 import Swiper from 'react-native-swiper';
@@ -28,11 +27,9 @@ import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import ImageView from 'react-native-image-viewing';
-import {LetLong} from '../../services/Apis';
 
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import Helper from '../../Components/Helper';
-import ImageZoom from 'react-native-image-pan-zoom';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -124,23 +121,6 @@ const ClubDetails = props => {
     );
   };
 
-  const ClubNarData = [
-    {
-      menuImg: ImagePath.lightHoush,
-      title: 'Light house- the club',
-      Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
-    },
-    {
-      menuImg: ImagePath.lightHoush,
-      title: 'Light house- the club',
-      Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
-    },
-    {
-      menuImg: ImagePath.lightHoush,
-      title: 'Light house- the club',
-      Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
-    },
-  ];
   const clubsNearbyDataApi = async () => {
     console.log('locationdata ---', Helper.location);
     try {
@@ -193,61 +173,7 @@ const ClubDetails = props => {
       </TouchableOpacity>
     );
   };
-  const [BeverageData, setBeverageData] = useState(
-    detailData?.media?.drinkMenuImages,
-  );
-  const BeverageDataRender = ({item, index}) => {
-    return (
-      <View style={{flexDirection: 'row'}} horizontal>
-        <View style={{marginRight: 15}}>
-          {/* {item && (
-            <Image
-              style={{
-                height: hp(22),
-                width: wp(50),
-                resizeMode: 'cover',
-                borderRadius: 10,
-              }}
-              source={{
-                uri: item,
-              }}
-            />
-          )} */}
-          {item && (
-            <ImageZoom
-              cropWidth={hp(20)}
-              cropHeight={wp(50)}
-              imageWidth={hp(20)}
-              imageHeight={wp(50)}>
-              <Image
-                style={{width: '100%', height: 200}}
-                source={{uri: item}}
-              />
-            </ImageZoom>
-          )}
-        </View>
-      </View>
-    );
-  };
-  const [manuRenderData, setManuRenderData] = useState(
-    detailData?.media?.foodMenuImages,
-  );
 
-  const manuRender = ({item, index}) => {
-    return (
-      <View style={{flexDirection: 'row'}} horizontal>
-        <View style={{marginRight: 15, borderRadius: 10}}>
-          <ImageZoom
-            cropWidth={wp(50)}
-            cropHeight={200}
-            imageWidth={wp(50)}
-            imageHeight={200}>
-            <Image style={{width: '100%', height: 200}} source={{uri: item}} />
-          </ImageZoom>
-        </View>
-      </View>
-    );
-  };
   return (
     <View style={{flex: 1}}>
       <View style={[styles.inputMain, {marginTop: 50, marginBottom: 10}]}>
