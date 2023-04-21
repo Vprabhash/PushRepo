@@ -27,10 +27,12 @@ import Swiper from 'react-native-swiper';
 import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
+import ImageView from 'react-native-image-viewing';
 import {LetLong} from '../../services/Apis';
 
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import Helper from '../../Components/Helper';
+import ImageZoom from 'react-native-image-pan-zoom';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -198,7 +200,7 @@ const ClubDetails = props => {
     return (
       <View style={{flexDirection: 'row'}} horizontal>
         <View style={{marginRight: 15}}>
-          {item && (
+          {/* {item && (
             <Image
               style={{
                 height: hp(22),
@@ -208,11 +210,21 @@ const ClubDetails = props => {
               }}
               source={{
                 uri: item,
-                //  detailData?.media?.drinkMenuImages[0],
               }}
             />
+          )} */}
+          {item && (
+            <ImageZoom
+              cropWidth={hp(20)}
+              cropHeight={wp(50)}
+              imageWidth={hp(20)}
+              imageHeight={wp(50)}>
+              <Image
+                style={{width: '100%', height: 200}}
+                source={{uri: item}}
+              />
+            </ImageZoom>
           )}
-          {/* <Text style={styles.titleText}>menu</Text> */}
         </View>
       </View>
     );
@@ -224,22 +236,14 @@ const ClubDetails = props => {
   const manuRender = ({item, index}) => {
     return (
       <View style={{flexDirection: 'row'}} horizontal>
-        <View style={{marginRight: 15}}>
-          {item && (
-            <Image
-              style={{
-                height: hp(20),
-                width: wp(50),
-                resizeMode: 'cover',
-                borderRadius: 10,
-              }}
-              source={{
-                uri: item,
-                //  detailData?.media?.drinkMenuImages[0],
-              }}
-            />
-          )}
-          {/* <Text style={styles.titleText}>menu</Text> */}
+        <View style={{marginRight: 15, borderRadius: 10}}>
+          <ImageZoom
+            cropWidth={wp(50)}
+            cropHeight={200}
+            imageWidth={wp(50)}
+            imageHeight={200}>
+            <Image style={{width: '100%', height: 200}} source={{uri: item}} />
+          </ImageZoom>
         </View>
       </View>
     );
@@ -437,7 +441,7 @@ const ClubDetails = props => {
             </LinearGradient>
           </TouchableOpacity>
           <Text style={[styles.aboutText, {marginTop: 31}]}>Menu</Text>
-          <View style={styles.centeredView}>
+          {/* <View style={styles.centeredView}>
             <Modal
               animationType="slide"
               transparent={true}
@@ -470,7 +474,7 @@ const ClubDetails = props => {
                 </View>
               </View>
             </Modal>
-          </View>
+          </View> */}
           <ScrollView style={{flexDirection: 'row'}} horizontal>
             <View
               style={{
@@ -496,7 +500,17 @@ const ClubDetails = props => {
               </TouchableOpacity>
               <Text style={styles.titleText}>Beverages</Text>
             </View>
-            <Modal
+            <ImageView
+              images={
+                detailData?.media?.drinkMenuImages?.map(e => ({
+                  uri: e,
+                })) || []
+              }
+              imageIndex={0}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            />
+            {/* <Modal
               animationType="slide"
               transparent={true}
               visible={modalVisibletwo}
@@ -524,20 +538,21 @@ const ClubDetails = props => {
                       bgColor="#fff"
                       textColor="#000000"
                     />
-                    {/* <CustomButton
-                      onclick={() => {
-                        setModalVisible(!modalVisible);
-                      }}
-                      flex={0.47}
-                      title="ok"
-                      borderColor="#000"
-                      bgColor="#fff"
-                      textColor="#000"
-                    /> */}
+                   
                   </View>
                 </View>
               </View>
-            </Modal>
+            </Modal> */}
+            <ImageView
+              images={
+                detailData?.media?.foodMenuImages?.map(e => ({
+                  uri: e,
+                })) || []
+              }
+              imageIndex={0}
+              visible={modalVisibletwo}
+              onRequestClose={() => setModalVisibletwo(false)}
+            />
             <View style={{marginRight: 15}}>
               <TouchableOpacity
                 onPress={() => {
@@ -579,6 +594,17 @@ const ClubDetails = props => {
           />
         </ImageBackground>
       </ScrollView>
+      {/* <FlatList
+              horizontal={true}
+              data={Tabs}
+              renderItem={_renderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
+            /> */}
     </View>
   );
 };
@@ -595,7 +621,7 @@ const styles = StyleSheet.create({
   modalView: {
     // margin: 20,
     width: wp(100),
-    height: hp(30),
+    height: hp(40),
     // backgroundColor: '#fff',
     paddingHorizontal: wp(4),
     // alignItems: 'center',
