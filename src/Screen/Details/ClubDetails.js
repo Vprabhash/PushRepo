@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -20,7 +20,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import ImagePath from '../../assets/ImagePath';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-simple-toast';
 import Swiper from 'react-native-swiper';
@@ -28,119 +27,89 @@ import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import ImageView from 'react-native-image-viewing';
-import {LetLong} from '../../services/Apis';
-
-import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import Helper from '../../Components/Helper';
-import ImageZoom from 'react-native-image-pan-zoom';
-
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibletwo, setModalVisibletwo] = useState(false);
   const [clubsNearby, setClubNearby] = useState([]);
-  // letLeng
-  console.log('+++++++++((((((((-----', Helper.location);
-  // console.log(
-  //   '--ClubDetails--=----',
-  //   props.route.params.listDetail?.menu,
-  // );
+  // console.log('+++++++++((((((((-----', Helper.location);
+  const scrollRef = useRef(null);
   const detailData = props?.route?.params?.listDetail;
-
-  const ENTRIES1 = [
-    {
-      mapIcon: ImagePath.upcoming_Evn_Img,
-      title: 'Fabulous friday',
-      singerName: 'by ',
-      singerNameIcon: ImagePath.Explore,
-      musicIcon: ImagePath.menuUser3,
-      musicText: 'Bollywood, Commercial',
-    },
-  ];
-
-  useEffect(() => {
-    clubsNearbyDataApi();
-  }, []);
-
-  const _renderItem = ({item, index}) => {
-    return (
-      <View style={{flex: 1, width: '100%', marginBottom: 31}}>
-        <View
-          style={{
-            marginHorizontal: 15,
-            borderRadius: 10,
-            backgroundColor: '#FFFFFF',
-            elevation: 4,
-          }}>
-          <Image
-            style={{
-              height: hp(29),
-              width: '100%',
-              borderTopRightRadius: 10,
-              borderTopLeftRadius: 10,
-            }}
-            source={item.mapIcon}
-          />
-          <View style={{paddingHorizontal: wp(3), paddingVertical: hp(3)}}>
-            <Text style={styles.listinhHeading}>{item.title}</Text>
-            <View style={{flexDirection: 'row', marginTop: hp(2)}}>
-              <Image
-                style={{
-                  height: 17,
-                  width: 17,
-                  borderRadius: 10,
-                  resizeMode: 'contain',
-                }}
-                source={item.singerNameIcon}
-              />
-              <Text style={[styles.singerName]}>
-                {item.singerName}
-                <Text
-                  style={[
-                    styles.singerName,
-                    {textDecorationLine: 'underline'},
-                  ]}>
-                  AVGSS Group
-                </Text>
-              </Text>
-            </View>
-            <View style={{flexDirection: 'row', marginTop: 10}}>
-              <Image
-                style={{
-                  height: 17,
-                  width: 17,
-                  tintColor: '#D200FD',
-                  borderRadius: 10,
-                  resizeMode: 'contain',
-                }}
-                source={item.musicIcon}
-              />
-              <Text style={[styles.singerName]}>{item.musicText}</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    );
+  // const ENTRIES1 = [
+  //   {
+  //     mapIcon: ImagePath.upcoming_Evn_Img,
+  //     title: 'Fabulous friday',
+  //     singerName: 'by ',
+  //     singerNameIcon: ImagePath.Explore,
+  //     musicIcon: ImagePath.menuUser3,
+  //     musicText: 'Bollywood, Commercial',
+  //   },
+  // ];
+  // const _renderItem = ({item, index}) => {
+  //   return (
+  //     <View style={{flex: 1, width: '100%', marginBottom: 31}}>
+  //       <View
+  //         style={{
+  //           marginHorizontal: 15,
+  //           borderRadius: 10,
+  //           backgroundColor: '#FFFFFF',
+  //           elevation: 4,
+  //         }}>
+  //         <Image
+  //           style={{
+  //             height: hp(29),
+  //             width: '100%',
+  //             borderTopRightRadius: 10,
+  //             borderTopLeftRadius: 10,
+  //           }}
+  //           source={item.mapIcon}
+  //         />
+  //         <View style={{paddingHorizontal: wp(3), paddingVertical: hp(3)}}>
+  //           <Text style={styles.listinhHeading}>{item.title}</Text>
+  //           <View style={{flexDirection: 'row', marginTop: hp(2)}}>
+  //             <Image
+  //               style={{
+  //                 height: 17,
+  //                 width: 17,
+  //                 borderRadius: 10,
+  //                 resizeMode: 'contain',
+  //               }}
+  //               source={item.singerNameIcon}
+  //             />
+  //             <Text style={[styles.singerName]}>
+  //               {item.singerName}
+  //               <Text
+  //                 style={[
+  //                   styles.singerName,
+  //                   {textDecorationLine: 'underline'},
+  //                 ]}>
+  //                 AVGSS Group
+  //               </Text>
+  //             </Text>
+  //           </View>
+  //           <View style={{flexDirection: 'row', marginTop: 10}}>
+  //             <Image
+  //               style={{
+  //                 height: 17,
+  //                 width: 17,
+  //                 tintColor: '#D200FD',
+  //    cc             borderRadius: 10,
+  //                 resizeMode: 'contain',
+  //               }}
+  //               source={item.musicIcon}
+  //             />
+  //             <Text style={[styles.singerName]}>{item.musicText}</Text>
+  //           </View>
+  //         </View>
+  //       </View>
+  //     </View>
+  //   );
+  // };
+  const scrollToEnd = () => {
+    scrollRef?.current?.scrollToEnd({animation: true});
   };
-
-  const ClubNarData = [
-    {
-      menuImg: ImagePath.lightHoush,
-      title: 'Light house- the club',
-      Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
-    },
-    {
-      menuImg: ImagePath.lightHoush,
-      title: 'Light house- the club',
-      Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
-    },
-    {
-      menuImg: ImagePath.lightHoush,
-      title: 'Light house- the club',
-      Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
-    },
-  ];
   const clubsNearbyDataApi = async () => {
     console.log('locationdata ---', Helper.location);
     try {
@@ -154,7 +123,9 @@ const ClubDetails = props => {
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
-
+  useEffect(() => {
+    clubsNearbyDataApi();
+  }, []);
   const ClubNarDatarenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -193,61 +164,6 @@ const ClubDetails = props => {
       </TouchableOpacity>
     );
   };
-  const [BeverageData, setBeverageData] = useState(
-    detailData?.media?.drinkMenuImages,
-  );
-  const BeverageDataRender = ({item, index}) => {
-    return (
-      <View style={{flexDirection: 'row'}} horizontal>
-        <View style={{marginRight: 15}}>
-          {/* {item && (
-            <Image
-              style={{
-                height: hp(22),
-                width: wp(50),
-                resizeMode: 'cover',
-                borderRadius: 10,
-              }}
-              source={{
-                uri: item,
-              }}
-            />
-          )} */}
-          {item && (
-            <ImageZoom
-              cropWidth={hp(20)}
-              cropHeight={wp(50)}
-              imageWidth={hp(20)}
-              imageHeight={wp(50)}>
-              <Image
-                style={{width: '100%', height: 200}}
-                source={{uri: item}}
-              />
-            </ImageZoom>
-          )}
-        </View>
-      </View>
-    );
-  };
-  const [manuRenderData, setManuRenderData] = useState(
-    detailData?.media?.foodMenuImages,
-  );
-
-  const manuRender = ({item, index}) => {
-    return (
-      <View style={{flexDirection: 'row'}} horizontal>
-        <View style={{marginRight: 15, borderRadius: 10}}>
-          <ImageZoom
-            cropWidth={wp(50)}
-            cropHeight={200}
-            imageWidth={wp(50)}
-            imageHeight={200}>
-            <Image style={{width: '100%', height: 200}} source={{uri: item}} />
-          </ImageZoom>
-        </View>
-      </View>
-    );
-  };
   return (
     <View style={{flex: 1}}>
       <View style={[styles.inputMain, {marginTop: 50, marginBottom: 10}]}>
@@ -269,7 +185,7 @@ const ClubDetails = props => {
           />
         </TouchableOpacity>
       </View>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView ref={scrollRef} contentContainerStyle={{flexGrow: 1}}>
         <StatusBar
           barStyle="dark-content"
           hidden={false}
@@ -296,7 +212,7 @@ const ClubDetails = props => {
               backgroundColor: '#C9C9C9',
               borderRadius: 20,
               height: 18,
-              marginHorizontal: '40%',
+              marginHorizontal: '38%',
             }}
             activeDotStyle={{
               backgroundColor: '#717171',
@@ -344,7 +260,6 @@ const ClubDetails = props => {
               <View />
             )}
           </Swiper>
-
           <View
             style={{
               flexDirection: 'row',
@@ -353,24 +268,57 @@ const ClubDetails = props => {
               marginHorizontal: 15,
             }}>
             <View style={{marginTop: -5.5, width: '80%'}}>
-              <Text
+              <View
                 style={{
-                  color: '#202020',
-                  fontSize: 20,
-                  fontFamily: FONTS.AxiformaBold,
+                  flexDirection: 'row',
+                  alignItems: 'flex-start',
+                  width: '95%',
                 }}>
-                {detailData?.name}
-              </Text>
+                <Text
+                  style={{
+                    color: '#202020',
+                    fontSize: 20,
+                    fontFamily: FONTS.AxiformaBold,
+                  }}>
+                  {detailData?.name}
+                </Text>
+                {detailData?.vegNonVeg && (
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      borderColor:
+                        detailData?.vegNonVeg?.toLowerCase() === 'veg'
+                          ? 'green'
+                          : 'red',
+                      padding: 4,
+                      height: 20,
+                      width: 20,
+                      marginTop: 4,
+                      marginHorizontal: 8,
+                    }}>
+                    <View
+                      style={{
+                        height: 10,
+                        width: 10,
+                        borderRadius: 10,
+                        backgroundColor:
+                          detailData?.vegNonVeg?.toLowerCase() === 'veg'
+                            ? 'green'
+                            : 'red',
+                      }}
+                    />
+                  </View>
+                )}
+              </View>
               <Text
                 style={{
                   color: '#5B5959',
                   fontSize: 14,
                   fontFamily: FONTS.RobotoMedium,
                 }}>
-                Restobar
+                Restrobar
               </Text>
             </View>
-
             <LinearGradient
               style={{
                 flexDirection: 'row',
@@ -410,10 +358,8 @@ const ClubDetails = props => {
             {detailData?.address}
           </Text>
           <Text style={styles.aboutText}>About the Club</Text>
-          <MenuCard itemdata={detailData} />
-
+          <MenuCard scrollToEnd={scrollToEnd} itemdata={detailData} />
           {/* <Text style={styles.aboutText}>Whats Happening Today </Text>
-
           <View style={{marginHorizontal: 0}}>
             <FlatList data={ENTRIES1} renderItem={_renderItem} />
           </View> */}
@@ -427,8 +373,6 @@ const ClubDetails = props => {
                 borderRadius: 40,
               }}
               start={{x: 0.4, y: 0}}
-              // start={{x: 0.1, y: 0}}
-              // end={{x: 1.1, y: 0.9}}
               colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
               <Text
                 style={{
@@ -441,40 +385,6 @@ const ClubDetails = props => {
             </LinearGradient>
           </TouchableOpacity>
           <Text style={[styles.aboutText, {marginTop: 31}]}>Menu</Text>
-          {/* <View style={styles.centeredView}>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                setModalVisible(!modalVisible);
-              }}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <FlatList
-                    horizontal={true}
-                    data={BeverageData}
-                    renderItem={BeverageDataRender}
-                  />
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                    }}>
-                    <CustomButton
-                      onclick={() => {
-                        setModalVisible(!modalVisible);
-                      }}
-                      title="Cancel"
-                      flex={1}
-                      bgColor="#fff"
-                      textColor="#000000"
-                    />
-                  </View>
-                </View>
-              </View>
-            </Modal>
-          </View> */}
           <ScrollView style={{flexDirection: 'row'}} horizontal>
             <View
               style={{
@@ -510,39 +420,6 @@ const ClubDetails = props => {
               visible={modalVisible}
               onRequestClose={() => setModalVisible(false)}
             />
-            {/* <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisibletwo}
-              onRequestClose={() => {
-                setModalVisibletwo(!modalVisibletwo);
-              }}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <FlatList
-                    horizontal={true}
-                    data={manuRenderData}
-                    renderItem={manuRender}
-                  />
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                    }}>
-                    <CustomButton
-                      onclick={() => {
-                        setModalVisibletwo(!modalVisibletwo);
-                      }}
-                      title="Cancel"
-                      flex={1}
-                      bgColor="#fff"
-                      textColor="#000000"
-                    />
-                   
-                  </View>
-                </View>
-              </View>
-            </Modal> */}
             <ImageView
               images={
                 detailData?.media?.foodMenuImages?.map(e => ({
@@ -594,48 +471,11 @@ const ClubDetails = props => {
           />
         </ImageBackground>
       </ScrollView>
-      {/* <FlatList
-              horizontal={true}
-              data={Tabs}
-              renderItem={_renderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-            /> */}
     </View>
   );
 };
 export default ClubDetails;
 const styles = StyleSheet.create({
-  // modal css
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.9,
-    backgroundColor: '#000',
-  },
-  modalView: {
-    // margin: 20,
-    width: wp(100),
-    height: hp(40),
-    // backgroundColor: '#fff',
-    paddingHorizontal: wp(4),
-    // alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  //
-
   aboutText: {
     color: '#202020',
     fontSize: 20,

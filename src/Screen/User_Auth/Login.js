@@ -50,7 +50,7 @@ const Login = props => {
     var data = JSON.stringify({
       username: email,
       password: password,
-      pushNotificationToken: '<device-token>',
+      pushNotificationToken: '',
     });
     const res = await ApiCall('api/login', 'POST', data);
     console.log('---res--Lohin-----', res);

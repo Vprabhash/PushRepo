@@ -20,7 +20,7 @@ import {
 import {COLORS, FONTS} from './constants';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const MenuCard = ({navigation, itemdata}, props) => {
+const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
   console.log('==itemdatamenu----', itemdata);
   const MenuData = [
     {
@@ -40,17 +40,17 @@ const MenuCard = ({navigation, itemdata}, props) => {
     },
     {
       menuIcon: ImagePath.menuUser2,
-      menuTitle: 'VEG & NON-VEG',
+      menuTitle: 'Menu',
       menuTitleText: itemdata?.vegNonVeg || 'N/A',
     },
     {
       menuIcon: ImagePath.menuUser3,
-      menuTitle: 'POP, BLUES, EDM',
+      menuTitle: 'Music Genre',
       menuTitleText: itemdata?.musicGenre || 'N/A',
     },
     {
       menuIcon:
-        itemdata?.stagsAllowed === 'Yes'
+        itemdata?.stagsAllowed?.toLowerCase() === 'yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Stags',
@@ -59,7 +59,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
 
     {
       menuIcon:
-        itemdata?.seeshaServe === 'Yes'
+        itemdata?.seeshaServe?.toLowerCase() === 'yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Sheesha',
@@ -67,7 +67,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
     },
     {
       menuIcon:
-        itemdata?.kidsFriendly === 'Yes'
+        itemdata?.kidsFriendly?.toLowerCase() === 'yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Kids Friendly',
@@ -76,7 +76,12 @@ const MenuCard = ({navigation, itemdata}, props) => {
   ];
   const MenuDataRenderItem = ({item, index}) => {
     return (
-      <View
+      <TouchableOpacity
+        disabled={item.menuTitle != 'Menu'}
+        activeOpacity={0.5}
+        onPress={() => {
+          item.menuTitle === 'Menu' && scrollToEnd();
+        }}
         style={{
           flex: 1,
           paddingVertical: 7,
@@ -94,7 +99,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

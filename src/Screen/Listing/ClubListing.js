@@ -164,7 +164,7 @@ const ClubListing = props => {
               </LinearGradient>
             </View>
             <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-              Retrobar
+              Restrobar
             </Text>
             <View
               style={{

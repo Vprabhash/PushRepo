@@ -31,7 +31,7 @@ function FilterData(props) {
         {backgroundColor: bgColor, paddingLeft: wp(2)},
       ]}>
       <Image style={styles.filterIcon} source={image} />
-      <Text style={[styles.locationText, {marginLeft: 6}]}>{label}</Text>
+      <Text style={[styles.locationText, {marginLeft: 7}]}>{label}</Text>
     </TouchableOpacity>
   );
 }
@@ -97,7 +97,7 @@ const FilterScreen = props => {
             width: 11,
             resizeMode: 'contain',
             tintColor: '#202020',
-            borderWidth: item.checked ? 0 : 0.5,
+            borderWidth: item.checked ? 0 : 0.3,
             borderColor: item.checked ? '#202020' : '#202020',
           }}
           source={item.checked ? ImagePath.checkSelected : ImagePath.checkBox}
@@ -267,11 +267,11 @@ const FilterScreen = props => {
                   <Image
                     style={[
                       styles.searchIcon,
-                      {borderWidth: 1, borderColor: '#000'},
+                      {borderWidth: 0.6, borderColor: '#000'},
                     ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text style={styles.selectAllText}>select All</Text>
+                  <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -312,11 +312,11 @@ const FilterScreen = props => {
                   <Image
                     style={[
                       styles.searchIcon,
-                      {borderWidth: 1, borderColor: '#000'},
+                      {borderWidth: 0.6, borderColor: '#000'},
                     ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text style={styles.selectAllText}>select All</Text>
+                  <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -357,11 +357,11 @@ const FilterScreen = props => {
                   <Image
                     style={[
                       styles.searchIcon,
-                      {borderWidth: 1, borderColor: '#000'},
+                      {borderWidth: 0.6, borderColor: '#000'},
                     ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text style={styles.selectAllText}>select All</Text>
+                  <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -402,11 +402,11 @@ const FilterScreen = props => {
                   <Image
                     style={[
                       styles.searchIcon,
-                      {borderWidth: 1, borderColor: '#000'},
+                      {borderWidth: 0.6, borderColor: '#000'},
                     ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text style={styles.selectAllText}>select All</Text>
+                  <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -447,11 +447,11 @@ const FilterScreen = props => {
                   <Image
                     style={[
                       styles.searchIcon,
-                      {borderWidth: 1, borderColor: '#000'},
+                      {borderWidth: 0.6, borderColor: '#000'},
                     ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text style={styles.selectAllText}>select All</Text>
+                  <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -492,11 +492,11 @@ const FilterScreen = props => {
                   <Image
                     style={[
                       styles.searchIcon,
-                      {borderWidth: 1, borderColor: '#000'},
+                      {borderWidth: 0.6, borderColor: '#000'},
                     ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text style={styles.selectAllText}>select All</Text>
+                  <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -537,11 +537,11 @@ const FilterScreen = props => {
                   <Image
                     style={[
                       styles.searchIcon,
-                      {borderWidth: 1, borderColor: '#000'},
+                      {borderWidth: 0.6, borderColor: '#000'},
                     ]}
                     source={ImagePath.checkBox}
                   />
-                  <Text style={styles.selectAllText}>select All</Text>
+                  <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
                   data={genreData}
@@ -611,8 +611,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   selectAllText: {
+    fontFamily: FONTS.InterMedium,
     color: '#202020',
-    marginLeft: 14,
+    marginLeft: 12,
   },
   filterIcon: {
     height: 17,
