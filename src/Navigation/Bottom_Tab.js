@@ -7,9 +7,28 @@ import Home from '../Screen/Dashboard/Home';
 import ClubListing from '../Screen/Listing/ClubListing';
 import EventListing from '../Screen/Listing/EventListing';
 import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ClubDetails from '../Screen/Details/ClubDetails';
 
 const Tab = createBottomTabNavigator();
 
+const Club = createNativeStackNavigator();
+const clubStack = () => {
+  return (
+    <Club.Navigator initialRouteName="ClubListing">
+      <Club.Screen
+        name="ClubListing"
+        component={ClubListing}
+        options={{headerShown: false}}
+      />
+      <Club.Screen
+        name="ClubDetails"
+        component={ClubDetails}
+        options={{headerShown: false}}
+      />
+    </Club.Navigator>
+  );
+};
 function BottomTab() {
   return (
     <Tab.Navigator
@@ -24,8 +43,8 @@ function BottomTab() {
           height: Platform.OS === 'ios' ? 100 : 60,
           borderRadius: 65,
           backgroundColor: '#fff',
+          overflow: 'hidden',
         },
-
         tabBarLabelStyle: {paddingBottom: 10, fontSize: 10, fontWeight: '700'},
       })}>
       <Tab.Screen
@@ -44,7 +63,7 @@ function BottomTab() {
       />
       <Tab.Screen
         name="ClubListing"
-        component={ClubListing}
+        component={clubStack}
         options={{
           headerShown: false,
           tabBarLabel: 'CLUB',
@@ -55,6 +74,23 @@ function BottomTab() {
                 {tintColor: focused ? '#9700AF' : 'black'},
               ]}
               source={focused ? ImagePath.clubActive : ImagePath.clubActive}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ArtistDetail"
+        component={ArtistDetail}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'ARTIST',
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={[
+                styles.tab_Icon,
+                {tintColor: focused ? '#9700AF' : 'black'},
+              ]}
+              source={focused ? ImagePath.artistIcon : ImagePath.artistIcon}
             />
           ),
         }}
@@ -72,23 +108,6 @@ function BottomTab() {
                 {tintColor: focused ? '#9700AF' : 'black'},
               ]}
               source={focused ? ImagePath.calendarIcon : ImagePath.calendarIcon}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="ArtistDetail"
-        component={ArtistDetail}
-        options={{
-          headerShown: false,
-          tabBarLabel: 'VENUE',
-          tabBarIcon: ({focused}) => (
-            <Image
-              style={[
-                styles.tab_Icon,
-                {tintColor: focused ? '#9700AF' : 'black'},
-              ]}
-              source={focused ? ImagePath.location : ImagePath.location}
             />
           ),
         }}

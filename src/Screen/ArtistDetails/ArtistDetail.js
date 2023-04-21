@@ -40,16 +40,21 @@ const ArtistDetail = props => {
         <View
           style={{
             marginHorizontal: 15,
-            borderBottomEndRadius: 16,
-            borderBottomStartRadius: 16,
-            backgroundColor: '#FFFFFF',
+            borderRadius: 16,
             elevation: 4,
+            overflow: 'hidden',
+            backgroundColor: 'white',
           }}>
           <Image
             style={{height: hp(29), width: '100%', borderRadius: 16}}
             source={item.mapIcon}
           />
-          <View style={{paddingHorizontal: wp(3), paddingVertical: hp(2)}}>
+          <View
+            style={{
+              paddingHorizontal: wp(3),
+              paddingVertical: hp(2),
+              backgroundColor: COLORS.white,
+            }}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
             <View
               style={{

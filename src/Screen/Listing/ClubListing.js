@@ -104,7 +104,7 @@ const ClubListing = props => {
 
   const renderFooter = () => {
     return loading ? (
-      <View style={{paddingVertical: 50}}>
+      <View style={{paddingTop: 50, paddingBottom: 130}}>
         <ActivityIndicator
           color={COLORS.primary}
           size={'small'}
@@ -130,7 +130,7 @@ const ClubListing = props => {
               props.navigation.navigate('ClubDetails', {listDetail: item});
             }}
             activeOpacity={0.7}>
-            {item?.media?.ambienceImages.length ? (
+            {item?.media?.ambienceImages ? (
               <Image
                 style={{
                   height: hp(29),
@@ -262,7 +262,6 @@ const ClubListing = props => {
             onMomentumScrollBegin={() => {
               setonEndReachedCalledDuringMomentum(false);
             }}
-            contentContainerStyle={{paddingBottom: 100}}
             onEndReached={fetchMoreData}
           />
         </View>

@@ -22,6 +22,7 @@ import {
 import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import Toast from 'react-native-simple-toast';
 import Swiper from 'react-native-swiper';
 import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -36,6 +37,7 @@ const height = Dimensions.get('window').height;
 const ClubDetails = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibletwo, setModalVisibletwo] = useState(false);
+  const [clubsNearby, setClubNearby] = useState([]);
   // letLeng
   console.log('+++++++++((((((((-----', Helper.location);
   // console.log(
@@ -54,6 +56,10 @@ const ClubDetails = props => {
       musicText: 'Bollywood, Commercial',
     },
   ];
+
+  useEffect(() => {
+    clubsNearbyDataApi();
+  }, []);
 
   const _renderItem = ({item, index}) => {
     return (
@@ -133,38 +139,56 @@ const ClubDetails = props => {
       Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
     },
   ];
-  const ClubNarDataApi = async () => {
-    const res = await ApiCall(
-      `api/nearby-clubs?coordinates=${Helper.location?.latitude},${Helper.location?.longitude}`,
-      'GET',
-    );
-    // setENTRIES1(res.data);
-    console.log('---res--club ClubNarData--artist---', res.data);
+  const clubsNearbyDataApi = async () => {
+    console.log('locationdata ---', Helper.location);
+    try {
+      const res = await ApiCall(
+        `api/nearby-clubs?coordinates=${Helper?.location?.latitude},${Helper?.location?.longitude}`,
+        'GET',
+      );
+      setClubNearby(res.data);
+      console.log('clubsnearbydata ----', res.data);
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+    }
   };
-  useEffect(() => {
-    ClubNarDataApi();
-  }, []);
+
   const ClubNarDatarenderItem = ({item, index}) => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.push('ClubDetails', {listDetail: item});
+        }}
         style={{
           marginLeft: index == 0 ? 15 : 0,
           marginRight: index == 2 ? 15 : 15,
           marginBottom: 10,
         }}>
-        <Image
-          style={{
-            height: hp(20),
-            width: wp(50),
-            // marginLeft: wp(4),
-            resizeMode: 'cover',
-            borderRadius: 10,
-          }}
-          source={item.menuImg}
-        />
-        <Text style={styles.titleText}>{item.title}</Text>
-        <Text style={styles.LoctionText}>{item.Loction}</Text>
-      </View>
+        {item?.media?.ambienceImages?.length ? (
+          <Image
+            style={{
+              height: hp(20),
+              width: wp(50),
+              resizeMode: 'cover',
+              borderRadius: 10,
+            }}
+            source={{uri: item?.media?.ambienceImages[0]}}
+          />
+        ) : (
+          <View
+            style={{
+              height: hp(20),
+              width: wp(50),
+              borderRadius: 10,
+              backgroundColor: COLORS.white,
+            }}
+          />
+        )}
+        <Text style={[styles.titleText, {width: wp(50)}]}>{item?.name}</Text>
+        <Text style={styles.LoctionText}>
+          {item?.locality}, {item?.city}
+        </Text>
+      </TouchableOpacity>
     );
   };
   const [BeverageData, setBeverageData] = useState(
@@ -222,7 +246,7 @@ const ClubDetails = props => {
   };
   return (
     <View style={{flex: 1}}>
-      <View style={[styles.inputMain, {marginTop: 50}]}>
+      <View style={[styles.inputMain, {marginTop: 50, marginBottom: 10}]}>
         <TextInput
           style={[styles.textInput, {color: COLORS.black}]}
           placeholder={'Search'}
@@ -306,8 +330,8 @@ const ClubDetails = props => {
                 }}
               />
             }>
-            {detailData?.media?.ambienceImages.length ? (
-              detailData?.media?.ambienceImages?.map(item => (
+            {detailData?.media?.ambienceImages?.length ? (
+              detailData?.media?.ambienceImages?.slice(0, 6)?.map(item => (
                 <View style={styles.slide}>
                   <Image style={styles.slideImg} source={{uri: item}} />
                 </View>
@@ -324,7 +348,7 @@ const ClubDetails = props => {
               marginTop: 5,
               marginHorizontal: 15,
             }}>
-            <View style={{marginTop: -5.5}}>
+            <View style={{marginTop: -5.5, width: '80%'}}>
               <Text
                 style={{
                   color: '#202020',
@@ -463,7 +487,11 @@ const ClubDetails = props => {
                     resizeMode: 'cover',
                     borderRadius: 10,
                   }}
-                  source={{uri: detailData?.media?.drinkMenuImages[0] || ''}}
+                  source={{
+                    uri: detailData?.media?.drinkMenuImages?.length
+                      ? detailData?.media?.drinkMenuImages[0]
+                      : '',
+                  }}
                 />
               </TouchableOpacity>
               <Text style={styles.titleText}>Beverages</Text>
@@ -522,7 +550,11 @@ const ClubDetails = props => {
                     resizeMode: 'cover',
                     borderRadius: 10,
                   }}
-                  source={{uri: detailData?.media?.foodMenuImages[0] || ''}}
+                  source={{
+                    uri: detailData?.media?.foodMenuImages?.length
+                      ? detailData?.media?.foodMenuImages[0]
+                      : '',
+                  }}
                 />
               </TouchableOpacity>
               <Text style={styles.titleText}>Food</Text>
@@ -531,22 +563,22 @@ const ClubDetails = props => {
           <Text style={[styles.aboutText]}>Clubs Nearby </Text>
           <FlatList
             horizontal={true}
-            data={ClubNarData}
+            data={clubsNearby}
             renderItem={ClubNarDatarenderItem}
+            ListEmptyComponent={
+              <View
+                style={{
+                  width: width,
+                  paddingBottom: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.titleText}>No Nearby Clubs Found</Text>
+              </View>
+            }
           />
         </ImageBackground>
       </ScrollView>
-      {/* <FlatList
-              horizontal={true}
-              data={Tabs}
-              renderItem={_renderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-            /> */}
     </View>
   );
 };
