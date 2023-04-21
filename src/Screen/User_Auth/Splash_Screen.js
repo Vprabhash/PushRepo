@@ -53,7 +53,6 @@ const Splash_Screen = props => {
             obj.latitude = position.coords.latitude;
             obj.longitude = position.coords.longitude;
             Helper.location = obj;
-            // console.log('---------obj: ', obj);
           },
           error => {
             console.log(error.code, error.message);

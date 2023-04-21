@@ -16,7 +16,7 @@ export default {
   settingIcon: require('./Image/settingIcon.png'),
   listImg: require('./Image/listImg.png'),
   listTwoImg: require('./Image/listTwoImg.png'),
-
+  artistIcon: require('./Image/artist.png'),
   redio: require('./Image/redio.png'),
   redioRed: require('./Image/redioRed.png'),
 

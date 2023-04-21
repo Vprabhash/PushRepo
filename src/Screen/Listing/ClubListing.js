@@ -17,6 +17,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Toast from 'react-native-simple-toast';
 import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -34,42 +35,55 @@ const ClubListing = props => {
   ] = useState(true);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const renderFooter = () => {
-    return (
-      <View>
-        {loading ? (
-          <ActivityIndicator
-            color={'#fff'}
-            size={'large'}
-            style={{marginLeft: 8}}
-          />
-        ) : null}
-      </View>
-    );
-  };
-
-  const list = async () => {
-    const res = await ApiCall('api/clubs', 'GET');
-    setClubs(res.data);
-    console.log('---res--club listin--artist---', res.data);
-  };
 
   useEffect(() => {
-    list();
-  }, []);
+    list(page);
+    console.log('Page', page);
+  }, [page]);
 
-  const fetchMoreData = () => {
-    if (!onEndReachedCalledDuringMomentum) {
-      list();
-      setLoading(true);
-      setonEndReachedCalledDuringMomentum(true);
-    } else {
+  const list = async page => {
+    try {
+      const res = await ApiCall(`api/clubs?page=${page}`, 'GET');
+      console.log('---res--club listin---', res.data);
+      if (Array.isArray(res?.data)) {
+        if (page === 1) {
+          setClubs(res?.data);
+        } else {
+          setClubs([...clubs, ...res?.data]);
+        }
+      } else {
+        Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
+      }
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+    } finally {
       setLoading(false);
     }
   };
 
+  const fetchMoreData = () => {
+    console.log('Called');
+    if (!onEndReachedCalledDuringMomentum) {
+      setLoading(true);
+      setPage(page + 1);
+      setonEndReachedCalledDuringMomentum(true);
+    }
+  };
+
+  const renderFooter = () => {
+    return loading ? (
+      <View style={{paddingTop: 50, paddingBottom: 130}}>
+        <ActivityIndicator
+          color={COLORS.primary}
+          size={'small'}
+          style={{marginLeft: 8}}
+        />
+      </View>
+    ) : null;
+  };
+
   const _renderItem = ({item, index}) => {
-    // console.log('==---item---', item);
+    console.log('---item---', item?.media);
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
@@ -84,20 +98,29 @@ const ClubListing = props => {
               props.navigation.navigate('ClubDetails', {listDetail: item});
             }}
             activeOpacity={0.7}>
-            <Image
-              style={{
-                height: hp(29),
-                width: '100%',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-                resizeMode: 'cover',
-              }}
-              source={{
-                uri: item?.media?.ambienceImages.length
-                  ? item?.media?.ambienceImages[0]
-                  : '',
-              }}
-            />
+            {item?.media?.ambienceImages ? (
+              <Image
+                style={{
+                  height: hp(29),
+                  width: '100%',
+                  borderTopRightRadius: 10,
+                  borderTopLeftRadius: 10,
+                  resizeMode: 'cover',
+                }}
+                source={{
+                  uri: item?.media?.ambienceImages[0],
+                }}
+              />
+            ) : (
+              <View
+                style={{
+                  height: hp(29),
+                  width: '100%',
+                  borderTopRightRadius: 10,
+                  borderTopLeftRadius: 10,
+                }}
+              />
+            )}
           </TouchableOpacity>
           <Image
             style={{
@@ -117,30 +140,30 @@ const ClubListing = props => {
               <LinearGradient
                 style={{
                   flexDirection: 'row',
-                  height: 20,
+                  height: 24,
                   width: 40,
-                  borderRadius: 8,
+                  borderRadius: 5,
                   justifyContent: 'center',
                   backgroundColor: 'red',
                   alignItems: 'center',
                 }}
                 start={{x: 0.3, y: 0.4}}
                 colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
+                <Image
+                  style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
+                  source={ImagePath.star}
+                />
                 <Text
                   style={{
-                    fontFamily: FONTS.DMSansBold,
+                    fontFamily: FONTS.RobotoBold,
                     color: '#FFFFFF',
                     fontSize: 12,
                   }}>
-                  {item?.zomatoRating}
+                  {item?.zomatoRating || '-'}
                 </Text>
-                <Image
-                  style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
-                  source={item.starIcon}
-                />
               </LinearGradient>
             </View>
-            <Text style={[styles.listinhText, {marginVertical: hp(0.3)}]}>
+            <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
               Retrobar
             </Text>
             <View
@@ -149,14 +172,11 @@ const ClubListing = props => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}>
-              <Text style={styles.listinhText}>{item?.city}</Text>
-              <Text
-                style={[
-                  styles.listinhText,
-                  {marginHorizontal: 10, width: '60%'},
-                ]}
-                numberOfLines={1}>
-                {item?.averageCost2People}
+              <Text style={styles.listingText}>
+                {`${item?.locality}, ${item?.city}`}
+              </Text>
+              <Text style={styles.listingText} numberOfLines={1}>
+                ₹{item?.cost}
               </Text>
             </View>
           </View>
@@ -182,7 +202,7 @@ const ClubListing = props => {
           />
         </View>
 
-        <ScrollView contentContainerStyle={{flexGrow: 1, marginHorizontal: 5}}>
+        <View style={{marginHorizontal: 5}}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}
@@ -190,7 +210,7 @@ const ClubListing = props => {
             translucent={true}
           />
 
-          <View style={[styles.inputMain, {marginTop: 10}]}>
+          <View style={[styles.inputMain, {marginTop: 10, marginBottom: 20}]}>
             <TextInput
               style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
               placeholderTextColor="rgba(0, 0, 0, 0.7)"
@@ -198,27 +218,21 @@ const ClubListing = props => {
               // onChangeText={onChangeText}
               // value={value}
             />
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
-                ('');
-              }}>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
               <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
             </TouchableOpacity>
           </View>
-          <SafeAreaView>
-            <FlatList
-              data={clubs}
-              renderItem={_renderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-            />
-          </SafeAreaView>
-        </ScrollView>
+          <FlatList
+            data={clubs}
+            renderItem={_renderItem}
+            ListFooterComponent={renderFooter}
+            onEndReachedThreshold={0.3}
+            onMomentumScrollBegin={() => {
+              setonEndReachedCalledDuringMomentum(false);
+            }}
+            onEndReached={fetchMoreData}
+          />
+        </View>
       </ImageBackground>
     </View>
   );
@@ -229,8 +243,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: FONTS.AxiformaBold,
     color: COLORS.black,
+    width: '85%',
   },
-  listinhText: {
+  listingText: {
     fontSize: 14,
     fontFamily: FONTS.RobotoRegular,
     color: '#575757',

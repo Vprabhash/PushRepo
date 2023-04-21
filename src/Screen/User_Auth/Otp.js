@@ -25,36 +25,46 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Otp = props => {
-  console.log('props signOtp--------', props.route.params);
   const [Otp, setOtp] = useState('');
-  const [password, setPassword] = useState(props?.route?.params?.password);
-  const [email, setemail] = useState(props?.route?.params?.email);
-  console.log(email, '-------');
+  const email = props.route?.params?.email;
+  const password = props.route?.params?.password;
+  console.log('props signOtp--------', props.route.params);
   const OtpApi = async () => {
-    var data = JSON.stringify({
+    const data = {
       email: email,
       password: password,
-    });
-    const res = await ApiCall('api/register', 'POST', data);
-    console.log('---res--otp-----', res);
-    if (res.ok == true) {
-      Helper.setData('userData', res);
-      props.navigation.reset({
-        index: 0,
-        routes: [{name: 'BottomTab'}],
-      });
+    };
+    try {
+      const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
+      console.log('---res--otp-----', res);
+      if (res.ok == true) {
+        Helper.setData('userData', res);
+        props.navigation.reset({
+          index: 0,
+          routes: [{name: 'BottomTab'}],
+        });
+      } else {
+        Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
+      }
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
+
   const resendOtp = async () => {
-    var data = {
+    const data = {
       email: email,
     };
-    const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
-    console.log('---send--otp-----', res);
-    if (res.ok == true) {
-      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
-    } else {
-      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+    try {
+      const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
+      console.log('---send--otp-----', res);
+      Toast.show(
+        res.message || 'Something went wrong',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
   return (
@@ -112,7 +122,7 @@ const Otp = props => {
               // props.navigation.navigate('Login');
             }}
             top={30}
-            title="Otp"
+            title="Submit OTP"
             bgColor="#000"
             textColor="#fff"
           />
@@ -122,7 +132,7 @@ const Otp = props => {
               justifyContent: 'center',
               marginTop: hp(4.2),
             }}>
-            <Text style={[styles.withText]}>Didn’t received pin </Text>
+            <Text style={[styles.withText]}>Didn’t receive pin </Text>
             <TouchableOpacity
               onPress={() => {
                 resendOtp();

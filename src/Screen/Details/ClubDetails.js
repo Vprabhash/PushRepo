@@ -22,6 +22,7 @@ import {
 import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import Toast from 'react-native-simple-toast';
 import Swiper from 'react-native-swiper';
 import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -36,15 +37,14 @@ const height = Dimensions.get('window').height;
 const ClubDetails = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibletwo, setModalVisibletwo] = useState(false);
+  const [clubsNearby, setClubNearby] = useState([]);
   // letLeng
   console.log('+++++++++((((((((-----', Helper.location);
   // console.log(
   //   '--ClubDetails--=----',
   //   props.route.params.listDetail?.menu,
   // );
-  const [detailData, setDetailData] = useState(
-    props?.route?.params?.listDetail,
-  );
+  const detailData = props?.route?.params?.listDetail;
 
   const ENTRIES1 = [
     {
@@ -56,6 +56,10 @@ const ClubDetails = props => {
       musicText: 'Bollywood, Commercial',
     },
   ];
+
+  useEffect(() => {
+    clubsNearbyDataApi();
+  }, []);
 
   const _renderItem = ({item, index}) => {
     return (
@@ -135,38 +139,56 @@ const ClubDetails = props => {
       Loction: '6.9 km| Sayaji Hotel, Vijay nagar',
     },
   ];
-  const ClubNarDataApi = async () => {
-    const res = await ApiCall(
-      `api/nearby-clubs?coordinates=${Helper.location?.latitude},${Helper.location?.longitude}`,
-      'GET',
-    );
-    // setENTRIES1(res.data);
-    console.log('---res--club ClubNarData--artist---', res.data);
+  const clubsNearbyDataApi = async () => {
+    console.log('locationdata ---', Helper.location);
+    try {
+      const res = await ApiCall(
+        `api/nearby-clubs?coordinates=${Helper?.location?.latitude},${Helper?.location?.longitude}`,
+        'GET',
+      );
+      setClubNearby(res.data);
+      console.log('clubsnearbydata ----', res.data);
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+    }
   };
-  useEffect(() => {
-    ClubNarDataApi();
-  }, []);
+
   const ClubNarDatarenderItem = ({item, index}) => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.push('ClubDetails', {listDetail: item});
+        }}
         style={{
           marginLeft: index == 0 ? 15 : 0,
           marginRight: index == 2 ? 15 : 15,
           marginBottom: 10,
         }}>
-        <Image
-          style={{
-            height: hp(20),
-            width: wp(50),
-            // marginLeft: wp(4),
-            resizeMode: 'cover',
-            borderRadius: 10,
-          }}
-          source={item.menuImg}
-        />
-        <Text style={styles.titleText}>{item.title}</Text>
-        <Text style={styles.LoctionText}>{item.Loction}</Text>
-      </View>
+        {item?.media?.ambienceImages?.length ? (
+          <Image
+            style={{
+              height: hp(20),
+              width: wp(50),
+              resizeMode: 'cover',
+              borderRadius: 10,
+            }}
+            source={{uri: item?.media?.ambienceImages[0]}}
+          />
+        ) : (
+          <View
+            style={{
+              height: hp(20),
+              width: wp(50),
+              borderRadius: 10,
+              backgroundColor: COLORS.white,
+            }}
+          />
+        )}
+        <Text style={[styles.titleText, {width: wp(50)}]}>{item?.name}</Text>
+        <Text style={styles.LoctionText}>
+          {item?.locality}, {item?.city}
+        </Text>
+      </TouchableOpacity>
     );
   };
   const [BeverageData, setBeverageData] = useState(
@@ -224,7 +246,7 @@ const ClubDetails = props => {
   };
   return (
     <View style={{flex: 1}}>
-      <View style={[styles.inputMain, {marginTop: 50}]}>
+      <View style={[styles.inputMain, {marginTop: 50, marginBottom: 10}]}>
         <TextInput
           style={[styles.textInput, {color: COLORS.black}]}
           placeholder={'Search'}
@@ -255,6 +277,8 @@ const ClubDetails = props => {
           resizeMode="cover"
           style={{height: '100%'}}>
           <Swiper
+            autoplay={true}
+            autoplayTimeout={4}
             style={[styles.wrapper]}
             containerStyle={{
               borderRadius: 8,
@@ -306,15 +330,15 @@ const ClubDetails = props => {
                 }}
               />
             }>
-            <View style={styles.slide}>
-              <Image style={styles.slideImg} source={ImagePath.swiperItem} />
-            </View>
-            <View style={styles.slide}>
-              <Image style={styles.slideImg} source={ImagePath.eventImg} />
-            </View>
-            <View style={styles.slide}>
-              <Image style={styles.slideImg} source={ImagePath.swiperItem} />
-            </View>
+            {detailData?.media?.ambienceImages?.length ? (
+              detailData?.media?.ambienceImages?.slice(0, 6)?.map(item => (
+                <View style={styles.slide}>
+                  <Image style={styles.slideImg} source={{uri: item}} />
+                </View>
+              ))
+            ) : (
+              <View />
+            )}
           </Swiper>
 
           <View
@@ -324,7 +348,7 @@ const ClubDetails = props => {
               marginTop: 5,
               marginHorizontal: 15,
             }}>
-            <View style={{marginTop: -5.5}}>
+            <View style={{marginTop: -5.5, width: '80%'}}>
               <Text
                 style={{
                   color: '#202020',
@@ -336,37 +360,37 @@ const ClubDetails = props => {
               <Text
                 style={{
                   color: '#5B5959',
-                  fontSize: 12,
+                  fontSize: 14,
                   fontFamily: FONTS.RobotoMedium,
                 }}>
-                Restobar no velue
+                Restobar
               </Text>
             </View>
 
             <LinearGradient
               style={{
                 flexDirection: 'row',
-                height: 20,
+                height: 24,
                 width: 40,
-                borderRadius: 8,
+                borderRadius: 5,
                 justifyContent: 'center',
                 backgroundColor: 'red',
                 alignItems: 'center',
               }}
               start={{x: 0.3, y: 0.5}}
               colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
+              <Image
+                style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
+                source={ImagePath.star}
+              />
               <Text
                 style={{
-                  fontFamily: FONTS.DMSansBold,
+                  fontFamily: FONTS.RobotoBold,
                   color: '#FFFFFF',
                   fontSize: 12,
                 }}>
                 {detailData?.zomatoRating}
               </Text>
-              <Image
-                style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
-                source={ImagePath.star}
-              />
             </LinearGradient>
           </View>
           <Text
@@ -376,11 +400,12 @@ const ClubDetails = props => {
               marginTop: 9,
               color: COLORS.black,
               marginHorizontal: 15,
+              marginTop: 20,
               fontFamily: FONTS.HankenGroteskReglur,
             }}>
             {detailData?.address}
           </Text>
-          <Text style={styles.aboutText}>About the Club </Text>
+          <Text style={styles.aboutText}>About the Club</Text>
           <MenuCard itemdata={detailData} />
 
           {/* <Text style={styles.aboutText}>Whats Happening Today </Text>
@@ -407,7 +432,7 @@ const ClubDetails = props => {
                   color: '#FFFFFF',
                   fontSize: 14,
                 }}>
-                Events For the month
+                Events for the month
               </Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -418,7 +443,6 @@ const ClubDetails = props => {
               transparent={true}
               visible={modalVisible}
               onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
                 setModalVisible(!modalVisible);
               }}>
               <View style={styles.centeredView}>
@@ -459,11 +483,15 @@ const ClubDetails = props => {
                 <Image
                   style={{
                     height: hp(20),
-                    width: wp(50),
+                    width: wp(44),
                     resizeMode: 'cover',
                     borderRadius: 10,
                   }}
-                  source={ImagePath.food}
+                  source={{
+                    uri: detailData?.media?.drinkMenuImages?.length
+                      ? detailData?.media?.drinkMenuImages[0]
+                      : '',
+                  }}
                 />
               </TouchableOpacity>
               <Text style={styles.titleText}>Beverages</Text>
@@ -473,7 +501,6 @@ const ClubDetails = props => {
               transparent={true}
               visible={modalVisibletwo}
               onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
                 setModalVisibletwo(!modalVisibletwo);
               }}>
               <View style={styles.centeredView}>
@@ -519,24 +546,37 @@ const ClubDetails = props => {
                 <Image
                   style={{
                     height: hp(20),
-                    width: wp(50),
+                    width: wp(44),
                     resizeMode: 'cover',
                     borderRadius: 10,
                   }}
-                  source={ImagePath.lightHoush}
+                  source={{
+                    uri: detailData?.media?.foodMenuImages?.length
+                      ? detailData?.media?.foodMenuImages[0]
+                      : '',
+                  }}
                 />
               </TouchableOpacity>
               <Text style={styles.titleText}>Food</Text>
             </View>
           </ScrollView>
           <Text style={[styles.aboutText]}>Clubs Nearby </Text>
-          <View style={{}}>
-            <FlatList
-              horizontal={true}
-              data={ClubNarData}
-              renderItem={ClubNarDatarenderItem}
-            />
-          </View>
+          <FlatList
+            horizontal={true}
+            data={clubsNearby}
+            renderItem={ClubNarDatarenderItem}
+            ListEmptyComponent={
+              <View
+                style={{
+                  width: width,
+                  paddingBottom: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.titleText}>No Nearby Clubs Found</Text>
+              </View>
+            }
+          />
         </ImageBackground>
       </ScrollView>
     </View>
@@ -574,8 +614,8 @@ const styles = StyleSheet.create({
     color: '#202020',
     fontSize: 20,
     marginLeft: 15,
-    marginBottom: hp(2.5),
-    marginTop: hp(4),
+    marginBottom: 10,
+    marginTop: 20,
     fontFamily: FONTS.AxiformaBold,
   },
   wrapper: {height: 223},

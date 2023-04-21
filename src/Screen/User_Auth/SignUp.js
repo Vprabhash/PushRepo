@@ -49,20 +49,23 @@ const SignUp = props => {
       return;
     }
     if (confirmPassword === password) {
-      var data = {
+      const data = {
         email: email,
       };
-      const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
-      console.log('---res--otp-----', res);
-      if (res.ok == true) {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
-
-        props.navigation.navigate('Otp', {
-          email: email,
-          password: password,
-        });
-      } else {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+      try {
+        const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
+        console.log('---res--otp-----', res);
+        if (res.ok == true) {
+          Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+          props.navigation.navigate('Otp', {
+            email: email,
+            password: password,
+          });
+        } else {
+          Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+        }
+      } catch (error) {
+        Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
       }
       // dispatch(
       //   signUp({
