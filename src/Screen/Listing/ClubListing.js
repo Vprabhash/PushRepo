@@ -27,39 +27,7 @@ import ApiCall from '../../redux/CommanApi';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = props => {
-  const [clubs, setClubs] = useState([
-    // {
-    //   mapIcon: ImagePath.barImg,
-    //   title: "Geoffrey's",
-    //   starIcon: ImagePath.star,
-    //   starText: '5',
-    //   barNamr: 'Retrobar',
-    //   barLocation: 'Colaba, Mumbai',
-    //   price: 'Rs. 3000 for 2',
-    //   heartIcon: ImagePath.heartIcon,
-    // },
-    // {
-    //   mapIcon: ImagePath.cocktailbar,
-    //   title: 'Bombay cocktail bar',
-    //   starIcon: ImagePath.star,
-    //   starText: '5',
-    //   barNamr: 'Barclub',
-    //   barLocation: 'Colaba, Mumbai',
-    //   price: 'Rs. 3000 for 2',
-    //   heartIcon: ImagePath.heartIcon,
-    // },
-    // {
-    //   mapIcon: ImagePath.Effingutbarclub,
-    //   title: 'Effingut',
-    //   starIcon: ImagePath.star,
-    //   starText: '5',
-    //   barNamr: 'club',
-    //   barLocation: 'Colaba, Mumbai',
-    //   price: 'Rs. 3000 for 2',
-    //   heartIcon: ImagePath.heartIcon,
-    // },
-  ]);
-
+  const [clubs, setClubs] = useState();
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -125,8 +93,8 @@ const ClubListing = props => {
                 resizeMode: 'cover',
               }}
               source={{
-                uri: item?._doc?.media?.ambienceImages.length
-                  ? item?._doc?.media?.ambienceImages[0]
+                uri: item?.media?.ambienceImages.length
+                  ? item?.media?.ambienceImages[0]
                   : '',
               }}
             />
@@ -145,7 +113,7 @@ const ClubListing = props => {
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.listinhHeading}>{item?._doc?.name}</Text>
+              <Text style={styles.listinhHeading}>{item?.name}</Text>
               <LinearGradient
                 style={{
                   flexDirection: 'row',
@@ -164,7 +132,7 @@ const ClubListing = props => {
                     color: '#FFFFFF',
                     fontSize: 12,
                   }}>
-                  {item?._doc?.zomatoRating}
+                  {item?.zomatoRating}
                 </Text>
                 <Image
                   style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
@@ -181,14 +149,14 @@ const ClubListing = props => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}>
-              <Text style={styles.listinhText}>{item?._doc?.city}</Text>
+              <Text style={styles.listinhText}>{item?.city}</Text>
               <Text
                 style={[
                   styles.listinhText,
                   {marginHorizontal: 10, width: '60%'},
                 ]}
                 numberOfLines={1}>
-                {item?._doc?.averageCost2People}
+                {item?.averageCost2People}
               </Text>
             </View>
           </View>

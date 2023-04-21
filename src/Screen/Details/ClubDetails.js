@@ -40,7 +40,7 @@ const ClubDetails = props => {
   console.log('+++++++++((((((((-----', Helper.location);
   // console.log(
   //   '--ClubDetails--=----',
-  //   props.route.params.listDetail?._doc?.menu,
+  //   props.route.params.listDetail?.menu,
   // );
   const [detailData, setDetailData] = useState(
     props?.route?.params?.listDetail,
@@ -170,7 +170,7 @@ const ClubDetails = props => {
     );
   };
   const [BeverageData, setBeverageData] = useState(
-    detailData?._doc?.media?.drinkMenuImages,
+    detailData?.media?.drinkMenuImages,
   );
   const BeverageDataRender = ({item, index}) => {
     return (
@@ -186,7 +186,7 @@ const ClubDetails = props => {
               }}
               source={{
                 uri: item,
-                //  detailData?._doc?.media?.drinkMenuImages[0],
+                //  detailData?.media?.drinkMenuImages[0],
               }}
             />
           )}
@@ -196,7 +196,7 @@ const ClubDetails = props => {
     );
   };
   const [manuRenderData, setManuRenderData] = useState(
-    detailData?._doc?.media?.foodMenuImages,
+    detailData?.media?.foodMenuImages,
   );
 
   const manuRender = ({item, index}) => {
@@ -213,7 +213,7 @@ const ClubDetails = props => {
               }}
               source={{
                 uri: item,
-                //  detailData?._doc?.media?.drinkMenuImages[0],
+                //  detailData?.media?.drinkMenuImages[0],
               }}
             />
           )}
@@ -331,7 +331,7 @@ const ClubDetails = props => {
                   fontSize: 20,
                   fontFamily: FONTS.AxiformaBold,
                 }}>
-                {detailData?._doc.name}
+                {detailData?.name}
               </Text>
               <Text
                 style={{
@@ -361,7 +361,7 @@ const ClubDetails = props => {
                   color: '#FFFFFF',
                   fontSize: 12,
                 }}>
-                {detailData?._doc?.zomatoRating}
+                {detailData?.zomatoRating}
               </Text>
               <Image
                 style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
@@ -378,7 +378,7 @@ const ClubDetails = props => {
               marginHorizontal: 15,
               fontFamily: FONTS.HankenGroteskReglur,
             }}>
-            {detailData?._doc?.address}
+            {detailData?.address}
           </Text>
           <Text style={styles.aboutText}>About the Club </Text>
           <MenuCard itemdata={detailData} />

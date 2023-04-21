@@ -26,52 +26,52 @@ const MenuCard = ({navigation, itemdata}, props) => {
     {
       menuIcon: ImagePath.watchIcon,
       menuTitle: 'Timings',
-      menuTitleText: itemdata?._doc?.timings,
+      menuTitleText: itemdata?.timings,
     },
     {
       menuIcon: ImagePath.menuUser,
-      menuTitle: `₹${itemdata?._doc?.cost}`,
-      menuTitleText: itemdata?._doc?.averageCost2People,
+      menuTitle: `₹${itemdata?.cost}`,
+      menuTitleText: itemdata?.averageCost2People,
     },
     {
       menuIcon: ImagePath.menuUser1,
       menuTitle: 'Happy Hours',
-      menuTitleText: itemdata?._doc?.happyHoursTimings,
+      menuTitleText: itemdata?.happyHoursTimings,
     },
     {
       menuIcon: ImagePath.menuUser2,
       menuTitle: 'VEG & NON-VEG',
-      menuTitleText: itemdata?._doc?.vegNonVeg,
+      menuTitleText: itemdata?.vegNonVeg,
     },
     {
       menuIcon: ImagePath.menuUser3,
       menuTitle: 'POP, BLUES, EDM',
-      menuTitleText: itemdata?._doc?.musicGenre,
+      menuTitleText: itemdata?.musicGenre,
     },
     {
       menuIcon:
-        itemdata?._doc?.stagsAllowed === 'Yes'
+        itemdata?.stagsAllowed === 'Yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Stags',
-      menuTitleText: itemdata?._doc?.stagsAllowed,
+      menuTitleText: itemdata?.stagsAllowed,
     },
 
     {
       menuIcon:
-        itemdata?._doc?.seeshaServe === 'Yes'
+        itemdata?.seeshaServe === 'Yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Sheesha',
-      menuTitleText: itemdata?._doc?.seeshaServe,
+      menuTitleText: itemdata?.seeshaServe,
     },
     {
       menuIcon:
-        itemdata?._doc?.kidsFriendly === 'Yes'
+        itemdata?.kidsFriendly === 'Yes'
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Kids Friendly',
-      menuTitleText: itemdata?._doc?.kidsFriendly,
+      menuTitleText: itemdata?.kidsFriendly,
     },
   ];
   const MenuDataRenderItem = ({item, index}) => {
@@ -141,7 +141,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
           activeOpacity={0.7}
           onPress={() => {
             Linking.openURL(
-              'google.navigation:q=100+101' + itemdata?._doc?.googleMapLink,
+              'google.navigation:q=100+101' + itemdata?.googleMapLink,
             );
           }}
           style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
@@ -153,7 +153,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
           onPress={() => {
             Linking.openURL(
               'http://api.whatsapp.com/send?phone=91' +
-                itemdata?._doc?.whatsappNumber,
+                itemdata?.whatsappNumber,
             );
           }}
           style={[styles.btnmain, {marginHorizontal: 1}]}>
@@ -164,7 +164,7 @@ const MenuCard = ({navigation, itemdata}, props) => {
           activeOpacity={0.7}
           onPress={() => {
             alert('ok');
-            Linking.openURL('tel:' + itemdata?._doc?.phoneNumber);
+            Linking.openURL('tel:' + itemdata?.phoneNumber);
           }}
           style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
           <Image style={styles.btnIcon} source={ImagePath.callIcon} />
