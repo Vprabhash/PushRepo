@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -11,6 +11,7 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -19,138 +20,134 @@ import {
 import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Toast from 'react-native-simple-toast';
 import {COLORS, FONTS} from '../../Components/constants';
+import ApiCall from '../../redux/CommanApi';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistDetail = props => {
-  const ENTRIES1 = [
-    {
-      mapIcon: ImagePath.aadat,
-      title: 'Worth The Shot',
-      singerName: 'By ',
-      singerNameTwo: 'DJ Snake',
-      singerNameIcon: ImagePath.Explore,
-      price: '₹1499',
-      priceText: 'onwards',
-    },
-  ];
+  const [artistList, setArtistList] = useState();
+  const [
+    onEndReachedCalledDuringMomentum,
+    setonEndReachedCalledDuringMomentum,
+  ] = useState(true);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
-  const _renderItem = ({item, index}) => {
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      clubsNearbyDataApi(page);
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [props.navigation]);
+  useEffect(() => {
+    // clubsNearbyDataApi(page);
+    // console.log('Page', page);
+  }, [page]);
+
+  const clubsNearbyDataApi = async page => {
+    console.log('------page :', page);
+    try {
+      const res = await ApiCall(`api/artists?page=${page}`, 'GET');
+      console.log('---resartists--->', res.data);
+      if (Array.isArray(res?.data)) {
+        if (page === 1) {
+          setArtistList(res?.data);
+        } else {
+          setArtistList([...artistList, ...res?.data]);
+        }
+      } else {
+        Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
+      }
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchMoreData = () => {
+    // clubsNearbyDataApi(page + 1);
+    if (!onEndReachedCalledDuringMomentum) {
+      setLoading(true);
+      setPage(page + 1);
+      setonEndReachedCalledDuringMomentum(true);
+    }
+  };
+  const renderFooter = () => {
+    return loading ? (
+      <View style={{paddingTop: 50, paddingBottom: 130}}>
+        <ActivityIndicator
+          color={COLORS.primary}
+          size={'small'}
+          style={{marginLeft: 8}}
+        />
+      </View>
+    ) : null;
+  };
+
+  const artistListRenderItem = ({item, index}) => {
+    console.log('---item---', item?.media);
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
           style={{
             marginHorizontal: 15,
-            borderRadius: 16,
+            borderRadius: 10,
+            backgroundColor: '#FFFFFF',
             elevation: 4,
-            overflow: 'hidden',
-            backgroundColor: 'white',
           }}>
-          <Image
-            style={{height: hp(29), width: '100%', borderRadius: 16}}
-            source={item.mapIcon}
-          />
-          <View
-            style={{
-              paddingHorizontal: wp(3),
-              paddingVertical: hp(2),
-              backgroundColor: COLORS.white,
-            }}>
-            <Text style={styles.listinhHeading}>{item.title}</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image
-                  style={{
-                    height: 17,
-                    width: 17,
-                    borderRadius: 10,
-                    resizeMode: 'contain',
-                  }}
-                  source={item.singerNameIcon}
-                />
-                <Text style={[styles.singerName]}>{item.singerName}</Text>
-                <Text
-                  style={[
-                    styles.singerName,
-                    {textDecorationLine: 'underline', marginLeft: 0},
-                  ]}>
-                  {item.singerNameTwo}
-                </Text>
-              </View>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('ArtistEventDetail', {
+                artistListDetail: item,
+              });
+            }}
+            activeOpacity={0.7}>
+            {item?.images ? (
+              <Image
+                style={{
+                  height: hp(29),
+                  width: '100%',
+                  borderTopRightRadius: 10,
+                  borderTopLeftRadius: 10,
+                  resizeMode: 'cover',
+                }}
+                source={{
+                  uri: item?.images[0],
+                }}
+              />
+            ) : (
               <View
                 style={{
-                  backgroundColor: '#FAFAFA',
-                  borderWidth: 1,
-                  alignItems: 'center',
-                  borderColor: 'rgba(239, 239, 239, 1)',
-                  paddingHorizontal: 5,
-                  paddingVertical: 2,
-                  borderRadius: 5,
-                }}>
-                <Text
-                  style={{
-                    fontFamily: FONTS.AxiformaBold,
-                    fontSize: 16,
-                    marginBottom: -4,
-                    color: '#292929',
-                  }}>
-                  {item.price}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: FONTS.AxiformaRegular,
-                    fontSize: 12,
-                    color: '#292929',
-                  }}>
-                  {item.priceText}
-                </Text>
-              </View>
+                  height: hp(29),
+                  width: '100%',
+                  borderTopRightRadius: 10,
+                  borderTopLeftRadius: 10,
+                }}
+              />
+            )}
+          </TouchableOpacity>
+
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+            <View>
+              <Text style={styles.listinhHeading}>{item?.name}</Text>
             </View>
+            <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+              {item.musicGenre}
+            </Text>
           </View>
         </View>
       </View>
     );
   };
-  const TimeData = [
-    {
-      mapIcon: ImagePath.watchIcon,
-      title: 'Fri Mar 24 at 8:00 PM   ',
-    },
-    {
-      mapIcon: ImagePath.location,
-      title: 'BoomBox, Lucknowx',
-      dis: '13th Floor The Summit, Vibhuti Khand, Lucknow, Uttar Pradesh 226010',
-    },
-  ];
-  const TimerenderItem = ({item, index}) => {
+
+  const EmptyListMessage = () => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          padding: 5,
-          alignItems: index == 1 ? 'flex-start' : 'center',
-          marginTop: index == 1 ? 4 : 0,
-          paddingLeft: 16,
-        }}>
-        <Image
-          style={{
-            height: 17,
-            tintColor: COLORS.black,
-            width: 17,
-            resizeMode: 'contain',
-          }}
-          source={item.mapIcon}
-        />
-        <View style={{flex: 0.7}}>
-          <Text style={styles.listinhHeading1}>{item.title}</Text>
-          {item.dis && <Text style={styles.dicText}>{item.dis}</Text>}
-        </View>
-      </View>
+      <Text style={{color: '#000', textAlign: 'center', marginTop: 50}}>
+        No Data Found
+      </Text>
     );
   };
   return (
@@ -165,7 +162,7 @@ const ArtistDetail = props => {
         }}>
         <Header
           Back_Arrow={ImagePath.goBack}
-          titalTwo="Artist Details"
+          titalTwo="Artist"
           iconHeight={13}
           iconWidth={30}
           onclick={() => {
@@ -175,7 +172,7 @@ const ArtistDetail = props => {
           //  profileIcon={ImagePath.profilePic}
         />
       </View>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView contentContainerStyle={{flexGrow: 1, flex: 1}}>
         <StatusBar
           barStyle="dark-content"
           hidden={false}
@@ -186,34 +183,19 @@ const ArtistDetail = props => {
           source={ImagePath.Azzir_Bg}
           resizeMode="cover"
           style={{height: '100%'}}>
-          <SafeAreaView>
-            <FlatList data={ENTRIES1} renderItem={_renderItem} />
-          </SafeAreaView>
-          <Text style={styles.aboutText}>Timing & Venue </Text>
-
-          <View
-            style={{
-              marginHorizontal: 15,
-              backgroundColor: '#FFFFFF',
-              elevation: 5,
-              borderRadius: 10,
-            }}>
-            <FlatList data={TimeData} renderItem={TimerenderItem} />
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                borderTopWidth: 1,
-                borderTopColor: '#9D9D9D',
-                paddingVertical: 6,
-                marginTop: 10,
-                alignItems: 'center',
-              }}>
-              <Image style={styles.btnIcon} source={ImagePath.direction} />
-              <Text style={styles.buttonText}>Get Direction</Text>
-            </TouchableOpacity>
-          </View>
+          {/* <SafeAreaView> */}
+          <FlatList
+            data={artistList}
+            renderItem={artistListRenderItem}
+            ListFooterComponent={renderFooter}
+            onEndReachedThreshold={0.3}
+            onMomentumScrollBegin={() => {
+              setonEndReachedCalledDuringMomentum(false);
+              // console.log('----rechBegin');
+            }}
+            onEndReached={fetchMoreData}
+            ListEmptyComponent={EmptyListMessage}
+          />
         </ImageBackground>
       </ScrollView>
     </View>
@@ -253,6 +235,11 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontFamily: FONTS.AxiformaBold,
     color: '#5B5959',
+  },
+  listingText: {
+    fontSize: 14,
+    fontFamily: FONTS.RobotoRegular,
+    color: '#575757',
   },
   listinhHeading: {
     fontSize: 24,

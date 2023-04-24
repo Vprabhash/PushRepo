@@ -20,7 +20,6 @@ import {
 import Toast from 'react-native-simple-toast';
 import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
@@ -40,7 +39,15 @@ const ClubListing = props => {
     list(page);
     console.log('Page', page);
   }, [page]);
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      list(1);
+      setSearchValue('');
+    });
 
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [props.navigation]);
   const list = async page => {
     try {
       const res = await ApiCall(`api/clubs?page=${page}`, 'GET');
@@ -48,6 +55,7 @@ const ClubListing = props => {
       if (Array.isArray(res?.data)) {
         if (page === 1) {
           setClubs(res?.data);
+          setTeamArray(res.data);
         } else {
           setClubs([...clubs, ...res?.data]);
         }
@@ -62,7 +70,6 @@ const ClubListing = props => {
   };
 
   const fetchMoreData = () => {
-    console.log('Called');
     if (!onEndReachedCalledDuringMomentum) {
       setLoading(true);
       setPage(page + 1);
@@ -70,6 +77,26 @@ const ClubListing = props => {
     }
   };
   const [searchValue, setSearchValue] = useState('');
+  const [teamArray, setTeamArray] = useState([]);
+
+  const searchApi = async text => {
+    // const res = await ApiCall(`api/search?q=${text}`, 'GET');
+    // console.log('---searchApi--->', JSON.stringify(res));
+    // setClubs(res?.data.clubs);
+
+    if (text) {
+      const newData = teamArray.filter(function (item) {
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setClubs(newData);
+      setSearchValue(text);
+    } else {
+      setClubs(teamArray);
+      setSearchValue(text);
+    }
+  };
 
   const renderFooter = () => {
     return loading ? (
@@ -84,7 +111,6 @@ const ClubListing = props => {
   };
 
   const _renderItem = ({item, index}) => {
-    console.log('---item---', item?.media);
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
@@ -186,6 +212,14 @@ const ClubListing = props => {
     );
   };
 
+  const EmptyListMessage = () => {
+    return (
+      <Text style={{color: '#000', textAlign: 'center', marginTop: 50}}>
+        No Data Found
+      </Text>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -217,11 +251,15 @@ const ClubListing = props => {
               placeholderTextColor="rgba(0, 0, 0, 0.7)"
               placeholder={'Search'}
               onChangeText={text => {
-                setSearchValue(text);
+                searchApi(text);
               }}
               value={searchValue}
             />
-            <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                // searchApi();
+              }}>
               <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
             </TouchableOpacity>
           </View>
@@ -234,6 +272,7 @@ const ClubListing = props => {
               setonEndReachedCalledDuringMomentum(false);
             }}
             onEndReached={fetchMoreData}
+            ListEmptyComponent={EmptyListMessage}
           />
         </View>
       </ImageBackground>

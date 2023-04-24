@@ -71,7 +71,9 @@ export default {
   callIcon: require('./Image/callIcon.png'),
   lightHoush: require('./Image/lightHoush.png'),
   goBack: require('./Image/goBack.png'),
-  //
+  Instagram: require('./Image/Instagram.png'),
+  youtube: require('./Image/youtube.png'),
+  //youtube.png
 
   aadat: require('./Image/aadat.png'),
   play_pause: require('./Image/play_pause.png'),

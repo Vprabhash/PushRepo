@@ -18,6 +18,7 @@ import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
 import FilterScreen from '../Components/Filter/FilterScreen';
 import Home from '../Screen/Dashboard/Home';
 import ClubDetails from '../Screen/Details/ClubDetails';
+import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -81,6 +82,11 @@ function Routes() {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="ArtistEventDetail"
+          component={ArtistEventDetail}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="ArtistPlayingDetail"
           component={ArtistPlayingDetail}
           options={{headerShown: false}}
@@ -90,7 +96,6 @@ function Routes() {
           component={Home}
           options={{headerShown: false}}
         />
-
         <Stack.Screen
           name="ClubDetails"
           component={ClubDetails}
