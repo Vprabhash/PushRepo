@@ -34,6 +34,7 @@ const ArtistDetail = props => {
       priceText: 'onwards',
     },
   ];
+
   const _renderItem = ({item, index}) => {
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>

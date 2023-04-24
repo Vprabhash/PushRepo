@@ -69,6 +69,7 @@ const ClubListing = props => {
       setonEndReachedCalledDuringMomentum(true);
     }
   };
+  const [searchValue, setSearchValue] = useState('');
 
   const renderFooter = () => {
     return loading ? (
@@ -215,8 +216,10 @@ const ClubListing = props => {
               style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
               placeholderTextColor="rgba(0, 0, 0, 0.7)"
               placeholder={'Search'}
-              // onChangeText={onChangeText}
-              // value={value}
+              onChangeText={text => {
+                setSearchValue(text);
+              }}
+              value={searchValue}
             />
             <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
               <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
