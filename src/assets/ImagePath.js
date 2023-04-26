@@ -64,6 +64,7 @@ export default {
   prew: require('./Image/prew.png'),
   next: require('./Image/next.png'),
   swiperItem: require('./Image/swiperItem.png'),
+  profile: require('./Image/profile.png'),
 
   direction: require('./Image/direction.png'),
   WhatsApp: require('./Image/WhatsApp.png'),
@@ -73,7 +74,11 @@ export default {
   goBack: require('./Image/goBack.png'),
   Instagram: require('./Image/Instagram.png'),
   youtube: require('./Image/youtube.png'),
-  //youtube.png
+  profileEdit: require('./Image/profileEdit.png'),
+  rightIcon: require('./Image/rightIcon.png'),
+  //
+  //
+  EditIcon: require('./Image/EditIcon.png'),
 
   aadat: require('./Image/aadat.png'),
   play_pause: require('./Image/play_pause.png'),

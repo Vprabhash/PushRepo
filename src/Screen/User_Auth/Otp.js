@@ -25,29 +25,45 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Otp = props => {
+  console.log('---proofogetmail', props.route.params.fogetmail);
+  const fogetmail = props.route.params.fogetmail;
   const [Otp, setOtp] = useState('');
   const email = props.route?.params?.email;
   const password = props.route?.params?.password;
   console.log('props signOtp--------', props.route.params);
   const OtpApi = async () => {
-    const data = {
-      email: email,
-      password: password,
-    };
-    try {
-      const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
-      console.log('---res--otp-----', res);
-      if (res.ok == true) {
-        Helper.setData('userData', res);
-        props.navigation.reset({
-          index: 0,
-          routes: [{name: 'BottomTab'}],
-        });
-      } else {
-        Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
+    if (Otp.length == 0) {
+      Toast.show('Enter Otp', Toast.LONG, Toast.BOTTOM);
+      return;
+    } else {
+      const data = {
+        email: email,
+        otp: Otp,
+        password: password,
+      };
+      try {
+        const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
+        console.log('---res--otp-----', res);
+        if (res.ok == true) {
+          Helper.setData('userData', res);
+          if (fogetmail == 'otp') {
+            props.navigation.navigate('ResetPassword', {
+              otp: Otp,
+              email: fogetmail,
+            });
+            // props.navigation.navigate('ResetPassword',{otp:Otp}),
+          } else {
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'BottomTab'}],
+            });
+          }
+        } else {
+          Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
+        }
+      } catch (error) {
+        Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
       }
-    } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 

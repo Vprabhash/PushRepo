@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
@@ -19,10 +20,13 @@ import {
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
-
+import Toast from 'react-native-simple-toast';
+import ApiCall from '../../redux/CommanApi';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const ResetPassword = props => {
+const ResetPassword = ({route, navigation}) => {
+  const [email, setEmail] = useState(route.params.email);
+  const Otp = route.params.otp;
   const [creatPassword, setCreatPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [eyeShow, setEyeShow] = useState('');
@@ -32,6 +36,37 @@ const ResetPassword = props => {
       setEyeShow(!eyeShow);
     } else {
       setEyeShow2(!eyeShow2);
+    }
+  };
+
+  const resetPassApi = async () => {
+    const minPasswordLength = 6;
+    if (creatPassword.length < minPasswordLength) {
+      Alert.alert(
+        'Invalid password',
+        `Password must be at least ${minPasswordLength} characters long.`,
+      );
+      return;
+    }
+    if (creatPassword === newPassword) {
+      var data = JSON.stringify({
+        email: email,
+        otp: Otp,
+        password: newPassword,
+      });
+      const res = await ApiCall('api/reset-password', 'POST', data);
+      console.log('---res--Lohin-----', res);
+      if (res.ok == true) {
+        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+        route.navigation.navigate('PasswordSuccessful');
+      } else {
+        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+      }
+    } else {
+      Alert.alert(
+        "Passwords don't match",
+        'Please make sure the passwords match.',
+      );
     }
   };
 
@@ -102,7 +137,8 @@ const ResetPassword = props => {
             />
             <CustomButton
               onclick={() => {
-                props.navigation.navigate('PasswordSuccessful');
+                resetPassApi();
+                // props.navigation.navigate('PasswordSuccessful');
               }}
               top={40}
               title="Submit"

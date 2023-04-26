@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Alert,
   View,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
@@ -19,11 +20,36 @@ import {
 } from 'react-native-responsive-screen';
 import {COLORS, FONTS} from '../../Components/constants';
 import LinearGradient from 'react-native-linear-gradient';
+import ApiCall from '../../redux/CommanApi';
+import Toast from 'react-native-simple-toast';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const ForgetPassword = props => {
+const ForgetPassword = ({route, navigation}) => {
   const [email, setEmail] = useState('');
+
+  const forgotPassApi = async () => {
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!emailRegex.test(email)) {
+      Alert.alert('Invalid email', 'Please enter a valid email address.');
+      return;
+    }
+    var data = JSON.stringify({
+      email: email,
+    });
+    const res = await ApiCall('api/forgot-password', 'POST', data);
+    console.log('--resForgetpass-----', res);
+    if (res.ok == true) {
+      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+
+      navigation.navigate('Otp', {
+        forgetmail: 'otp',
+        email: email,
+      });
+    } else {
+      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
   return (
     <View style={{flex: 1}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -81,7 +107,8 @@ const ForgetPassword = props => {
             <View>
               <CustomButton
                 onclick={() => {
-                  props.navigation.navigate('ResetPassword');
+                  forgotPassApi();
+                  // props.navigation.navigate('ResetPassword');
                 }}
                 top={30}
                 title="Submit"

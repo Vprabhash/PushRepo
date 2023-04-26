@@ -166,36 +166,34 @@ const ClubDetails = props => {
   };
   return (
     <View style={{flex: 1}}>
-      <View style={[styles.inputMain, {marginTop: 50, marginBottom: 10}]}>
-        <TextInput
-          style={[styles.textInput, {color: COLORS.black}]}
-          placeholder={'Search'}
-          placeholderTextColor="#A3A3A3"
-          // onChangeText={onChangeText}
-          // value={value}
-        />
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => {
-            ('');
-          }}>
-          <Image
-            source={ImagePath.searchIcon}
-            style={[styles.iconStyle, {tintColor: '#A3A3A3'}]}
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: '100%'}}>
+        <View style={[styles.inputMain, {marginTop: 50, marginBottom: 10}]}>
+          <TextInput
+            style={[styles.textInput, {color: COLORS.black}]}
+            placeholder={'Search'}
+            placeholderTextColor="#A3A3A3"
+            // onChangeText={onChangeText}
+            // value={value}
           />
-        </TouchableOpacity>
-      </View>
-      <ScrollView ref={scrollRef} contentContainerStyle={{flexGrow: 1}}>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
-        />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%'}}>
+          <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
+            <Image
+              source={ImagePath.searchIcon}
+              style={[styles.iconStyle, {tintColor: '#A3A3A3'}]}
+            />
+          </TouchableOpacity>
+        </View>
+
+        <ScrollView ref={scrollRef} contentContainerStyle={{flexGrow: 1}}>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={false}
+            backgroundColor="transparent"
+            translucent={true}
+          />
+
           <Swiper
             autoplay={true}
             autoplayTimeout={4}
@@ -469,8 +467,8 @@ const ClubDetails = props => {
               </View>
             }
           />
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };

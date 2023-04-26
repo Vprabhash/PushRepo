@@ -76,6 +76,17 @@ const ClubListing = props => {
       setonEndReachedCalledDuringMomentum(true);
     }
   };
+  const renderFooter = () => {
+    return loading ? (
+      <View style={{paddingTop: 50, paddingBottom: 130}}>
+        <ActivityIndicator
+          color={COLORS.primary}
+          size={'small'}
+          style={{marginLeft: 8}}
+        />
+      </View>
+    ) : null;
+  };
   const [searchValue, setSearchValue] = useState('');
   const [teamArray, setTeamArray] = useState([]);
 
@@ -96,18 +107,6 @@ const ClubListing = props => {
       setClubs(teamArray);
       setSearchValue(text);
     }
-  };
-
-  const renderFooter = () => {
-    return loading ? (
-      <View style={{paddingTop: 50, paddingBottom: 130}}>
-        <ActivityIndicator
-          color={COLORS.primary}
-          size={'small'}
-          style={{marginLeft: 8}}
-        />
-      </View>
-    ) : null;
   };
 
   const _renderItem = ({item, index}) => {
@@ -213,11 +212,7 @@ const ClubListing = props => {
   };
 
   const EmptyListMessage = () => {
-    return (
-      <Text style={{color: '#000', textAlign: 'center', marginTop: 50}}>
-        No Data Found
-      </Text>
-    );
+    return <Text style={styles.noDataText}>No Data Found</Text>;
   };
 
   return (
@@ -226,17 +221,6 @@ const ClubListing = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
-          <Header
-            Back_Arrow={ImagePath.manueIcon}
-            tital="Near me"
-            titalTwo="Sector 52, Noida, UP 435464"
-            iconHeight={12}
-            iconWidth={18}
-            profileIcon={ImagePath.profilePic}
-          />
-        </View>
-
         <View style={{marginHorizontal: 5}}>
           <StatusBar
             barStyle="dark-content"
@@ -245,7 +229,7 @@ const ClubListing = props => {
             translucent={true}
           />
 
-          <View style={[styles.inputMain, {marginTop: 10, marginBottom: 20}]}>
+          <View style={[styles.inputMain, {marginTop: 50, marginBottom: 20}]}>
             <TextInput
               style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
               placeholderTextColor="rgba(0, 0, 0, 0.7)"
@@ -263,6 +247,16 @@ const ClubListing = props => {
               <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            style={[styles.fllter]}
+            activeOpacity={0.5}
+            onPress={() => {
+              props.navigation.navigate('FilterScreen');
+            }}>
+            <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
+            <Text style={styles.filtersText}>Filters</Text>
+          </TouchableOpacity>
+
           <FlatList
             data={clubs}
             renderItem={_renderItem}
@@ -281,6 +275,37 @@ const ClubListing = props => {
 };
 export default ClubListing;
 const styles = StyleSheet.create({
+  filtersText: {
+    fontSize: 12,
+    color: COLORS.black,
+    fontFamily: FONTS.RobotoMedium,
+  },
+  fllter: {
+    backgroundColor: COLORS.white,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 16,
+    width: wp(23),
+    marginBottom: 20,
+    marginHorizontal: 15,
+    borderRadius: 8,
+    paddingHorizontal: wp(4),
+    height: hp(4),
+  },
+  iconStyle: {
+    tintColor: COLORS.black,
+    width: 16,
+    resizeMode: 'contain',
+    height: 16,
+  },
+  noDataText: {
+    color: COLORS.black,
+    fontFamily: FONTS.AxiformaRegular,
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: hp(1),
+  },
   listinhHeading: {
     fontSize: 18,
     fontFamily: FONTS.AxiformaBold,
@@ -298,7 +323,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     elevation: 16,
-    marginHorizontal: wp(2.5),
+    marginHorizontal: 10,
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),

@@ -30,6 +30,7 @@ import {LocationApi} from '../../redux/reducers/clubLocationSlice';
 import {upComingEventApi} from '../../redux/reducers/upComingEventSlice';
 import ApiCall from '../../redux/CommanApi';
 import {ARTIST} from '../../services/Apis';
+import Helper from '../../Components/Helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -82,13 +83,13 @@ const Home = props => {
       </View>
     );
   };
-  const location = async () => {
-    let data = {
-      page: page + 1,
-    };
-    const res = await ApiCall(ARTIST, 'GET', data);
-    console.log('---res--logIn--artist---', res);
-  };
+  // const location = async () => {
+  //   let data = {
+  //     page: page + 1,
+  //   };
+  //   const res = await ApiCall(ARTIST, 'GET', data);
+  //   console.log('---res----', res);
+  // };
 
   const fetchMoreData = () => {
     if (!onEndReachedCalledDuringMomentum) {
@@ -107,24 +108,24 @@ const Home = props => {
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail'},
   ];
 
-  const _renderItem = ({item, index}) => {
-    return (
-      <View style={{}}>
-        <Image
-          style={{
-            marginRight: index == 4 ? 15 : 0,
-            height: hp(20),
-            width: wp(50),
-            marginLeft: 15,
-            resizeMode: 'cover',
-            borderRadius: 10,
-          }}
-          source={item.mapIcon}
-        />
-        <Text style={styles.titleText}>{item.title}</Text>
-      </View>
-    );
-  };
+  // const _renderItem = ({item, index}) => {
+  //   return (
+  //     <View style={{}}>
+  //       <Image
+  //         style={{
+  //           marginRight: index == 4 ? 15 : 0,
+  //           height: hp(20),
+  //           width: wp(50),
+  //           marginLeft: 15,
+  //           resizeMode: 'cover',
+  //           borderRadius: 10,
+  //         }}
+  //         source={item.mapIcon}
+  //       />
+  //       <Text style={styles.titleText}>{item.title}</Text>
+  //     </View>
+  //   );
+  // };
   const [onEndReachedCalledDuringArtist, setonEndReachedCalledDuringArtist] =
     useState(true);
   const [artistPage, setArtistPage] = useState(1);
@@ -407,6 +408,61 @@ const Home = props => {
       </View>
     );
   };
+  const clubsNearbyDataApi = async () => {
+    console.log('locationdata ---', Helper.location);
+    try {
+      const res = await ApiCall(
+        `api/nearby-clubs?coordinates=${Helper?.location?.latitude},${Helper?.location?.longitude}`,
+        'GET',
+      );
+      setClubNearby(res.data);
+      console.log('clubsnearbydata ----', res.data);
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
+  useEffect(() => {
+    clubsNearbyDataApi();
+  }, []);
+  const [clubsNearby, setClubNearby] = useState();
+  const ClubNarDatarenderItem = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.push('ClubDetails', {listDetail: item});
+        }}
+        style={{
+          marginLeft: index == 0 ? 15 : 0,
+          marginRight: index == 2 ? 15 : 15,
+          marginBottom: 10,
+        }}>
+        {item?.media?.ambienceImages?.length ? (
+          <Image
+            style={{
+              height: hp(20),
+              width: wp(50),
+              resizeMode: 'cover',
+              borderRadius: 10,
+            }}
+            source={{uri: item?.media?.ambienceImages[0]}}
+          />
+        ) : (
+          <View
+            style={{
+              height: hp(20),
+              width: wp(50),
+              borderRadius: 10,
+              backgroundColor: COLORS.white,
+            }}
+          />
+        )}
+        <Text style={[styles.titleText1, {width: wp(50)}]}>{item?.name}</Text>
+        <Text style={styles.LoctionText}>
+          {item?.locality}, {item?.city}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -420,6 +476,9 @@ const Home = props => {
             titalTwo="Sector 52, Noida, UP 435464"
             iconHeight={12}
             iconWidth={18}
+            onProfileClick={() => {
+              props.navigation.navigate('Profile');
+            }}
             profileIcon={ImagePath.profilePic}
           />
         </View>
@@ -448,7 +507,7 @@ const Home = props => {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
             onPress={() => {
@@ -456,7 +515,7 @@ const Home = props => {
             }}>
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View style={styles.hedingTextMain}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
@@ -486,6 +545,28 @@ const Home = props => {
           <SafeAreaView style={{}}>
             <FlatList
               horizontal={true}
+              data={clubsNearby}
+              renderItem={ClubNarDatarenderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    width: width,
+                    paddingBottom: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.titleText1}>No Nearby Clubs Found</Text>
+                </View>
+              }
+            />
+            {/* <FlatList
+              horizontal={true}
               data={Tabs}
               renderItem={_renderItem}
               ListFooterComponent={renderFooter}
@@ -494,7 +575,7 @@ const Home = props => {
                 setonEndReachedCalledDuringMomentum(false);
               }}
               onEndReached={fetchMoreData}
-            />
+            /> */}
           </SafeAreaView>
           <SafeAreaView>
             <View style={styles.hedingTextMain}>
@@ -543,7 +624,7 @@ const Home = props => {
             <Text style={styles.cardText}>UP COMING EVENTS</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
-          <SafeAreaView style={{marginBottom: 20}}>
+          <SafeAreaView style={{marginBottom: 10}}>
             <FlatList
               horizontal={true}
               data={UpcomingData}
@@ -556,6 +637,26 @@ const Home = props => {
               onEndReached={fetchUpcomingData}
             />
           </SafeAreaView>
+          {/* <Text style={[styles.aboutText]}>Clubs Nearby </Text> */}
+
+          {/* <SafeAreaView style={{marginBottom: 20}}>
+            <FlatList
+              horizontal={true}
+              data={clubsNearby}
+              renderItem={ClubNarDatarenderItem}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    width: width,
+                    paddingBottom: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.titleText1}>No Nearby Clubs Found</Text>
+                </View>
+              }
+            />
+          </SafeAreaView> */}
         </ScrollView>
       </ImageBackground>
     </View>
@@ -647,6 +748,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     height: hp(4),
   },
+  iconStyle: {
+    tintColor: COLORS.black,
+    width: 16,
+    resizeMode: 'contain',
+    height: 16,
+  },
   textInput: {
     fontFamily: FONTS.RobotoRegular,
     fontSize: 16,
@@ -655,17 +762,30 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, 0.3)',
     flex: 1,
   },
+  titleText1: {
+    color: COLORS.black,
+    fontFamily: FONTS.AxiformaRegular,
+    fontSize: 16,
+    marginTop: hp(1),
+  },
+  aboutText: {
+    color: '#202020',
+    fontSize: 20,
+    marginLeft: 15,
+    marginBottom: 10,
+    marginTop: 20,
+    fontFamily: FONTS.AxiformaBold,
+  },
+  LoctionText: {
+    fontFamily: FONTS.RobotoRegular,
+    fontSize: 12,
+    color: '#5B5959',
+  },
   titleText: {
     color: COLORS.black,
     textAlign: 'center',
     fontFamily: FONTS.RobotoRegular,
     fontSize: 14,
     marginTop: hp(1),
-  },
-  iconStyle: {
-    tintColor: COLORS.black,
-    width: 16,
-    resizeMode: 'contain',
-    height: 16,
   },
 });

@@ -19,13 +19,14 @@ import FilterScreen from '../Components/Filter/FilterScreen';
 import Home from '../Screen/Dashboard/Home';
 import ClubDetails from '../Screen/Details/ClubDetails';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
+import Profile from '../Components/Profile/Profile';
 
 const Stack = createNativeStackNavigator();
 
 function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash_Screen">
+      <Stack.Navigator initialRouteName="">
         <Stack.Screen
           name="Splash_Screen"
           component={Splash_Screen}
@@ -66,6 +67,12 @@ function Routes() {
           component={PasswordSuccessful}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{headerShown: false}}
+        />
+
         <Stack.Screen
           name="BottomTab"
           component={BottomTab}

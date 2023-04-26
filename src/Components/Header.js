@@ -93,7 +93,9 @@ const Header = props => {
           </View>
         )}
       </View>
-      <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+      <TouchableOpacity
+        style={{flex: 0.3, alignItems: 'flex-end'}}
+        onPress={props.onProfileClick}>
         <Image
           style={{
             width: 30,
@@ -103,7 +105,7 @@ const Header = props => {
           }}
           source={props.profileIcon}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

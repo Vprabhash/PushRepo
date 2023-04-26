@@ -3,17 +3,13 @@ import {
   Image,
   ImageBackground,
   Dimensions,
-  FlatList,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  Modal,
-  TextInput,
   View,
   Linking,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -21,13 +17,8 @@ import {
 } from 'react-native-responsive-screen';
 import ImagePath from '../../assets/ImagePath';
 import LinearGradient from 'react-native-linear-gradient';
-import Toast from 'react-native-simple-toast';
-import Swiper from 'react-native-swiper';
-import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
-import ImageView from 'react-native-image-viewing';
-import Helper from '../../Components/Helper';
 import Header from '../../Components/Header';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

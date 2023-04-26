@@ -65,7 +65,6 @@ const Login = props => {
       Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
     }
   };
-  useEffect(() => {}, []);
 
   return (
     <View style={{flex: 1}}>

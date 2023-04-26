@@ -4,7 +4,7 @@ export const BASE_URL = 'https://api.azzirevents.com/';
 // api endpoints
 export const SIGN_UP = 'api/register';
 export const SIGN_IN = 'user';
-export const PROFILE = 'users/';
+export const PROFILE = 'api/user';
 
 export const OTP = 'users/';
 export const FORGEPASSWORD = 'users/';

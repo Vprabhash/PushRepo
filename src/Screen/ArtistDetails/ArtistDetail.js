@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  TextInput,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -38,13 +39,11 @@ const ArtistDetail = props => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       clubsNearbyDataApi(page);
     });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [props.navigation]);
   useEffect(() => {
-    // clubsNearbyDataApi(page);
-    // console.log('Page', page);
+    clubsNearbyDataApi(page);
+    console.log('Page', page);
   }, [page]);
 
   const clubsNearbyDataApi = async page => {
@@ -77,7 +76,7 @@ const ArtistDetail = props => {
   };
   const renderFooter = () => {
     return loading ? (
-      <View style={{paddingTop: 50, paddingBottom: 130}}>
+      <View style={{paddingTop: 50, paddingBottom: 10}}>
         <ActivityIndicator
           color={COLORS.primary}
           size={'small'}
@@ -88,7 +87,7 @@ const ArtistDetail = props => {
   };
 
   const artistListRenderItem = ({item, index}) => {
-    console.log('---item---', item?.media);
+    console.log('---item---', item);
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
@@ -142,67 +141,122 @@ const ArtistDetail = props => {
       </View>
     );
   };
-
+  const [searchValue, setSearchValue] = useState('');
   const EmptyListMessage = () => {
-    return (
-      <Text style={{color: '#000', textAlign: 'center', marginTop: 50}}>
-        No Data Found
-      </Text>
-    );
+    return <Text style={styles.titleText}>No Data Found</Text>;
   };
   return (
     <View style={{flex: 1}}>
-      <View
-        style={{
-          backgroundColor: '#fff',
-          elevation: 10,
-          paddingTop: 46,
-          paddingBottom: 14,
-          paddingHorizontal: 15,
-        }}>
-        <Header
-          Back_Arrow={ImagePath.goBack}
-          titalTwo="Artist"
-          iconHeight={13}
-          iconWidth={30}
-          onclick={() => {
-            props.navigation.goBack();
-          }}
-
-          //  profileIcon={ImagePath.profilePic}
-        />
-      </View>
-      <ScrollView contentContainerStyle={{flexGrow: 1, flex: 1}}>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
-        />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%'}}>
-          {/* <SafeAreaView> */}
-          <FlatList
-            data={artistList}
-            renderItem={artistListRenderItem}
-            ListFooterComponent={renderFooter}
-            onEndReachedThreshold={0.3}
-            onMomentumScrollBegin={() => {
-              setonEndReachedCalledDuringMomentum(false);
-              // console.log('----rechBegin');
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: '100%'}}>
+        <View style={[styles.inputMain, {marginTop: 50, marginBottom: 20}]}>
+          <TextInput
+            style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
+            placeholderTextColor="rgba(0, 0, 0, 0.7)"
+            placeholder={'Search'}
+            onChangeText={text => {
+              setSearchValue(text);
             }}
-            onEndReached={fetchMoreData}
-            ListEmptyComponent={EmptyListMessage}
+            value={searchValue}
           />
-        </ImageBackground>
-      </ScrollView>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              // searchApi();
+            }}>
+            <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={[styles.fllter]}
+          activeOpacity={0.5}
+          onPress={() => {
+            props.navigation.navigate('FilterScreen');
+          }}>
+          <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
+          <Text style={styles.filtersText}>Filters</Text>
+        </TouchableOpacity>
+        <ScrollView contentContainerStyle={{flexGrow: 1, flex: 1}}>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={false}
+            backgroundColor="transparent"
+            translucent={true}
+          />
+
+          <SafeAreaView style={{flex: 1}}>
+            <FlatList
+              data={artistList}
+              renderItem={artistListRenderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.3}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
+              ListEmptyComponent={EmptyListMessage}
+            />
+          </SafeAreaView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };
 export default ArtistDetail;
 const styles = StyleSheet.create({
+  filtersText: {
+    fontSize: 12,
+    color: COLORS.black,
+    fontFamily: FONTS.RobotoMedium,
+  },
+  fllter: {
+    backgroundColor: COLORS.white,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 16,
+    width: wp(23),
+    marginBottom: 20,
+    marginHorizontal: 15,
+    borderRadius: 8,
+    paddingHorizontal: wp(4),
+    height: hp(4),
+  },
+  inputMain: {
+    backgroundColor: COLORS.white,
+    flexDirection: 'row',
+    alignItems: 'center',
+    elevation: 5,
+    marginHorizontal: 15,
+    borderRadius: 30,
+    paddingHorizontal: wp(4),
+    height: hp(6),
+    // marginBottom: hp(4),
+  },
+  textInput: {
+    fontFamily: FONTS.RobotoRegular,
+    fontSize: 16,
+    padding: 0,
+    height: hp(6),
+    color: '#A3A3A3',
+    flex: 1,
+  },
+  iconStyle: {
+    tintColor: '#000000',
+    width: 18,
+    resizeMode: 'contain',
+    height: 18,
+  },
+
+  titleText: {
+    color: COLORS.black,
+    fontFamily: FONTS.AxiformaRegular,
+    fontSize: 16,
+    marginTop: hp(1),
+    textAlign: 'center',
+  },
   listinhHeading1: {
     fontSize: 16,
     marginLeft: 15,

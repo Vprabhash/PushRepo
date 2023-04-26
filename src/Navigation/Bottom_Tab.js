@@ -9,6 +9,8 @@ import EventListing from '../Screen/Listing/EventListing';
 import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ClubDetails from '../Screen/Details/ClubDetails';
+import Profile from '../Components/Profile/Profile';
+import {FONTS} from '../Components/constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,13 +41,19 @@ function BottomTab() {
           elevation: 3,
           borderTopWidth: 1,
           marginTop: 0.5,
-          // height: 60,
-          height: Platform.OS === 'ios' ? 100 : 60,
+          // position: 'absolute',
+          // bottom: 5,
+          height: Platform.OS === 'ios' ? 100 : 65,
           borderRadius: 65,
+
           backgroundColor: '#fff',
           overflow: 'hidden',
         },
-        tabBarLabelStyle: {paddingBottom: 10, fontSize: 10, fontWeight: '700'},
+        tabBarLabelStyle: {
+          paddingBottom: 10,
+          fontSize: 10,
+          fontFamily: FONTS.DMSansMedium,
+        },
       })}>
       <Tab.Screen
         name="Home"
@@ -108,6 +116,23 @@ function BottomTab() {
                 {tintColor: focused ? '#9700AF' : 'black'},
               ]}
               source={focused ? ImagePath.calendarIcon : ImagePath.calendarIcon}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'PROFILE',
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={[
+                styles.tab_Icon,
+                {tintColor: focused ? '#9700AF' : 'black'},
+              ]}
+              source={focused ? ImagePath.profile : ImagePath.profile}
             />
           ),
         }}
