@@ -347,7 +347,7 @@ const EventListing = props => {
           <View style={styles.hedingTextMain}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <View style={{}}>
-              <Text style={styles.cardText}>Coming Soon</Text>
+              <Text style={styles.cardText}> Coming Soon </Text>
             </View>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>

@@ -576,25 +576,23 @@ const Home = props => {
               onEndReached={fetchMoreData}
             /> */}
           </SafeAreaView>
-          <SafeAreaView>
-            <View style={styles.hedingTextMain}>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>ARTIST PLAYING NEARBY </Text>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-            </View>
-            <FlatList
-              horizontal={true}
-              data={artistData}
-              renderItem={artistRenderItem}
-              ListFooterComponent={artistRenderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringArtist(false);
-              }}
-              onEndReached={fetchArtistData}
-            />
-          </SafeAreaView>
-          <TouchableOpacity
+          <View style={styles.hedingTextMain}>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+            <Text style={styles.cardText}>ARTIST PLAYING NEARBY </Text>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+          </View>
+          <FlatList
+            horizontal={true}
+            data={artistData}
+            renderItem={artistRenderItem}
+            ListFooterComponent={artistRenderFooter}
+            onEndReachedThreshold={0.7}
+            onMomentumScrollBegin={() => {
+              setonEndReachedCalledDuringArtist(false);
+            }}
+            onEndReached={fetchArtistData}
+          />
+          {/* <TouchableOpacity
             style={[
               styles.fllter,
               {
@@ -617,13 +615,27 @@ const Home = props => {
               source={ImagePath.arrowRight}
               style={[styles.iconStyle, {width: 10, height: 8}]}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={styles.hedingTextMain}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <Text style={styles.cardText}>UP COMING EVENTS</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
-          <SafeAreaView style={{marginBottom: 10}}>
+          <View
+            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 100,
+              }}>
+              {/* <Image style={styles.hedingImg} source={ImagePath.rightLine1} /> */}
+              <Text style={styles.cardText}> Coming Soon </Text>
+              {/* <Image style={styles.hedingImg} source={ImagePath.rightLine} /> */}
+            </View>
+          </View>
+          {/* <SafeAreaView style={{marginBottom: 10}}>
             <FlatList
               horizontal={true}
               data={UpcomingData}
@@ -635,7 +647,7 @@ const Home = props => {
               }}
               onEndReached={fetchUpcomingData}
             />
-          </SafeAreaView>
+          </SafeAreaView> */}
           {/* <Text style={[styles.aboutText]}>Clubs Nearby </Text> */}
 
           {/* <SafeAreaView style={{marginBottom: 20}}>

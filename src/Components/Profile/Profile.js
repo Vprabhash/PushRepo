@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  TextInput,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -18,20 +19,53 @@ import ApiCall from '../../redux/CommanApi';
 import CustomButton from '../TextInput_And_Button/CustomButton';
 import {removeData} from '../Helper';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 const Profile = ({navigation}) => {
   // const dispatch = useDispatch();
-  const [userProfileData, setUserProfileData] = useState(null);
+  const [userProfileData, setUserProfileData] = useState({});
+  const [img, setimg] = useState('');
+
+  const [accountList, setAccountList] = useState([
+    {
+      Title: 'Reset Password',
+      Icon: ImagePath.rightIcon,
+      onPress: () => {
+        navigation.navigate('ResetPassword', {
+          email: userProfileData?.email,
+        });
+      },
+    },
+    {
+      Title: 'Log out',
+      Icon: ImagePath.rightIcon,
+      onPress: () => logOut(),
+      color: 'red',
+    },
+  ]);
+
+  const [notificationList, setNotificationList] = useState([
+    {Title: 'Event Alerts', Icon: ImagePath.rightIcon},
+    {Title: 'Event Reminders', Icon: ImagePath.rightIcon},
+    {Title: 'Artist Updates', Icon: ImagePath.rightIcon},
+  ]);
+
   useEffect(() => {
     userProfile();
   }, []);
+
   const userProfile = async () => {
     try {
       const res = await ApiCall(`api/user`, 'GET');
-      console.log('---profile--user-----', res);
-      if (res.ok == true) {
+      console.log('---profile--user-----', res?.data);
+      if (res?.data?.username) {
         setUserProfileData(res?.data);
       } else {
-        // Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.show(
+          res?.data?.message || 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       }
     } catch (error) {
       Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
@@ -44,13 +78,39 @@ const Profile = ({navigation}) => {
       navigation.navigate('Login');
     });
   };
-  const [accountList, setAccountList] = useState([
-    {Title: 'Email Address', Icon: ImagePath.rightIcon, onPress: () => {}},
-    {Title: 'Password', Icon: ImagePath.rightIcon, onPress: () => {}},
-  ]);
+
+  const openPicker = () => {
+    const options = {
+      title: 'Select Image',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        console.log('selected image', response.assets?.[0]?.uri);
+        setimg(response.assets?.[0]?.uri);
+      }
+    });
+  };
+
+  const uploadImage = async () => {
+    try {
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
+
   const accountListRenderItem = ({item, index}) => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={item.onPress}
         style={{
           flex: 1,
           marginTop: index == 0 ? 0 : 23,
@@ -59,23 +119,22 @@ const Profile = ({navigation}) => {
         }}>
         <Text
           style={{
-            color: COLORS.black,
+            color: item?.color ?? COLORS.black,
             fontFamily: FONTS.RobotoRegular,
             fontSize: 16,
           }}>
           {item?.Title}
         </Text>
-        <TouchableOpacity style={{alignSelf: 'center'}}>
-          <Image style={styles.rightIcon} source={item?.Icon} />
-        </TouchableOpacity>
-      </View>
+        <View style={{alignSelf: 'center'}}>
+          <Image
+            style={[styles.rightIcon, {tintColor: item?.color ?? null}]}
+            source={item?.Icon}
+          />
+        </View>
+      </TouchableOpacity>
     );
   };
-  const [notificationList, setNotificationList] = useState([
-    {Title: 'Event Alerts', Icon: ImagePath.rightIcon},
-    {Title: 'Event Reminders', Icon: ImagePath.rightIcon},
-    {Title: 'Artist Updates', Icon: ImagePath.rightIcon},
-  ]);
+
   const notificationListRenderItem = ({item, index}) => {
     return (
       <View
@@ -192,40 +251,92 @@ const Profile = ({navigation}) => {
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-around',
                 alignItems: 'center',
                 marginHorizontal: 20,
                 marginTop: 20,
               }}>
-              <TouchableOpacity onPress={() => {}}>
-                <Image
-                  style={{
-                    width: 100,
-                    height: 100,
-                    resizeMode: 'cover',
-                    borderRadius: 30,
-                  }}
-                  source={ImagePath.profileEdit}
-                />
-              </TouchableOpacity>
-
-              <Text
+              <TouchableOpacity
                 style={{
-                  color: COLORS.black,
-                  fontFamily: FONTS.RobotoMedium,
-                  fontSize: 20,
-                }}>
-                Harry D’suza
-              </Text>
-              <Image
-                style={{
-                  height: 16,
-                  width: 16,
-                  resizeMode: 'contain',
+                  width: 100,
+                  height: 100,
+                  borderRadius: 50,
+                  backgroundColor: COLORS.primary,
                 }}
-                source={ImagePath.EditIcon}
-              />
+                onPress={openPicker}>
+                {img ? (
+                  <Image
+                    style={{
+                      width: 100,
+                      height: 100,
+                      resizeMode: 'contain',
+                      borderRadius: 50,
+                      backgroundColor: COLORS.primary,
+                    }}
+                    source={{uri: img}}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      width: 100,
+                      height: 100,
+                      borderRadius: 50,
+                      backgroundColor: COLORS.primary,
+                    }}
+                  />
+                )}
+              </TouchableOpacity>
+              <View
+                style={{
+                  marginLeft: wp(5),
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <TextInput
+                    value={userProfileData.firstName}
+                    style={{
+                      color: COLORS.black,
+                      fontFamily: FONTS.AxiformaMedium,
+                      fontSize: 20,
+                    }}
+                    onChangeText={text => {
+                      setUserProfileData({...userProfileData, firstName: text});
+                    }}
+                  />
+                  <Text
+                    style={{
+                      color: COLORS.black,
+                      fontFamily: FONTS.AxiformaMedium,
+                      fontSize: 20,
+                    }}>
+                    {userProfileData?.firstName || userProfileData?.lastName
+                      ? `${userProfileData?.firstName} ${userProfileData?.lastName}`
+                      : 'Unknown user'}
+                  </Text>
+                  <Image
+                    style={{
+                      height: 16,
+                      width: 16,
+                      resizeMode: 'contain',
+                      marginLeft: 5,
+                    }}
+                    source={ImagePath.EditIcon}
+                  />
+                </View>
+                <Text
+                  style={{
+                    color: COLORS.black,
+                    fontFamily: FONTS.AxiformaMedium,
+                    fontSize: 12,
+                  }}>
+                  {userProfileData?.email}
+                </Text>
+              </View>
             </View>
+
             <Text style={[styles.settingText, {marginTop: 22}]}>
               Account Settings
             </Text>
@@ -244,7 +355,7 @@ const Profile = ({navigation}) => {
           <View style={[styles.ProfileList, {marginBottom: 10}]}>
             <FlatList data={paymentList} renderItem={paymentListRenderItem} />
           </View> */}
-            <View style={{marginHorizontal: 20, marginBottom: 40}}>
+            {/* <View style={{marginHorizontal: 20, marginBottom: 40}}>
               <CustomButton
                 onclick={logOut}
                 top={30}
@@ -252,7 +363,7 @@ const Profile = ({navigation}) => {
                 bgColor="#000"
                 textColor="#fff"
               />
-            </View>
+            </View> */}
           </SafeAreaView>
         </ImageBackground>
       </ScrollView>
