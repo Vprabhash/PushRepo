@@ -10,7 +10,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
   TextInput,
 } from 'react-native';
@@ -18,9 +17,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import Toast from 'react-native-simple-toast';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
@@ -34,13 +31,16 @@ const ArtistDetail = props => {
   ] = useState(true);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [valuekey, setValuekey] = useState('');
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
-      clubsNearbyDataApi(page);
+      clubsNearbyDataApi(1);
+      setValuekey('');
     });
     return unsubscribe;
   }, [props.navigation]);
+
   useEffect(() => {
     clubsNearbyDataApi(page);
     console.log('Page', page);
@@ -65,6 +65,11 @@ const ArtistDetail = props => {
     } finally {
       setLoading(false);
     }
+  };
+  const searchApi = async text => {
+    const res = await ApiCall(`api/search?q=${text}`, 'GET');
+    console.log('---searchApi--->', JSON.stringify(res?.data.artists));
+    setArtistList(res?.data.artists);
   };
   const fetchMoreData = () => {
     // clubsNearbyDataApi(page + 1);
@@ -164,14 +169,14 @@ const ArtistDetail = props => {
             placeholderTextColor="rgba(0, 0, 0, 0.7)"
             placeholder={'Search artists'}
             onChangeText={text => {
-              setSearchValue(text);
+              searchApi(text), setValuekey(text);
             }}
-            value={searchValue}
+            value={valuekey}
           />
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-              // searchApi();
+              searchApi();
             }}>
             <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
           </TouchableOpacity>

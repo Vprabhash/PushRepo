@@ -138,7 +138,6 @@ const Profile = ({navigation}) => {
       Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
-
   const accountListRenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -230,21 +229,47 @@ const Profile = ({navigation}) => {
         }}>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            backgroundColor: '#fff',
+            elevation: 10,
+            paddingTop: 46,
+            paddingBottom: 14,
+            paddingHorizontal: 15,
           }}>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
             }}>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.goBack();
+              }}>
+              <Image
+                style={{
+                  height: 12,
+                  width: 12,
+                  resizeMode: 'contain',
+                }}
+                source={ImagePath.goBack}
+              />
+            </TouchableOpacity>
+
+            <Text
+              style={{
+                color: COLORS.black,
+                fontFamily: FONTS.RobotoRegular,
+                fontSize: 16,
+              }}>
+              My Account
+            </Text>
+
             <Image
               style={{
-                height: 12,
-                width: 12,
+                width: 21,
+                height: 16,
                 resizeMode: 'contain',
+                borderRadius: 30,
               }}
-              source={ImagePath.goBack}
+              source={ImagePath.checkSelected}
             />
           </TouchableOpacity>
 

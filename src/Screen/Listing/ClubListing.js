@@ -18,11 +18,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Toast from 'react-native-simple-toast';
-import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
+import FilterScreen from '../../Components/Filter/FilterScreen';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -34,20 +34,21 @@ const ClubListing = props => {
   ] = useState(true);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [valuekey, setValuekey] = useState('');
 
   useEffect(() => {
     list(page);
     console.log('Page', page);
   }, [page]);
+
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       list(1);
-      setSearchValue('');
+      setValuekey('');
     });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [props.navigation]);
+
   const list = async page => {
     try {
       const res = await ApiCall(`api/clubs?page=${page}`, 'GET');
@@ -91,22 +92,9 @@ const ClubListing = props => {
   const [teamArray, setTeamArray] = useState([]);
 
   const searchApi = async text => {
-    // const res = await ApiCall(`api/search?q=${text}`, 'GET');
-    // console.log('---searchApi--->', JSON.stringify(res));
-    // setClubs(res?.data.clubs);
-
-    if (text) {
-      const newData = teamArray.filter(function (item) {
-        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setClubs(newData);
-      setSearchValue(text);
-    } else {
-      setClubs(teamArray);
-      setSearchValue(text);
-    }
+    const res = await ApiCall(`api/search?q=${text}`, 'GET');
+    console.log('---searchApi--->', JSON.stringify(res?.data.clubs));
+    setClubs(res?.data.clubs);
   };
 
   const _renderItem = ({item, index}) => {
@@ -214,6 +202,31 @@ const ClubListing = props => {
   const EmptyListMessage = () => {
     return <Text style={styles.noDataText}>No Data Found</Text>;
   };
+  const [filterComponent, setFilterComponent] = useState(false);
+  const onPressApply = async data => {
+    // call filter api here
+    const res = await ApiCall(
+      `api/clubs?vegNonVeg=${data?.vegNonVeg}&locality=${data?.locality.join(
+        '|',
+      )}&stagsAllowed=${data?.stagsAllowed}&musicGenre=${data?.musicGenre.join(
+        '|',
+      )}`,
+      'GET',
+    );
+    console.log('-------filterApi', JSON.stringify(res?.data));
+    setClubs(res?.data);
+    setFilterComponent(false);
+  };
+
+  const onPressCancel = () => {
+    console.log('filterComponent---first');
+    setFilterComponent(false);
+  };
+  if (filterComponent) {
+    return (
+      <FilterScreen onPressApply={onPressApply} onPressCancel={onPressCancel} />
+    );
+  }
 
   return (
     <View style={{flex: 1}}>
@@ -228,21 +241,20 @@ const ClubListing = props => {
             backgroundColor="transparent"
             translucent={true}
           />
-
           <View style={[styles.inputMain, {marginTop: 50, marginBottom: 20}]}>
             <TextInput
               style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
               placeholderTextColor="rgba(0, 0, 0, 0.7)"
               placeholder={'Search clubs'}
               onChangeText={text => {
-                searchApi(text);
+                searchApi(text), setValuekey(text);
               }}
-              value={searchValue}
+              value={valuekey}
             />
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
-                // searchApi();
+                searchApi();
               }}>
               <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
             </TouchableOpacity>
@@ -251,7 +263,7 @@ const ClubListing = props => {
             style={[styles.fllter]}
             activeOpacity={0.5}
             onPress={() => {
-              props.navigation.navigate('FilterScreen');
+              setFilterComponent(true);
             }}>
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>

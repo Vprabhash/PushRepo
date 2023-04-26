@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import {
-  Image,
   ImageBackground,
   Dimensions,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   Alert,
   View,
 } from 'react-native';

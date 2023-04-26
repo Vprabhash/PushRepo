@@ -15,7 +15,7 @@ import BottomTab from './Bottom_Tab';
 import Otp from '../Screen/User_Auth/Otp';
 import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';
 import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
-import FilterScreen from '../Components/Filter/FilterScreen';
+// import FilterScreen from '../Components/Filter/FilterScreen';
 import Home from '../Screen/Dashboard/Home';
 import ClubDetails from '../Screen/Details/ClubDetails';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
@@ -78,11 +78,11 @@ function Routes() {
           component={BottomTab}
           options={{headerShown: false}}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="FilterScreen"
           component={FilterScreen}
           options={{headerShown: false}}
-        />
+        /> */}
         <Stack.Screen
           name="ArtistDetail"
           component={ArtistDetail}

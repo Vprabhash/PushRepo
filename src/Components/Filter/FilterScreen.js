@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   FlatList,
@@ -18,8 +18,8 @@ import {
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../constants';
 import GradientText from '../GradientText';
-function FilterData(props) {
-  const {label, onClick, image, bgColor} = props;
+import ApiCall from '../../redux/CommanApi';
+function FilterData({label, onClick, image, bgColor}) {
   return (
     <TouchableOpacity
       onPress={() => {
@@ -35,19 +35,21 @@ function FilterData(props) {
     </TouchableOpacity>
   );
 }
-const FilterScreen = props => {
+const FilterScreen = ({onPressApply, onPressCancel}) => {
   const [serachFriends, setSerachFriends] = useState('');
-  const [genreData, setgenreData] = useState([
-    {label: 'Pop', checked: false},
-    {label: 'Rock', checked: false},
-    {label: 'Doc', checked: false},
-    {label: 'Soc', checked: false},
-    {label: 'Jik', checked: false},
-    {label: 'Sam', checked: false},
-    {label: 'MAx', checked: false},
-    {label: 'Min', checked: false},
-  ]);
-  const [teamArray, setTeamArray] = useState(genreData);
+  const [genreData, setgenreData] = useState([]);
+  const [localities, setLocalities] = useState('');
+  const [generes, setGeneres] = useState('');
+  const [happyHourTimings, setHappyHourTimings] = useState('');
+
+  const [kidsFriendly, setKidsFriendly] = useState('');
+  const [vegNonVeg, setVegNonVeg] = useState('');
+  const [stages, setStages] = useState('');
+  const [sheesha, setSheesha] = useState('');
+
+  console.log('-----', kidsFriendly, vegNonVeg, stages, sheesha);
+
+  const [teamArray, setTeamArray] = useState([]);
   const friendSearchFilter = text => {
     if (text) {
       const newData = teamArray.filter(function (item) {
@@ -64,23 +66,26 @@ const FilterScreen = props => {
       setSerachFriends(text);
     }
   };
-  const checkAll = () => {
-    let temp = genreData.map(item => {
-      return {...item, checked: true};
-    });
-    setgenreData(temp);
-  };
-  const checkOne = index => {
-    let temp = [...genreData];
+
+  // const checkAllLocality = () => {
+  //   let temp = localities.map(item => {
+  //     return {...item, checked: true};
+  //   });
+  //   setLocalities(temp);
+  // };
+
+  const checkLocalityData = index => {
+    let temp = [...localities];
     temp[index].checked = !temp[index].checked;
-    setgenreData(temp);
+    setLocalities(temp);
   };
-  const [selectRight, setSelectRight] = useState('Location');
-  const rendarItemGenre = ({item, index}) => {
+
+  const [selectRight, setSelectRight] = useState('Locality');
+  const rendarItemLocality = ({item, index}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          checkOne(index);
+          checkLocalityData(index);
         }}
         activeOpacity={0.5}
         style={{
@@ -110,9 +115,79 @@ const FilterScreen = props => {
       </TouchableOpacity>
     );
   };
+
+  const checkGenreData = index => {
+    let temp = [...generes];
+    temp[index].checked = !temp[index].checked;
+    setGeneres(temp);
+  };
+
+  const rendarItemGenre = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          checkGenreData(index);
+        }}
+        activeOpacity={0.5}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: 10,
+          borderBottomWidth: 1,
+          borderBottomColor: 'rgba(214, 214, 214, 1)',
+          paddingVertical: 12,
+        }}>
+        <Image
+          style={{
+            height: 11,
+            width: 11,
+            resizeMode: 'contain',
+            tintColor: '#202020',
+            borderWidth: item.checked ? 0 : 0.3,
+            borderColor: item.checked ? '#202020' : '#202020',
+          }}
+          source={item.checked ? ImagePath.checkSelected : ImagePath.checkBox}
+        />
+        <View style={{flex: 0.6}}>
+          <View style={{}}>
+            <Text style={styles.listinhHeading1}>{item.label}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const filterApi = async text => {
+    const res = await ApiCall('api/filters', 'GET');
+    setLocalities(res?.data?.localities);
+    setGeneres(res?.data?.generes);
+    setHappyHourTimings(res?.data?.happyHourTimings);
+  };
+
+  useEffect(() => {
+    filterApi();
+  }, []);
+
   const onSelectRightUi = label => {
     setSelectRight(label);
   };
+
+  const stagesSelect = label => {
+    setStages(label);
+  };
+
+  const sheeshaSelect = label => {
+    setSheesha(label);
+  };
+
+  const vegNonVegSelect = label => {
+    setVegNonVeg(label);
+  };
+
+  const kidsFriendlySelect = label => {
+    setKidsFriendly(label);
+  };
+
   return (
     <View style={{flex: 1}}>
       <StatusBar
@@ -154,13 +229,13 @@ const FilterScreen = props => {
               flex: 0.4,
             }}>
             <FilterData
-              label={'Location'}
+              label={'Locality'}
               onClick={() => {
-                onSelectRightUi('Location');
+                onSelectRightUi('Locality');
               }}
               image={ImagePath.location}
               bgColor={
-                selectRight === 'Location' ? '#fff' : 'rgba(205, 205, 205, 1)'
+                selectRight === 'Locality' ? '#fff' : 'rgba(205, 205, 205, 1)'
               }
             />
             <FilterData
@@ -194,7 +269,7 @@ const FilterScreen = props => {
               }
             />
             <FilterData
-              label={'Veg/Non Veg'}
+              label={'Veg/Non-Veg'}
               onClick={() => {
                 onSelectRightUi('Veg/Non Veg');
               }}
@@ -231,7 +306,7 @@ const FilterScreen = props => {
             />
           </View>
           <View style={{flex: 0.6, backgroundColor: '#FFFFFF'}}>
-            {selectRight === 'Location' && (
+            {selectRight === 'Locality' && (
               <>
                 <View style={styles.clearInput}>
                   <Image
@@ -250,14 +325,14 @@ const FilterScreen = props => {
                     placeholderTextColor={'#A5A5A5'}
                     value={serachFriends}
                     onChangeText={text => {
-                      friendSearchFilter(text);
+                      // friendSearchFilter(text);
                     }}
                   />
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.5}
                   onPress={() => {
-                    checkAll();
+                    // checkAllLocality();
                   }}
                   style={{
                     flexDirection: 'row',
@@ -273,12 +348,15 @@ const FilterScreen = props => {
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
-                <FlatList
-                  data={genreData}
-                  renderItem={rendarItemGenre}
-                  extraData={genreData}
-                  showsVerticalScrollIndicator={false}
-                />
+                <View style={{maxHeight: hp(61)}}>
+                  <FlatList
+                    data={localities}
+                    nestedScrollEnabled={true}
+                    renderItem={rendarItemLocality}
+                    // extraData={localities}
+                    showsVerticalScrollIndicator={false}
+                  />
+                </View>
               </>
             )}
             {selectRight === 'Genre' && (
@@ -302,7 +380,7 @@ const FilterScreen = props => {
                 <TouchableOpacity
                   activeOpacity={0.5}
                   onPress={() => {
-                    checkAll();
+                    // checkAll();
                   }}
                   style={{
                     flexDirection: 'row',
@@ -319,146 +397,227 @@ const FilterScreen = props => {
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
-                  data={genreData}
+                  data={generes}
                   renderItem={rendarItemGenre}
-                  extraData={genreData}
+                  extraData={generes}
                   showsVerticalScrollIndicator={false}
                 />
               </>
             )}
             {selectRight === 'Sheesha' && (
               <>
-                <View style={styles.clearInput}>
-                  <Image
-                    style={styles.searchIcon}
-                    source={ImagePath.searchIcon}
-                  />
-                  <TextInput
-                    style={{
-                      padding: 0,
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 5,
-                    }}
-                    placeholder="Search"
-                    placeholderTextColor={'#A5A5A5'}
-                  />
-                </View>
                 <TouchableOpacity
-                  activeOpacity={0.5}
                   onPress={() => {
-                    checkAll();
+                    sheeshaSelect('yes');
                   }}
+                  activeOpacity={0.5}
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
                   }}>
                   <Image
-                    style={[
-                      styles.searchIcon,
-                      {borderWidth: 0.6, borderColor: '#000'},
-                    ]}
-                    source={ImagePath.checkBox}
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      sheesha == 'yes'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
                   />
-                  <Text style={styles.selectAllText}>Select All</Text>
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>Yes</Text>
+                    </View>
+                  </View>
                 </TouchableOpacity>
-                <FlatList
-                  data={genreData}
-                  renderItem={rendarItemGenre}
-                  extraData={genreData}
-                  showsVerticalScrollIndicator={false}
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    sheeshaSelect('no');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      sheesha == 'no'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>No</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
               </>
             )}
             {selectRight === 'Stages' && (
               <>
-                <View style={styles.clearInput}>
-                  <Image
-                    style={styles.searchIcon}
-                    source={ImagePath.searchIcon}
-                  />
-                  <TextInput
-                    style={{
-                      padding: 0,
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 5,
-                    }}
-                    placeholder="Search"
-                    placeholderTextColor={'#A5A5A5'}
-                  />
-                </View>
                 <TouchableOpacity
-                  activeOpacity={0.5}
                   onPress={() => {
-                    checkAll();
+                    stagesSelect('yes');
                   }}
+                  activeOpacity={0.5}
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
                   }}>
                   <Image
-                    style={[
-                      styles.searchIcon,
-                      {borderWidth: 0.6, borderColor: '#000'},
-                    ]}
-                    source={ImagePath.checkBox}
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      stages == 'yes'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
                   />
-                  <Text style={styles.selectAllText}>Select All</Text>
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>Yes</Text>
+                    </View>
+                  </View>
                 </TouchableOpacity>
-                <FlatList
-                  data={genreData}
-                  renderItem={rendarItemGenre}
-                  extraData={genreData}
-                  showsVerticalScrollIndicator={false}
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    stagesSelect('no');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      stages == 'no'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>No</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
               </>
             )}
             {selectRight === 'Veg/Non Veg' && (
               <>
-                <View style={styles.clearInput}>
-                  <Image
-                    style={styles.searchIcon}
-                    source={ImagePath.searchIcon}
-                  />
-                  <TextInput
-                    style={{
-                      padding: 0,
-                      color: '#A5A5A5',
-                      fontWeight: '600',
-                      marginLeft: 5,
-                    }}
-                    placeholder="Search"
-                    placeholderTextColor={'#A5A5A5'}
-                  />
-                </View>
                 <TouchableOpacity
-                  activeOpacity={0.5}
                   onPress={() => {
-                    checkAll();
+                    vegNonVegSelect('veg');
                   }}
+                  activeOpacity={0.5}
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
                   }}>
                   <Image
-                    style={[
-                      styles.searchIcon,
-                      {borderWidth: 0.6, borderColor: '#000'},
-                    ]}
-                    source={ImagePath.checkBox}
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      vegNonVeg == 'veg'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
                   />
-                  <Text style={styles.selectAllText}>Select All</Text>
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>Veg</Text>
+                    </View>
+                  </View>
                 </TouchableOpacity>
-                <FlatList
-                  data={genreData}
-                  renderItem={rendarItemGenre}
-                  extraData={genreData}
-                  showsVerticalScrollIndicator={false}
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    vegNonVegSelect('non-Veg');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      vegNonVeg == 'non-Veg'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>Non-Veg</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
               </>
             )}
             {selectRight === 'Happy Hours' && (
@@ -482,7 +641,7 @@ const FilterScreen = props => {
                 <TouchableOpacity
                   activeOpacity={0.5}
                   onPress={() => {
-                    checkAll();
+                    // checkAll();
                   }}
                   style={{
                     flexDirection: 'row',
@@ -499,16 +658,84 @@ const FilterScreen = props => {
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <FlatList
-                  data={genreData}
+                  data={happyHourTimings}
                   renderItem={rendarItemGenre}
-                  extraData={genreData}
+                  extraData={happyHourTimings}
                   showsVerticalScrollIndicator={false}
                 />
               </>
             )}
             {selectRight === 'Kids Friendly' && (
               <>
-                <View style={styles.clearInput}>
+                <TouchableOpacity
+                  onPress={() => {
+                    kidsFriendlySelect('yes');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      kidsFriendly == 'yes'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>Yes</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    kidsFriendlySelect('no');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      kidsFriendly == 'no'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>No</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                {/* <View style={styles.clearInput}>
                   <Image
                     style={styles.searchIcon}
                     source={ImagePath.searchIcon}
@@ -542,13 +769,13 @@ const FilterScreen = props => {
                     source={ImagePath.checkBox}
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
-                </TouchableOpacity>
-                <FlatList
+                </TouchableOpacity> */}
+                {/* <FlatList
                   data={genreData}
                   renderItem={rendarItemGenre}
                   extraData={genreData}
                   showsVerticalScrollIndicator={false}
-                />
+                /> */}
               </>
             )}
           </View>
@@ -568,7 +795,7 @@ const FilterScreen = props => {
               {borderRightWidth: 1, borderRightColor: '#fff'},
             ]}
             onPress={() => {
-              props.navigation.goBack();
+              onPressCancel();
             }}>
             <Text style={{color: COLORS.white, fontFamily: FONTS.InterMedium}}>
               CLOSE
@@ -578,7 +805,31 @@ const FilterScreen = props => {
             activeOpacity={0.7}
             style={styles.closeBtn}
             onPress={() => {
-              props.navigation.goBack();
+              var tempdata = [];
+              for (var i = 0; i < localities.length; i++) {
+                if (localities[i].checked == true) {
+                  var detaisl = {};
+                  detaisl = localities[i].value;
+                  tempdata.push(detaisl);
+                }
+              }
+
+              var tempdataGenres = [];
+              for (var i = 0; i < generes.length; i++) {
+                if (generes[i].checked == true) {
+                  var detaisl = {};
+                  detaisl = generes[i].value;
+                  tempdataGenres.push(detaisl);
+                }
+              }
+
+              onPressApply({
+                locality: tempdata,
+                sheesha: sheesha,
+                vegNonVeg: vegNonVeg,
+                stagsAllowed: stages,
+                musicGenre: tempdataGenres,
+              });
             }}>
             <GradientText
               style={[styles.textStyle, {fontFamily: FONTS.InterMedium}]}>

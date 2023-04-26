@@ -8,12 +8,9 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  Modal,
   TextInput,
   View,
-  Linking,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,

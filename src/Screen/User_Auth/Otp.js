@@ -25,14 +25,14 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Otp = props => {
-  console.log('---proofogetmail', props.route.params.fogetmail);
-  const fogetmail = props.route.params.fogetmail;
+  console.log('---proofogetmail', props.route.params.forgetmail);
+  const forgetmail = props.route.params.forgetmail;
   const [Otp, setOtp] = useState('');
   const email = props.route?.params?.email;
   const password = props.route?.params?.password;
   console.log('props signOtp--------', props.route.params);
   const OtpApi = async () => {
-    if (Otp.length == 0) {
+    if (Otp.length == 6) {
       Toast.show('Enter Otp', Toast.LONG, Toast.BOTTOM);
       return;
     } else {
@@ -49,7 +49,7 @@ const Otp = props => {
           if (fogetmail == 'otp') {
             props.navigation.navigate('ResetPassword', {
               otp: Otp,
-              email: fogetmail,
+              email: forgetmail,
             });
             // props.navigation.navigate('ResetPassword',{otp:Otp}),
           } else {

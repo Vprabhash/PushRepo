@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
     // letterSpacing: 0.3,
   },
   btnIcon: {
-    height: 18,
-    width: 18,
-    resizeMode: 'contain',
+    height: 35,
+    width: 28,
+    resizeMode: 'cover',
   },
 });

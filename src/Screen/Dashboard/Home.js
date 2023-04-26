@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
-  Modal,
   ImageBackground,
   Dimensions,
   FlatList,
@@ -21,7 +20,6 @@ import {
 import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import {COLORS, FONTS} from '../../Components/constants';
 import {useDispatch} from 'react-redux';
 import {spotLightApi} from '../../redux/reducers/spotLightSlice';
@@ -218,20 +216,20 @@ const Home = props => {
   };
 
   const [UpcomingData, setupcomingData] = useState([
-    {
-      mapIcon: ImagePath.eventImg,
-      button: 'CONCERT',
-      Name: 'Darshan Raval',
-      icon: ImagePath.location,
-      Location: '10 Downing Street, Near Bombay hospital',
-    },
-    {
-      mapIcon: ImagePath.eventImg1,
-      button: 'CONCERT',
-      Name: 'Divine',
-      icon: ImagePath.location,
-      Location: '10 Downing Street, Near Bombay hospital',
-    },
+    // {
+    //   mapIcon: ImagePath.eventImg,
+    //   button: 'CONCERT',
+    //   Name: 'Darshan Raval',
+    //   icon: ImagePath.location,
+    //   Location: '10 Downing Street, Near Bombay hospital',
+    // },
+    // {
+    //   mapIcon: ImagePath.eventImg1,
+    //   button: 'CONCERT',
+    //   Name: 'Divine',
+    //   icon: ImagePath.location,
+    //   Location: '10 Downing Street, Near Bombay hospital',
+    // },
   ]);
 
   const UpcomingData_RenderItem = ({item, index}) => {
@@ -649,6 +647,18 @@ const Home = props => {
                 setonEndReachedCalledDuringUpcoming(false);
               }}
               onEndReached={fetchUpcomingData}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    height: 100,
+                    width: width,
+                    paddingBottom: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.titleText1}>Coming Soon</Text>
+                </View>
+              }
             />
           </SafeAreaView> */}
             {/* <Text style={[styles.aboutText]}>Clubs Nearby </Text> */}
