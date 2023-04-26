@@ -488,7 +488,7 @@ const Home = props => {
               translucent={true}
             />
 
-            <View style={[styles.inputMain, {marginTop: 10}]}>
+            {/* <View style={[styles.inputMain, {marginTop: 10}]}>
               <TextInput
                 style={[styles.textInput, {}]}
                 placeholder={'Search near you'}
@@ -503,7 +503,7 @@ const Home = props => {
                 }}>
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             {/* <TouchableOpacity
             style={[styles.fllter]}
@@ -520,21 +520,18 @@ const Home = props => {
               <Text style={styles.cardText}>IN THE SPOTLIGHT</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
-
-            <SafeAreaView>
-              <FlatList
-                horizontal={true}
-                data={SpotlightData}
-                renderItem={SpotlightData_RenderItem}
-                ListFooterComponent={spotLightrenderFooter}
-                onEndReachedThreshold={0.7}
-                onMomentumScrollBegin={() => {
-                  setonEndReachedCalledDuringspotLight(false);
-                }}
-                onEndReached={fetchSpotlightData}
-              />
-            </SafeAreaView>
-
+            <FlatList
+              horizontal={true}
+              data={SpotlightData}
+              renderItem={SpotlightData_RenderItem}
+              ListFooterComponent={spotLightrenderFooter}
+              onEndReachedThreshold={0.7}
+              contentContainerStyle={{marginTop: 20}}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringspotLight(false);
+              }}
+              onEndReached={fetchSpotlightData}
+            />
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
               <Text style={styles.cardText}>
@@ -542,7 +539,7 @@ const Home = props => {
               </Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
-            <SafeAreaView style={{}}>
+            <SafeAreaView>
               <FlatList
                 horizontal={true}
                 data={clubsNearby}

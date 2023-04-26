@@ -17,6 +17,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import ImagePath from '../../assets/ImagePath';
 import Toast from 'react-native-simple-toast';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -158,38 +159,39 @@ const ArtistDetail = props => {
         backgroundColor="transparent"
         translucent={true}
       />
+
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={[styles.inputMain, {marginVertical: 20}]}>
-          <TextInput
-            style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
-            placeholderTextColor="rgba(0, 0, 0, 0.7)"
-            placeholder={'Search artists'}
-            onChangeText={text => {
-              searchApi(text), setValuekey(text);
-            }}
-            value={valuekey}
-          />
+        <SafeAreaView>
+          <View style={[styles.inputMain, {marginVertical: 20}]}>
+            <TextInput
+              style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
+              placeholderTextColor="rgba(0, 0, 0, 0.7)"
+              placeholder={'Search artists'}
+              onChangeText={text => {
+                searchApi(text), setValuekey(text);
+              }}
+              value={valuekey}
+            />
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                searchApi();
+              }}>
+              <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
+            style={styles.fllter}
             activeOpacity={0.5}
             onPress={() => {
-              searchApi();
+              props.navigation.navigate('FilterScreen');
             }}>
-            <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
+            <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
+            <Text style={styles.filtersText}>Filters</Text>
           </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          style={styles.fllter}
-          activeOpacity={0.5}
-          onPress={() => {
-            props.navigation.navigate('FilterScreen');
-          }}>
-          <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
-          <Text style={styles.filtersText}>Filters</Text>
-        </TouchableOpacity>
-        <ScrollView contentContainerStyle={{flexGrow: 1, flex: 1}}>
           <FlatList
             data={artistList}
             renderItem={artistListRenderItem}
@@ -201,7 +203,7 @@ const ArtistDetail = props => {
             onEndReached={fetchMoreData}
             ListEmptyComponent={EmptyListMessage}
           />
-        </ScrollView>
+        </SafeAreaView>
       </ImageBackground>
     </View>
   );
