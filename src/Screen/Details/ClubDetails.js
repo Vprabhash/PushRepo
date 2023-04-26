@@ -24,6 +24,7 @@ import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import ImageView from 'react-native-image-viewing';
+import Header from '../../Components/Header';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
@@ -165,7 +166,25 @@ const ClubDetails = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={[styles.inputMain, {marginTop: 50, marginBottom: 10}]}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            elevation: 10,
+            paddingTop: 46,
+            paddingBottom: 14,
+            paddingHorizontal: 15,
+          }}>
+          <Header
+            Back_Arrow={ImagePath.goBack}
+            titleTwo="Club Details"
+            iconHeight={15}
+            iconWidth={30}
+            onclick={() => {
+              props.navigation.goBack();
+            }}
+          />
+        </View>
+        <View style={[styles.inputMain, {marginTop: 10, marginBottom: 10}]}>
           <TextInput
             style={[styles.textInput, {color: COLORS.black}]}
             placeholder={'Search'}
@@ -195,7 +214,7 @@ const ClubDetails = props => {
             style={[styles.wrapper]}
             containerStyle={{
               borderRadius: 8,
-              marginTop: 26,
+              marginTop: 10,
               marginHorizontal: 15,
               overflow: 'hidden',
             }}
@@ -260,7 +279,7 @@ const ClubDetails = props => {
               marginTop: 5,
               marginHorizontal: 15,
             }}>
-            <View style={{marginTop: -5.5, width: '80%'}}>
+            <View style={{width: '80%'}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -357,7 +376,7 @@ const ClubDetails = props => {
           <View style={{marginHorizontal: 0}}>
             <FlatList data={ENTRIES1} renderItem={_renderItem} />
           </View> */}
-          <TouchableOpacity style={{alignSelf: 'center', marginTop: 20}}>
+          {/* <TouchableOpacity style={{alignSelf: 'center', marginTop: 20}}>
             <LinearGradient
               style={{
                 height: 43,
@@ -377,8 +396,8 @@ const ClubDetails = props => {
                 Events for the month
               </Text>
             </LinearGradient>
-          </TouchableOpacity>
-          <Text style={[styles.aboutText, {marginTop: 31}]}>Menu</Text>
+          </TouchableOpacity> */}
+          <Text style={[styles.aboutText, {marginTop: 25}]}>Menu</Text>
           <ScrollView style={{flexDirection: 'row'}} horizontal>
             <View
               style={{
@@ -459,7 +478,7 @@ const ClubDetails = props => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={styles.titleText}>No Nearby Clubs Found</Text>
+                <Text style={styles.titleText}>No Clubs Found</Text>
               </View>
             }
           />

@@ -15,6 +15,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Toast from 'react-native-simple-toast';
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../constants';
 import GradientText from '../GradientText';
@@ -35,29 +36,40 @@ function FilterData({label, onClick, image, bgColor}) {
     </TouchableOpacity>
   );
 }
-const FilterScreen = ({onPressApply, onPressCancel}) => {
+const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
   const [, forceUpdate] = useState();
   const [searchLocality, setSearchLocality] = useState('');
+  const [searchGenre, setSearchGenre] = useState('');
   const [genreData, setgenreData] = useState([]);
   const [localities, setLocalities] = useState([]);
-  const [generes, setGeneres] = useState('');
+  const [generes, setGeneres] = useState([]);
   const [happyHourTimings, setHappyHourTimings] = useState('');
   const [kidsFriendly, setKidsFriendly] = useState('');
   const [vegNonVeg, setVegNonVeg] = useState('');
   const [stages, setStages] = useState('');
   const [sheesha, setSheesha] = useState('');
   const [selectAllLocality, setSelectAllLocality] = useState(false);
+  const [selectAllGenre, setSelectAllGenre] = useState(false);
 
   useEffect(() => {
     filterApi();
   }, []);
 
+  // select all localities
   useEffect(() => {
     const temp = localities.map(item => {
       return {...item, checked: selectAllLocality};
     });
     setLocalities(temp);
   }, [selectAllLocality]);
+
+  // select all genres
+  useEffect(() => {
+    const temp = generes.map(item => {
+      return {...item, checked: selectAllGenre};
+    });
+    setLocalities(temp);
+  }, [selectAllGenre]);
 
   const filterApi = async () => {
     const res = await ApiCall('api/filters', 'GET');
@@ -104,6 +116,9 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
   const checkAllLocality = () => {
     setSelectAllLocality(!selectAllLocality);
   };
+  const checkAllGenre = () => {
+    setSelectAllGenre(!selectAllGenre);
+  };
 
   const checkLocalityData = item => {
     let temp = [...localities];
@@ -115,7 +130,9 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
     }
   };
 
-  const [selectRight, setSelectRight] = useState('Locality');
+  const [selectRight, setSelectRight] = useState(
+    isArtistFilter ? 'Genre' : 'Locality',
+  );
   const rendarItemLocality = ({item}) => {
     return (
       <TouchableOpacity
@@ -149,17 +166,22 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
     );
   };
 
-  const checkGenreData = index => {
+  const checkGenreData = item => {
+    console.log(item);
     let temp = [...generes];
-    temp[index].checked = !temp[index].checked;
-    setGeneres(temp);
+    const itemIndex = temp.findIndex(e => e.label === item?.label);
+
+    if (itemIndex !== -1) {
+      temp[itemIndex].checked = !temp[itemIndex].checked;
+      setGeneres(temp);
+    }
   };
 
   const rendarItemGenre = ({item, index}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          checkGenreData(index);
+          checkGenreData(item);
         }}
         activeOpacity={0.5}
         style={{
@@ -181,13 +203,9 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
           }}
           source={item.checked ? ImagePath.checkSelected : ImagePath.checkBox}
         />
-        <View style={{}}>
-          <View style={{}}>
-            <Text numberOfLines={1} style={styles.listinhHeading1}>
-              {item.label}
-            </Text>
-          </View>
-        </View>
+        <Text numberOfLines={1} style={styles.listinhHeading1}>
+          {item.label}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -297,82 +315,101 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
               height: '100%',
               flex: 0.4,
             }}>
-            <FilterData
-              label={'Locality'}
-              onClick={() => {
-                onSelectRightUi('Locality');
-              }}
-              image={ImagePath.location}
-              bgColor={
-                selectRight === 'Locality' ? '#fff' : 'rgba(205, 205, 205, 1)'
-              }
-            />
-            <FilterData
-              label={'Genre'}
-              onClick={() => {
-                onSelectRightUi('Genre');
-              }}
-              image={ImagePath.menuUser3}
-              bgColor={
-                selectRight === 'Genre' ? '#fff' : 'rgba(205, 205, 205, 1)'
-              }
-            />
-            <FilterData
-              label={'Sheesha'}
-              onClick={() => {
-                onSelectRightUi('Sheesha');
-              }}
-              image={ImagePath.hookah}
-              bgColor={
-                selectRight === 'Sheesha' ? '#fff' : 'rgba(205, 205, 205, 1)'
-              }
-            />
-            <FilterData
-              label={'Stags'}
-              onClick={() => {
-                onSelectRightUi('Stages');
-              }}
-              image={ImagePath.deer}
-              bgColor={
-                selectRight === 'Stages' ? '#fff' : 'rgba(205, 205, 205, 1)'
-              }
-            />
-            <FilterData
-              label={'Veg/Non-Veg'}
-              onClick={() => {
-                onSelectRightUi('Veg/Non Veg');
-              }}
-              image={ImagePath.menuUser2}
-              bgColor={
-                selectRight === 'Veg/Non Veg'
-                  ? '#fff'
-                  : 'rgba(205, 205, 205, 1)'
-              }
-            />
-            <FilterData
-              label={'Happy Hours'}
-              onClick={() => {
-                onSelectRightUi('Happy Hours');
-              }}
-              image={ImagePath.menuUser1}
-              bgColor={
-                selectRight === 'Happy Hours'
-                  ? '#fff'
-                  : 'rgba(205, 205, 205, 1)'
-              }
-            />
-            <FilterData
-              label={'Kids Friendly'}
-              onClick={() => {
-                onSelectRightUi('Kids Friendly');
-              }}
-              image={ImagePath.emog}
-              bgColor={
-                selectRight === 'Kids Friendly'
-                  ? '#fff'
-                  : 'rgba(205, 205, 205, 1)'
-              }
-            />
+            {isArtistFilter ? (
+              <FilterData
+                label={'Genre'}
+                onClick={() => {
+                  onSelectRightUi('Genre');
+                }}
+                image={ImagePath.menuUser3}
+                bgColor={
+                  selectRight === 'Genre' ? '#fff' : 'rgba(205, 205, 205, 1)'
+                }
+              />
+            ) : (
+              <>
+                <FilterData
+                  label={'Locality'}
+                  onClick={() => {
+                    onSelectRightUi('Locality');
+                  }}
+                  image={ImagePath.location}
+                  bgColor={
+                    selectRight === 'Locality'
+                      ? '#fff'
+                      : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+                <FilterData
+                  label={'Genre'}
+                  onClick={() => {
+                    onSelectRightUi('Genre');
+                  }}
+                  image={ImagePath.menuUser3}
+                  bgColor={
+                    selectRight === 'Genre' ? '#fff' : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+                <FilterData
+                  label={'Sheesha'}
+                  onClick={() => {
+                    onSelectRightUi('Sheesha');
+                  }}
+                  image={ImagePath.hookah}
+                  bgColor={
+                    selectRight === 'Sheesha'
+                      ? '#fff'
+                      : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+                <FilterData
+                  label={'Stags'}
+                  onClick={() => {
+                    onSelectRightUi('Stages');
+                  }}
+                  image={ImagePath.deer}
+                  bgColor={
+                    selectRight === 'Stages' ? '#fff' : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+                <FilterData
+                  label={'Veg/Non-Veg'}
+                  onClick={() => {
+                    onSelectRightUi('Veg/Non Veg');
+                  }}
+                  image={ImagePath.menuUser2}
+                  bgColor={
+                    selectRight === 'Veg/Non Veg'
+                      ? '#fff'
+                      : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+                <FilterData
+                  label={'Happy Hours'}
+                  onClick={() => {
+                    onSelectRightUi('Happy Hours');
+                  }}
+                  image={ImagePath.menuUser1}
+                  bgColor={
+                    selectRight === 'Happy Hours'
+                      ? '#fff'
+                      : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+                <FilterData
+                  label={'Kids Friendly'}
+                  onClick={() => {
+                    onSelectRightUi('Kids Friendly');
+                  }}
+                  image={ImagePath.emog}
+                  bgColor={
+                    selectRight === 'Kids Friendly'
+                      ? '#fff'
+                      : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+              </>
+            )}
           </View>
           <View style={{flex: 0.6, backgroundColor: '#FFFFFF'}}>
             {selectRight === 'Locality' && (
@@ -450,12 +487,13 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
                     }}
                     placeholder="Search"
                     placeholderTextColor={'#A5A5A5'}
+                    onChangeText={text => setSearchGenre(text)}
                   />
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.5}
                   onPress={() => {
-                    // checkAll();
+                    checkAllGenre();
                   }}
                   style={{
                     flexDirection: 'row',
@@ -467,13 +505,17 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
                       styles.searchIcon,
                       {borderWidth: 0.6, borderColor: '#000'},
                     ]}
-                    source={ImagePath.checkBox}
+                    source={
+                      selectAllGenre
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <View style={{maxHeight: hp(59)}}>
                   <FlatList
-                    data={generes}
+                    data={generes.filter(e => e.label.includes(searchGenre))}
                     nestedScrollEnabled={true}
                     renderItem={rendarItemGenre}
                     extraData={generes}
@@ -910,6 +952,7 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
                 vegNonVeg: vegNonVeg,
                 stagsAllowed: stages,
                 musicGenre: tempdataGenres,
+                kidsFriendly: kidsFriendly,
               });
             }}>
             <GradientText

@@ -45,6 +45,7 @@ const ClubListing = props => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       list(1);
       setValuekey('');
+      setFilterComponent(false);
     });
     return unsubscribe;
   }, [props.navigation]);
@@ -204,16 +205,17 @@ const ClubListing = props => {
   };
   const [filterComponent, setFilterComponent] = useState(false);
   const onPressApply = async data => {
+    console.log('onPressApply===', data);
     // call filter api here
     const res = await ApiCall(
       `api/clubs?vegNonVeg=${data?.vegNonVeg}&locality=${data?.locality.join(
         '|',
       )}&stagsAllowed=${data?.stagsAllowed}&musicGenre=${data?.musicGenre.join(
         '|',
-      )}`,
+      )}&kidsFriendly=${data?.kidsFriendly}`,
       'GET',
     );
-    console.log('-------filterApi', JSON.stringify(res?.data));
+    console.log('-------filterApi', res?.data?.length);
     setClubs(res?.data);
     setFilterComponent(false);
   };
@@ -247,7 +249,8 @@ const ClubListing = props => {
               placeholderTextColor="rgba(0, 0, 0, 0.7)"
               placeholder={'Search clubs'}
               onChangeText={text => {
-                searchApi(text), setValuekey(text);
+                // searchApi(text)
+                setValuekey(text);
               }}
               value={valuekey}
             />

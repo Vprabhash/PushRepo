@@ -22,6 +22,7 @@ import ImagePath from '../../assets/ImagePath';
 import Toast from 'react-native-simple-toast';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
+import FilterScreen from '../../Components/Filter/FilterScreen';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistDetail = props => {
@@ -33,11 +34,13 @@ const ArtistDetail = props => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [valuekey, setValuekey] = useState('');
+  const [filterComponent, setFilterComponent] = useState(false);
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       clubsNearbyDataApi(1);
       setValuekey('');
+      setFilterComponent(false);
     });
     return unsubscribe;
   }, [props.navigation]);
@@ -147,10 +150,35 @@ const ArtistDetail = props => {
       </View>
     );
   };
-  const [searchValue, setSearchValue] = useState('');
+  const onPressApply = async data => {
+    // call filter api here
+    const res = await ApiCall(
+      `api/artists?musicGenre=${data?.musicGenre.join('|')}`,
+      'GET',
+    );
+    console.log('-------filterApi', res?.data?.length);
+    setArtistList(res?.data);
+    setFilterComponent(false);
+  };
+
+  const onPressCancel = () => {
+    console.log('filterComponent---first');
+    setFilterComponent(false);
+  };
   const EmptyListMessage = () => {
     return <Text style={styles.titleText}>No Data Found</Text>;
   };
+
+  if (filterComponent) {
+    return (
+      <FilterScreen
+        isArtistFilter={true}
+        onPressApply={onPressApply}
+        onPressCancel={onPressCancel}
+      />
+    );
+  }
+
   return (
     <View style={{flex: 1}}>
       <StatusBar
@@ -171,7 +199,8 @@ const ArtistDetail = props => {
               placeholderTextColor="rgba(0, 0, 0, 0.7)"
               placeholder={'Search artists'}
               onChangeText={text => {
-                searchApi(text), setValuekey(text);
+                // searchApi(text),
+                setValuekey(text);
               }}
               value={valuekey}
             />
@@ -187,7 +216,7 @@ const ArtistDetail = props => {
             style={styles.fllter}
             activeOpacity={0.5}
             onPress={() => {
-              props.navigation.navigate('FilterScreen');
+              setFilterComponent(true);
             }}>
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>

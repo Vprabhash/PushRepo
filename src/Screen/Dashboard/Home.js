@@ -470,7 +470,7 @@ const Home = props => {
           {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
-            tital="Near me"
+            title="Near me"
             titalTwo="Sector 52, Noida, UP 435464"
             iconHeight={12}
             iconWidth={18}
@@ -488,10 +488,10 @@ const Home = props => {
               translucent={true}
             />
 
-            {/* <View style={[styles.inputMain, {marginTop: 10}]}>
+            <View style={[styles.inputMain, {marginTop: 10}]}>
               <TextInput
                 style={[styles.textInput, {}]}
-                placeholder={'Search near you'}
+                placeholder={'Search'}
                 placeholderTextColor={'rgba(0, 0, 0, 0.3)'}
                 // onChangeText={onChangeText}
                 // value={value}
@@ -503,7 +503,7 @@ const Home = props => {
                 }}>
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
-            </View> */}
+            </View>
 
             {/* <TouchableOpacity
             style={[styles.fllter]}
@@ -517,7 +517,7 @@ const Home = props => {
 
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>IN THE SPOTLIGHT</Text>
+              <Text style={styles.cardText}>CLUBS IN THE SPOTLIGHT</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
             <FlatList
@@ -534,9 +534,7 @@ const Home = props => {
             />
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>
-                THE CLUB NEARBY YOUR LOCATION{' '}
-              </Text>
+              <Text style={styles.cardText}>CLUBS NEARBY</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
             <SafeAreaView>
@@ -558,7 +556,7 @@ const Home = props => {
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    <Text style={styles.titleText1}>No Nearby Clubs Found</Text>
+                    <Text style={styles.titleText1}>No Clubs Found</Text>
                   </View>
                 }
               />
@@ -576,7 +574,7 @@ const Home = props => {
             </SafeAreaView>
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>ARTIST PLAYING NEARBY </Text>
+              <Text style={styles.cardText}>ARTISTS IN THE SPOTLIGHT</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
             <FlatList
@@ -616,7 +614,7 @@ const Home = props => {
           </TouchableOpacity> */}
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>UP COMING EVENTS</Text>
+              <Text style={styles.cardText}>UPCOMING EVENTS</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
             <View
@@ -673,7 +671,7 @@ const Home = props => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={styles.titleText1}>No Nearby Clubs Found</Text>
+                  <Text style={styles.titleText1}>No Clubs Found</Text>
                 </View>
               }
             />

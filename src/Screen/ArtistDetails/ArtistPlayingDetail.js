@@ -203,7 +203,7 @@ const ArtistPlayingDetail = props => {
           }}>
           <Header
             Back_Arrow={ImagePath.goBack}
-            tital="Artist playing Nearby"
+            title="Artist playing Nearby"
             titalTwo="DJ NYK- Wort the shot"
             iconHeight={20}
             iconWidth={29}

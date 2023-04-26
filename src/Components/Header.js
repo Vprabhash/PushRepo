@@ -49,14 +49,14 @@ const Header = props => {
           </TouchableOpacity>
         )}
         <View style={{}}>
-          {props.tital && (
+          {props.title && (
             <Text
               style={{
                 color: COLORS.black,
                 fontFamily: FONTS.AxiformaBold,
                 fontSize: 16,
               }}>
-              {props.tital}
+              {props.title}
             </Text>
           )}
           {props.titalTwo && (
