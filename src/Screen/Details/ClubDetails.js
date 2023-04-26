@@ -27,14 +27,12 @@ import MenuCard from '../../Components/MenuCard';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import ImageView from 'react-native-image-viewing';
-import Helper from '../../Components/Helper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibletwo, setModalVisibletwo] = useState(false);
   const [clubsNearby, setClubNearby] = useState([]);
-  // console.log('+++++++++((((((((-----', Helper.location);
   const scrollRef = useRef(null);
   const detailData = props?.route?.params?.listDetail;
   // const ENTRIES1 = [
@@ -111,10 +109,10 @@ const ClubDetails = props => {
     scrollRef?.current?.scrollToEnd({animation: true});
   };
   const clubsNearbyDataApi = async () => {
-    console.log('locationdata ---', Helper.location);
+    console.log('locationdata ---', global.location);
     try {
       const res = await ApiCall(
-        `api/nearby-clubs?coordinates=${Helper?.location?.latitude},${Helper?.location?.longitude}`,
+        `api/nearby-clubs?coordinates=${global?.location?.latitude},${global?.location?.longitude}`,
         'GET',
       );
       setClubNearby(res.data);
@@ -288,16 +286,17 @@ const ClubDetails = props => {
                         detailData?.vegNonVeg?.toLowerCase() === 'veg'
                           ? 'green'
                           : 'red',
-                      padding: 4,
-                      height: 20,
-                      width: 20,
-                      marginTop: 4,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: 15,
+                      width: 15,
+                      marginTop: 6,
                       marginHorizontal: 8,
                     }}>
                     <View
                       style={{
-                        height: 10,
-                        width: 10,
+                        height: 6,
+                        width: 6,
                         borderRadius: 10,
                         backgroundColor:
                           detailData?.vegNonVeg?.toLowerCase() === 'veg'

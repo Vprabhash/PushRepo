@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  Platform,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -190,7 +191,9 @@ const SignUp = props => {
           marginHorizontal: wp(7),
         }}>
         <Image source={ImagePath.google} style={styles.googleLogo} />
-        <Image source={ImagePath.apple} style={styles.googleLogo} />
+        {Platform.OS === 'ios' && (
+          <Image source={ImagePath.apple} style={styles.googleLogo} />
+        )}
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Text style={[styles.withText, {color: '#000000'}]}>

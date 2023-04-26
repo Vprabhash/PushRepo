@@ -19,7 +19,7 @@ import Toast from 'react-native-simple-toast';
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
-import Helper from '../../Components/Helper';
+import {setData} from '../../Components/Helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -45,7 +45,7 @@ const Otp = props => {
         const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
         console.log('---res--otp-----', res);
         if (res.ok == true) {
-          Helper.setData('userData', res);
+          setData('userData', res);
           if (fogetmail == 'otp') {
             props.navigation.navigate('ResetPassword', {
               otp: Otp,

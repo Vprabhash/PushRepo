@@ -284,7 +284,7 @@ const EventListing = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
+        {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
             searchIcon={ImagePath.searchIcon}
@@ -342,7 +342,16 @@ const EventListing = props => {
               onEndReached={fetchMoreData}
             />
           </SafeAreaView>
-        </ScrollView>
+        </ScrollView> */}
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <View style={styles.hedingTextMain}>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+            <View style={{}}>
+              <Text style={styles.cardText}>Coming Soon</Text>
+            </View>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+          </View>
+        </View>
       </ImageBackground>
     </View>
   );

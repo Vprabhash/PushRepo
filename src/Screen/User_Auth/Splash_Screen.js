@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Image, ImageBackground, View, StatusBar} from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import Geolocation from '@react-native-community/geolocation';
-import Helper from '../../Components/Helper';
+import {getData} from '../../Components/Helper';
 import {
   check,
   PERMISSIONS,
@@ -13,9 +13,9 @@ import BackgroundTimer from 'react-native-background-timer';
 
 const Splash_Screen = props => {
   useEffect(() => {
-    Helper.getData('userData').then(userdata => {
+    getData('userData').then(userdata => {
       console.log('userdatauserdata:-------- ', userdata);
-      if (userdata == null) {
+      if (!userdata) {
         setTimeout(() => {
           props.navigation.reset({
             index: 0,
@@ -52,7 +52,7 @@ const Splash_Screen = props => {
             let obj = {};
             obj.latitude = position.coords.latitude;
             obj.longitude = position.coords.longitude;
-            Helper.location = obj;
+            global.location = obj;
           },
           error => {
             console.log(error.code, error.message);
@@ -73,8 +73,7 @@ const Splash_Screen = props => {
                 let obj = {};
                 obj.latitude = position.coords.latitude;
                 obj.longitude = position.coords.longitude;
-                Helper.location = obj;
-                //  console.log('---------obj: ', obj);
+                global.location = obj;
               },
               error => {
                 console.log(error.code, error.message);
@@ -84,9 +83,6 @@ const Splash_Screen = props => {
             return false;
           } else {
             console.log('-----error2:');
-            //   Helper.showToast(
-            //     'permission denied! please enable location permission from setting',
-            //   );
             setTimeout(() => {
               openSettings();
             }, 3000);

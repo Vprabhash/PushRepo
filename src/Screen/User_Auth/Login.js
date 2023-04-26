@@ -10,6 +10,7 @@ import {
   View,
   Alert,
   Dimensions,
+  Platform,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
@@ -23,7 +24,7 @@ import ApiCall from '../../redux/CommanApi';
 import {ARTIST, SIGN_IN} from '../../services/Apis';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Helper from '../../Components/Helper';
+import {setData} from '../../Components/Helper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -35,11 +36,14 @@ const Login = props => {
     setEyeShow(!eyeShow);
   };
   const signin = async () => {
-    // var data = {
-    //   email: email,
-    //   password: password,
-    // };
     const minPasswordLength = 6;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      Alert.alert('Invalid email', 'Please enter a valid email address.');
+      return;
+    }
+
     if (password.length < minPasswordLength) {
       Alert.alert(
         'Invalid password',
@@ -52,17 +56,22 @@ const Login = props => {
       password: password,
       pushNotificationToken: '',
     });
-    const res = await ApiCall('api/login', 'POST', data);
-    console.log('---res--Lohin-----', res);
-    if (res.ok == true) {
-      Helper.setData('userData', res);
-      props.navigation.reset({
-        index: 0,
-        routes: [{name: 'BottomTab'}],
-      });
-      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
-    } else {
-      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+    try {
+      const res = await ApiCall('api/login', 'POST', data);
+      console.log('---res--Login-----', res);
+      if (res.ok == true) {
+        setData('userData', res?.data);
+        setData('userToken', res?.meta?.token);
+        props.navigation.reset({
+          index: 0,
+          routes: [{name: 'BottomTab'}],
+        });
+        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+      } else {
+        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+      }
+    } catch (error) {
+      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 
@@ -153,7 +162,9 @@ const Login = props => {
             marginHorizontal: wp(7),
           }}>
           <Image source={ImagePath.google} style={styles.googleLogo} />
-          <Image source={ImagePath.apple} style={styles.googleLogo} />
+          {Platform.OS === 'ios' && (
+            <Image source={ImagePath.apple} style={styles.googleLogo} />
+          )}
         </View>
 
         <View

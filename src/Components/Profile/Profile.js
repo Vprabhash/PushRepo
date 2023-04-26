@@ -13,40 +13,40 @@ import {
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
 import {useDispatch} from 'react-redux';
-import {fetchProfile} from '../../redux/reducers/profileSlice';
 import Toast from 'react-native-simple-toast';
 import ApiCall from '../../redux/CommanApi';
-const Profile = props => {
-  const dispatch = useDispatch();
-  const userProfile = async () => {
-    // const data = await dispatch(fetchProfile()).then(data => {
-    //   console.log('------profile data--------', data);
-    // });
-    // Email validation
-
-    try {
-      const res = await ApiCall(`api/user`, 'GET');
-      console.log('---profile--user-----', res);
-
-      if (res.ok == true) {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
-        props.navigation.navigate('Otp', {
-          email: email,
-          password: password,
-        });
-      } else {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
-      }
-    } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
-    }
-  };
+import CustomButton from '../TextInput_And_Button/CustomButton';
+import {removeData} from '../Helper';
+import {SafeAreaView} from 'react-native-safe-area-context';
+const Profile = ({navigation}) => {
+  // const dispatch = useDispatch();
+  const [userProfileData, setUserProfileData] = useState(null);
   useEffect(() => {
     userProfile();
   }, []);
+  const userProfile = async () => {
+    try {
+      const res = await ApiCall(`api/user`, 'GET');
+      console.log('---profile--user-----', res);
+      if (res.ok == true) {
+        setUserProfileData(res?.data);
+      } else {
+        // Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+      }
+    } catch (error) {
+      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
+
+  const logOut = async () => {
+    await removeData('userToken');
+    await removeData('userData').then(() => {
+      navigation.navigate('Login');
+    });
+  };
   const [accountList, setAccountList] = useState([
-    {Title: 'Email Address', Icon: ImagePath.rightIcon},
-    {Title: 'Password', Icon: ImagePath.rightIcon},
+    {Title: 'Email Address', Icon: ImagePath.rightIcon, onPress: () => {}},
+    {Title: 'Password', Icon: ImagePath.rightIcon, onPress: () => {}},
   ]);
   const accountListRenderItem = ({item, index}) => {
     return (
@@ -129,7 +129,7 @@ const Profile = props => {
   };
   return (
     <View style={{flex: 1}}>
-      <View
+      {/* <View
         style={{
           backgroundColor: '#fff',
           elevation: 10,
@@ -145,7 +145,7 @@ const Profile = props => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.goBack();
+              navigation.goBack();
             }}>
             <Image
               style={{
@@ -176,7 +176,7 @@ const Profile = props => {
             source={ImagePath.checkSelected}
           />
         </View>
-      </View>
+      </View> */}
       <StatusBar
         barStyle="dark-content"
         hidden={false}
@@ -188,50 +188,51 @@ const Profile = props => {
           source={ImagePath.Azzir_Bg}
           resizeMode="cover"
           style={{height: '100%'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-              marginHorizontal: 20,
-              marginTop: 20,
-            }}>
-            <TouchableOpacity onPress={() => {}}>
+          <SafeAreaView>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                marginHorizontal: 20,
+                marginTop: 20,
+              }}>
+              <TouchableOpacity onPress={() => {}}>
+                <Image
+                  style={{
+                    width: 100,
+                    height: 100,
+                    resizeMode: 'cover',
+                    borderRadius: 30,
+                  }}
+                  source={ImagePath.profileEdit}
+                />
+              </TouchableOpacity>
+
+              <Text
+                style={{
+                  color: COLORS.black,
+                  fontFamily: FONTS.RobotoMedium,
+                  fontSize: 20,
+                }}>
+                Harry D’suza
+              </Text>
               <Image
                 style={{
-                  width: 100,
-                  height: 100,
-                  resizeMode: 'cover',
-                  borderRadius: 30,
+                  height: 16,
+                  width: 16,
+                  resizeMode: 'contain',
                 }}
-                source={ImagePath.profileEdit}
+                source={ImagePath.EditIcon}
               />
-            </TouchableOpacity>
-
-            <Text
-              style={{
-                color: COLORS.black,
-                fontFamily: FONTS.RobotoMedium,
-                fontSize: 20,
-              }}>
-              Harry D’suza
+            </View>
+            <Text style={[styles.settingText, {marginTop: 22}]}>
+              Account Settings
             </Text>
-            <Image
-              style={{
-                height: 16,
-                width: 16,
-                resizeMode: 'contain',
-              }}
-              source={ImagePath.EditIcon}
-            />
-          </View>
-          <Text style={[styles.settingText, {marginTop: 22}]}>
-            Account Settings
-          </Text>
-          <View style={styles.ProfileList}>
-            <FlatList data={accountList} renderItem={accountListRenderItem} />
-          </View>
-          <Text style={styles.settingText}>Notification Settings</Text>
+            <View style={styles.ProfileList}>
+              <FlatList data={accountList} renderItem={accountListRenderItem} />
+            </View>
+            {/* <Text style={styles.settingText}>Notification Settings</Text>
           <View style={styles.ProfileList}>
             <FlatList
               data={notificationList}
@@ -240,9 +241,19 @@ const Profile = props => {
           </View>
           <Text style={styles.settingText}>Payment Settings</Text>
 
-          <View style={[styles.ProfileList, {marginBottom: 20}]}>
+          <View style={[styles.ProfileList, {marginBottom: 10}]}>
             <FlatList data={paymentList} renderItem={paymentListRenderItem} />
-          </View>
+          </View> */}
+            <View style={{marginHorizontal: 20, marginBottom: 40}}>
+              <CustomButton
+                onclick={logOut}
+                top={30}
+                title="Log out"
+                bgColor="#000"
+                textColor="#fff"
+              />
+            </View>
+          </SafeAreaView>
         </ImageBackground>
       </ScrollView>
     </View>

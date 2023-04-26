@@ -20,6 +20,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import Header from '../../Components/Header';
+import Toast from 'react-native-simple-toast';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistEventDetail = props => {
@@ -109,34 +110,38 @@ const ArtistEventDetail = props => {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
-                    Linking.openURL(detailData?.instagramLink);
+                    if (detailData?.instagramLink) {
+                      Linking.openURL(detailData?.instagramLink);
+                    } else {
+                      Toast.show(
+                        'Instagram link is not available',
+                        Toast.LONG,
+                        Toast.BOTTOM,
+                      );
+                    }
                   }}
                   style={[
                     styles.btnmain,
                     {borderBottomLeftRadius: 10, marginRight: 1},
                   ]}>
-                  <LinearGradient
-                    style={{
-                      // height: 24,
-                      // width: 40,
-                      // borderRadius: 5,
-                      // justifyContent: 'center',
-                      backgroundColor: 'red',
-                      alignItems: 'center',
-                    }}
-                    start={{x: 1, y: 0}}
-                    colors={['red', 'red']}>
-                    <Image
-                      style={[styles.btnIcon, {height: 14, width: 14}]}
-                      source={ImagePath.Instagram}
-                    />
-                  </LinearGradient>
-                  <Text style={[styles.buttonText, {}]}>Instagram</Text>
+                  <Image
+                    style={[styles.btnIcon, {height: 14, width: 14}]}
+                    source={ImagePath.Instagram}
+                  />
+                  <Text style={styles.buttonText}>Instagram</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
-                    Linking.openURL(detailData?.youtubeChannelLink);
+                    if (detailData?.youtubeChannelLink) {
+                      Linking.openURL(detailData?.youtubeChannelLink);
+                    } else {
+                      Toast.show(
+                        'Youtube link is not available',
+                        Toast.LONG,
+                        Toast.BOTTOM,
+                      );
+                    }
                   }}
                   style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
                   <Image style={styles.btnIcon} source={ImagePath.youtube} />

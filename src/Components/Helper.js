@@ -1,39 +1,33 @@
-import * as React from 'react';
-import {Alert, Platform} from 'react-native';
+import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default class Helper extends React.Component {
-  static device_type = Platform.OS == 'android' ? 'Android' : 'IOS';
-  static device_token = '1213123123';
-  static location = '';
+export const setData = async (key, val) => {
+  try {
+    let tempval = JSON.stringify(val);
+    await AsyncStorage.setItem(key, tempval);
+  } catch (error) {
+    console.error(error, '----------SetAsyncStorage');
+  }
+};
 
-  static async setData(key, val) {
-    try {
-      let tempval = JSON.stringify(val);
-      await AsyncStorage.setItem(key, tempval);
-    } catch (error) {
-      console.error(error, '----------SetAsyncStorage');
+export const getData = async key => {
+  try {
+    let value = await AsyncStorage.getItem(key);
+    if (value) {
+      return JSON.parse(value);
+    } else {
+      return null;
     }
+  } catch (error) {
+    console.error(error, '---------GetAsyncStorage');
   }
-  static async getData(key) {
-    try {
-      let value = await AsyncStorage.getItem(key);
-      if (value) {
-        let newvalue = JSON.parse(value);
-        return newvalue;
-      } else {
-        return value;
-      }
-    } catch (error) {
-      console.error(error, '---------GetAsyncStorage');
-    }
+};
+
+export const removeData = async key => {
+  try {
+    await AsyncStorage.removeItem(key);
+    return true;
+  } catch (exception) {
+    return false;
   }
-  static async removeItemValue(key) {
-    try {
-      await AsyncStorage.removeItem(key);
-      return true;
-    } catch (exception) {
-      return false;
-    }
-  }
-}
+};

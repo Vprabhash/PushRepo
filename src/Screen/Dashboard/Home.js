@@ -30,7 +30,6 @@ import {LocationApi} from '../../redux/reducers/clubLocationSlice';
 import {upComingEventApi} from '../../redux/reducers/upComingEventSlice';
 import ApiCall from '../../redux/CommanApi';
 import {ARTIST} from '../../services/Apis';
-import Helper from '../../Components/Helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -409,10 +408,10 @@ const Home = props => {
     );
   };
   const clubsNearbyDataApi = async () => {
-    console.log('locationdata ---', Helper.location);
+    console.log('locationdata ---', global?.location);
     try {
       const res = await ApiCall(
-        `api/nearby-clubs?coordinates=${Helper?.location?.latitude},${Helper?.location?.longitude}`,
+        `api/nearby-clubs?coordinates=${global?.location?.latitude},${global?.location?.longitude}`,
         'GET',
       );
       setClubNearby(res.data);

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { FONTS } from '../constants';
+import {FONTS} from '../constants';
 
 const CustomButton = ({
   onclick,
@@ -34,9 +34,11 @@ const CustomButton = ({
         borderColor: '#00000',
         justifyContent: 'center',
       }}>
-      {isLoading ? <ActivityIndicator size="small" color={textColor} />
-        : <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
-      }
+      {isLoading ? (
+        <ActivityIndicator size="small" color={textColor} />
+      ) : (
+        <Text style={[styles.buttonText, {color: textColor}]}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -46,7 +48,7 @@ export default memo(CustomButton);
 const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
-    fontSize:16,
+    fontSize: 16,
     fontFamily: FONTS.RobotoRegular,
     letterSpacing: 0.3,
   },
