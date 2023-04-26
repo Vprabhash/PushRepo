@@ -233,7 +233,7 @@ const ClubListing = props => {
             <TextInput
               style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
               placeholderTextColor="rgba(0, 0, 0, 0.7)"
-              placeholder={'Search'}
+              placeholder={'Search clubs'}
               onChangeText={text => {
                 searchApi(text);
               }}

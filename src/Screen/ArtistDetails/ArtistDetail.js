@@ -147,15 +147,22 @@ const ArtistDetail = props => {
   };
   return (
     <View style={{flex: 1}}>
+      <StatusBar
+        barStyle="dark-content"
+        hidden={false}
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={[styles.inputMain, {marginTop: 50, marginBottom: 20}]}>
+        <SafeAreaView />
+        <View style={[styles.inputMain, {marginVertical: 20}]}>
           <TextInput
             style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
             placeholderTextColor="rgba(0, 0, 0, 0.7)"
-            placeholder={'Search'}
+            placeholder={'Search artists'}
             onChangeText={text => {
               setSearchValue(text);
             }}
@@ -170,7 +177,7 @@ const ArtistDetail = props => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          style={[styles.fllter]}
+          style={styles.fllter}
           activeOpacity={0.5}
           onPress={() => {
             props.navigation.navigate('FilterScreen');
@@ -179,26 +186,17 @@ const ArtistDetail = props => {
           <Text style={styles.filtersText}>Filters</Text>
         </TouchableOpacity>
         <ScrollView contentContainerStyle={{flexGrow: 1, flex: 1}}>
-          <StatusBar
-            barStyle="dark-content"
-            hidden={false}
-            backgroundColor="transparent"
-            translucent={true}
+          <FlatList
+            data={artistList}
+            renderItem={artistListRenderItem}
+            ListFooterComponent={renderFooter}
+            onEndReachedThreshold={0.3}
+            onMomentumScrollBegin={() => {
+              setonEndReachedCalledDuringMomentum(false);
+            }}
+            onEndReached={fetchMoreData}
+            ListEmptyComponent={EmptyListMessage}
           />
-
-          <SafeAreaView style={{flex: 1}}>
-            <FlatList
-              data={artistList}
-              renderItem={artistListRenderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.3}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-              ListEmptyComponent={EmptyListMessage}
-            />
-          </SafeAreaView>
         </ScrollView>
       </ImageBackground>
     </View>
@@ -216,7 +214,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    elevation: 16,
+    elevation: 9,
     width: wp(23),
     marginBottom: 20,
     marginHorizontal: 15,

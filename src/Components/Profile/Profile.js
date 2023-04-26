@@ -10,6 +10,7 @@ import {
   View,
   FlatList,
   TextInput,
+  Platform,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -96,14 +97,45 @@ const Profile = ({navigation}) => {
       } else {
         console.log('selected image', response.assets?.[0]?.uri);
         setimg(response.assets?.[0]?.uri);
+        uploadImage(response.assets?.[0]);
       }
     });
   };
 
-  const uploadImage = async () => {
+  const uploadImage = async imageResponse => {
     try {
+      const formData = new FormData();
+
+      formData.append('file', {
+        name: imageResponse.fileName || 'profileImage',
+        type: imageResponse.type || 'jpg',
+        uri:
+          Platform.OS === 'android'
+            ? imageResponse.uri
+            : imageResponse.uri.replace('file://', ''),
+      });
+      console.log('---profile--data-----', {
+        name: imageResponse.fileName || 'profileImage',
+        type: imageResponse.type || 'jpg',
+        uri:
+          Platform.OS === 'android'
+            ? imageResponse.uri
+            : imageResponse.uri.replace('file://', ''),
+      });
+      const res = await ApiCall(`api/user/avatar`, 'POST', formData);
+      console.log('---profile--user-----', res?.data);
+
+      if (res?.data?.username) {
+        setUserProfileData(res?.data);
+      } else {
+        Toast.show(
+          res?.data?.message || 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
+      }
     } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 
@@ -113,7 +145,7 @@ const Profile = ({navigation}) => {
         onPress={item.onPress}
         style={{
           flex: 1,
-          marginTop: index == 0 ? 0 : 23,
+          marginTop: index == 0 ? 0 : 20,
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
@@ -256,32 +288,14 @@ const Profile = ({navigation}) => {
                 marginTop: 20,
               }}>
               <TouchableOpacity
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 50,
-                  backgroundColor: COLORS.primary,
-                }}
+                style={styles.profileImgContainer}
                 onPress={openPicker}>
                 {img ? (
-                  <Image
-                    style={{
-                      width: 100,
-                      height: 100,
-                      resizeMode: 'contain',
-                      borderRadius: 50,
-                      backgroundColor: COLORS.primary,
-                    }}
-                    source={{uri: img}}
-                  />
+                  <Image style={styles.profileImg} source={{uri: img}} />
                 ) : (
-                  <View
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 50,
-                      backgroundColor: COLORS.primary,
-                    }}
+                  <Image
+                    style={styles.profileIcon}
+                    source={ImagePath.profile}
                   />
                 )}
               </TouchableOpacity>
@@ -295,17 +309,6 @@ const Profile = ({navigation}) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  <TextInput
-                    value={userProfileData.firstName}
-                    style={{
-                      color: COLORS.black,
-                      fontFamily: FONTS.AxiformaMedium,
-                      fontSize: 20,
-                    }}
-                    onChangeText={text => {
-                      setUserProfileData({...userProfileData, firstName: text});
-                    }}
-                  />
                   <Text
                     style={{
                       color: COLORS.black,
@@ -326,14 +329,26 @@ const Profile = ({navigation}) => {
                     source={ImagePath.EditIcon}
                   />
                 </View>
-                <Text
-                  style={{
-                    color: COLORS.black,
-                    fontFamily: FONTS.AxiformaMedium,
-                    fontSize: 12,
-                  }}>
-                  {userProfileData?.email}
-                </Text>
+                {userProfileData?.email && (
+                  <Text
+                    style={{
+                      color: COLORS.black,
+                      fontFamily: FONTS.AxiformaMedium,
+                      fontSize: 12,
+                    }}>
+                    {userProfileData?.email}
+                  </Text>
+                )}
+                {userProfileData?.phoneNumber && (
+                  <Text
+                    style={{
+                      color: COLORS.black,
+                      fontFamily: FONTS.AxiformaMedium,
+                      fontSize: 12,
+                    }}>
+                    {userProfileData?.phoneNumber}
+                  </Text>
+                )}
               </View>
             </View>
 
@@ -394,5 +409,26 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.RobotoBold,
     marginHorizontal: 15,
     marginTop: 30,
+  },
+  profileImgContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: COLORS.gray,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileImg: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+    borderRadius: 50,
+    backgroundColor: COLORS.primary,
+  },
+  profileIcon: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+    tintColor: COLORS.primary,
   },
 });

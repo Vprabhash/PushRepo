@@ -468,7 +468,8 @@ const Home = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
+        <SafeAreaView>
+          {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
             tital="Near me"
@@ -480,33 +481,33 @@ const Home = props => {
             }}
             profileIcon={ImagePath.profilePic}
           />
-        </View>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          <StatusBar
-            barStyle="dark-content"
-            hidden={false}
-            backgroundColor="transparent"
-            translucent={true}
-          />
-
-          <View style={[styles.inputMain, {marginTop: 10}]}>
-            <TextInput
-              style={[styles.textInput, {}]}
-              placeholder={'Search near you'}
-              placeholderTextColor={'rgba(0, 0, 0, 0.3)'}
-              // onChangeText={onChangeText}
-              // value={value}
+        </View> */}
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+            <StatusBar
+              barStyle="dark-content"
+              hidden={false}
+              backgroundColor="transparent"
+              translucent={true}
             />
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
-                ('');
-              }}>
-              <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
-            </TouchableOpacity>
-          </View>
 
-          {/* <TouchableOpacity
+            <View style={[styles.inputMain, {marginTop: 10}]}>
+              <TextInput
+                style={[styles.textInput, {}]}
+                placeholder={'Search near you'}
+                placeholderTextColor={'rgba(0, 0, 0, 0.3)'}
+                // onChangeText={onChangeText}
+                // value={value}
+              />
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => {
+                  ('');
+                }}>
+                <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
+              </TouchableOpacity>
+            </View>
+
+            {/* <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
             onPress={() => {
@@ -516,55 +517,57 @@ const Home = props => {
             <Text style={styles.filtersText}>Filters</Text>
           </TouchableOpacity> */}
 
-          <View style={styles.hedingTextMain}>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <Text style={styles.cardText}>IN THE SPOTLIGHT</Text>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-          </View>
+            <View style={styles.hedingTextMain}>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+              <Text style={styles.cardText}>IN THE SPOTLIGHT</Text>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+            </View>
 
-          <SafeAreaView>
-            <FlatList
-              horizontal={true}
-              data={SpotlightData}
-              renderItem={SpotlightData_RenderItem}
-              ListFooterComponent={spotLightrenderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringspotLight(false);
-              }}
-              onEndReached={fetchSpotlightData}
-            />
-          </SafeAreaView>
+            <SafeAreaView>
+              <FlatList
+                horizontal={true}
+                data={SpotlightData}
+                renderItem={SpotlightData_RenderItem}
+                ListFooterComponent={spotLightrenderFooter}
+                onEndReachedThreshold={0.7}
+                onMomentumScrollBegin={() => {
+                  setonEndReachedCalledDuringspotLight(false);
+                }}
+                onEndReached={fetchSpotlightData}
+              />
+            </SafeAreaView>
 
-          <View style={styles.hedingTextMain}>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <Text style={styles.cardText}>THE CLUB NEARBY YOUR LOCATION </Text>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-          </View>
-          <SafeAreaView style={{}}>
-            <FlatList
-              horizontal={true}
-              data={clubsNearby}
-              renderItem={ClubNarDatarenderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-              ListEmptyComponent={
-                <View
-                  style={{
-                    width: width,
-                    paddingBottom: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={styles.titleText1}>No Nearby Clubs Found</Text>
-                </View>
-              }
-            />
-            {/* <FlatList
+            <View style={styles.hedingTextMain}>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+              <Text style={styles.cardText}>
+                THE CLUB NEARBY YOUR LOCATION{' '}
+              </Text>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+            </View>
+            <SafeAreaView style={{}}>
+              <FlatList
+                horizontal={true}
+                data={clubsNearby}
+                renderItem={ClubNarDatarenderItem}
+                ListFooterComponent={renderFooter}
+                onEndReachedThreshold={0.7}
+                onMomentumScrollBegin={() => {
+                  setonEndReachedCalledDuringMomentum(false);
+                }}
+                onEndReached={fetchMoreData}
+                ListEmptyComponent={
+                  <View
+                    style={{
+                      width: width,
+                      paddingBottom: 30,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text style={styles.titleText1}>No Nearby Clubs Found</Text>
+                  </View>
+                }
+              />
+              {/* <FlatList
               horizontal={true}
               data={Tabs}
               renderItem={_renderItem}
@@ -575,24 +578,24 @@ const Home = props => {
               }}
               onEndReached={fetchMoreData}
             /> */}
-          </SafeAreaView>
-          <View style={styles.hedingTextMain}>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <Text style={styles.cardText}>ARTIST PLAYING NEARBY </Text>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-          </View>
-          <FlatList
-            horizontal={true}
-            data={artistData}
-            renderItem={artistRenderItem}
-            ListFooterComponent={artistRenderFooter}
-            onEndReachedThreshold={0.7}
-            onMomentumScrollBegin={() => {
-              setonEndReachedCalledDuringArtist(false);
-            }}
-            onEndReached={fetchArtistData}
-          />
-          {/* <TouchableOpacity
+            </SafeAreaView>
+            <View style={styles.hedingTextMain}>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+              <Text style={styles.cardText}>ARTIST PLAYING NEARBY </Text>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+            </View>
+            <FlatList
+              horizontal={true}
+              data={artistData}
+              renderItem={artistRenderItem}
+              ListFooterComponent={artistRenderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringArtist(false);
+              }}
+              onEndReached={fetchArtistData}
+            />
+            {/* <TouchableOpacity
             style={[
               styles.fllter,
               {
@@ -616,26 +619,26 @@ const Home = props => {
               style={[styles.iconStyle, {width: 10, height: 8}]}
             />
           </TouchableOpacity> */}
-          <View style={styles.hedingTextMain}>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <Text style={styles.cardText}>UP COMING EVENTS</Text>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-          </View>
-          <View
-            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 100,
-              }}>
-              {/* <Image style={styles.hedingImg} source={ImagePath.rightLine1} /> */}
-              <Text style={styles.cardText}> Coming Soon </Text>
-              {/* <Image style={styles.hedingImg} source={ImagePath.rightLine} /> */}
+            <View style={styles.hedingTextMain}>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+              <Text style={styles.cardText}>UP COMING EVENTS</Text>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
-          </View>
-          {/* <SafeAreaView style={{marginBottom: 10}}>
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 100,
+                }}>
+                {/* <Image style={styles.hedingImg} source={ImagePath.rightLine1} /> */}
+                <Text style={styles.cardText}> Coming Soon </Text>
+                {/* <Image style={styles.hedingImg} source={ImagePath.rightLine} /> */}
+              </View>
+            </View>
+            {/* <SafeAreaView style={{marginBottom: 10}}>
             <FlatList
               horizontal={true}
               data={UpcomingData}
@@ -648,9 +651,9 @@ const Home = props => {
               onEndReached={fetchUpcomingData}
             />
           </SafeAreaView> */}
-          {/* <Text style={[styles.aboutText]}>Clubs Nearby </Text> */}
+            {/* <Text style={[styles.aboutText]}>Clubs Nearby </Text> */}
 
-          {/* <SafeAreaView style={{marginBottom: 20}}>
+            {/* <SafeAreaView style={{marginBottom: 20}}>
             <FlatList
               horizontal={true}
               data={clubsNearby}
@@ -668,7 +671,8 @@ const Home = props => {
               }
             />
           </SafeAreaView> */}
-        </ScrollView>
+          </ScrollView>
+        </SafeAreaView>
       </ImageBackground>
     </View>
   );
