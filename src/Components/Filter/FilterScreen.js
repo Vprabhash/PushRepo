@@ -47,6 +47,13 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
   const [stages, setStages] = useState('');
   const [sheesha, setSheesha] = useState('');
 
+  const clearAllData = () => {
+    setKidsFriendly('');
+
+    setVegNonVeg('');
+    setStages('');
+    setSheesha('');
+  };
   console.log('-----', kidsFriendly, vegNonVeg, stages, sheesha);
 
   const [teamArray, setTeamArray] = useState([]);
@@ -148,9 +155,54 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
           }}
           source={item.checked ? ImagePath.checkSelected : ImagePath.checkBox}
         />
-        <View style={{flex: 0.6}}>
+        <View style={{}}>
           <View style={{}}>
-            <Text style={styles.listinhHeading1}>{item.label}</Text>
+            <Text numberOfLines={1} style={styles.listinhHeading1}>
+              {item.label}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const checkhappyData = index => {
+    let temp = [...happyHourTimings];
+    temp[index].checked = !temp[index].checked;
+    setHappyHourTimings(temp);
+  };
+
+  const happyrendarItemGenre = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          checkhappyData(index);
+        }}
+        activeOpacity={0.5}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: 10,
+          borderBottomWidth: 1,
+          borderBottomColor: 'rgba(214, 214, 214, 1)',
+          paddingVertical: 12,
+        }}>
+        <Image
+          style={{
+            height: 11,
+            width: 11,
+            resizeMode: 'contain',
+            tintColor: '#202020',
+            borderWidth: item.checked ? 0 : 0.3,
+            borderColor: item.checked ? '#202020' : '#202020',
+          }}
+          source={item.checked ? ImagePath.checkSelected : ImagePath.checkBox}
+        />
+        <View style={{}}>
+          <View style={{}}>
+            <Text numberOfLines={1} style={styles.listinhHeading1}>
+              {item.label}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -212,13 +264,18 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
               justifyContent: 'space-between',
             }}>
             <Text style={styles.aboutText}>Filters </Text>
-            <GradientText
-              style={[
-                styles.textStyle,
-                {fontFamily: FONTS.InterSemiBold, fontSize: 12},
-              ]}>
-              CLEAR ALL
-            </GradientText>
+            <TouchableOpacity
+              onPress={() => {
+                clearAllData();
+              }}>
+              <GradientText
+                style={[
+                  styles.textStyle,
+                  {fontFamily: FONTS.InterSemiBold, fontSize: 12},
+                ]}>
+                CLEAR ALL
+              </GradientText>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{flex: 1, flexDirection: 'row', borderTopWidth: 1}}>
@@ -348,7 +405,7 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
-                <View style={{maxHeight: hp(61)}}>
+                <View style={{maxHeight: hp(59)}}>
                   <FlatList
                     data={localities}
                     nestedScrollEnabled={true}
@@ -396,12 +453,15 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
-                <FlatList
-                  data={generes}
-                  renderItem={rendarItemGenre}
-                  extraData={generes}
-                  showsVerticalScrollIndicator={false}
-                />
+                <View style={{maxHeight: hp(59)}}>
+                  <FlatList
+                    data={generes}
+                    nestedScrollEnabled={true}
+                    renderItem={rendarItemGenre}
+                    extraData={generes}
+                    showsVerticalScrollIndicator={false}
+                  />
+                </View>
               </>
             )}
             {selectRight === 'Sheesha' && (
@@ -657,12 +717,15 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
-                <FlatList
-                  data={happyHourTimings}
-                  renderItem={rendarItemGenre}
-                  extraData={happyHourTimings}
-                  showsVerticalScrollIndicator={false}
-                />
+                <View style={{maxHeight: hp(59)}}>
+                  <FlatList
+                    data={happyHourTimings}
+                    nestedScrollEnabled={true}
+                    renderItem={happyrendarItemGenre}
+                    extraData={happyHourTimings}
+                    showsVerticalScrollIndicator={false}
+                  />
+                </View>
               </>
             )}
             {selectRight === 'Kids Friendly' && (

@@ -162,7 +162,6 @@ const ArtistDetail = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <SafeAreaView />
         <View style={[styles.inputMain, {marginVertical: 20}]}>
           <TextInput
             style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
