@@ -29,6 +29,13 @@ const Profile = ({navigation}) => {
 
   const [accountList, setAccountList] = useState([
     {
+      Title: 'Edit Profile',
+      Icon: ImagePath.rightIcon,
+      onPress: () => {
+        navigation.navigate('EditProfile');
+      },
+    },
+    {
       Title: 'Reset Password',
       Icon: ImagePath.rightIcon,
       onPress: () => {

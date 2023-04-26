@@ -36,28 +36,57 @@ function FilterData({label, onClick, image, bgColor}) {
   );
 }
 const FilterScreen = ({onPressApply, onPressCancel}) => {
-  const [serachFriends, setSerachFriends] = useState('');
+  const [, forceUpdate] = useState();
+  const [searchLocality, setSearchLocality] = useState('');
   const [genreData, setgenreData] = useState([]);
-  const [localities, setLocalities] = useState('');
+  const [localities, setLocalities] = useState([]);
   const [generes, setGeneres] = useState('');
   const [happyHourTimings, setHappyHourTimings] = useState('');
-
   const [kidsFriendly, setKidsFriendly] = useState('');
   const [vegNonVeg, setVegNonVeg] = useState('');
   const [stages, setStages] = useState('');
   const [sheesha, setSheesha] = useState('');
+  const [selectAllLocality, setSelectAllLocality] = useState(false);
+
+  useEffect(() => {
+    filterApi();
+  }, []);
+
+  useEffect(() => {
+    const temp = localities.map(item => {
+      return {...item, checked: selectAllLocality};
+    });
+    setLocalities(temp);
+  }, [selectAllLocality]);
+
+  const filterApi = async () => {
+    const res = await ApiCall('api/filters', 'GET');
+    setLocalities(res?.data?.localities);
+    setGeneres(res?.data?.generes);
+    setHappyHourTimings(res?.data?.happyHourTimings);
+  };
+
+  const clearLocalities = () => {
+    const temp = localities.map(item => {
+      return {...item, checked: false};
+    });
+    setLocalities(temp);
+    setSelectAllLocality(false);
+  };
 
   const clearAllData = () => {
+    clearLocalities();
     setKidsFriendly('');
-
     setVegNonVeg('');
     setStages('');
     setSheesha('');
   };
+
   console.log('-----', kidsFriendly, vegNonVeg, stages, sheesha);
 
   const [teamArray, setTeamArray] = useState([]);
-  const friendSearchFilter = text => {
+  const searchLocalityFilter = text => {
+    setSearchLocality(text);
     if (text) {
       const newData = teamArray.filter(function (item) {
         const itemData = item.label
@@ -66,33 +95,32 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
-      setgenreData(newData);
-      setSerachFriends(text);
+      setLocalities(newData);
     } else {
-      setgenreData(teamArray);
-      setSerachFriends(text);
+      setLocalities(teamArray);
     }
   };
 
-  // const checkAllLocality = () => {
-  //   let temp = localities.map(item => {
-  //     return {...item, checked: true};
-  //   });
-  //   setLocalities(temp);
-  // };
+  const checkAllLocality = () => {
+    setSelectAllLocality(!selectAllLocality);
+  };
 
-  const checkLocalityData = index => {
+  const checkLocalityData = item => {
     let temp = [...localities];
-    temp[index].checked = !temp[index].checked;
-    setLocalities(temp);
+    const itemIndex = temp.findIndex(e => e.label === item?.label);
+
+    if (itemIndex !== -1) {
+      temp[itemIndex].checked = !temp[itemIndex].checked;
+      setLocalities(temp);
+    }
   };
 
   const [selectRight, setSelectRight] = useState('Locality');
-  const rendarItemLocality = ({item, index}) => {
+  const rendarItemLocality = ({item}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          checkLocalityData(index);
+          checkLocalityData(item);
         }}
         activeOpacity={0.5}
         style={{
@@ -115,9 +143,7 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
           source={item.checked ? ImagePath.checkSelected : ImagePath.checkBox}
         />
         <View style={{flex: 0.6}}>
-          <View style={{}}>
-            <Text style={styles.listinhHeading1}>{item.label}</Text>
-          </View>
+          <Text style={styles.listinhHeading1}>{item.label}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -209,17 +235,6 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
     );
   };
 
-  const filterApi = async text => {
-    const res = await ApiCall('api/filters', 'GET');
-    setLocalities(res?.data?.localities);
-    setGeneres(res?.data?.generes);
-    setHappyHourTimings(res?.data?.happyHourTimings);
-  };
-
-  useEffect(() => {
-    filterApi();
-  }, []);
-
   const onSelectRightUi = label => {
     setSelectRight(label);
   };
@@ -264,10 +279,7 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
               justifyContent: 'space-between',
             }}>
             <Text style={styles.aboutText}>Filters </Text>
-            <TouchableOpacity
-              onPress={() => {
-                clearAllData();
-              }}>
+            <TouchableOpacity onPress={clearAllData}>
               <GradientText
                 style={[
                   styles.textStyle,
@@ -380,16 +392,17 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
                     }}
                     placeholder="Search"
                     placeholderTextColor={'#A5A5A5'}
-                    value={serachFriends}
+                    value={searchLocality}
                     onChangeText={text => {
-                      // friendSearchFilter(text);
+                      // searchLocalityFilter(text);
+                      setSearchLocality(text);
                     }}
                   />
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.5}
                   onPress={() => {
-                    // checkAllLocality();
+                    checkAllLocality();
                   }}
                   style={{
                     flexDirection: 'row',
@@ -401,16 +414,21 @@ const FilterScreen = ({onPressApply, onPressCancel}) => {
                       styles.searchIcon,
                       {borderWidth: 0.6, borderColor: '#000'},
                     ]}
-                    source={ImagePath.checkBox}
+                    source={
+                      selectAllLocality
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
                 <View style={{maxHeight: hp(59)}}>
                   <FlatList
-                    data={localities}
+                    data={localities?.filter(e =>
+                      e.label.includes(searchLocality),
+                    )}
                     nestedScrollEnabled={true}
                     renderItem={rendarItemLocality}
-                    // extraData={localities}
                     showsVerticalScrollIndicator={false}
                   />
                 </View>

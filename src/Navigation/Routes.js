@@ -108,6 +108,11 @@ function Routes() {
           component={ClubDetails}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="EditProfile"
+          component={ClubDetails}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
