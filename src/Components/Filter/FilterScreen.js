@@ -75,7 +75,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
     const res = await ApiCall('api/filters', 'GET');
     setLocalities(res?.data?.localities);
     setGeneres(res?.data?.generes);
-    setHappyHourTimings(res?.data?.happyHourTimings);
+    // setHappyHourTimings(res?.data?.happyHourTimings);
   };
 
   const clearLocalities = () => {
@@ -85,13 +85,21 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
     setLocalities(temp);
     setSelectAllLocality(false);
   };
+  const clearGeneres = () => {
+    const temp = generes.map(item => {
+      return {...item, checked: false};
+    });
+    setGeneres(temp);
+  };
 
   const clearAllData = () => {
     clearLocalities();
+    clearGeneres();
     setKidsFriendly('');
     setVegNonVeg('');
     setStages('');
     setSheesha('');
+    setHappyHourTimings('');
   };
 
   console.log('-----', kidsFriendly, vegNonVeg, stages, sheesha);
@@ -271,6 +279,10 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
 
   const kidsFriendlySelect = label => {
     setKidsFriendly(label);
+  };
+
+  const happyHourTimingSelect = label => {
+    setHappyHourTimings(label);
   };
 
   return (
@@ -742,7 +754,75 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
             )}
             {selectRight === 'Happy Hours' && (
               <>
-                <View style={styles.clearInput}>
+                <TouchableOpacity
+                  onPress={() => {
+                    happyHourTimingSelect('yes');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      happyHourTimings == 'yes'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>Yes</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    happyHourTimingSelect('no');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      happyHourTimings == 'no'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>No</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                {/* <View style={styles.clearInput}>
                   <Image
                     style={styles.searchIcon}
                     source={ImagePath.searchIcon}
@@ -785,7 +865,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
                     extraData={happyHourTimings}
                     showsVerticalScrollIndicator={false}
                   />
-                </View>
+                </View> */}
               </>
             )}
             {selectRight === 'Kids Friendly' && (
@@ -953,6 +1033,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
                 stagsAllowed: stages,
                 musicGenre: tempdataGenres,
                 kidsFriendly: kidsFriendly,
+                happyHours: happyHourTimings,
               });
             }}>
             <GradientText

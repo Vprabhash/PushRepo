@@ -26,11 +26,8 @@ import {removeData} from '../../Components/Helper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ResetPassword = ({route, navigation}) => {
-  // Otp: Otp,
-  // email: email,
-  console.log('ResetPasswordemail====', route.params.email);
-  const [email, setEmail] = useState(route.params.email);
-  const Otp = route.params.Otp;
+  const [email, setEmail] = useState(route.params?.email);
+  const Otp = route.params?.otp;
   const [creatPassword, setCreatPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [eyeShow, setEyeShow] = useState('');
@@ -68,11 +65,11 @@ const ResetPassword = ({route, navigation}) => {
       );
       console.log('---res--Lohin-----', res);
       if (res.ok == true) {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
         logOut();
         navigation.navigate('PasswordSuccessful');
       } else {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+        // Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
       }
     } else {
       Alert.alert(

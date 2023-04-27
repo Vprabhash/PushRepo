@@ -185,7 +185,6 @@ const Home = props => {
       style={{marginTop: 20}}>
       <Image
         style={{
-          marginRight: index == 4 ? 15 : 0,
           height: wp(28),
           width: wp(28),
           borderRadius: 10,
@@ -422,7 +421,8 @@ const Home = props => {
             style={[
               {color: COLORS.white, fontSize: 12, fontFamily: FONTS.PTBold},
             ]}>
-            {item.musicGenre}
+            {/* {item.musicGenre} */}
+            Restrobar
           </Text>
           <Text
             style={[
@@ -572,30 +572,31 @@ const Home = props => {
               <Text style={styles.cardText}>CLUBS NEARBY</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
-            <SafeAreaView>
-              <FlatList
-                horizontal={true}
-                data={clubsNearby}
-                renderItem={ClubNarDatarenderItem}
-                ListFooterComponent={renderFooter}
-                onEndReachedThreshold={0.7}
-                onMomentumScrollBegin={() => {
-                  setonEndReachedCalledDuringMomentum(false);
-                }}
-                onEndReached={fetchMoreData}
-                ListEmptyComponent={
-                  <View
-                    style={{
-                      width: width,
-                      paddingBottom: 30,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <Text style={styles.titleText1}>No Clubs Found</Text>
-                  </View>
-                }
-              />
-              {/* <FlatList
+            {/* <SafeAreaView> */}
+            <FlatList
+              horizontal={true}
+              data={clubsNearby}
+              renderItem={ClubNarDatarenderItem}
+              ListFooterComponent={renderFooter}
+              style={{marginTop: 20, marginBottom: -30}}
+              // onEndReachedThreshold={0.7}
+              // onMomentumScrollBegin={() => {
+              //   setonEndReachedCalledDuringMomentum(false);
+              // }}
+              // onEndReached={fetchMoreData}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    width: width,
+                    paddingBottom: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.titleText1}>No Clubs Found</Text>
+                </View>
+              }
+            />
+            {/* <FlatList
               horizontal={true}
               data={Tabs}
               renderItem={_renderItem}
@@ -606,7 +607,7 @@ const Home = props => {
               }}
               onEndReached={fetchMoreData}
             /> */}
-            </SafeAreaView>
+            {/* </SafeAreaView> */}
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
               <Text style={styles.cardText}>ARTISTS IN THE SPOTLIGHT</Text>
@@ -614,14 +615,15 @@ const Home = props => {
             </View>
             <FlatList
               horizontal={true}
-              data={artistsSpotlight}
+              data={artistsSpotlight?.slice(0, 3)}
               renderItem={artistRenderItem}
-              ListFooterComponent={artistRenderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringArtist(false);
-              }}
-              onEndReached={fetchArtistData}
+              contentContainerStyle={{paddingRight: 15}}
+              // ListFooterComponent={artistRenderFooter}
+              // onEndReachedThreshold={0.7}
+              // onMomentumScrollBegin={() => {
+              //   setonEndReachedCalledDuringArtist(false);
+              // }}
+              // onEndReached={fetchArtistData}
             />
             {/* <TouchableOpacity
             style={[
