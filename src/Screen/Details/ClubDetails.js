@@ -106,22 +106,23 @@ const ClubDetails = props => {
   const scrollToEnd = () => {
     scrollRef?.current?.scrollToEnd({animation: true});
   };
+  useEffect(() => {
+    clubsNearbyDataApi();
+  }, []);
   const clubsNearbyDataApi = async () => {
     console.log('locationdata ---', global.location);
     try {
       const res = await ApiCall(
-        `api/nearby-clubs?coordinates=${global?.location?.latitude},${global?.location?.longitude}`,
+        `api/nearby-clubs?coordinates=${19.136326},${72.82766}`,
         'GET',
       );
-      setClubNearby(res.data);
+      setClubNearby(res?.data);
       console.log('clubsnearbydata ----', res.data);
     } catch (error) {
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
-  useEffect(() => {
-    clubsNearbyDataApi();
-  }, []);
+
   const ClubNarDatarenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -176,7 +177,7 @@ const ClubDetails = props => {
           }}>
           <Header
             Back_Arrow={ImagePath.goBack}
-            titleTwo="Club Details"
+            titalTwo="Club Details"
             iconHeight={15}
             iconWidth={30}
             onclick={() => {

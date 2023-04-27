@@ -71,8 +71,8 @@ const Splash_Screen = props => {
             Geolocation.getCurrentPosition(
               position => {
                 let obj = {};
-                obj.latitude = position.coords.latitude;
-                obj.longitude = position.coords.longitude;
+                obj.latitude = 19.1364; //position.coords.latitude;
+                obj.longitude = 72.8296; //position.coords.longitude;
                 global.location = obj;
               },
               error => {

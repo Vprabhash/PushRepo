@@ -104,7 +104,18 @@ const Home = props => {
     {mapIcon: ImagePath.clubLocation, title: 'Nightclub'},
     {mapIcon: ImagePath.listTwoImg, title: 'Cocktail'},
   ];
-
+  const [clubsSpotlight, setClubsSpotlight] = useState([]);
+  const [artistsSpotlight, setArtistsSpotlight] = useState([]);
+  const fetchClubsSpotlight = async () => {
+    const res = await ApiCall(`api/clubs?isFeatured=true`, 'GET');
+    console.log('---spotlight--->', JSON.stringify(res?.data));
+    setClubsSpotlight(res?.data);
+  };
+  const fetchArtistSpotlight = async () => {
+    const res = await ApiCall(`api/artists?isFeatured=true`, 'GET');
+    console.log('---spotlight--->', JSON.stringify(res?.data));
+    setArtistsSpotlight(res?.data);
+  };
   // const _renderItem = ({item, index}) => {
   //   return (
   //     <View style={{}}>
@@ -165,18 +176,38 @@ const Home = props => {
     {Bar_Icon: ImagePath.artistImg},
   ]);
   const artistRenderItem = ({item, index}) => (
-    <View style={{flexDirection: 'row'}}>
+    <TouchableOpacity
+      onPress={() => {
+        props.navigation.navigate('ArtistEventDetail', {
+          artistListDetail: item,
+        });
+      }}
+      style={{marginTop: 20}}>
       <Image
         style={{
           marginRight: index == 4 ? 15 : 0,
-          height: hp(20),
-          width: wp(29),
+          height: wp(28),
+          width: wp(28),
+          borderRadius: 10,
           marginLeft: 15,
-          resizeMode: 'contain',
+          resizeMode: 'cover',
         }}
-        source={item.Bar_Icon}
+        source={{uri: item?.images[0] ?? ''}}
       />
-    </View>
+      <Text
+        style={[
+          {
+            color: COLORS.white,
+            fontSize: 12,
+            fontFamily: FONTS.AxiformaMedium,
+            position: 'absolute',
+            bottom: 10,
+            left: 30,
+          },
+        ]}>
+        {item.name}
+      </Text>
+    </TouchableOpacity>
   );
   const [
     onEndReachedCalledDuringUpcoming,
@@ -360,7 +391,10 @@ const Home = props => {
   ]);
   const SpotlightData_RenderItem = ({item, index}) => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.push('ClubDetails', {listDetail: item});
+        }}
         style={{
           marginLeft: wp(2.5),
           marginRight: index == 0 ? 15 : 15,
@@ -373,43 +407,42 @@ const Home = props => {
             resizeMode: 'cover',
             borderRadius: 10,
           }}
-          source={item.mapIcon}
+          source={{uri: item?.media?.ambienceImages[0]}}
         />
         <View style={{position: 'absolute', left: 15, bottom: 30}}>
-          <Text
-            style={[
-              {color: COLORS.white, fontSize: 12, fontFamily: FONTS.PTBold},
-            ]}>
-            {item.button}
-          </Text>
           <Text
             style={{
               fontSize: 20,
               color: COLORS.white,
               fontFamily: FONTS.PTItalic,
             }}>
-            {item.Name}
+            {item.name}
+          </Text>
+          <Text
+            style={[
+              {color: COLORS.white, fontSize: 12, fontFamily: FONTS.PTBold},
+            ]}>
+            {item.musicGenre}
           </Text>
           <Text
             style={[
               {
                 fontSize: 10,
                 color: COLORS.white,
-                marginLeft: 3,
                 fontFamily: FONTS.PTBold,
               },
             ]}>
-            {item.Location}
+            {item.locality}, {item.city}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   const clubsNearbyDataApi = async () => {
     console.log('locationdata ---', global?.location);
     try {
       const res = await ApiCall(
-        `api/nearby-clubs?coordinates=${global?.location?.latitude},${global?.location?.longitude}`,
+        `api/nearby-clubs?coordinates=${19.136326},${72.82766}`,
         'GET',
       );
       setClubNearby(res.data);
@@ -419,6 +452,8 @@ const Home = props => {
     }
   };
   useEffect(() => {
+    fetchClubsSpotlight();
+    fetchArtistSpotlight();
     clubsNearbyDataApi();
   }, []);
   const [clubsNearby, setClubNearby] = useState();
@@ -522,15 +557,15 @@ const Home = props => {
             </View>
             <FlatList
               horizontal={true}
-              data={SpotlightData}
+              data={clubsSpotlight}
               renderItem={SpotlightData_RenderItem}
-              ListFooterComponent={spotLightrenderFooter}
-              onEndReachedThreshold={0.7}
+              // ListFooterComponent={spotLightrenderFooter}
+              // onEndReachedThreshold={0.7}
               contentContainerStyle={{marginTop: 20}}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringspotLight(false);
-              }}
-              onEndReached={fetchSpotlightData}
+              // onMomentumScrollBegin={() => {
+              //   setonEndReachedCalledDuringspotLight(false);
+              // }}
+              // onEndReached={fetchSpotlightData}
             />
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
@@ -579,7 +614,7 @@ const Home = props => {
             </View>
             <FlatList
               horizontal={true}
-              data={artistData}
+              data={artistsSpotlight}
               renderItem={artistRenderItem}
               ListFooterComponent={artistRenderFooter}
               onEndReachedThreshold={0.7}

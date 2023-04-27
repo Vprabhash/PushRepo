@@ -11,6 +11,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ClubDetails from '../Screen/Details/ClubDetails';
 import Profile from '../Components/Profile/Profile';
 import {FONTS} from '../Components/constants';
+import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
+import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +28,32 @@ const clubStack = () => {
       <Club.Screen
         name="ClubDetails"
         component={ClubDetails}
+        options={{headerShown: false}}
+      />
+    </Club.Navigator>
+  );
+};
+const homeStack = () => {
+  return (
+    <Club.Navigator initialRouteName="Home">
+      <Club.Screen
+        name="Home"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Club.Screen
+        name="ClubDetails"
+        component={ClubDetails}
+        options={{headerShown: false}}
+      />
+      <Club.Screen
+        name="ArtistEventDetail"
+        component={ArtistEventDetail}
+        options={{headerShown: false}}
+      />
+      <Club.Screen
+        name="ArtistPlayingDetail"
+        component={ArtistPlayingDetail}
         options={{headerShown: false}}
       />
     </Club.Navigator>
@@ -57,7 +85,7 @@ function BottomTab() {
       })}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={homeStack}
         options={{
           headerShown: false,
           tabBarLabel: 'HOME',
