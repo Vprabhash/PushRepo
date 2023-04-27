@@ -552,7 +552,7 @@ const Home = props => {
 
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>CLUBS IN THE SPOTLIGHT</Text>
+              <Text style={styles.cardText}>CLUBS IN SPOTLIGHT</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
             <FlatList
@@ -610,7 +610,7 @@ const Home = props => {
             {/* </SafeAreaView> */}
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>ARTISTS IN THE SPOTLIGHT</Text>
+              <Text style={styles.cardText}>ARTISTS IN SPOTLIGHT</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
             </View>
             <FlatList

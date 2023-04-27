@@ -309,14 +309,22 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
               justifyContent: 'space-between',
             }}>
             <Text style={styles.aboutText}>Filters </Text>
-            <TouchableOpacity onPress={clearAllData}>
-              <GradientText
-                style={[
-                  styles.textStyle,
-                  {fontFamily: FONTS.InterSemiBold, fontSize: 12},
-                ]}>
+            <TouchableOpacity
+              onPress={clearAllData}
+              style={{
+                backgroundColor: COLORS.black,
+                paddingVertical: 5,
+                paddingHorizontal: 10,
+                borderRadius: 6,
+              }}>
+              <Text
+                style={{
+                  fontFamily: FONTS.InterSemiBold,
+                  fontSize: 12,
+                  color: COLORS.white,
+                }}>
                 CLEAR ALL
-              </GradientText>
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -986,10 +994,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
         <View
           style={{
             flexDirection: 'row',
-            backgroundColor: COLORS.black,
             justifyContent: 'space-between',
-            marginBottom: hp(2),
-            paddingVertical: 10,
           }}>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -1006,7 +1011,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
-            style={styles.closeBtn}
+            style={[styles.closeBtn, {backgroundColor: COLORS.green}]}
             onPress={() => {
               var tempdata = [];
               for (var i = 0; i < localities.length; i++) {
@@ -1036,10 +1041,12 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
                 happyHours: happyHourTimings,
               });
             }}>
-            <GradientText
-              style={[styles.textStyle, {fontFamily: FONTS.InterMedium}]}>
-              <Text>APPLY</Text>
-            </GradientText>
+            {/* <GradientText
+              style={[styles.textStyle, {fontFamily: FONTS.InterMedium}]}> */}
+            <Text style={{fontFamily: FONTS.InterMedium, color: COLORS.white}}>
+              APPLY
+            </Text>
+            {/* </GradientText> */}
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -1049,10 +1056,11 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
 export default FilterScreen;
 const styles = StyleSheet.create({
   closeBtn: {
-    flex: 0.6,
-    paddingVertical: 6,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.red,
+    paddingVertical: 16,
   },
   searchIcon: {
     height: 11,

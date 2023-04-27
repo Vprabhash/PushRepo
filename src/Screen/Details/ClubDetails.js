@@ -295,7 +295,7 @@ const ClubDetails = props => {
                   }}>
                   {detailData?.name}
                 </Text>
-                {detailData?.vegNonVeg && (
+                {/* {detailData?.vegNonVeg && (
                   <View
                     style={{
                       borderWidth: 1,
@@ -322,7 +322,7 @@ const ClubDetails = props => {
                       }}
                     />
                   </View>
-                )}
+                )} */}
               </View>
               <Text
                 style={{
