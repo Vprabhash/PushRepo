@@ -21,10 +21,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
-// import {signUp} from '../../redux/reducers/authSlice';
 import {FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
-// import ApiCall from '../../redux/CommanApi';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const SignUp = props => {
@@ -89,6 +92,30 @@ const SignUp = props => {
         "Passwords don't match",
         'Please make sure the passwords match.',
       );
+    }
+  };
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: '<FROM DEVELOPER CONSOLE>', // client ID of type WEB for your server (needed to verify user ID and offline access)
+    });
+  }, []);
+  const googleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      // this.setState({userInfo});
+      Alert.alert(JSON.stringify(userInfo));
+      console.log('google signIn===>', userInfo);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
     }
   };
   const [eyeShow, setEyeShow] = useState('');
@@ -183,7 +210,10 @@ const SignUp = props => {
         Or Sign up with
       </Text>
 
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          googleSignIn();
+        }}
         style={{
           flexDirection: 'row',
           justifyContent: 'space-around',
@@ -194,7 +224,7 @@ const SignUp = props => {
         {Platform.OS === 'ios' && (
           <Image source={ImagePath.apple} style={styles.googleLogo} />
         )}
-      </View>
+      </TouchableOpacity>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Text style={[styles.withText, {color: '#000000'}]}>
           Already have an account{' '}

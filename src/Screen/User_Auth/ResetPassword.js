@@ -22,6 +22,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
 import Toast from 'react-native-simple-toast';
 import ApiCall from '../../redux/CommanApi';
+import {removeData} from '../../Components/Helper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ResetPassword = ({route, navigation}) => {
@@ -38,7 +39,10 @@ const ResetPassword = ({route, navigation}) => {
       setEyeShow2(!eyeShow2);
     }
   };
-
+  const logOut = async () => {
+    await removeData('userToken');
+    await removeData('userData');
+  };
   const resetPassApi = async () => {
     const minPasswordLength = 6;
     if (creatPassword.length < minPasswordLength) {
@@ -49,15 +53,20 @@ const ResetPassword = ({route, navigation}) => {
       return;
     }
     if (creatPassword === newPassword) {
-      var data = JSON.stringify({
+      var data = {
         email: email,
-        // otp: Otp,
+        otp: Otp,
         password: newPassword,
-      });
-      const res = await ApiCall('api/reset-password', 'POST', data);
+      };
+      const res = await ApiCall(
+        'api/reset-password',
+        'POST',
+        JSON.stringify(data),
+      );
       console.log('---res--Lohin-----', res);
       if (res.ok == true) {
-        // Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        logOut();
         navigation.navigate('PasswordSuccessful');
       } else {
         // Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);

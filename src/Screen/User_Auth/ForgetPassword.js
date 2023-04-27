@@ -24,7 +24,7 @@ import Toast from 'react-native-simple-toast';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ForgetPassword = ({route, navigation}) => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(route?.params?.email || '');
 
   const forgotPassApi = async () => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
