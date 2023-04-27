@@ -26,8 +26,9 @@ const Profile = ({navigation}) => {
   // const dispatch = useDispatch();
   const [userProfileData, setUserProfileData] = useState({});
   const [img, setimg] = useState('');
+  const [forgetEmail, setForgetEmail] = useState('');
 
-  const [accountList, setAccountList] = useState([
+  const accountList = [
     {
       Title: 'Edit Profile',
       Icon: ImagePath.rightIcon,
@@ -38,8 +39,10 @@ const Profile = ({navigation}) => {
     {
       Title: 'Reset Password',
       Icon: ImagePath.rightIcon,
+
       onPress: () => {
-        navigation.navigate('ResetPassword', {
+        console.log('userProfileData=====', userProfileData?.email);
+        navigation.navigate('ForgetPassword', {
           email: userProfileData?.email,
         });
       },
@@ -50,7 +53,7 @@ const Profile = ({navigation}) => {
       onPress: () => logOut(),
       color: 'red',
     },
-  ]);
+  ];
 
   const [notificationList, setNotificationList] = useState([
     {Title: 'Event Alerts', Icon: ImagePath.rightIcon},

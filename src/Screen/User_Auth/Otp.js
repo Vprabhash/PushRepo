@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import OTPTextInput from 'react-native-otp-textinput';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
@@ -25,14 +26,14 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Otp = props => {
-  console.log('---proofogetmail', props.route.params.forgetmail);
-  const forgetmail = props.route.params.forgetmail;
+  const forgetotp = props?.route?.params?.forgetmail;
+  const forgetmail = props?.route?.params?.email;
   const [Otp, setOtp] = useState('');
   const email = props.route?.params?.email;
   const password = props.route?.params?.password;
   console.log('props signOtp--------', props.route.params);
   const OtpApi = async () => {
-    if (Otp.length == 1) {
+    if (Otp.length == 6) {
       Toast.show('Enter Otp', Toast.LONG, Toast.BOTTOM);
       return;
     } else {
@@ -44,22 +45,13 @@ const Otp = props => {
       };
       try {
         const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
-        console.log('---res--otp-----', res);
+        console.log('---res--registerotp-----', res);
         if (res.ok == true) {
           setData('userData-----', res);
-          console.log(forgetmail, 'usera-----', res);
-          // if (forgetmail == 'otp') {
-          //   props.navigation.navigate('ResetPassword', {
-          //     otp: Otp,
-          //     email: forgetmail,
-          //   });
-          //   // props.navigation.navigate('ResetPassword',{otp:Otp}),
-          // } else {
-          //   props.navigation.reset({
-          //     index: 0,
-          //     routes: [{name: 'BottomTab'}],
-          //   });
-          // }
+          props.navigation.reset({
+            index: 0,
+            routes: [{name: 'BottomTab'}],
+          });
         } else {
           Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
         }
@@ -68,14 +60,14 @@ const Otp = props => {
       }
     }
   };
-
   const resendOtp = async () => {
+    console.log('email=================', email);
     const data = {
       email: email,
     };
     try {
       const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
-      console.log('---send--otp-----', res);
+      console.log('---send-------', res);
       Toast.show(
         res.message || 'Something went wrong',
         Toast.LONG,
@@ -85,6 +77,24 @@ const Otp = props => {
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
+
+  const resendforgetmailOtp = async () => {
+    var data = JSON.stringify({
+      email: email,
+    });
+    try {
+      const res = await ApiCall('api/forgot-password', 'POST', data);
+      console.log('--resForgetpass-----', res);
+      Toast.show(
+        res.message || 'Something went wrong',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
+
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
       <ImageBackground
@@ -136,7 +146,14 @@ const Otp = props => {
           />
           <CustomButton
             onclick={() => {
-              OtpApi();
+              if (forgetmail == 'otp' && Otp.length == 6) {
+                props.navigation.navigate('ResetPassword', {
+                  Otp: Otp,
+                  email: email,
+                });
+              } else {
+                OtpApi();
+              }
               // props.navigation.navigate('Login');
             }}
             top={30}
@@ -153,7 +170,14 @@ const Otp = props => {
             <Text style={[styles.withText]}>Didn’t receive pin </Text>
             <TouchableOpacity
               onPress={() => {
-                resendOtp();
+                if (forgetotp == 'otp') {
+                  // Alert.alert('ok');
+                  resendforgetmailOtp();
+                } else {
+                  // Alert.alert('orrrk');
+                  resendOtp();
+                }
+                // resendOtp();
               }}>
               <Text
                 style={[

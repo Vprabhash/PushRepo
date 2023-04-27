@@ -83,13 +83,13 @@ const Login = props => {
       webClientId: '<FROM DEVELOPER CONSOLE>', // client ID of type WEB for your server (needed to verify user ID and offline access)
     });
   }, []);
-  const signIn = async () => {
+  const googleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       // this.setState({userInfo});
+      Alert.alert(JSON.stringify(userInfo));
       console.log('google signIn===>', userInfo);
-      alert(JSON.stringify(userInfo));
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -193,7 +193,7 @@ const Login = props => {
 
         <TouchableOpacity
           onPress={() => {
-            signIn();
+            googleSignIn();
           }}
           style={{
             flexDirection: 'row',
