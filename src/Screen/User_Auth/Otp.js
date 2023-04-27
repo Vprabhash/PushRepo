@@ -32,7 +32,7 @@ const Otp = props => {
   const password = props.route?.params?.password;
   console.log('props signOtp--------', props.route.params);
   const OtpApi = async () => {
-    if (Otp.length == 6) {
+    if (Otp.length == 1) {
       Toast.show('Enter Otp', Toast.LONG, Toast.BOTTOM);
       return;
     } else {
@@ -40,24 +40,26 @@ const Otp = props => {
         email: email,
         otp: Otp,
         password: password,
+        phoneNumber: '1234567890',
       };
       try {
         const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
         console.log('---res--otp-----', res);
         if (res.ok == true) {
-          setData('userData', res);
-          if (fogetmail == 'otp') {
-            props.navigation.navigate('ResetPassword', {
-              otp: Otp,
-              email: forgetmail,
-            });
-            // props.navigation.navigate('ResetPassword',{otp:Otp}),
-          } else {
-            props.navigation.reset({
-              index: 0,
-              routes: [{name: 'BottomTab'}],
-            });
-          }
+          setData('userData-----', res);
+          console.log(forgetmail, 'usera-----', res);
+          // if (forgetmail == 'otp') {
+          //   props.navigation.navigate('ResetPassword', {
+          //     otp: Otp,
+          //     email: forgetmail,
+          //   });
+          //   // props.navigation.navigate('ResetPassword',{otp:Otp}),
+          // } else {
+          //   props.navigation.reset({
+          //     index: 0,
+          //     routes: [{name: 'BottomTab'}],
+          //   });
+          // }
         } else {
           Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
         }
