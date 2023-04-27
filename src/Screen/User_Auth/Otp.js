@@ -46,20 +46,20 @@ const Otp = props => {
         const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
         console.log('---res--otp-----', res);
         if (res.ok == true) {
-          setData('userData-----', res);
-          console.log(forgetmail, 'usera-----', res);
-          // if (forgetmail == 'otp') {
-          //   props.navigation.navigate('ResetPassword', {
-          //     otp: Otp,
-          //     email: forgetmail,
-          //   });
-          //   // props.navigation.navigate('ResetPassword',{otp:Otp}),
-          // } else {
-          //   props.navigation.reset({
-          //     index: 0,
-          //     routes: [{name: 'BottomTab'}],
-          //   });
-          // }
+          setData('userData', res?.data);
+          setData('userToken', res?.meta?.token);
+          if (forgetmail == 'otp') {
+            props.navigation.navigate('ResetPassword', {
+              otp: Otp,
+              email: forgetmail,
+            });
+            // props.navigation.navigate('ResetPassword',{otp:Otp}),
+          } else {
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'BottomTab'}],
+            });
+          }
         } else {
           Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
         }

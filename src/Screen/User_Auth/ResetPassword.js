@@ -25,8 +25,8 @@ import ApiCall from '../../redux/CommanApi';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ResetPassword = ({route, navigation}) => {
-  const [email, setEmail] = useState(route.params.email);
-  const Otp = route.params.otp;
+  const [email, setEmail] = useState(route.params?.email);
+  const Otp = route.params?.otp;
   const [creatPassword, setCreatPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [eyeShow, setEyeShow] = useState('');
@@ -51,16 +51,16 @@ const ResetPassword = ({route, navigation}) => {
     if (creatPassword === newPassword) {
       var data = JSON.stringify({
         email: email,
-        otp: Otp,
+        // otp: Otp,
         password: newPassword,
       });
       const res = await ApiCall('api/reset-password', 'POST', data);
       console.log('---res--Lohin-----', res);
       if (res.ok == true) {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
-        route.navigation.navigate('PasswordSuccessful');
+        // Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        navigation.navigate('PasswordSuccessful');
       } else {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+        // Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
       }
     } else {
       Alert.alert(

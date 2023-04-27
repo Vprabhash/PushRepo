@@ -32,7 +32,7 @@ const Profile = ({navigation}) => {
       Title: 'Edit Profile',
       Icon: ImagePath.rightIcon,
       onPress: () => {
-        navigation.navigate('EditProfile');
+        // navigation.navigate('EditProfile');
       },
     },
     {

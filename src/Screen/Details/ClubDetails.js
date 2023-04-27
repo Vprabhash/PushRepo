@@ -185,7 +185,7 @@ const ClubDetails = props => {
             }}
           />
         </View>
-        <View style={[styles.inputMain, {marginTop: 10, marginBottom: 10}]}>
+        {/* <View style={[styles.inputMain, {marginTop: 10, marginBottom: 10}]}>
           <TextInput
             style={[styles.textInput, {color: COLORS.black}]}
             placeholder={'Search'}
@@ -199,7 +199,7 @@ const ClubDetails = props => {
               style={[styles.iconStyle, {tintColor: '#A3A3A3'}]}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <ScrollView ref={scrollRef} contentContainerStyle={{flexGrow: 1}}>
           <StatusBar
