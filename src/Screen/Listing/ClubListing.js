@@ -35,6 +35,7 @@ const ClubListing = props => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [valuekey, setValuekey] = useState('');
+  const [filteredData, setFilteredData] = useState({});
 
   useEffect(() => {
     list(page);
@@ -43,12 +44,12 @@ const ClubListing = props => {
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
-      list(1);
-      setValuekey('');
+      // list(1);
+      // setValuekey('');
       setFilterComponent(false);
     });
     return unsubscribe;
-  }, [props.navigation]);
+  }, []);
 
   const list = async page => {
     try {
@@ -93,9 +94,13 @@ const ClubListing = props => {
   const [teamArray, setTeamArray] = useState([]);
 
   const searchApi = async text => {
-    const res = await ApiCall(`api/search?q=${text}`, 'GET');
-    console.log('---searchApi--->', JSON.stringify(res?.data.clubs));
-    setClubs(res?.data.clubs);
+    if (valuekey) {
+      const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
+      console.log('---searchApi--->', JSON.stringify(res?.data?.clubs));
+      setClubs(res?.data?.clubs);
+    } else {
+      setPage(1);
+    }
   };
 
   const _renderItem = ({item, index}) => {
@@ -215,9 +220,11 @@ const ClubListing = props => {
       )}&kidsFriendly=${data?.kidsFriendly}`,
       'GET',
     );
+    // setFilteredData(data);
+    setFilterComponent(false);
+    // setPage(1);
     console.log('-------filterApi', res?.data?.length);
     setClubs(res?.data);
-    setFilterComponent(false);
   };
 
   const onPressCancel = () => {

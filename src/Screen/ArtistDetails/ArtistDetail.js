@@ -71,9 +71,13 @@ const ArtistDetail = props => {
     }
   };
   const searchApi = async text => {
-    const res = await ApiCall(`api/search?q=${text}`, 'GET');
-    console.log('---searchApi--->', JSON.stringify(res?.data.artists));
-    setArtistList(res?.data.artists);
+    if (valuekey) {
+      const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
+      console.log('---searchApi--->', JSON.stringify(res?.data.artists));
+      setArtistList(res?.data.artists);
+    } else {
+      setPage(1);
+    }
   };
   const fetchMoreData = () => {
     // clubsNearbyDataApi(page + 1);

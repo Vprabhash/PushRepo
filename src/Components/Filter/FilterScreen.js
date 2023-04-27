@@ -65,10 +65,10 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
 
   // select all genres
   useEffect(() => {
-    const temp = generes.map(item => {
+    const genre = generes.map(item => {
       return {...item, checked: selectAllGenre};
     });
-    setLocalities(temp);
+    setLocalities(genre);
   }, [selectAllGenre]);
 
   const filterApi = async () => {
@@ -490,7 +490,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
                     onChangeText={text => setSearchGenre(text)}
                   />
                 </View>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   activeOpacity={0.5}
                   onPress={() => {
                     checkAllGenre();
@@ -512,7 +512,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
                     }
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View style={{maxHeight: hp(59)}}>
                   <FlatList
                     data={generes.filter(e => e.label.includes(searchGenre))}
