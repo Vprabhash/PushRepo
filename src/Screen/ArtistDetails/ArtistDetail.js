@@ -187,7 +187,9 @@ const ArtistDetail = props => {
     // call filter api here
     console.log('ArtistData-------:', data);
     const res = await ApiCall(
-      `api/artists?musicGenre=${data?.musicGenre.join('|')}`,
+      `api/artists?musicGenre=${data?.musicGenre.join('|')}&type=${
+        data?.artist || ''
+      }`,
       'GET',
     );
     console.log('ArtistFilterApi-----:', res?.data);

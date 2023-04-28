@@ -442,7 +442,7 @@ const Home = props => {
     console.log('locationdata ---', global?.location);
     try {
       const res = await ApiCall(
-        `api/nearby-clubs?coordinates=${19.136326},${72.82766}`,
+        `api/nearby-clubs?coordinates=${global?.location?.latitude},${global?.location?.longitude}&radius=5000`, //${19.136326},${72.82766}
         'GET',
       );
       setClubNearby(res.data);
@@ -456,7 +456,7 @@ const Home = props => {
     fetchArtistSpotlight();
     clubsNearbyDataApi();
   }, []);
-  const [clubsNearby, setClubNearby] = useState();
+  const [clubsNearby, setClubNearby] = useState([]);
   const ClubNarDatarenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -575,7 +575,7 @@ const Home = props => {
             {/* <SafeAreaView> */}
             <FlatList
               horizontal={true}
-              data={clubsNearby}
+              data={clubsNearby?.slice(0, 5)}
               renderItem={ClubNarDatarenderItem}
               ListFooterComponent={renderFooter}
               style={{marginTop: 20, marginBottom: -30}}

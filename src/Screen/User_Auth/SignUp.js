@@ -113,17 +113,16 @@ const SignUp = props => {
       await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
       console.log('lofuser data-------:', userInfo);
-      // Alert.alert('success:' + JSON.stringify(userInfo));
+
       const data = {
         name: userInfo?.user?.givenName,
         email: userInfo?.user?.email,
         username: userInfo?.user?.name,
         profilePhotoUrl: userInfo?.user?.photo,
-        phoneNumber: '9999999993',
+        phoneNumber: '',
         accessToken: userInfo?.idToken,
-        accessTokenExpiresAt: '<expire-time>',
-        pushNotificationToken:
-          'ft6dM1xAQYWx8PDLwo4zGH:APA91bG-eFNtF51KN-MYrAu_FwOnSvg76NFX_FCv85S8I74IJPXlFDoIRWshPwe5NsRQEoC2_wwFHQAAwLOv82NRukVOR-gP6iY-RuBRtL-R985mcBPy_ymrwJfQOMm6_4WnkFkRlosd',
+        accessTokenExpiresAt: '',
+        pushNotificationToken: '',
       };
       try {
         const res = await ApiCall(
