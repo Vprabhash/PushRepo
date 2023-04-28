@@ -23,7 +23,7 @@ end
 
 # pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
-target 'azzirApp' do
+target 'Azzir' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -45,7 +45,7 @@ target 'azzirApp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'azzirAppTests' do
+  target 'AzzirTests' do
     inherit! :complete
     # Pods for testing
   end

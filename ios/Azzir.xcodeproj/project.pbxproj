@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0066AE907E2F4A2BAFBDD077 /* HankenGrotesk-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB45E28371AE45608546E824 /* HankenGrotesk-Thin.ttf */; };
-		00E356F31AD99517003FC87E /* azzirAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* azzirAppTests.m */; };
+		00E356F31AD99517003FC87E /* AzzirTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AzzirTests.m */; };
 		0B6AA09BC10645E385A3BDFB /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A653D2ADE5F54B1A87885CAC /* Inter-ExtraBold.ttf */; };
 		0BA2EEABF9CB46ACB9DEBFA4 /* Metropolis-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3EB574F89913405C92973717 /* Metropolis-Bold.ttf */; };
 		10D55EC9101345EF9F2CCC35 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C74CBCC9D1F41388C39C5BB /* Inter-Black.ttf */; };
@@ -29,7 +29,7 @@
 		5699693C17B041EC8B58EB29 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F88CE21EBE8B462DA3721FA9 /* Roboto-Thin.ttf */; };
 		59D35737A68C426189DBD045 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE54E0D6A433487BAA5AFD9A /* Inter-ExtraLight.ttf */; };
 		5B0D7093795A44BCA9DB8F7A /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43D2E87DD33440988E5EF7D6 /* DMSans-Medium.ttf */; };
-		5BF1E38E8F862B9DE343A713 /* libPods-azzirApp-azzirAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DABA2014C2D22A56B9A4CA5 /* libPods-azzirApp-azzirAppTests.a */; };
+		5BF1E38E8F862B9DE343A713 /* libPods-Azzir-AzzirTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DABA2014C2D22A56B9A4CA5 /* libPods-Azzir-AzzirTests.a */; };
 		6DCAED4087894DBF82FAF6C1 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D5ECC51E857479E943FCCBD /* DMSans-Regular.ttf */; };
 		73276142C3F744C5A4439410 /* HankenGrotesk-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */; };
 		74D4943A3E4144408CF84612 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */; };
@@ -50,7 +50,7 @@
 		E8F8D5E594C54D3195BE3A47 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C9BCF2059143A4916919F2 /* Roboto-Regular.ttf */; };
 		EF3CAB4EBA7E414AA5009FF8 /* Metropolis-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2000C2FAE335404C857822EC /* Metropolis-Regular.ttf */; };
 		F79644FDBDCD487D9A623E13 /* PTSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C26705880C09491ABCA2A7AE /* PTSerif-Regular.ttf */; };
-		FB077ADD14E7A42EF57DD95B /* libPods-azzirApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF5C0A20CA5845B07C312287 /* libPods-azzirApp.a */; };
+		FB077ADD14E7A42EF57DD95B /* libPods-Azzir.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF5C0A20CA5845B07C312287 /* libPods-Azzir.a */; };
 		FE54491C691D45BAB1ED4B88 /* PTSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CBAFDCB21524D138AC748EB /* PTSerif-Bold.ttf */; };
 /* End PBXBuildFile section */
 
@@ -60,25 +60,25 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = azzirApp;
+			remoteInfo = "Azzir";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* azzirAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = azzirAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* AzzirTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AzzirTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* azzirAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = azzirAppTests.m; sourceTree = "<group>"; };
-		0DABA2014C2D22A56B9A4CA5 /* libPods-azzirApp-azzirAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-azzirApp-azzirAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F21AD99517003FC87E /* AzzirTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AzzirTests.m"; sourceTree = "<group>"; };
+		0DABA2014C2D22A56B9A4CA5 /* libPods-Azzir-AzzirTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Azzir-AzzirTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E01C5B396BC42829AB75416 /* HankenGrotesk-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-ExtraLight.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-ExtraLight.ttf"; sourceTree = "<group>"; };
 		104CB82E1BE14084B7479457 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Bold.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		11C9BCF2059143A4916919F2 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
-		132FD2BEBB586487F64D028C /* Pods-azzirApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp.release.xcconfig"; path = "Target Support Files/Pods-azzirApp/Pods-azzirApp.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* azzirApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = azzirApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = azzirApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = azzirApp/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = azzirApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = azzirApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = azzirApp/main.m; sourceTree = "<group>"; };
+		132FD2BEBB586487F64D028C /* Pods-Azzir.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir.release.xcconfig"; path = "Target Support Files/Pods-Azzir/Pods-Azzir.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Azzir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Azzir.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "Azzir/AppDelegate.h"; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = "Azzir/AppDelegate.mm"; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Azzir/Images.xcassets"; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Azzir/Info.plist"; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Azzir/main.m"; sourceTree = "<group>"; };
 		185FF0BC53E449578E33BDB2 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Black.ttf"; sourceTree = "<group>"; };
 		1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-ExtraBold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-ExtraBold.ttf"; sourceTree = "<group>"; };
 		1F39B53B00EF4F3CB16E3473 /* Metropolis-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Light.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Light.ttf"; sourceTree = "<group>"; };
@@ -97,11 +97,11 @@
 		448744E87E59483CB4AE1F03 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		4BACEDAAD1164B13BBC2E308 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		4CBAFDCB21524D138AC748EB /* PTSerif-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Bold.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Bold.ttf"; sourceTree = "<group>"; };
-		4ECC6ED6A62C75A0686991FF /* Pods-azzirApp-azzirAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp-azzirAppTests.release.xcconfig"; path = "Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		4ECC6ED6A62C75A0686991FF /* Pods-Azzir-AzzirTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir-AzzirTests.release.xcconfig"; path = "Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests.release.xcconfig"; sourceTree = "<group>"; };
 		63ECA6D793F444B38D8D8546 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Bold.ttf"; sourceTree = "<group>"; };
 		672110960D5049EB81CF45F2 /* HankenGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Light.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Light.ttf"; sourceTree = "<group>"; };
 		7B680208BC6F42E4AA88508B /* HankenGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Medium.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Medium.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = azzirApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "Azzir/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		868A123A3F014FB2A78B650C /* HankenGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Bold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Bold.ttf"; sourceTree = "<group>"; };
 		8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		932924A87F414BEABFEB6B18 /* HankenGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-SemiBold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -111,12 +111,12 @@
 		C26705880C09491ABCA2A7AE /* PTSerif-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Regular.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Regular.ttf"; sourceTree = "<group>"; };
 		C49E850DC7BF4B5E84F0E741 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Light.ttf"; sourceTree = "<group>"; };
 		C7087A67D500488CB8F1206A /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Thin.ttf"; sourceTree = "<group>"; };
-		D655E637DCF0B675400CEA14 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp-azzirAppTests.debug.xcconfig"; path = "Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D655E637DCF0B675400CEA14 /* Pods-Azzir-AzzirTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir-AzzirTests.debug.xcconfig"; path = "Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DA3C1421A195474B9BEB3BF2 /* Inter-VariableFont_slnt,wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-VariableFont_slnt,wght.ttf"; path = "../src/assets/fonts/Inter/Inter-VariableFont_slnt,wght.ttf"; sourceTree = "<group>"; };
 		DD12A3E750EA4663A4BC3337 /* HankenGrotesk-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Black.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Black.ttf"; sourceTree = "<group>"; };
 		DE54E0D6A433487BAA5AFD9A /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../src/assets/fonts/Inter/static/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
-		DF5C0A20CA5845B07C312287 /* libPods-azzirApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-azzirApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC7FAA7876844E130D568FC1 /* Pods-azzirApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-azzirApp.debug.xcconfig"; path = "Target Support Files/Pods-azzirApp/Pods-azzirApp.debug.xcconfig"; sourceTree = "<group>"; };
+		DF5C0A20CA5845B07C312287 /* libPods-Azzir.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Azzir.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC7FAA7876844E130D568FC1 /* Pods-Azzir.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir.debug.xcconfig"; path = "Target Support Files/Pods-Azzir/Pods-Azzir.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F88CE21EBE8B462DA3721FA9 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		FB45E28371AE45608546E824 /* HankenGrotesk-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Thin.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Thin.ttf"; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BF1E38E8F862B9DE343A713 /* libPods-azzirApp-azzirAppTests.a in Frameworks */,
+				5BF1E38E8F862B9DE343A713 /* libPods-Azzir-AzzirTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,20 +135,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB077ADD14E7A42EF57DD95B /* libPods-azzirApp.a in Frameworks */,
+				FB077ADD14E7A42EF57DD95B /* libPods-Azzir.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* azzirAppTests */ = {
+		00E356EF1AD99517003FC87E /* AzzirTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* azzirAppTests.m */,
+				00E356F21AD99517003FC87E /* AzzirTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = azzirAppTests;
+			path = "AzzirTests";
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -159,7 +159,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* azzirApp */ = {
+		13B07FAE1A68108700A75B9A /* Azzir */ = {
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -169,15 +169,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = azzirApp;
+			name = "Azzir";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				DF5C0A20CA5845B07C312287 /* libPods-azzirApp.a */,
-				0DABA2014C2D22A56B9A4CA5 /* libPods-azzirApp-azzirAppTests.a */,
+				DF5C0A20CA5845B07C312287 /* libPods-Azzir.a */,
+				0DABA2014C2D22A56B9A4CA5 /* libPods-Azzir-AzzirTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -237,9 +237,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* azzirApp */,
+				13B07FAE1A68108700A75B9A /* Azzir */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* azzirAppTests */,
+				00E356EF1AD99517003FC87E /* AzzirTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -253,8 +253,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* azzirApp.app */,
-				00E356EE1AD99517003FC87E /* azzirAppTests.xctest */,
+				13B07F961A680F5B00A75B9A /* Azzir.app */,
+				00E356EE1AD99517003FC87E /* AzzirTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -262,10 +262,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EC7FAA7876844E130D568FC1 /* Pods-azzirApp.debug.xcconfig */,
-				132FD2BEBB586487F64D028C /* Pods-azzirApp.release.xcconfig */,
-				D655E637DCF0B675400CEA14 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */,
-				4ECC6ED6A62C75A0686991FF /* Pods-azzirApp-azzirAppTests.release.xcconfig */,
+				EC7FAA7876844E130D568FC1 /* Pods-Azzir.debug.xcconfig */,
+				132FD2BEBB586487F64D028C /* Pods-Azzir.release.xcconfig */,
+				D655E637DCF0B675400CEA14 /* Pods-Azzir-AzzirTests.debug.xcconfig */,
+				4ECC6ED6A62C75A0686991FF /* Pods-Azzir-AzzirTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -273,9 +273,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* azzirAppTests */ = {
+		00E356ED1AD99517003FC87E /* AzzirTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "azzirAppTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AzzirTests" */;
 			buildPhases = (
 				5BF101FBC8E9B689A091EF09 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -289,14 +289,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = azzirAppTests;
-			productName = azzirAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* azzirAppTests.xctest */;
+			name = "AzzirTests";
+			productname = "AzzirTests";
+			productReference = 00E356EE1AD99517003FC87E /* AzzirTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* azzirApp */ = {
+		13B07F861A680F5B00A75B9A /* Azzir */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "azzirApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Azzir" */;
 			buildPhases = (
 				AC6E8AEB5A4675526682667E /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -311,9 +311,9 @@
 			);
 			dependencies = (
 			);
-			name = azzirApp;
-			productName = azzirApp;
-			productReference = 13B07F961A680F5B00A75B9A /* azzirApp.app */;
+			name = "Azzir";
+			productName = "Azzir";
+			productReference = 13B07F961A680F5B00A75B9A /* Azzir.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -333,7 +333,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "azzirApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Azzir" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -346,8 +346,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* azzirApp */,
-				00E356ED1AD99517003FC87E /* azzirAppTests */,
+				13B07F861A680F5B00A75B9A /* Azzir */,
+				00E356ED1AD99517003FC87E /* AzzirTests */,
 			);
 		};
 /* End PBXProject section */
@@ -432,15 +432,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5B4D57741D2933F68784E40F /* [CP] Copy Pods Resources */ = {
@@ -449,15 +449,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp/Pods-azzirApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5BF101FBC8E9B689A091EF09 /* [CP] Check Pods Manifest.lock */ = {
@@ -475,7 +475,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-azzirApp-azzirAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Azzir-AzzirTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -488,15 +488,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AC6E8AEB5A4675526682667E /* [CP] Check Pods Manifest.lock */ = {
@@ -514,7 +514,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-azzirApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Azzir-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -527,15 +527,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-azzirApp-azzirAppTests/Pods-azzirApp-azzirAppTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -564,7 +564,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* azzirAppTests.m in Sources */,
+				00E356F31AD99517003FC87E /* AzzirTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,7 +582,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* azzirApp */;
+			target = 13B07F861A680F5B00A75B9A /* Azzir */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -590,14 +590,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D655E637DCF0B675400CEA14 /* Pods-azzirApp-azzirAppTests.debug.xcconfig */;
+			baseConfigurationReference = D655E637DCF0B675400CEA14 /* Pods-Azzir-AzzirTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = azzirAppTests/Info.plist;
+				INFOPLIST_FILE = "AzzirTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -609,19 +609,19 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.azzir";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/azzirApp.app/azzirApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Azzir.app/Azzir";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4ECC6ED6A62C75A0686991FF /* Pods-azzirApp-azzirAppTests.release.xcconfig */;
+			baseConfigurationReference = 4ECC6ED6A62C75A0686991FF /* Pods-Azzir-AzzirTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = azzirAppTests/Info.plist;
+				INFOPLIST_FILE = "AzzirTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -633,21 +633,22 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.azzir";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/azzirApp.app/azzirApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Azzir.app/Azzir";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EC7FAA7876844E130D568FC1 /* Pods-azzirApp.debug.xcconfig */;
+			baseConfigurationReference = EC7FAA7876844E130D568FC1 /* Pods-Azzir.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = azzirApp/Info.plist;
+				INFOPLIST_FILE = "Azzir/Info.plist";
+             INFOPLIST_KEY_CFBundleDisplayName = "Azzir";
 				INFOPLIST_KEY_CFBundleDisplayName = Azzir;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -660,8 +661,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = azzirApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.azzir";
+				PRODUCT_NAME = "Azzir";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -670,12 +671,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 132FD2BEBB586487F64D028C /* Pods-azzirApp.release.xcconfig */;
+			baseConfigurationReference = 132FD2BEBB586487F64D028C /* Pods-Azzir.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = azzirApp/Info.plist;
+				INFOPLIST_FILE = "Azzir/Info.plist";
+             INFOPLIST_KEY_CFBundleDisplayName = "Azzir";
 				INFOPLIST_KEY_CFBundleDisplayName = Azzir;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -688,8 +690,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = azzirApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.azzir";
+				PRODUCT_NAME = "Azzir";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -835,7 +837,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "azzirAppTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AzzirTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -844,7 +846,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "azzirApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Azzir" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -853,7 +855,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "azzirApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Azzir" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

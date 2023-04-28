@@ -94,30 +94,64 @@ const SignUp = props => {
       );
     }
   };
+  const googleSignInApi = async () => {
+    const data = {
+      name: 'Akshay J',
+      email: 'akkyjumbade+test2@gmail.com',
+      username: 'akkyjumbade+test2@gmail.com',
+      profilePhotoUrl: '<profilePhotoUrl>',
+      phoneNumber: '9999999993',
+      accessToken: '',
+      accessTokenExpiresAt: '<expire-time>',
+      pushNotificationToken:
+        'ft6dM1xAQYWx8PDLwo4zGH:APA91bG-eFNtF51KN-MYrAu_FwOnSvg76NFX_FCv85S8I74IJPXlFDoIRWshPwe5NsRQEoC2_wwFHQAAwLOv82NRukVOR-gP6iY-RuBRtL-R985mcBPy_ymrwJfQOMm6_4WnkFkRlosd',
+    };
+    try {
+      const res = await ApiCall(
+        'api/oauth/google',
+        'POST',
+        JSON.stringify(data),
+      );
+      setClubNearby(res?.data);
+      console.log('clubsnearbydata ----', res.data);
+    } catch (error) {
+      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
   useEffect(() => {
+    // GoogleSignin.configure();
     GoogleSignin.configure({
-      webClientId: '<FROM DEVELOPER CONSOLE>', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      webClientId:
+        Platform.OS == 'ios'
+          ? ''
+          : '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
+      androidClientId:
+        '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
+      offlineAccess: true,
     });
   }, []);
-  const googleSignIn = async () => {
+
+  const signInFunction = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      // this.setState({userInfo});
-      Alert.alert(JSON.stringify(userInfo));
-      console.log('google signIn===>', userInfo);
+      // this.setState({ userInfo, error: null });
+      Alert.alert('success:' + JSON.stringify(userInfo));
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
+        // sign in was cancelled
+        Alert.alert('cancelled');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
+        // operation in progress already
+        Alert.alert('in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
+        Alert.alert('play services not available or outdated');
       } else {
-        // some other error happened
+        console.log('Something went wrong', error.toString());
       }
     }
   };
+
   const [eyeShow, setEyeShow] = useState('');
   const [eyeShow2, setEyeShow2] = useState('');
   const onClickEye = value => {
@@ -212,7 +246,7 @@ const SignUp = props => {
 
       <TouchableOpacity
         onPress={() => {
-          googleSignIn();
+          signInFunction();
         }}
         style={{
           flexDirection: 'row',

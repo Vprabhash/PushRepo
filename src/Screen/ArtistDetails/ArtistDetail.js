@@ -25,8 +25,28 @@ import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
+const customListItem = {
+  __v: 0,
+  _id: '64462842009adf4eeabf3142',
+  createdAt: '2023-04-24T06:57:06.974Z',
+  images: [
+    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_317714771_626852062550522_8322181189025240624_n_1080.jpg',
+    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_317868744_696754691768768_5091900867895031615_n_1080.jpg',
+    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_332279759_584742553287684_5972417165416107356_n_1080.jpg',
+    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_332378218_1216430905960835_4601160547994114409_n_1080.jpg',
+    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_83074476_1465456303611593_5288992800734429474_n_1080.jpg',
+  ],
+  instagramLink: 'https://instagram.com/djpraveennair?igshid=YmMyMTA2M2Y=',
+  isFeatured: false,
+  musicGenre: 'Bollywood, Hip-hop, Commercial, Techno, Tech, Psy',
+  name: 'DJ Praveen Nair',
+  type: 'dj',
+  updatedAt: '2023-04-24T06:57:06.974Z',
+  youtubeChannelLink: '',
+};
+
 const ArtistDetail = props => {
-  const [artistList, setArtistList] = useState();
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -35,12 +55,21 @@ const ArtistDetail = props => {
   const [loading, setLoading] = useState(true);
   const [valuekey, setValuekey] = useState('');
   const [filterComponent, setFilterComponent] = useState(false);
+  const [songListType, setSongListType] = useState('AllList');
+  const [artistList, setArtistList] = useState();
+  const [DJListData, setDJListData] = useState([
+    customListItem,
+    customListItem,
+    customListItem,
+  ]);
+  const [SingerListData, setSingerListData] = useState([customListItem]);
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       clubsNearbyDataApi(1);
       setValuekey('');
       setFilterComponent(false);
+      setSongListType('AllList');
     });
     return unsubscribe;
   }, [props.navigation]);
@@ -156,11 +185,12 @@ const ArtistDetail = props => {
   };
   const onPressApply = async data => {
     // call filter api here
+    console.log('ArtistData-------:', data);
     const res = await ApiCall(
       `api/artists?musicGenre=${data?.musicGenre.join('|')}`,
       'GET',
     );
-    console.log('-------filterApi', res?.data?.length);
+    console.log('ArtistFilterApi-----:', res?.data);
     setArtistList(res?.data);
     setFilterComponent(false);
   };
@@ -216,26 +246,113 @@ const ArtistDetail = props => {
               <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.fllter}
-            activeOpacity={0.5}
-            onPress={() => {
-              setFilterComponent(true);
-            }}>
-            <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
-            <Text style={styles.filtersText}>Filters</Text>
-          </TouchableOpacity>
-          <FlatList
-            data={artistList}
-            renderItem={artistListRenderItem}
-            ListFooterComponent={renderFooter}
-            onEndReachedThreshold={0.3}
-            onMomentumScrollBegin={() => {
-              setonEndReachedCalledDuringMomentum(false);
-            }}
-            onEndReached={fetchMoreData}
-            ListEmptyComponent={EmptyListMessage}
-          />
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TouchableOpacity
+              style={styles.fllter}
+              activeOpacity={0.5}
+              onPress={() => {
+                setFilterComponent(true);
+              }}>
+              <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
+              <Text style={styles.filtersText}>Filters</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.fllter,
+                {backgroundColor: songListType == 'DJLIST' ? '#000' : '#fff'},
+              ]}
+              // style={[styles.fllter,]}
+              activeOpacity={0.5}
+              onPress={() => {
+                setSongListType('DJLIST');
+              }}>
+              <Image
+                source={ImagePath.menuUser3}
+                style={[
+                  styles.iconStyle,
+                  {tintColor: songListType == 'DJLIST' ? '#fff' : '#000'},
+                ]}
+              />
+              <Text
+                style={[
+                  styles.filtersText,
+                  {color: songListType == 'DJLIST' ? '#fff' : '#000'},
+                ]}>
+                DJ
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              // style={[
+              //   styles.fllter,
+              //   {
+              //     backgroundColor:
+              //       SingerListData == 'SINGERLIST' ? '#000' : '#fff',
+              //   },
+              // ]}
+              style={[
+                styles.fllter,
+                {
+                  backgroundColor:
+                    songListType == 'SINGERLIST' ? '#000' : '#fff',
+                },
+              ]}
+              activeOpacity={0.5}
+              onPress={() => {
+                setSongListType('SINGERLIST');
+              }}>
+              <Image
+                source={ImagePath.songIcon}
+                style={[
+                  styles.iconStyle,
+                  {tintColor: songListType == 'SINGERLIST' ? '#fff' : '#000'},
+                ]}
+              />
+              <Text
+                style={[
+                  styles.filtersText,
+                  {color: songListType == 'SINGERLIST' ? '#fff' : '#000'},
+                ]}>
+                SINGER
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {songListType == 'AllList' ? (
+            <FlatList
+              data={artistList}
+              renderItem={artistListRenderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.3}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
+              ListEmptyComponent={EmptyListMessage}
+            />
+          ) : songListType == 'DJLIST' ? (
+            <FlatList
+              data={DJListData}
+              renderItem={artistListRenderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.3}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
+              ListEmptyComponent={EmptyListMessage}
+            />
+          ) : songListType == 'SINGERLIST' ? (
+            <FlatList
+              data={SingerListData}
+              renderItem={artistListRenderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.3}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={fetchMoreData}
+              ListEmptyComponent={EmptyListMessage}
+            />
+          ) : null}
         </SafeAreaView>
       </ImageBackground>
     </View>
@@ -244,6 +361,7 @@ const ArtistDetail = props => {
 export default ArtistDetail;
 const styles = StyleSheet.create({
   filtersText: {
+    marginLeft: 8,
     fontSize: 12,
     color: COLORS.black,
     fontFamily: FONTS.RobotoMedium,
@@ -252,9 +370,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     elevation: 9,
-    width: wp(23),
+    width: wp(25),
     marginBottom: 20,
     marginHorizontal: 15,
     borderRadius: 8,

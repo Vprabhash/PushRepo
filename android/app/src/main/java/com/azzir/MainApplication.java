@@ -1,4 +1,4 @@
-package com.azzirapp;
+package com.azzir;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "234696942853",
+    "project_id": "azzir-app",
+    "storage_bucket": "azzir-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234696942853:android:3141dd3584d9077d56836c",
+        "android_client_info": {
+          "package_name": "com.azzir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234696942853-f14qpc86r4bcpeqvc3npnfe1cetnaim2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.azzir",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1OPmFNUcftOkCHHxbZa-jTQfI2_3hU3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

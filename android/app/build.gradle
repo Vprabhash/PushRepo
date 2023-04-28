@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.azzirapp"
+    namespace "com.azzir"
     defaultConfig {
-        applicationId "com.azzirapp"
+        applicationId "com.azzir"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

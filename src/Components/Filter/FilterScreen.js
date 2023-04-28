@@ -48,6 +48,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
   const [vegNonVeg, setVegNonVeg] = useState('');
   const [stages, setStages] = useState('');
   const [sheesha, setSheesha] = useState('');
+  const [artist, setArtist] = useState('');
   const [selectAllLocality, setSelectAllLocality] = useState(false);
   const [selectAllGenre, setSelectAllGenre] = useState(false);
 
@@ -94,6 +95,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
 
   const clearAllData = () => {
     clearLocalities();
+    setArtist('');
     clearGeneres();
     setKidsFriendly('');
     setVegNonVeg('');
@@ -102,7 +104,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
     setHappyHourTimings('');
   };
 
-  console.log('-----', kidsFriendly, vegNonVeg, stages, sheesha);
+  console.log('-----', kidsFriendly, vegNonVeg, stages, sheesha, artist);
 
   const [teamArray, setTeamArray] = useState([]);
   const searchLocalityFilter = text => {
@@ -272,6 +274,9 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
   const sheeshaSelect = label => {
     setSheesha(label);
   };
+  const artistSelect = label => {
+    setArtist(label);
+  };
 
   const vegNonVegSelect = label => {
     setVegNonVeg(label);
@@ -336,16 +341,28 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
               flex: 0.4,
             }}>
             {isArtistFilter ? (
-              <FilterData
-                label={'Genre'}
-                onClick={() => {
-                  onSelectRightUi('Genre');
-                }}
-                image={ImagePath.menuUser3}
-                bgColor={
-                  selectRight === 'Genre' ? '#fff' : 'rgba(205, 205, 205, 1)'
-                }
-              />
+              <>
+                <FilterData
+                  label={'Genre'}
+                  onClick={() => {
+                    onSelectRightUi('Genre');
+                  }}
+                  image={ImagePath.menuUser3}
+                  bgColor={
+                    selectRight === 'Genre' ? '#fff' : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+                <FilterData
+                  label={'Artist'}
+                  onClick={() => {
+                    onSelectRightUi('Artist');
+                  }}
+                  image={ImagePath.artistIcon}
+                  bgColor={
+                    selectRight === 'Artist' ? '#fff' : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+              </>
             ) : (
               <>
                 <FilterData
@@ -542,6 +559,78 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
                     showsVerticalScrollIndicator={false}
                   />
                 </View>
+              </>
+            )}
+            {selectRight === 'Artist' && (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    artistSelect('dj');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      artist == 'dj'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>DJ</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    artistSelect('singer');
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      artist == 'singer'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>Singer</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
               </>
             )}
             {selectRight === 'Sheesha' && (
@@ -1021,7 +1110,6 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
                   tempdata.push(detaisl);
                 }
               }
-
               var tempdataGenres = [];
               for (var i = 0; i < generes.length; i++) {
                 if (generes[i].checked == true) {
@@ -1034,6 +1122,7 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
               onPressApply({
                 locality: tempdata,
                 sheesha: sheesha,
+                artist: artist,
                 vegNonVeg: vegNonVeg,
                 stagsAllowed: stages,
                 musicGenre: tempdataGenres,
