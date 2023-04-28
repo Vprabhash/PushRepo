@@ -94,32 +94,8 @@ const SignUp = props => {
       );
     }
   };
-  const googleSignInApi = async () => {
-    const data = {
-      name: 'Akshay J',
-      email: 'akkyjumbade+test2@gmail.com',
-      username: 'akkyjumbade+test2@gmail.com',
-      profilePhotoUrl: '<profilePhotoUrl>',
-      phoneNumber: '9999999993',
-      accessToken: '',
-      accessTokenExpiresAt: '<expire-time>',
-      pushNotificationToken:
-        'ft6dM1xAQYWx8PDLwo4zGH:APA91bG-eFNtF51KN-MYrAu_FwOnSvg76NFX_FCv85S8I74IJPXlFDoIRWshPwe5NsRQEoC2_wwFHQAAwLOv82NRukVOR-gP6iY-RuBRtL-R985mcBPy_ymrwJfQOMm6_4WnkFkRlosd',
-    };
-    try {
-      const res = await ApiCall(
-        'api/oauth/google',
-        'POST',
-        JSON.stringify(data),
-      );
-      setClubNearby(res?.data);
-      console.log('clubsnearbydata ----', res.data);
-    } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
-    }
-  };
+
   useEffect(() => {
-    // GoogleSignin.configure();
     GoogleSignin.configure({
       webClientId:
         Platform.OS == 'ios'
@@ -134,9 +110,35 @@ const SignUp = props => {
   const signInFunction = async () => {
     try {
       await GoogleSignin.hasPlayServices();
+      await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
-      // this.setState({ userInfo, error: null });
-      Alert.alert('success:' + JSON.stringify(userInfo));
+      console.log('lofuser data-------:', userInfo);
+      // Alert.alert('success:' + JSON.stringify(userInfo));
+      const data = {
+        name: userInfo?.user?.givenName,
+        email: userInfo?.user?.email,
+        username: userInfo?.user?.name,
+        profilePhotoUrl: userInfo?.user?.photo,
+        phoneNumber: '9999999993',
+        accessToken: userInfo?.idToken,
+        accessTokenExpiresAt: '<expire-time>',
+        pushNotificationToken:
+          'ft6dM1xAQYWx8PDLwo4zGH:APA91bG-eFNtF51KN-MYrAu_FwOnSvg76NFX_FCv85S8I74IJPXlFDoIRWshPwe5NsRQEoC2_wwFHQAAwLOv82NRukVOR-gP6iY-RuBRtL-R985mcBPy_ymrwJfQOMm6_4WnkFkRlosd',
+      };
+      try {
+        const res = await ApiCall(
+          'api/oauth/google',
+          'POST',
+          JSON.stringify(data),
+        );
+        // setClubNearby(res?.data);
+        console.log('google sign bydata ----', res.data);
+        if (res?.ok == true) {
+          props.navigation.navigate('BottomTab');
+        }
+      } catch (error) {
+        Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // sign in was cancelled
