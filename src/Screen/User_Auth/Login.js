@@ -97,9 +97,9 @@ const Login = props => {
       console.log('lofuser data-------:', userInfo);
       // Alert.alert('success:' + JSON.stringify(userInfo));
       const data = {
-        name: userInfo?.user?.givenName,
+        name: userInfo?.user?.name,
         email: userInfo?.user?.email,
-        username: userInfo?.user?.name,
+        username: userInfo?.user?.email,
         profilePhotoUrl: userInfo?.user?.photo,
         phoneNumber: '',
         accessToken: userInfo?.idToken,
@@ -112,13 +112,20 @@ const Login = props => {
           'POST',
           JSON.stringify(data),
         );
-        // setClubNearby(res?.data);
         console.log('google sign bydata ----', res.data);
         if (res?.ok == true) {
-          props.navigation.navigate('BottomTab');
+          setData('userData', res?.data);
+          setData(
+            'userToken',
+            res?.data?.connectedAuthProviders?.google?.accessToken,
+          );
+          props.navigation.reset({
+            index: 0,
+            routes: [{name: 'BottomTab'}],
+          });
         }
       } catch (error) {
-        Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+        Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
       }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

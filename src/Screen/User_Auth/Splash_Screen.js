@@ -14,7 +14,7 @@ import BackgroundTimer from 'react-native-background-timer';
 const Splash_Screen = props => {
   useEffect(() => {
     getData('userData').then(userdata => {
-      console.log('userdatauserdata:-------- ', userdata);
+      console.log('userdata: ===', userdata);
       if (!userdata) {
         setTimeout(() => {
           props.navigation.reset({
@@ -31,8 +31,7 @@ const Splash_Screen = props => {
         }, 1000);
       }
     });
-  });
-  useEffect(() => {
+
     BackgroundTimer.runBackgroundTimer(() => {
       checkLocation();
     }, 3000);
@@ -71,8 +70,8 @@ const Splash_Screen = props => {
             Geolocation.getCurrentPosition(
               position => {
                 let obj = {};
-                obj.latitude = 19.1364; //position.coords.latitude;
-                obj.longitude = 72.8296; //position.coords.longitude;
+                obj.latitude = position.coords.latitude;
+                obj.longitude = position.coords.longitude;
                 global.location = obj;
               },
               error => {

@@ -22,6 +22,7 @@ import {removeData} from '../Helper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 const Profile = ({navigation}) => {
   // const dispatch = useDispatch();
   const [userProfileData, setUserProfileData] = useState({});
@@ -84,9 +85,12 @@ const Profile = ({navigation}) => {
   };
 
   const logOut = async () => {
+    GoogleSignin.signOut();
     await removeData('userToken');
-    await removeData('userData').then(() => {
-      navigation.navigate('Login');
+    await removeData('userData');
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Login'}],
     });
   };
 

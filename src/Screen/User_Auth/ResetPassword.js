@@ -23,6 +23,7 @@ import {COLORS, FONTS} from '../../Components/constants';
 import Toast from 'react-native-simple-toast';
 import ApiCall from '../../redux/CommanApi';
 import {removeData} from '../../Components/Helper';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ResetPassword = ({route, navigation}) => {
@@ -40,8 +41,13 @@ const ResetPassword = ({route, navigation}) => {
     }
   };
   const logOut = async () => {
+    GoogleSignin.signOut();
     await removeData('userToken');
     await removeData('userData');
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'PasswordSuccessful'}],
+    });
   };
   const resetPassApi = async () => {
     const minPasswordLength = 6;
@@ -58,18 +64,19 @@ const ResetPassword = ({route, navigation}) => {
         otp: Otp,
         password: newPassword,
       };
-      const res = await ApiCall(
-        'api/reset-password',
-        'POST',
-        JSON.stringify(data),
-      );
-      console.log('---res--Lohin-----', res);
-      if (res.ok == true) {
-        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
-        logOut();
-        navigation.navigate('PasswordSuccessful');
-      } else {
-        // Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+      try {
+        const res = await ApiCall(
+          'api/reset-password',
+          'POST',
+          JSON.stringify(data),
+        );
+        console.log('---res--Lohin-----', res);
+        if (res.ok == true) {
+          Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+          logOut();
+        }
+      } catch (error) {
+        Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
       }
     } else {
       Alert.alert(
