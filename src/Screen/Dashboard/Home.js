@@ -61,6 +61,12 @@ const Home = props => {
   //   UpComingEventList();
   // }, []);
 
+  useEffect(() => {
+    fetchClubsSpotlight();
+    fetchArtistSpotlight();
+    clubsNearbyDataApi();
+  }, []);
+
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -442,20 +448,15 @@ const Home = props => {
     console.log('locationdata ---', global?.location);
     try {
       const res = await ApiCall(
-        `api/nearby-clubs?coordinates=${global?.location?.latitude},${global?.location?.longitude}&radius=5000`, //${19.136326},${72.82766}
+        `api/nearby-clubs?coordinates=${global?.location?.latitude},${global?.location?.longitude}&radius=5000&sort_by=zomatoRating&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
       );
-      setClubNearby(res.data);
-      console.log('clubsnearbydata ----', res.data);
+      setClubNearby(res?.data);
+      console.log('clubsnearbydata ----', res?.data);
     } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
-  useEffect(() => {
-    fetchClubsSpotlight();
-    fetchArtistSpotlight();
-    clubsNearbyDataApi();
-  }, []);
   const [clubsNearby, setClubNearby] = useState([]);
   const ClubNarDatarenderItem = ({item, index}) => {
     return (
@@ -615,7 +616,7 @@ const Home = props => {
             </View>
             <FlatList
               horizontal={true}
-              data={artistsSpotlight?.slice(0, 3)}
+              data={artistsSpotlight}
               renderItem={artistRenderItem}
               contentContainerStyle={{paddingRight: 15}}
               // ListFooterComponent={artistRenderFooter}
