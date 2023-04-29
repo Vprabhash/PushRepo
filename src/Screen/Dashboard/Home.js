@@ -108,12 +108,12 @@ const Home = props => {
   const [artistsSpotlight, setArtistsSpotlight] = useState([]);
   const fetchClubsSpotlight = async () => {
     const res = await ApiCall(`api/clubs?isFeatured=true`, 'GET');
-    console.log('---spotlight--->', JSON.stringify(res?.data));
+    console.log('+++++++++---spotlight--->', JSON.stringify(res?.data));
     setClubsSpotlight(res?.data);
   };
   const fetchArtistSpotlight = async () => {
     const res = await ApiCall(`api/artists?isFeatured=true`, 'GET');
-    console.log('---spotlight--->', JSON.stringify(res?.data));
+    console.log('(((((((---spotlight--->', JSON.stringify(res?.data));
     setArtistsSpotlight(res?.data);
   };
   // const _renderItem = ({item, index}) => {
@@ -523,11 +523,17 @@ const Home = props => {
               translucent={true}
             />
 
-            <View style={[styles.inputMain, {marginTop: 10}]}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                props.navigation.navigate('SearchBar');
+              }}
+              style={[styles.inputMain, {marginTop: 10}]}>
               <TextInput
                 style={[styles.textInput, {}]}
                 placeholder={'Search'}
                 placeholderTextColor={'rgba(0, 0, 0, 0.3)'}
+                editable={false}
                 // onChangeText={onChangeText}
                 // value={value}
               />
@@ -538,7 +544,7 @@ const Home = props => {
                 }}>
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
 
             {/* <TouchableOpacity
             style={[styles.fllter]}

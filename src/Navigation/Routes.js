@@ -15,18 +15,18 @@ import BottomTab from './Bottom_Tab';
 import Otp from '../Screen/User_Auth/Otp';
 import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';
 import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
-// import FilterScreen from '../Components/Filter/FilterScreen';
 import Home from '../Screen/Dashboard/Home';
 import ClubDetails from '../Screen/Details/ClubDetails';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 import Profile from '../Components/Profile/Profile';
+import SearchBar from '../Components/SearchBar';
 
 const Stack = createNativeStackNavigator();
 
 function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="">
         <Stack.Screen
           name="Splash_Screen"
           component={Splash_Screen}
@@ -78,11 +78,11 @@ function Routes() {
           component={BottomTab}
           options={{headerShown: false}}
         />
-        {/* <Stack.Screen
-          name="FilterScreen"
-          component={FilterScreen}
+        <Stack.Screen
+          name="SearchBar"
+          component={SearchBar}
           options={{headerShown: false}}
-        /> */}
+        />
         <Stack.Screen
           name="ArtistDetail"
           component={ArtistDetail}

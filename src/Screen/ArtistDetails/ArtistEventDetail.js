@@ -16,11 +16,10 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import ImagePath from '../../assets/ImagePath';
-import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
-import ApiCall from '../../redux/CommanApi';
 import Header from '../../Components/Header';
 import Toast from 'react-native-simple-toast';
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistEventDetail = props => {
