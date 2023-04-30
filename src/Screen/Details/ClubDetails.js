@@ -399,30 +399,6 @@ const ClubDetails = props => {
           </TouchableOpacity> */}
           <Text style={[styles.aboutText, {marginTop: 25}]}>Menu</Text>
           <ScrollView style={{flexDirection: 'row'}} horizontal>
-            <View
-              style={{
-                marginHorizontal: 15,
-              }}>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(true);
-                }}>
-                <Image
-                  style={{
-                    height: hp(20),
-                    width: wp(44),
-                    resizeMode: 'cover',
-                    borderRadius: 10,
-                  }}
-                  source={{
-                    uri: detailData?.media?.drinkMenuImages?.length
-                      ? detailData?.media?.drinkMenuImages[0]
-                      : '',
-                  }}
-                />
-              </TouchableOpacity>
-              <Text style={styles.titleText}>Beverages</Text>
-            </View>
             <ImageView
               images={
                 detailData?.media?.drinkMenuImages?.map(e => ({
@@ -448,6 +424,37 @@ const ClubDetails = props => {
                 );
               }}
             />
+            <View
+              style={{
+                marginLeft: 15,
+                marginRight: detailData?.media?.drinkMenuImages?.length
+                  ? 15
+                  : 0,
+              }}>
+              {detailData?.media?.drinkMenuImages?.length && (
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalVisible(true);
+                    }}>
+                    <Image
+                      style={{
+                        height: hp(20),
+                        width: wp(44),
+                        resizeMode: 'cover',
+                        borderRadius: 10,
+                      }}
+                      source={{
+                        uri: detailData?.media?.drinkMenuImages?.length
+                          ? detailData?.media?.drinkMenuImages[0]
+                          : '',
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.titleText}>Beverages</Text>
+                </>
+              )}
+            </View>
             <ImageView
               images={
                 detailData?.media?.foodMenuImages?.map(e => ({
@@ -473,25 +480,29 @@ const ClubDetails = props => {
               }}
             />
             <View style={{marginRight: 15}}>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisibletwo(true);
-                }}>
-                <Image
-                  style={{
-                    height: hp(20),
-                    width: wp(44),
-                    resizeMode: 'cover',
-                    borderRadius: 10,
-                  }}
-                  source={{
-                    uri: detailData?.media?.foodMenuImages?.length
-                      ? detailData?.media?.foodMenuImages[0]
-                      : '',
-                  }}
-                />
-              </TouchableOpacity>
-              <Text style={styles.titleText}>Food</Text>
+              {detailData?.media?.foodMenuImages?.length && (
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setModalVisibletwo(true);
+                    }}>
+                    <Image
+                      style={{
+                        height: hp(20),
+                        width: wp(44),
+                        resizeMode: 'cover',
+                        borderRadius: 10,
+                      }}
+                      source={{
+                        uri: detailData?.media?.foodMenuImages?.length
+                          ? detailData?.media?.foodMenuImages[0]
+                          : '',
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.titleText}>Food</Text>
+                </>
+              )}
             </View>
           </ScrollView>
           <Text style={[styles.aboutText]}>Clubs Nearby </Text>
