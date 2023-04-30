@@ -4,7 +4,6 @@ import {
   ImageBackground,
   Dimensions,
   FlatList,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -17,7 +16,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import ImagePath from '../../assets/ImagePath';
 import Toast from 'react-native-simple-toast';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -25,26 +23,6 @@ import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-
-const customListItem = {
-  __v: 0,
-  _id: '64462842009adf4eeabf3142',
-  createdAt: '2023-04-24T06:57:06.974Z',
-  images: [
-    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_317714771_626852062550522_8322181189025240624_n_1080.jpg',
-    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_317868744_696754691768768_5091900867895031615_n_1080.jpg',
-    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_332279759_584742553287684_5972417165416107356_n_1080.jpg',
-    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_332378218_1216430905960835_4601160547994114409_n_1080.jpg',
-    'https://api.azzirevents.com/storage/artists/DJ Praveen Nair/Snapinsta.app_83074476_1465456303611593_5288992800734429474_n_1080.jpg',
-  ],
-  instagramLink: 'https://instagram.com/djpraveennair?igshid=YmMyMTA2M2Y=',
-  isFeatured: false,
-  musicGenre: 'Bollywood, Hip-hop, Commercial, Techno, Tech, Psy',
-  name: 'DJ Praveen Nair',
-  type: 'dj',
-  updatedAt: '2023-04-24T06:57:06.974Z',
-  youtubeChannelLink: '',
-};
 
 const ArtistDetail = props => {
   const [
@@ -55,35 +33,34 @@ const ArtistDetail = props => {
   const [loading, setLoading] = useState(true);
   const [valuekey, setValuekey] = useState('');
   const [filterComponent, setFilterComponent] = useState(false);
-  const [songListType, setSongListType] = useState('AllList');
-  const [artistList, setArtistList] = useState();
-  const [DJListData, setDJListData] = useState([
-    customListItem,
-    customListItem,
-    customListItem,
-  ]);
-  const [SingerListData, setSingerListData] = useState([customListItem]);
+  const [artistList, setArtistList] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState({});
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       clubsNearbyDataApi(1);
       setValuekey('');
+      setSelectedFilter('');
       setFilterComponent(false);
-      setSongListType('AllList');
     });
     return unsubscribe;
-  }, [props.navigation]);
+  }, []);
 
   useEffect(() => {
     clubsNearbyDataApi(page);
-    console.log('Page', page);
-  }, [page]);
+    console.log('filterData', page, selectedFilter);
+  }, [page, selectedFilter]);
 
   const clubsNearbyDataApi = async page => {
     console.log('------page :', page);
     try {
-      const res = await ApiCall(`api/artists?page=${page}`, 'GET');
-      console.log('---resartists--->', res.data);
+      const res = await ApiCall(
+        `api/artists?page=${page}&musicGenre=${
+          selectedFilter?.musicGenre?.join('|') || ''
+        }&type=${selectedFilter?.artist || ''}`,
+        'GET',
+      );
+      console.log('---resartists--->', res?.data);
       if (Array.isArray(res?.data)) {
         if (page === 1) {
           setArtistList(res?.data);
@@ -97,16 +74,19 @@ const ArtistDetail = props => {
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
+      setFilterComponent(false);
     }
   };
+
   const searchApi = async text => {
     if (valuekey) {
       const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
-      console.log('---searchApi--->', JSON.stringify(res?.data.artists));
+      console.log('---searchApi--->', JSON.stringify(res?.data?.artists));
       setArtistList(res?.data.artists);
     } else {
       setPage(1);
     }
+    setSelectedFilter({});
   };
   const fetchMoreData = () => {
     // clubsNearbyDataApi(page + 1);
@@ -178,23 +158,22 @@ const ArtistDetail = props => {
             <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
               {item.musicGenre}
             </Text>
+            <Text
+              style={[
+                styles.listingText,
+                {marginVertical: hp(0.3), textTransform: 'uppercase'},
+              ]}>
+              {item.type}
+            </Text>
           </View>
         </View>
       </View>
     );
   };
-  const onPressApply = async data => {
-    // call filter api here
+
+  const onPressApply = data => {
     console.log('ArtistData-------:', data);
-    const res = await ApiCall(
-      `api/artists?musicGenre=${data?.musicGenre.join('|')}&type=${
-        data?.artist || ''
-      }`,
-      'GET',
-    );
-    console.log('ArtistFilterApi-----:', res?.data);
-    setArtistList(res?.data);
-    setFilterComponent(false);
+    setSelectedFilter(data);
   };
 
   const onPressCancel = () => {
@@ -202,7 +181,7 @@ const ArtistDetail = props => {
     setFilterComponent(false);
   };
   const EmptyListMessage = () => {
-    return <Text style={styles.titleText}>No Data Found</Text>;
+    return <Text style={styles.titleText}>No Artists Found</Text>;
   };
 
   if (filterComponent) {
@@ -211,44 +190,57 @@ const ArtistDetail = props => {
         isArtistFilter={true}
         onPressApply={onPressApply}
         onPressCancel={onPressCancel}
+        selectedFilter={selectedFilter}
       />
     );
   }
 
   return (
     <View style={{flex: 1}}>
-      <StatusBar
-        barStyle="dark-content"
-        hidden={false}
-        backgroundColor="transparent"
-        translucent={true}
-      />
-
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <SafeAreaView>
-          <View style={[styles.inputMain, {marginVertical: 20}]}>
-            <TextInput
-              style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
-              placeholderTextColor="rgba(0, 0, 0, 0.7)"
-              placeholder={'Search artists'}
-              onChangeText={text => {
-                // searchApi(text),
-                setValuekey(text);
-              }}
-              value={valuekey}
-            />
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
-                searchApi();
-              }}>
-              <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
-            </TouchableOpacity>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <StatusBar
+          barStyle="dark-content"
+          hidden={false}
+          backgroundColor="transparent"
+          translucent={true}
+        />
+        <View style={{marginHorizontal: 5, flex: 1}}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              props.navigation.navigate('SearchBar');
+            }}>
+            <View
+              style={[styles.inputMain, {marginTop: 50, marginVertical: 20}]}>
+              <TextInput
+                style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
+                placeholderTextColor="rgba(0, 0, 0, 0.7)"
+                placeholder={'Search artists'}
+                editable={false}
+                onChangeText={text => {
+                  // searchApi(text),
+                  setValuekey(text);
+                }}
+                value={valuekey}
+              />
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => {
+                  searchApi();
+                }}>
+                <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: 15,
+            }}>
             <TouchableOpacity
               style={styles.fllter}
               activeOpacity={0.5}
@@ -261,101 +253,104 @@ const ArtistDetail = props => {
             <TouchableOpacity
               style={[
                 styles.fllter,
-                {backgroundColor: songListType == 'DJLIST' ? '#000' : '#fff'},
+                {
+                  backgroundColor:
+                    selectedFilter?.artist?.toLowerCase() == 'dj'
+                      ? COLORS.primary
+                      : COLORS.white,
+                },
               ]}
-              // style={[styles.fllter,]}
               activeOpacity={0.5}
               onPress={() => {
-                setSongListType('DJLIST');
+                setPage(1);
+                if (selectedFilter?.artist?.toLowerCase() !== 'dj') {
+                  setSelectedFilter({...selectedFilter, artist: 'dj'});
+                } else {
+                  setSelectedFilter({...selectedFilter, artist: ''});
+                }
               }}>
               <Image
                 source={ImagePath.menuUser3}
                 style={[
                   styles.iconStyle,
-                  {tintColor: songListType == 'DJLIST' ? '#fff' : '#000'},
+                  {
+                    tintColor:
+                      selectedFilter?.artist?.toLowerCase() === 'dj'
+                        ? COLORS.white
+                        : COLORS.primary,
+                  },
                 ]}
               />
               <Text
                 style={[
                   styles.filtersText,
-                  {color: songListType == 'DJLIST' ? '#fff' : '#000'},
+                  {
+                    color:
+                      selectedFilter?.artist?.toLowerCase() == 'dj'
+                        ? COLORS.white
+                        : COLORS.primary,
+                  },
                 ]}>
                 DJ
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              // style={[
-              //   styles.fllter,
-              //   {
-              //     backgroundColor:
-              //       SingerListData == 'SINGERLIST' ? '#000' : '#fff',
-              //   },
-              // ]}
               style={[
                 styles.fllter,
                 {
                   backgroundColor:
-                    songListType == 'SINGERLIST' ? '#000' : '#fff',
+                    selectedFilter?.artist?.toLowerCase() === 'singer'
+                      ? COLORS.primary
+                      : COLORS.white,
                 },
               ]}
               activeOpacity={0.5}
               onPress={() => {
-                setSongListType('SINGERLIST');
+                setPage(1);
+                if (selectedFilter?.artist?.toLowerCase() !== 'singer') {
+                  setSelectedFilter({...selectedFilter, artist: 'singer'});
+                } else {
+                  setSelectedFilter({...selectedFilter, artist: ''});
+                }
               }}>
               <Image
                 source={ImagePath.songIcon}
                 style={[
                   styles.iconStyle,
-                  {tintColor: songListType == 'SINGERLIST' ? '#fff' : '#000'},
+                  {
+                    tintColor:
+                      selectedFilter?.artist?.toLowerCase() === 'singer'
+                        ? COLORS.white
+                        : COLORS.primary,
+                  },
                 ]}
               />
               <Text
                 style={[
                   styles.filtersText,
-                  {color: songListType == 'SINGERLIST' ? '#fff' : '#000'},
+                  {
+                    color:
+                      selectedFilter?.artist?.toLowerCase() === 'singer'
+                        ? COLORS.white
+                        : COLORS.primary,
+                  },
                 ]}>
                 SINGER
               </Text>
             </TouchableOpacity>
           </View>
-          {songListType == 'AllList' ? (
-            <FlatList
-              data={artistList}
-              renderItem={artistListRenderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.3}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-              ListEmptyComponent={EmptyListMessage}
-            />
-          ) : songListType == 'DJLIST' ? (
-            <FlatList
-              data={DJListData}
-              renderItem={artistListRenderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.3}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-              ListEmptyComponent={EmptyListMessage}
-            />
-          ) : songListType == 'SINGERLIST' ? (
-            <FlatList
-              data={SingerListData}
-              renderItem={artistListRenderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.3}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-              ListEmptyComponent={EmptyListMessage}
-            />
-          ) : null}
-        </SafeAreaView>
+          <FlatList
+            data={artistList}
+            renderItem={artistListRenderItem}
+            ListFooterComponent={renderFooter}
+            onEndReachedThreshold={0.3}
+            onMomentumScrollBegin={() => {
+              setonEndReachedCalledDuringMomentum(false);
+            }}
+            onEndReached={fetchMoreData}
+            ListEmptyComponent={EmptyListMessage}
+          />
+        </View>
       </ImageBackground>
     </View>
   );
@@ -376,10 +371,11 @@ const styles = StyleSheet.create({
     elevation: 9,
     width: wp(25),
     marginBottom: 20,
-    marginHorizontal: 15,
+    // marginHorizontal: 15,
     borderRadius: 8,
     paddingHorizontal: wp(4),
-    height: hp(4),
+    paddingVertical: 7,
+    zIndex: 9,
   },
   inputMain: {
     backgroundColor: COLORS.white,
@@ -401,7 +397,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   iconStyle: {
-    tintColor: '#000000',
+    tintColor: COLORS.primary,
     width: 18,
     resizeMode: 'contain',
     height: 18,
@@ -440,12 +436,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontFamily: FONTS.RobotoRegular,
     letterSpacing: 0.3,
-  },
-  singerName: {
-    fontSize: 16,
-    marginLeft: 8,
-    fontFamily: FONTS.AxiformaBold,
-    color: '#5B5959',
   },
   listingText: {
     fontSize: 14,

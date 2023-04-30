@@ -27,7 +27,7 @@ import FilterScreen from '../../Components/Filter/FilterScreen';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = props => {
-  const [clubs, setClubs] = useState();
+  const [clubs, setClubs] = useState([]);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -40,25 +40,34 @@ const ClubListing = props => {
   useEffect(() => {
     list(page);
     console.log('Page', page);
-  }, [page]);
+  }, [page, filteredData]);
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
-      // list(1);
-      // setValuekey('');
+      list(1);
+      setValuekey('');
       setFilterComponent(false);
+      setFilteredData({});
     });
     return unsubscribe;
   }, []);
 
   const list = async page => {
     try {
-      const res = await ApiCall(`api/clubs?page=${page}`, 'GET');
-      console.log('---res--club listin---', res.data);
+      const res = await ApiCall(
+        `api/clubs?page=${page}&vegNonVeg=${
+          filteredData?.vegNonVeg || ''
+        }&locality=${filteredData?.locality?.join('|') || ''}&stagsAllowed=${
+          filteredData?.stagsAllowed || ''
+        }&musicGenre=${
+          filteredData?.musicGenre?.join('|') || ''
+        }&kidsFriendly=${filteredData?.kidsFriendly || ''}`,
+        'GET',
+      );
+      console.log('---res--club listin---', res?.data);
       if (Array.isArray(res?.data)) {
         if (page === 1) {
           setClubs(res?.data);
-          setTeamArray(res.data);
         } else {
           setClubs([...clubs, ...res?.data]);
         }
@@ -90,13 +99,12 @@ const ClubListing = props => {
       </View>
     ) : null;
   };
-  const [searchValue, setSearchValue] = useState('');
-  const [teamArray, setTeamArray] = useState([]);
 
   const searchApi = async text => {
+    setFilteredData({});
     if (valuekey) {
       const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
-      console.log('---searchApi--->', JSON.stringify(res?.data?.clubs));
+      console.log('---searchApi--->', res?.data?.clubs?.length);
       setClubs(res?.data?.clubs);
     } else {
       setPage(1);
@@ -108,7 +116,7 @@ const ClubListing = props => {
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
           style={{
-            marginHorizontal: 10,
+            marginHorizontal: 15,
             borderRadius: 10,
             backgroundColor: '#FFFFFF',
             elevation: 4,
@@ -206,31 +214,20 @@ const ClubListing = props => {
   };
 
   const EmptyListMessage = () => {
-    return <Text style={styles.noDataText}>No Data Found</Text>;
+    return <Text style={styles.noDataText}>No Clubs Found</Text>;
   };
   const [filterComponent, setFilterComponent] = useState(false);
   const onPressApply = async data => {
-    console.log('onPressApply===', data);
-    // call filter api here
-    const res = await ApiCall(
-      `api/clubs?vegNonVeg=${data?.vegNonVeg}&locality=${data?.locality.join(
-        '|',
-      )}&stagsAllowed=${data?.stagsAllowed}&musicGenre=${data?.musicGenre.join(
-        '|',
-      )}&kidsFriendly=${data?.kidsFriendly}`,
-      'GET',
-    );
-    // setFilteredData(data);
+    console.log('-------filterApi', data);
+    setFilteredData(data);
+    setPage(1);
     setFilterComponent(false);
-    // setPage(1);
-    console.log('-------filterApi', res?.data?.length);
-    setClubs(res?.data);
   };
 
   const onPressCancel = () => {
-    console.log('filterComponent---first');
     setFilterComponent(false);
   };
+
   if (filterComponent) {
     return (
       <FilterScreen onPressApply={onPressApply} onPressCancel={onPressCancel} />
@@ -243,32 +240,35 @@ const ClubListing = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 5}}>
+        <View style={{marginHorizontal: 5, flex: 1}}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}
             backgroundColor="transparent"
             translucent={true}
           />
-          <View style={[styles.inputMain, {marginTop: 50, marginBottom: 20}]}>
-            <TextInput
-              style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
-              placeholderTextColor="rgba(0, 0, 0, 0.7)"
-              placeholder={'Search clubs'}
-              onChangeText={text => {
-                // searchApi(text)
-                setValuekey(text);
-              }}
-              value={valuekey}
-            />
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
-                searchApi();
-              }}>
-              <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              props.navigation.navigate('SearchBar');
+            }}>
+            <View style={[styles.inputMain, {marginTop: 50, marginBottom: 20}]}>
+              <TextInput
+                style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
+                placeholderTextColor="rgba(0, 0, 0, 0.7)"
+                placeholder={'Search clubs'}
+                editable={false}
+                onChangeText={text => {
+                  // searchApi(text)
+                  setValuekey(text);
+                }}
+                value={valuekey}
+              />
+              <TouchableOpacity activeOpacity={0.5} onPress={searchApi}>
+                <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
@@ -298,6 +298,7 @@ const ClubListing = props => {
 export default ClubListing;
 const styles = StyleSheet.create({
   filtersText: {
+    marginLeft: 8,
     fontSize: 12,
     color: COLORS.black,
     fontFamily: FONTS.RobotoMedium,
@@ -306,20 +307,21 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    elevation: 16,
-    width: wp(23),
+    // justifyContent: 'space-between',
+    elevation: 9,
+    width: wp(25),
     marginBottom: 20,
     marginHorizontal: 15,
     borderRadius: 8,
     paddingHorizontal: wp(4),
-    height: hp(4),
+    paddingVertical: 7,
+    zIndex: 9,
   },
   iconStyle: {
-    tintColor: COLORS.black,
-    width: 16,
+    tintColor: COLORS.primary,
+    width: 18,
     resizeMode: 'contain',
-    height: 16,
+    height: 18,
   },
   noDataText: {
     color: COLORS.black,
@@ -345,7 +347,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     elevation: 16,
-    marginHorizontal: 10,
+    marginHorizontal: 15,
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),
@@ -366,11 +368,5 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 12,
     marginTop: hp(1),
-  },
-  iconStyle: {
-    tintColor: '#000000',
-    width: 16,
-    resizeMode: 'contain',
-    height: 16,
   },
 });

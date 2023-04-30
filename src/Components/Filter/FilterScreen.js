@@ -36,7 +36,13 @@ function FilterData({label, onClick, image, bgColor}) {
     </TouchableOpacity>
   );
 }
-const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
+const FilterScreen = ({
+  onPressApply,
+  onPressCancel,
+  isArtistFilter,
+  selectedFilter,
+}) => {
+  // const selectedLocalities = selectedFilter?.locality?.map((e) => ({value: e, label: e, checked: true}));
   const [, forceUpdate] = useState();
   const [searchLocality, setSearchLocality] = useState('');
   const [searchGenre, setSearchGenre] = useState('');
@@ -52,6 +58,16 @@ const FilterScreen = ({onPressApply, onPressCancel, isArtistFilter}) => {
   const [selectAllLocality, setSelectAllLocality] = useState(false);
   const [selectAllGenre, setSelectAllGenre] = useState(false);
 
+  // {
+  //   locality: tempdata,
+  //   sheesha: sheesha,
+  //   artist: artist,
+  //   vegNonVeg: vegNonVeg,
+  //   stagsAllowed: stages,
+  //   musicGenre: tempdataGenres,
+  //   kidsFriendly: kidsFriendly,
+  //   happyHours: happyHourTimings,
+  // }
   useEffect(() => {
     filterApi();
   }, []);

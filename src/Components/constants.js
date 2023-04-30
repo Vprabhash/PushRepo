@@ -31,7 +31,7 @@ export const FONTS = {
   HankenGroteskBold: 'HankenGrotesk-Bold',
 };
 export const COLORS = {
-  primary: '#DAFGTE4',
+  primary: '#202020',
   white: '#FFFFFF',
   black: '#000000',
   gray: '#EFEFEF',

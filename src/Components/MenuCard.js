@@ -57,7 +57,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Stags',
-      menuTitleText: itemdata?.stagsAllowed || 'N/A',
+      // menuTitleText: itemdata?.stagsAllowed || 'N/A',
     },
 
     {
@@ -66,7 +66,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Sheesha',
-      menuTitleText: itemdata?.seeshaServe || 'N/A',
+      // menuTitleText: itemdata?.seeshaServe || 'N/A',
     },
     {
       menuIcon:
@@ -74,7 +74,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           ? ImagePath.doneIcon
           : ImagePath.menuUser4,
       menuTitle: 'Kids Friendly',
-      menuTitleText: itemdata?.kidsFriendly || 'N/A',
+      // menuTitleText: itemdata?.kidsFriendly || 'N/A',
     },
   ];
   const MenuDataRenderItem = ({item, index}) => {
@@ -88,6 +88,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
         style={{
           flex: 1,
           paddingVertical: 7,
+          // justifyContent: 'center',
         }}>
         <View
           style={{
@@ -95,11 +96,18 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             alignItems: 'center',
           }}>
           <Image style={styles.menuIconCss} source={item.menuIcon} />
-          <View>
+          <View
+            style={{
+              justifyContent: 'center',
+              marginLeft: 15,
+              flex: 1,
+            }}>
             <Text style={styles.menuText}>{item.menuTitle}</Text>
-            <View style={{width: '100%', paddingLeft: hp(1.6)}}>
-              <Text style={styles.menuText2}>{item.menuTitleText}</Text>
-            </View>
+            {item.menuTitleText && (
+              <View style={{width: '95%'}}>
+                <Text style={styles.menuText2}>{item.menuTitleText}</Text>
+              </View>
+            )}
           </View>
         </View>
       </TouchableOpacity>
@@ -133,7 +141,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             Linking.openURL(itemdata?.googleMapLink);
           }}
           style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
-          <Image style={styles.btnIcon} source={ImagePath.direction} />
+          <Image
+            style={[styles.btnIcon, {height: 18, width: 18}]}
+            source={ImagePath.direction}
+          />
           <Text style={[styles.buttonText, {}]}>Direction</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -167,7 +178,6 @@ const styles = StyleSheet.create({
     color: '#5B5959',
     fontSize: 14,
     fontFamily: FONTS.RobotoRegular,
-    marginLeft: hp(1.6),
   },
   menuText2: {
     color: '#BBBBBB',

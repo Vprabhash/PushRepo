@@ -97,14 +97,21 @@ const ArtistEventDetail = props => {
                   <Text style={styles.listinhHeading}>{detailData?.name}</Text>
                 </View>
                 <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-                  {detailData.musicGenre}
+                  {detailData?.musicGenre}
+                </Text>
+                <Text
+                  style={[
+                    styles.listingText,
+                    {marginVertical: hp(0.3), textTransform: 'uppercase'},
+                  ]}>
+                  {detailData?.type}
                 </Text>
               </View>
               <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginTop: 20,
+                  marginTop: 5,
                 }}>
                 <TouchableOpacity
                   activeOpacity={0.7}
@@ -123,10 +130,7 @@ const ArtistEventDetail = props => {
                     styles.btnmain,
                     {borderBottomLeftRadius: 10, marginRight: 1},
                   ]}>
-                  <Image
-                    style={[styles.btnIcon, {height: 14, width: 14}]}
-                    source={ImagePath.Instagram}
-                  />
+                  <Image style={styles.btnIcon} source={ImagePath.Instagram} />
                   <Text style={styles.buttonText}>Instagram</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -144,7 +148,7 @@ const ArtistEventDetail = props => {
                   }}
                   style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
                   <Image style={styles.btnIcon} source={ImagePath.youtube} />
-                  <Text style={[styles.buttonText, {}]}>YouTube</Text>
+                  <Text style={styles.buttonText}>YouTube</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -184,8 +188,8 @@ const styles = StyleSheet.create({
     // letterSpacing: 0.3,
   },
   btnIcon: {
-    height: 35,
-    width: 28,
-    resizeMode: 'cover',
+    height: 16,
+    width: 16,
+    resizeMode: 'contain',
   },
 });

@@ -32,10 +32,10 @@ const Splash_Screen = props => {
       }
     });
 
+    BackgroundTimer.start();
     BackgroundTimer.runBackgroundTimer(() => {
       checkLocation();
     }, 3000);
-    BackgroundTimer.start();
   }, []);
 
   async function checkLocation() {
@@ -49,14 +49,16 @@ const Splash_Screen = props => {
         Geolocation.getCurrentPosition(
           position => {
             let obj = {};
-            obj.latitude = position.coords.latitude;
-            obj.longitude = position.coords.longitude;
-            global.location = obj;
+            if (position.coords) {
+              obj.latitude = position.coords.latitude;
+              obj.longitude = position.coords.longitude;
+              global.location = obj;
+            }
           },
           error => {
             console.log(error.code, error.message);
           },
-          {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000},
+          {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
         );
         return;
       } else {

@@ -237,7 +237,7 @@ const SearchBar = props => {
               <TextInput
                 style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
                 placeholderTextColor="rgba(0, 0, 0, 0.7)"
-                placeholder={'Search clubs'}
+                placeholder={'Search'}
                 onChangeText={text => {
                   // searchApi(text)
                   setValuekey(text);
@@ -253,14 +253,13 @@ const SearchBar = props => {
               </TouchableOpacity>
             </View>
           </View>
-          <SafeAreaView style={{marginTop: 20}}>
-            <FlatList
-              data={clubs}
-              renderItem={_renderItem}
-              onEndReachedThreshold={0.3}
-              ListEmptyComponent={EmptyListMessage}
-            />
-          </SafeAreaView>
+          <FlatList
+            data={clubs}
+            renderItem={_renderItem}
+            onEndReachedThreshold={0.3}
+            contentContainerStyle={{paddingTop: 20, paddingBottom: 50}}
+            ListEmptyComponent={EmptyListMessage}
+          />
         </View>
       </ImageBackground>
     </View>

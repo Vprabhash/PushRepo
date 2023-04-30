@@ -110,7 +110,6 @@ const ClubDetails = props => {
     clubsNearbyDataApi();
   }, []);
   const clubsNearbyDataApi = async () => {
-    console.log('locationdata ---', global.location);
     try {
       const res = await ApiCall(
         `api/nearby-clubs?coordinates=${detailData?.geoJson?.coordinates}`, //${19.136326},${72.82766}
@@ -440,6 +439,8 @@ const ClubDetails = props => {
                     style={{
                       alignSelf: 'center',
                       paddingBottom: 30,
+                      zIndex: 99,
+                      elevation: 3,
                     }}>
                     ({imageIndex + 1} /
                     {detailData?.media?.drinkMenuImages?.length})
@@ -456,6 +457,20 @@ const ClubDetails = props => {
               imageIndex={0}
               visible={modalVisibletwo}
               onRequestClose={() => setModalVisibletwo(false)}
+              FooterComponent={({imageIndex}) => {
+                return (
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      paddingBottom: 30,
+                      zIndex: 99,
+                      elevation: 3,
+                    }}>
+                    ({imageIndex + 1} /
+                    {detailData?.media?.foodMenuImages?.length})
+                  </Text>
+                );
+              }}
             />
             <View style={{marginRight: 15}}>
               <TouchableOpacity

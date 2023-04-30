@@ -33,15 +33,14 @@ const Otp = props => {
   const password = props.route?.params?.password;
   console.log('props signOtp--------', props.route.params);
   const OtpApi = async () => {
-    if (Otp.length == 6) {
-      Toast.show('Enter Otp', Toast.LONG, Toast.BOTTOM);
-      return;
+    if (Otp.length < 6) {
+      Toast.show('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
     } else {
       const data = {
         email: email,
         otp: Otp,
         password: password,
-        phoneNumber: '1234567890',
+        // phoneNumber: '',
       };
       try {
         const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
