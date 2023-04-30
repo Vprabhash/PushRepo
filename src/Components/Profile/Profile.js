@@ -346,7 +346,6 @@ const Profile = ({navigation}) => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    justifyContent: 'center',
                   }}>
                   <Text
                     style={{
@@ -355,7 +354,9 @@ const Profile = ({navigation}) => {
                       fontSize: 20,
                     }}>
                     {userProfileData?.firstName || userProfileData?.lastName
-                      ? `${userProfileData?.firstName} ${userProfileData?.lastName}`
+                      ? `${userProfileData?.firstName || ''} ${
+                          userProfileData?.lastName || ''
+                        }`
                       : 'Unknown user'}
                   </Text>
                   <Image

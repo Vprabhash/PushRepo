@@ -448,7 +448,9 @@ const Home = props => {
     console.log('locationdata ---', global?.location);
     try {
       const res = await ApiCall(
-        `api/nearby-clubs?coordinates=${global?.location?.latitude},${global?.location?.longitude}&radius=5000&sort_by=zomatoRating&sort_dir=desc`, //${19.136326},${72.82766}
+        `api/nearby-clubs?coordinates=${global?.location?.latitude || ''},${
+          global?.location?.longitude || ''
+        }&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
       );
       setClubNearby(res?.data);
@@ -584,7 +586,7 @@ const Home = props => {
               horizontal={true}
               data={clubsNearby?.slice(0, 5)}
               renderItem={ClubNarDatarenderItem}
-              ListFooterComponent={renderFooter}
+              // ListFooterComponent={renderFooter}
               style={{marginTop: 20, marginBottom: -30}}
               // onEndReachedThreshold={0.7}
               // onMomentumScrollBegin={() => {

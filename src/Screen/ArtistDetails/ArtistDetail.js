@@ -38,9 +38,12 @@ const ArtistDetail = props => {
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
-      clubsNearbyDataApi(1);
-      setValuekey('');
-      setSelectedFilter('');
+      // const routes = props.navigation.getState()?.routes;
+      // const prevRoute = routes[routes.length - 3];
+      // console.log(prevRoute, 'ROUTE===');
+      // clubsNearbyDataApi(1);
+      // setValuekey('');
+      // setSelectedFilter('');
       setFilterComponent(false);
     });
     return unsubscribe;
@@ -82,7 +85,7 @@ const ArtistDetail = props => {
     if (valuekey) {
       const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
       console.log('---searchApi--->', JSON.stringify(res?.data?.artists));
-      setArtistList(res?.data.artists);
+      setArtistList(res?.data?.artists);
     } else {
       setPage(1);
     }
@@ -155,15 +158,17 @@ const ArtistDetail = props => {
             <View>
               <Text style={styles.listinhHeading}>{item?.name}</Text>
             </View>
+            {item?.type && (
+              <Text
+                style={[
+                  styles.listingText,
+                  {marginVertical: hp(0.3), textTransform: 'uppercase'},
+                ]}>
+                {item?.type?.toLowerCase() === 'artist' ? 'SINGER' : item?.type}
+              </Text>
+            )}
             <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-              {item.musicGenre}
-            </Text>
-            <Text
-              style={[
-                styles.listingText,
-                {marginVertical: hp(0.3), textTransform: 'uppercase'},
-              ]}>
-              {item.type}
+              {item?.musicGenre}
             </Text>
           </View>
         </View>
@@ -299,7 +304,7 @@ const ArtistDetail = props => {
                 styles.fllter,
                 {
                   backgroundColor:
-                    selectedFilter?.artist?.toLowerCase() === 'singer'
+                    selectedFilter?.artist?.toLowerCase() === 'artist'
                       ? COLORS.primary
                       : COLORS.white,
                 },
@@ -307,8 +312,8 @@ const ArtistDetail = props => {
               activeOpacity={0.5}
               onPress={() => {
                 setPage(1);
-                if (selectedFilter?.artist?.toLowerCase() !== 'singer') {
-                  setSelectedFilter({...selectedFilter, artist: 'singer'});
+                if (selectedFilter?.artist?.toLowerCase() !== 'artist') {
+                  setSelectedFilter({...selectedFilter, artist: 'artist'});
                 } else {
                   setSelectedFilter({...selectedFilter, artist: ''});
                 }
@@ -319,7 +324,7 @@ const ArtistDetail = props => {
                   styles.iconStyle,
                   {
                     tintColor:
-                      selectedFilter?.artist?.toLowerCase() === 'singer'
+                      selectedFilter?.artist?.toLowerCase() === 'artist'
                         ? COLORS.white
                         : COLORS.primary,
                   },
@@ -330,7 +335,7 @@ const ArtistDetail = props => {
                   styles.filtersText,
                   {
                     color:
-                      selectedFilter?.artist?.toLowerCase() === 'singer'
+                      selectedFilter?.artist?.toLowerCase() === 'artist'
                         ? COLORS.white
                         : COLORS.primary,
                   },

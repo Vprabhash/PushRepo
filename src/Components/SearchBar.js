@@ -126,7 +126,7 @@ const SearchBar = props => {
               </>
             )}
           </TouchableOpacity>
-          <Image
+          {/* <Image
             style={{
               height: 20,
               width: 20,
@@ -135,8 +135,8 @@ const SearchBar = props => {
               top: 10,
               right: 10,
             }}
-            source={item.heartIcon}
-          />
+            source={ImagePath?.heartIcon}
+          /> */}
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -176,13 +176,18 @@ const SearchBar = props => {
               </Text>
             )}
             {/* )} */}
+            {item?.type && (
+              <Text style={[styles.listingText, {textTransform: 'uppercase'}]}>
+                {item?.type?.toLowerCase() === 'artist' ? 'SINGER' : item?.type}
+              </Text>
+            )}
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}>
-              {item.musicGenre ? (
+              {item?.musicGenre && item?.images ? (
                 <Text style={styles.listingText}>{`${item?.musicGenre}`}</Text>
               ) : (
                 <Text style={styles.listingText}>

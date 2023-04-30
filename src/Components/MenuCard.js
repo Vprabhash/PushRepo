@@ -18,6 +18,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {COLORS, FONTS} from './constants';
+import Toast from 'react-native-simple-toast';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
@@ -150,10 +151,18 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            Linking.openURL(
-              'http://api.whatsapp.com/send?phone=91' +
-                itemdata?.whatsappNumber,
-            );
+            if (itemdata?.whatsappNumber) {
+              Linking.openURL(
+                'http://api.whatsapp.com/send?phone=91' +
+                  itemdata?.whatsappNumber,
+              );
+            } else {
+              Toast.show(
+                'Sorry! WhatsApp number is not available',
+                Toast.LONG,
+                Toast.BOTTOM,
+              );
+            }
           }}
           style={[styles.btnmain, {marginHorizontal: 1}]}>
           <Image style={styles.btnIcon} source={ImagePath.WhatsApp} />

@@ -615,7 +615,7 @@ const FilterScreen = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    artistSelect('singer');
+                    artistSelect('artist');
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -636,14 +636,14 @@ const FilterScreen = ({
                       borderColor: '#202020',
                     }}
                     source={
-                      artist == 'singer'
+                      artist == 'artist'
                         ? ImagePath.checkSelected
                         : ImagePath.checkBox
                     }
                   />
                   <View style={{flex: 0.6}}>
                     <View style={{}}>
-                      <Text style={styles.listinhHeading1}>Singer</Text>
+                      <Text style={styles.listinhHeading1}>SINGER</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -831,7 +831,7 @@ const FilterScreen = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    vegNonVegSelect('non-Veg');
+                    vegNonVegSelect('non-veg');
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -852,7 +852,7 @@ const FilterScreen = ({
                       borderColor: '#202020',
                     }}
                     source={
-                      vegNonVeg == 'non-Veg'
+                      vegNonVeg == 'non-veg'
                         ? ImagePath.checkSelected
                         : ImagePath.checkBox
                     }

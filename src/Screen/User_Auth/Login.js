@@ -115,10 +115,7 @@ const Login = props => {
         console.log('google sign bydata ----', res.data);
         if (res?.ok == true) {
           setData('userData', res?.data);
-          setData(
-            'userToken',
-            res?.data?.connectedAuthProviders?.google?.accessToken,
-          );
+          setData('userToken', res?.meta?.token);
           props.navigation.reset({
             index: 0,
             routes: [{name: 'BottomTab'}],

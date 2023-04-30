@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import {
   Image,
   ImageBackground,
@@ -27,6 +27,7 @@ import FilterScreen from '../../Components/Filter/FilterScreen';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = props => {
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
   const [clubs, setClubs] = useState([]);
   const [
     onEndReachedCalledDuringMomentum,
@@ -44,8 +45,8 @@ const ClubListing = props => {
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
-      list(1);
-      setValuekey('');
+      // list(1);
+      // setValuekey('');
       setFilterComponent(false);
       setFilteredData({});
     });
@@ -55,13 +56,15 @@ const ClubListing = props => {
   const list = async page => {
     try {
       const res = await ApiCall(
-        `api/clubs?page=${page}&vegNonVeg=${
-          filteredData?.vegNonVeg || ''
-        }&locality=${filteredData?.locality?.join('|') || ''}&stagsAllowed=${
-          filteredData?.stagsAllowed || ''
-        }&musicGenre=${
+        `api/clubs?&coordinates=${global?.location?.latitude || ''},${
+          global?.location?.longitude || ''
+        }&page=${page}&vegNonVeg=${filteredData?.vegNonVeg || ''}&locality=${
+          filteredData?.locality?.join('|') || ''
+        }&stagsAllowed=${filteredData?.stagsAllowed || ''}&musicGenre=${
           filteredData?.musicGenre?.join('|') || ''
-        }&kidsFriendly=${filteredData?.kidsFriendly || ''}`,
+        }&kidsFriendly=${filteredData?.kidsFriendly || ''}&happyHoursTimings=${
+          filteredData?.happyHours || ''
+        }`,
         'GET',
       );
       console.log('---res--club listin---', res?.data);
@@ -220,8 +223,9 @@ const ClubListing = props => {
   const onPressApply = async data => {
     console.log('-------filterApi', data);
     setFilteredData(data);
-    setPage(1);
     setFilterComponent(false);
+    setPage(1);
+    forceUpdate();
   };
 
   const onPressCancel = () => {

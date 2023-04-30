@@ -45,9 +45,11 @@ const Splash_Screen = props => {
         ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
       }),
     ).then(result => {
+      console.log('location', result);
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
           position => {
+            console.log('location 2', position.coords.latitude);
             let obj = {};
             if (position.coords) {
               obj.latitude = position.coords.latitude;
@@ -56,11 +58,10 @@ const Splash_Screen = props => {
             }
           },
           error => {
-            console.log(error.code, error.message);
+            console.log('location error', error.code, error.message);
           },
-          {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+          {enableHighAccuracy: true, timeout: 1000, maximumAge: 1000},
         );
-        return;
       } else {
         request(
           Platform.select({
@@ -72,16 +73,17 @@ const Splash_Screen = props => {
             Geolocation.getCurrentPosition(
               position => {
                 let obj = {};
-                obj.latitude = position.coords.latitude;
-                obj.longitude = position.coords.longitude;
-                global.location = obj;
+                if (position.coords) {
+                  obj.latitude = position.coords.latitude;
+                  obj.longitude = position.coords.longitude;
+                  global.location = obj;
+                }
               },
               error => {
                 console.log(error.code, error.message);
               },
-              {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000},
+              {enableHighAccuracy: true, timeout: 1000, maximumAge: 1000},
             );
-            return false;
           } else {
             console.log('-----error2:');
             setTimeout(() => {
