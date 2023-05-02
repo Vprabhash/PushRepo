@@ -135,10 +135,7 @@ const SignUp = props => {
         console.log('google sign bydata ----', res.data);
         if (res?.ok == true) {
           await setData('userData', res?.data);
-          await setData(
-            'userToken',
-            res?.data?.connectedAuthProviders?.google?.accessToken,
-          );
+          await setData('userToken', res?.meta?.token);
           props.navigation.reset({
             index: 0,
             routes: [{name: 'BottomTab'}],
