@@ -110,13 +110,13 @@ const ClubDetails = props => {
   useEffect(() => {
     clubsNearbyDataApi();
 
-    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
-    return () => {
-      BackHandler.removeEventListener(
-        'hardwareBackPress',
-        handleBackButtonClick,
-      );
-    };
+    // BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    // return () => {
+    //   BackHandler.removeEventListener(
+    //     'hardwareBackPress',
+    //     handleBackButtonClick,
+    //   );
+    // };
   }, []);
 
   function handleBackButtonClick() {
@@ -195,9 +195,10 @@ const ClubDetails = props => {
             iconHeight={15}
             iconWidth={30}
             onclick={() => {
-              props.navigation.navigate('ClubListing', {
-                screenName: 'ClubListing',
-              });
+              props.navigation.goBack();
+              // props.navigation.navigate('ClubListing', {
+              //   screenName: 'ClubListing',
+              // });
             }}
           />
         </View>
