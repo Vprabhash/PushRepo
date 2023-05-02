@@ -207,6 +207,8 @@ const ArtistDetail = props => {
 
   const onPressApply = data => {
     console.log('ArtistData-------:', data);
+    setPage(0);
+    setFilterComponent(false);
     setSelectedFilter(data);
   };
 
