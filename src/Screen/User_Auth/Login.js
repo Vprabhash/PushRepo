@@ -36,6 +36,7 @@ const Login = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [eyeShow, setEyeShow] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const onClickEye = () => {
     setEyeShow(!eyeShow);
   };
@@ -60,12 +61,13 @@ const Login = props => {
       password: password,
       pushNotificationToken: '',
     });
+    setIsLoading(true);
     try {
       const res = await ApiCall('api/login', 'POST', data);
       console.log('---res--Login-----', res);
       if (res.ok == true) {
-        setData('userData', res?.data);
-        setData('userToken', res?.meta?.token);
+        await setData('userData', res?.data);
+        await setData('userToken', res?.meta?.token);
         props.navigation.reset({
           index: 0,
           routes: [{name: 'BottomTab'}],
@@ -76,6 +78,8 @@ const Login = props => {
       }
     } catch (error) {
       Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -114,8 +118,8 @@ const Login = props => {
         );
         console.log('google sign bydata ----', res.data);
         if (res?.ok == true) {
-          setData('userData', res?.data);
-          setData('userToken', res?.meta?.token);
+          await setData('userData', res?.data);
+          await setData('userToken', res?.meta?.token);
           props.navigation.reset({
             index: 0,
             routes: [{name: 'BottomTab'}],
@@ -127,7 +131,7 @@ const Login = props => {
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // sign in was cancelled
-        Alert.alert('cancelled');
+        // Alert.alert('cancelled');
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation in progress already
         Alert.alert('in progress');
@@ -198,13 +202,12 @@ const Login = props => {
             }}
           />
           <CustomButton
-            onclick={() => {
-              signin();
-            }}
+            onclick={signin}
             top={30}
             title="Sign in"
             bgColor="#000"
             textColor="#fff"
+            isLoading={isLoading}
           />
           <TouchableOpacity
             style={{alignSelf: 'flex-end'}}

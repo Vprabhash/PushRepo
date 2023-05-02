@@ -25,6 +25,7 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ForgetPassword = ({route, navigation}) => {
   const [email, setEmail] = useState(route?.params?.email || '');
+  const [isLoading, setLoading] = useState(false);
 
   const forgotPassApi = async () => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -32,20 +33,31 @@ const ForgetPassword = ({route, navigation}) => {
       Alert.alert('Invalid email', 'Please enter a valid email address.');
       return;
     }
-    var data = JSON.stringify({
+    var data = {
       email: email,
-    });
-    const res = await ApiCall('api/forgot-password', 'POST', data);
-    console.log('--resForgetpass-----', res);
-    if (res.ok == true) {
-      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+    };
+    setLoading(true);
+    try {
+      const res = await ApiCall(
+        'api/forgot-password',
+        'POST',
+        JSON.stringify(data),
+      );
+      console.log('--resForgetpass-----', res);
+      if (res.ok == true) {
+        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
 
-      navigation.navigate('Otp', {
-        forgetmail: 'otp',
-        email: email,
-      });
-    } else {
-      Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+        navigation.navigate('Otp', {
+          forgetmail: 'otp',
+          email: email,
+        });
+      } else {
+        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+      }
+    } catch (error) {
+      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -112,6 +124,7 @@ const ForgetPassword = ({route, navigation}) => {
                 title="Submit"
                 bgColor="#000"
                 textColor="#fff"
+                isLoading={isLoading}
               />
             </View>
           </LinearGradient>

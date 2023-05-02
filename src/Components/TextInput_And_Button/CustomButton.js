@@ -24,6 +24,7 @@ const CustomButton = ({
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={onclick}
+      disabled={isLoading}
       style={{
         flex: flex,
         marginTop: top,

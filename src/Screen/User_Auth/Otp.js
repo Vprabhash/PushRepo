@@ -29,6 +29,7 @@ const Otp = props => {
   const forgetotp = props?.route?.params?.forgetmail;
   const forgetmail = props?.route?.params?.email;
   const [Otp, setOtp] = useState('');
+  const [isLoading, setLoading] = useState(false);
   const email = props.route?.params?.email;
   const password = props.route?.params?.password;
   console.log('props signOtp--------', props.route.params);
@@ -40,14 +41,14 @@ const Otp = props => {
         email: email,
         otp: Otp,
         password: password,
-        // phoneNumber: '',
       };
+      setLoading(true);
       try {
         const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
         console.log('---res--registerotp-----', res);
         if (res.ok == true) {
-          setData('userData', res?.data);
-          setData('userToken', res?.meta?.token);
+          await setData('userData', res?.data);
+          await setData('userToken', res?.meta?.token);
           if (forgetmail == 'otp') {
             props.navigation.navigate('ResetPassword', {
               otp: Otp,
@@ -64,6 +65,8 @@ const Otp = props => {
         }
       } catch (error) {
         Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -167,6 +170,7 @@ const Otp = props => {
             title="Submit OTP"
             bgColor="#000"
             textColor="#fff"
+            isLoading={isLoading}
           />
           <View
             style={{

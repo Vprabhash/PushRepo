@@ -64,8 +64,15 @@ const Home = props => {
   useEffect(() => {
     fetchClubsSpotlight();
     fetchArtistSpotlight();
-    clubsNearbyDataApi();
   }, []);
+
+  useEffect(() => {
+    if (global?.location) {
+      setTimeout(() => clubsNearbyDataApi(), 3000);
+    } else {
+      clearInterval();
+    }
+  }, [global?.location]);
 
   const [
     onEndReachedCalledDuringMomentum,

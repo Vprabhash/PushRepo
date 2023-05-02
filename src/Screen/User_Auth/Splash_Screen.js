@@ -49,7 +49,7 @@ const Splash_Screen = props => {
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
           position => {
-            console.log('location 2', position.coords.latitude);
+            console.log('location data:', position.coords);
             let obj = {};
             if (position.coords) {
               obj.latitude = position.coords.latitude;
@@ -60,7 +60,7 @@ const Splash_Screen = props => {
           error => {
             console.log('location error', error.code, error.message);
           },
-          {enableHighAccuracy: true, timeout: 1000, maximumAge: 1000},
+          {enableHighAccuracy: true, timeout: 30000},
         );
       } else {
         request(
@@ -82,7 +82,7 @@ const Splash_Screen = props => {
               error => {
                 console.log(error.code, error.message);
               },
-              {enableHighAccuracy: true, timeout: 1000, maximumAge: 1000},
+              {enableHighAccuracy: true, timeout: 30000},
             );
           } else {
             console.log('-----error2:');

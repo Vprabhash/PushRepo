@@ -134,8 +134,8 @@ const SignUp = props => {
         // setClubNearby(res?.data);
         console.log('google sign bydata ----', res.data);
         if (res?.ok == true) {
-          setData('userData', res?.data);
-          setData(
+          await setData('userData', res?.data);
+          await setData(
             'userToken',
             res?.data?.connectedAuthProviders?.google?.accessToken,
           );
@@ -150,7 +150,7 @@ const SignUp = props => {
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // sign in was cancelled
-        Alert.alert('cancelled');
+        // Alert.alert('cancelled');
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation in progress already
         Alert.alert('in progress');

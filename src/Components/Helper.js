@@ -1,11 +1,12 @@
-import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const setData = async (key, val) => {
   try {
     let tempval = JSON.stringify(val);
     await AsyncStorage.setItem(key, tempval);
+    return true;
   } catch (error) {
+    return false;
     console.error(error, '----------SetAsyncStorage');
   }
 };
