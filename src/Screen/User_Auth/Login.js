@@ -11,6 +11,8 @@ import {
   Alert,
   Dimensions,
   Platform,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
@@ -19,7 +21,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {FONTS} from '../../Components/constants';
+import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import {ARTIST, SIGN_IN} from '../../services/Apis';
 import Toast from 'react-native-simple-toast';
@@ -37,6 +39,7 @@ const Login = props => {
   const [password, setPassword] = useState('');
   const [eyeShow, setEyeShow] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
   const onClickEye = () => {
     setEyeShow(!eyeShow);
   };
@@ -98,6 +101,7 @@ const Login = props => {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
+      setIsLoadingGoogle(true);
       console.log('lofuser data-------:', userInfo);
       // Alert.alert('success:' + JSON.stringify(userInfo));
       const data = {
@@ -127,8 +131,11 @@ const Login = props => {
         }
       } catch (error) {
         Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+      } finally {
+        setIsLoadingGoogle(false);
       }
     } catch (error) {
+      setIsLoadingGoogle(false);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // sign in was cancelled
         // Alert.alert('cancelled');
@@ -261,6 +268,31 @@ const Login = props => {
             </Text>
           </TouchableOpacity>
         </View>
+        <Modal
+          visible={isLoadingGoogle}
+          transparent={true}
+          style={{flex: 1}}
+          statusBarTranslucent={true}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: 'rgba(0,0,0,0.8)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                height: wp(30),
+                width: wp(30),
+                borderRadius: 10,
+                backgroundColor: COLORS.white,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            </View>
+          </View>
+        </Modal>
       </ImageBackground>
     </View>
   );

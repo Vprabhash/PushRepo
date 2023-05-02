@@ -11,6 +11,8 @@ import {
   View,
   Alert,
   Platform,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -21,7 +23,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
-import {FONTS} from '../../Components/constants';
+import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import {
   GoogleSignin,
@@ -35,6 +37,8 @@ const SignUp = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const [isLoadingGoogle, setLoadingGoogle] = useState(false);
   const dispatch = useDispatch();
   const authStatus = useSelector(state => state.auth.status);
   const handleSignUp = async () => {
@@ -57,6 +61,7 @@ const SignUp = props => {
       const data = {
         email: email,
       };
+      setLoading(true);
       try {
         const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
         console.log('---res--otp-----', res);
@@ -71,6 +76,8 @@ const SignUp = props => {
         }
       } catch (error) {
         Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      } finally {
+        setLoading(false);
       }
       // dispatch(
       //   signUp({
@@ -113,8 +120,8 @@ const SignUp = props => {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
+      setLoadingGoogle(true);
       console.log('lofuser data-------:', userInfo);
-
       const data = {
         name: userInfo?.user?.name,
         email: userInfo?.user?.email,
@@ -143,8 +150,11 @@ const SignUp = props => {
         }
       } catch (error) {
         Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      } finally {
+        setLoadingGoogle(false);
       }
     } catch (error) {
+      setLoadingGoogle(false);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // sign in was cancelled
         // Alert.alert('cancelled');
@@ -244,7 +254,6 @@ const SignUp = props => {
           title="Sign up"
           bgColor="#000"
           textColor="#fff"
-          isLoading={authStatus === 'loading'}
         />
       </View>
       <Text style={[styles.withText, {color: '#797979', marginTop: hp(4)}]}>
@@ -279,6 +288,31 @@ const SignUp = props => {
           </Text>
         </TouchableOpacity>
       </View>
+      <Modal
+        visible={isLoadingGoogle}
+        transparent={true}
+        style={{flex: 1}}
+        statusBarTranslucent={true}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              height: wp(30),
+              width: wp(30),
+              borderRadius: 10,
+              backgroundColor: COLORS.white,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <ActivityIndicator size="large" color={COLORS.primary} />
+          </View>
+        </View>
+      </Modal>
     </ImageBackground>
   );
 };
