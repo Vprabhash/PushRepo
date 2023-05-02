@@ -42,19 +42,26 @@ const FilterScreen = ({
   isArtistFilter,
   selectedFilter,
 }) => {
-  // const selectedLocalities = selectedFilter?.locality?.map((e) => ({value: e, label: e, checked: true}));
-  const [, forceUpdate] = useState();
   const [searchLocality, setSearchLocality] = useState('');
   const [searchGenre, setSearchGenre] = useState('');
-  const [genreData, setgenreData] = useState([]);
   const [localities, setLocalities] = useState([]);
+  const [savedLocalities, setSavedLocalities] = useState(
+    selectedFilter?.locality || [],
+  );
+  const [savedGenre, setSavedGenre] = useState(
+    selectedFilter?.musicGenre || [],
+  );
   const [generes, setGeneres] = useState([]);
-  const [happyHourTimings, setHappyHourTimings] = useState('');
-  const [kidsFriendly, setKidsFriendly] = useState('');
-  const [vegNonVeg, setVegNonVeg] = useState('');
-  const [stages, setStages] = useState('');
-  const [sheesha, setSheesha] = useState('');
-  const [artist, setArtist] = useState('');
+  const [happyHourTimings, setHappyHourTimings] = useState(
+    selectedFilter?.happyHours || '',
+  );
+  const [kidsFriendly, setKidsFriendly] = useState(
+    selectedFilter?.kidsFriendly || '',
+  );
+  const [vegNonVeg, setVegNonVeg] = useState(selectedFilter?.vegNonVeg || '');
+  const [stages, setStages] = useState(selectedFilter?.stagsAllowed || '');
+  const [sheesha, setSheesha] = useState(selectedFilter?.sheesha || '');
+  const [artist, setArtist] = useState(selectedFilter?.artist || '');
   const [selectAllLocality, setSelectAllLocality] = useState(false);
   const [selectAllGenre, setSelectAllGenre] = useState(false);
 
@@ -70,11 +77,11 @@ const FilterScreen = ({
   // }
   useEffect(() => {
     filterApi();
-  }, []);
+  }, [isArtistFilter]);
 
   // select all localities
   useEffect(() => {
-    const temp = localities.map(item => {
+    const temp = localities?.map(item => {
       return {...item, checked: selectAllLocality};
     });
     setLocalities(temp);
@@ -82,28 +89,55 @@ const FilterScreen = ({
 
   // select all genres
   useEffect(() => {
-    const genre = generes.map(item => {
+    const genre = generes?.map(item => {
       return {...item, checked: selectAllGenre};
     });
     setLocalities(genre);
   }, [selectAllGenre]);
 
   const filterApi = async () => {
-    const res = await ApiCall('api/filters', 'GET');
-    setLocalities(res?.data?.localities);
-    setGeneres(res?.data?.generes);
-    // setHappyHourTimings(res?.data?.happyHourTimings);
+    try {
+      const res = await ApiCall('api/filters', 'GET');
+      console.log('Filters:', res?.data);
+      const uniqueArray = res?.data?.localities?.map(item => {
+        const foundLocality = savedLocalities.find(
+          locality => locality.value == item.value,
+        );
+        if (foundLocality) {
+          return foundLocality;
+        }
+        return item;
+      });
+
+      setLocalities(uniqueArray);
+
+      const tempGenre = !isArtistFilter
+        ? res?.data?.generes
+        : res?.data?.artistsMusicGenres;
+
+      const uniqueGenre = tempGenre?.map(item => {
+        const foundGenre = savedGenre?.find(genre => genre.value == item.value);
+        if (foundGenre) {
+          return foundGenre;
+        }
+        return item;
+      });
+      setGeneres(uniqueGenre);
+      // setHappyHourTimings(res?.data?.happyHourTimings);
+    } catch (error) {
+      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+    }
   };
 
   const clearLocalities = () => {
-    const temp = localities.map(item => {
+    const temp = localities?.map(item => {
       return {...item, checked: false};
     });
     setLocalities(temp);
     setSelectAllLocality(false);
   };
   const clearGeneres = () => {
-    const temp = generes.map(item => {
+    const temp = generes?.map(item => {
       return {...item, checked: false};
     });
     setGeneres(temp);
@@ -512,7 +546,7 @@ const FilterScreen = ({
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
-                <View style={{maxHeight: hp(59)}}>
+                <View style={{maxHeight: hp(65)}}>
                   <FlatList
                     data={localities?.filter(e =>
                       e.label.includes(searchLocality),
@@ -566,9 +600,11 @@ const FilterScreen = ({
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity> */}
-                <View style={{maxHeight: hp(59)}}>
+                <View style={{height: hp(65)}}>
                   <FlatList
-                    data={generes.filter(e => e.label.includes(searchGenre))}
+                    data={
+                      generes?.filter(e => e.label.includes(searchGenre)) || []
+                    }
                     nestedScrollEnabled={true}
                     renderItem={rendarItemGenre}
                     extraData={generes}
@@ -970,7 +1006,7 @@ const FilterScreen = ({
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
-                <View style={{maxHeight: hp(59)}}>
+                <View style={{maxHeight: hp(65)}}>
                   <FlatList
                     data={happyHourTimings}
                     nestedScrollEnabled={true}
@@ -1121,17 +1157,17 @@ const FilterScreen = ({
               var tempdata = [];
               for (var i = 0; i < localities.length; i++) {
                 if (localities[i].checked == true) {
-                  var detaisl = {};
-                  detaisl = localities[i].value;
-                  tempdata.push(detaisl);
+                  // var detaisl = {};
+                  // detaisl = localities[i].value;
+                  tempdata.push(localities[i]);
                 }
               }
               var tempdataGenres = [];
               for (var i = 0; i < generes.length; i++) {
                 if (generes[i].checked == true) {
-                  var detaisl = {};
-                  detaisl = generes[i].value;
-                  tempdataGenres.push(detaisl);
+                  // var detaisl = {};
+                  // detaisl = generes[i].value;
+                  tempdataGenres.push(generes[i]);
                 }
               }
 

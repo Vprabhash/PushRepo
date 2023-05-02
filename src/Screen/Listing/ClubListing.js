@@ -26,7 +26,7 @@ import FilterScreen from '../../Components/Filter/FilterScreen';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const ClubListing = props => {
+const ClubListing = ({navigation, route}) => {
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const [clubs, setClubs] = useState([]);
   const [
@@ -37,6 +37,9 @@ const ClubListing = props => {
   const [loading, setLoading] = useState(true);
   const [valuekey, setValuekey] = useState('');
   const [filteredData, setFilteredData] = useState({});
+  const [dontCall, setDontCall] = useState(false);
+  const [status, setStatus] = useState('');
+  const [isCall, setIsCall] = useState(true);
 
   useEffect(() => {
     list(page);
@@ -44,40 +47,85 @@ const ClubListing = props => {
   }, [page, filteredData]);
 
   useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
-      // list(1);
-      // setValuekey('');
+    navigation.addListener('focus', () => {
+      console.log('this is params', route?.params);
+      // const routes = navigation.getState().routes;
+      // const prevRoute = routes[routes.length - 2];
+      // // console.log('this is params prevRoute', routes);
+      // if (route?.params?.screenName !== 'ClubListing') {
+      //   console.log('this is params', route?.params);
+      //   setPage(1);
+      //   setFilteredData({});
+      // }
+      setDontCall(false);
       setFilterComponent(false);
-      setFilteredData({});
     });
-    return unsubscribe;
   }, []);
 
+  function areAllKeysEmpty(obj) {
+    return Object.values(obj).every(value => {
+      if (Array.isArray(value)) {
+        return value.length === 0;
+      }
+      return !value;
+    });
+  }
+
   const list = async page => {
+    let tempLocality = [];
+    for (let i = 0; i < filteredData?.locality?.length; i++) {
+      if (filteredData?.locality[i].checked == true) {
+        let detaisl = {};
+        detaisl = filteredData?.locality[i].value;
+        tempLocality.push(detaisl);
+      }
+    }
+    let tempdataGenres = [];
+    for (let i = 0; i < filteredData?.musicGenre?.length; i++) {
+      if (filteredData?.musicGenre[i].checked == true) {
+        let detaisl = {};
+        detaisl = filteredData?.musicGenre[i].value;
+        tempdataGenres.push(detaisl);
+      }
+    }
     try {
       const res = await ApiCall(
         `api/clubs?&coordinates=${global?.location?.latitude || ''},${
           global?.location?.longitude || ''
         }&page=${page}&vegNonVeg=${filteredData?.vegNonVeg || ''}&locality=${
-          filteredData?.locality?.join('|') || ''
+          tempLocality?.join('|') || ''
         }&stagsAllowed=${filteredData?.stagsAllowed || ''}&musicGenre=${
-          filteredData?.musicGenre?.join('|') || ''
+          tempdataGenres?.join('|') || ''
         }&kidsFriendly=${filteredData?.kidsFriendly || ''}&happyHoursTimings=${
           filteredData?.happyHours || ''
         }`,
         'GET',
       );
-      console.log('---res--club listin---', res?.data);
+      console.log('---res--club listin---', res?.status);
+      setStatus(res?.status);
       if (Array.isArray(res?.data)) {
         if (page === 1) {
-          setClubs(res?.data);
+          if (res?.status !== 'fallback-data') {
+            setClubs(res?.data);
+          } else {
+            setClubs([]);
+          }
+          setDontCall(false);
         } else {
-          setClubs([...clubs, ...res?.data]);
+          if (res?.data?.length) {
+            if (res?.status !== 'fallback-data') {
+              setClubs([...clubs, ...res?.data]);
+            }
+          } else {
+            setDontCall(true);
+          }
         }
       } else {
+        setDontCall(false);
         Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
       }
     } catch (error) {
+      setDontCall(false);
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
@@ -85,10 +133,13 @@ const ClubListing = props => {
   };
 
   const fetchMoreData = () => {
+    console.log('calling');
     if (!onEndReachedCalledDuringMomentum) {
-      setLoading(true);
-      setPage(page + 1);
-      setonEndReachedCalledDuringMomentum(true);
+      if (status !== 'fallback-data') {
+        setLoading(true);
+        setPage(page + 1);
+        setonEndReachedCalledDuringMomentum(true);
+      }
     }
   };
   const renderFooter = () => {
@@ -126,7 +177,7 @@ const ClubListing = props => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('ClubDetails', {listDetail: item});
+              navigation.navigate('ClubDetails', {listDetail: item});
             }}
             activeOpacity={0.7}>
             {item?.media?.ambienceImages ? (
@@ -225,7 +276,6 @@ const ClubListing = props => {
     setFilteredData(data);
     setFilterComponent(false);
     setPage(1);
-    forceUpdate();
   };
 
   const onPressCancel = () => {
@@ -234,7 +284,12 @@ const ClubListing = props => {
 
   if (filterComponent) {
     return (
-      <FilterScreen onPressApply={onPressApply} onPressCancel={onPressCancel} />
+      <FilterScreen
+        onPressApply={onPressApply}
+        onPressCancel={onPressCancel}
+        isArtistFilter={false}
+        selectedFilter={filteredData}
+      />
     );
   }
 
@@ -254,7 +309,7 @@ const ClubListing = props => {
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-              props.navigation.navigate('SearchBar');
+              navigation.navigate('SearchBar');
             }}>
             <View style={[styles.inputMain, {marginTop: 50, marginBottom: 20}]}>
               <TextInput
@@ -274,13 +329,30 @@ const ClubListing = props => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.fllter]}
+            style={[
+              styles.fllter,
+              {
+                borderWidth: areAllKeysEmpty(filteredData) ? 0 : 1,
+                borderColor: COLORS.primary,
+              },
+            ]}
             activeOpacity={0.5}
             onPress={() => {
               setFilterComponent(true);
             }}>
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>
+            {/* <View
+              style={{
+                height: 8,
+                width: 8,
+                borderRadius: 8,
+                backgroundColor: 'red',
+                position: 'absolute',
+                top: 0,
+                right: 0,
+              }}
+            /> */}
           </TouchableOpacity>
 
           <FlatList
@@ -291,7 +363,7 @@ const ClubListing = props => {
             onMomentumScrollBegin={() => {
               setonEndReachedCalledDuringMomentum(false);
             }}
-            onEndReached={fetchMoreData}
+            onEndReached={dontCall ? null : fetchMoreData}
             ListEmptyComponent={EmptyListMessage}
           />
         </View>

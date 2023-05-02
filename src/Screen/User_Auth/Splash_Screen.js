@@ -45,13 +45,12 @@ const Splash_Screen = props => {
         ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
       }),
     ).then(result => {
-      console.log('location', result);
       if (result === 'granted') {
         Geolocation.getCurrentPosition(
           position => {
-            console.log('location data:', position.coords);
-            let obj = {};
             if (position.coords) {
+              console.log('location data:', position.coords);
+              let obj = {};
               obj.latitude = position.coords.latitude;
               obj.longitude = position.coords.longitude;
               global.location = obj;

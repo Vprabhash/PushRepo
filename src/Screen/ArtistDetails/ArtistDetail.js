@@ -35,6 +35,7 @@ const ArtistDetail = props => {
   const [filterComponent, setFilterComponent] = useState(false);
   const [artistList, setArtistList] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState({});
+  const [dontCall, setDontCall] = useState(false);
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
@@ -43,7 +44,7 @@ const ArtistDetail = props => {
       // console.log(prevRoute, 'ROUTE===');
       // clubsNearbyDataApi(1);
       // setValuekey('');
-      // setSelectedFilter('');
+      // setSelectedFilter({});
       setFilterComponent(false);
     });
     return unsubscribe;
@@ -51,15 +52,38 @@ const ArtistDetail = props => {
 
   useEffect(() => {
     clubsNearbyDataApi(page);
-    console.log('filterData', page, selectedFilter);
   }, [page, selectedFilter]);
+
+  function areAllKeysEmpty(obj) {
+    return Object.values(obj).every(value => {
+      if (Array.isArray(value)) {
+        return value.length === 0;
+      }
+      return !value;
+    });
+  }
 
   const clubsNearbyDataApi = async page => {
     console.log('------page :', page);
+
+    let tempdataGenres = [];
+    for (let i = 0; i < selectedFilter?.musicGenre?.length; i++) {
+      if (selectedFilter?.musicGenre[i].checked == true) {
+        let detaisl = {};
+        detaisl = selectedFilter?.musicGenre[i].value;
+        tempdataGenres.push(detaisl);
+      }
+    }
     try {
+      console.log(
+        'artist filter URL===',
+        `api/artists?page=${page}&musicGenre=${
+          tempdataGenres?.join('|') || ''
+        }&type=${selectedFilter?.artist || ''}`,
+      );
       const res = await ApiCall(
         `api/artists?page=${page}&musicGenre=${
-          selectedFilter?.musicGenre?.join('|') || ''
+          tempdataGenres?.join('|') || ''
         }&type=${selectedFilter?.artist || ''}`,
         'GET',
       );
@@ -68,12 +92,18 @@ const ArtistDetail = props => {
         if (page === 1) {
           setArtistList(res?.data);
         } else {
-          setArtistList([...artistList, ...res?.data]);
+          if (res?.data?.length) {
+            setArtistList([...artistList, ...res?.data]);
+          } else {
+            setDontCall(true);
+          }
         }
       } else {
+        setDontCall(true);
         Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
       }
     } catch (error) {
+      setDontCall(true);
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
@@ -112,7 +142,6 @@ const ArtistDetail = props => {
   };
 
   const artistListRenderItem = ({item, index}) => {
-    console.log('---item---', item);
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
@@ -247,7 +276,13 @@ const ArtistDetail = props => {
               marginHorizontal: 15,
             }}>
             <TouchableOpacity
-              style={styles.fllter}
+              style={[
+                styles.fllter,
+                {
+                  borderWidth: areAllKeysEmpty(selectedFilter) ? 0 : 1,
+                  borderColor: COLORS.primary,
+                },
+              ]}
               activeOpacity={0.5}
               onPress={() => {
                 setFilterComponent(true);
@@ -352,7 +387,7 @@ const ArtistDetail = props => {
             onMomentumScrollBegin={() => {
               setonEndReachedCalledDuringMomentum(false);
             }}
-            onEndReached={fetchMoreData}
+            onEndReached={dontCall ? null : fetchMoreData}
             ListEmptyComponent={EmptyListMessage}
           />
         </View>

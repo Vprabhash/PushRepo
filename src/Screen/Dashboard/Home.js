@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useReducer} from 'react';
 import {
   Image,
   ImageBackground,
@@ -68,9 +68,7 @@ const Home = props => {
 
   useEffect(() => {
     if (global?.location) {
-      setTimeout(() => clubsNearbyDataApi(), 3000);
-    } else {
-      clearInterval();
+      setTimeout(() => clubsNearbyDataApi(), 2000);
     }
   }, [global?.location]);
 
@@ -80,6 +78,7 @@ const Home = props => {
   ] = useState(true);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
   const renderFooter = () => {
     return (
       <View>
@@ -460,7 +459,11 @@ const Home = props => {
         }&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
       );
-      setClubNearby(res?.data);
+      if (res?.data?.length) {
+        setClubNearby(res?.data);
+        clearTimeout();
+        forceUpdate();
+      }
       console.log('clubsnearbydata ----', res?.data);
     } catch (error) {
       Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);

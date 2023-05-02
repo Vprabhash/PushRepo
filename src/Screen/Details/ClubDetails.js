@@ -11,6 +11,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -108,7 +109,21 @@ const ClubDetails = props => {
   };
   useEffect(() => {
     clubsNearbyDataApi();
+
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        handleBackButtonClick,
+      );
+    };
   }, []);
+
+  function handleBackButtonClick() {
+    props.navigation.navigate('ClubListing', {screenName: 'ClubListing'});
+    return true;
+  }
+
   const clubsNearbyDataApi = async () => {
     try {
       const res = await ApiCall(
@@ -180,7 +195,9 @@ const ClubDetails = props => {
             iconHeight={15}
             iconWidth={30}
             onclick={() => {
-              props.navigation.goBack();
+              props.navigation.navigate('ClubListing', {
+                screenName: 'ClubListing',
+              });
             }}
           />
         </View>
