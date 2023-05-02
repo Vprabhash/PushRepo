@@ -44,7 +44,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
       menuTitle: 'Menu',
       menuTitleText:
         itemdata?.vegNonVeg.toLowerCase() === 'non-veg'
-          ? `Veg & ${itemdata?.vegNonVeg}`
+          ? `${itemdata?.vegNonVeg}`
           : itemdata?.vegNonVeg || 'N/A',
     },
     {

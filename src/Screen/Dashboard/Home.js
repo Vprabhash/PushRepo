@@ -68,7 +68,7 @@ const Home = props => {
 
   useEffect(() => {
     if (global?.location) {
-      setTimeout(() => clubsNearbyDataApi(), 2000);
+      clubsNearbyDataApi();
     }
   }, [global?.location]);
 

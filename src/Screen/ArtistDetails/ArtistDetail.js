@@ -29,7 +29,7 @@ const ArtistDetail = props => {
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
   ] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [valuekey, setValuekey] = useState('');
   const [filterComponent, setFilterComponent] = useState(false);
@@ -89,7 +89,7 @@ const ArtistDetail = props => {
       );
       console.log('---resartists--->', res?.data);
       if (Array.isArray(res?.data)) {
-        if (page === 1) {
+        if (page === 0) {
           setArtistList(res?.data);
         } else {
           if (res?.data?.length) {
@@ -117,7 +117,7 @@ const ArtistDetail = props => {
       console.log('---searchApi--->', JSON.stringify(res?.data?.artists));
       setArtistList(res?.data?.artists);
     } else {
-      setPage(1);
+      setPage(0);
     }
     setSelectedFilter({});
   };
@@ -302,11 +302,11 @@ const ArtistDetail = props => {
               ]}
               activeOpacity={0.5}
               onPress={() => {
-                setPage(1);
+                setPage(0);
                 if (selectedFilter?.artist?.toLowerCase() !== 'dj') {
-                  setSelectedFilter({...selectedFilter, artist: 'dj'});
+                  setSelectedFilter({artist: 'dj'});
                 } else {
-                  setSelectedFilter({...selectedFilter, artist: ''});
+                  setSelectedFilter({artist: ''});
                 }
               }}>
               <Image
@@ -346,11 +346,11 @@ const ArtistDetail = props => {
               ]}
               activeOpacity={0.5}
               onPress={() => {
-                setPage(1);
+                setPage(0);
                 if (selectedFilter?.artist?.toLowerCase() !== 'artist') {
-                  setSelectedFilter({...selectedFilter, artist: 'artist'});
+                  setSelectedFilter({artist: 'artist'});
                 } else {
-                  setSelectedFilter({...selectedFilter, artist: ''});
+                  setSelectedFilter({artist: ''});
                 }
               }}>
               <Image

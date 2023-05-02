@@ -33,7 +33,7 @@ const ClubListing = ({navigation, route}) => {
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
   ] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [valuekey, setValuekey] = useState('');
   const [filteredData, setFilteredData] = useState({});
@@ -54,7 +54,7 @@ const ClubListing = ({navigation, route}) => {
       // // console.log('this is params prevRoute', routes);
       // if (route?.params?.screenName !== 'ClubListing') {
       //   console.log('this is params', route?.params);
-      //   setPage(1);
+      //   setPage(0);
       //   setFilteredData({});
       // }
       setDontCall(false);
@@ -98,24 +98,24 @@ const ClubListing = ({navigation, route}) => {
           tempdataGenres?.join('|') || ''
         }&kidsFriendly=${filteredData?.kidsFriendly || ''}&happyHoursTimings=${
           filteredData?.happyHours || ''
-        }`,
+        }&seeshaServe=${filteredData?.sheesha}&city=Mumbai`,
         'GET',
       );
       console.log('---res--club listin---', res?.status);
-      setStatus(res?.status);
+      // setStatus(res?.status);
       if (Array.isArray(res?.data)) {
-        if (page === 1) {
-          if (res?.status !== 'fallback-data') {
-            setClubs(res?.data);
-          } else {
-            setClubs([]);
-          }
+        if (page === 0) {
+          // if (res?.status !== 'fallback-data') {
+          setClubs(res?.data);
+          // } else {
+          //   setClubs([]);
+          // }
           setDontCall(false);
         } else {
           if (res?.data?.length) {
-            if (res?.status !== 'fallback-data') {
-              setClubs([...clubs, ...res?.data]);
-            }
+            // if (res?.status !== 'fallback-data') {
+            setClubs([...clubs, ...res?.data]);
+            // }
           } else {
             setDontCall(true);
           }
@@ -135,11 +135,11 @@ const ClubListing = ({navigation, route}) => {
   const fetchMoreData = () => {
     console.log('calling');
     if (!onEndReachedCalledDuringMomentum) {
-      if (status !== 'fallback-data') {
-        setLoading(true);
-        setPage(page + 1);
-        setonEndReachedCalledDuringMomentum(true);
-      }
+      // if (status !== 'fallback-data') {
+      setLoading(true);
+      setPage(page + 1);
+      setonEndReachedCalledDuringMomentum(true);
+      // }
     }
   };
   const renderFooter = () => {
@@ -161,7 +161,7 @@ const ClubListing = ({navigation, route}) => {
       console.log('---searchApi--->', res?.data?.clubs?.length);
       setClubs(res?.data?.clubs);
     } else {
-      setPage(1);
+      setPage(0);
     }
   };
 
@@ -275,7 +275,7 @@ const ClubListing = ({navigation, route}) => {
     console.log('-------filterApi', data);
     setFilteredData(data);
     setFilterComponent(false);
-    setPage(1);
+    setPage(0);
   };
 
   const onPressCancel = () => {
