@@ -118,15 +118,17 @@ const Home = props => {
   ];
   const [clubsSpotlight, setClubsSpotlight] = useState([]);
   const [artistsSpotlight, setArtistsSpotlight] = useState([]);
-  const fetchClubsSpotlight = async () => {
-    const res = await ApiCall(`api/clubs?isFeatured=true`, 'GET');
-    console.log('+++++++++---spotlight--->', JSON.stringify(res?.data));
-    setClubsSpotlight(res?.data);
+  const fetchClubsSpotlight = () => {
+    ApiCall(`api/clubs?isFeatured=true`, 'GET').then(res => {
+      console.log('+++++++++---spotlight--->', JSON.stringify(res?.data));
+      setClubsSpotlight(res?.data);
+    });
   };
-  const fetchArtistSpotlight = async () => {
-    const res = await ApiCall(`api/artists?isFeatured=true`, 'GET');
-    console.log('(((((((---spotlight--->', JSON.stringify(res?.data));
-    setArtistsSpotlight(res?.data);
+  const fetchArtistSpotlight = () => {
+    ApiCall(`api/artists?isFeatured=true`, 'GET').then(res => {
+      console.log('(((((((---spotlight--->', JSON.stringify(res?.data));
+      setArtistsSpotlight(res?.data);
+    });
   };
   // const _renderItem = ({item, index}) => {
   //   return (
@@ -450,21 +452,22 @@ const Home = props => {
       </TouchableOpacity>
     );
   };
-  const clubsNearbyDataApi = async () => {
+  const clubsNearbyDataApi = () => {
     console.log('locationdata ---', global?.location);
     try {
-      const res = await ApiCall(
+      ApiCall(
         `api/nearby-clubs?coordinates=${global?.location?.latitude || ''},${
           global?.location?.longitude || ''
         }&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
-      );
-      if (res?.data?.length) {
-        setClubNearby(res?.data);
-        clearTimeout();
-        forceUpdate();
-      }
-      console.log('clubsnearbydata ----', res?.data);
+      ).then(res => {
+        if (res?.data?.length) {
+          setClubNearby(res?.data);
+          clearTimeout();
+          forceUpdate();
+        }
+        console.log('clubsnearbydata ----', res?.data);
+      });
     } catch (error) {
       Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
     }
