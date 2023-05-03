@@ -18,6 +18,7 @@ export default {
   listTwoImg: require('./Image/listTwoImg.png'),
   artistIcon: require('./Image/artist.png'),
   songIcon: require('./Image/songIcon.png'),
+  liveDjIcon: require('./Image/livedj.png'),
 
   redio: require('./Image/redio.png'),
   redioRed: require('./Image/redioRed.png'),

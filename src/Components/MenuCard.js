@@ -53,7 +53,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
       menuTitleText: itemdata?.musicGenre || 'N/A',
     },
     {
-      menuIcon: ImagePath.songIcon,
+      menuIcon: ImagePath.liveDjIcon,
       menuTitle: 'Live Music/DJ',
       menuTitleText: itemdata?.liveMusicDj || 'N/A',
     },

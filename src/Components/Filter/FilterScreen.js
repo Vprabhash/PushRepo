@@ -503,7 +503,7 @@ const FilterScreen = ({
                   onClick={() => {
                     onSelectRightUi('liveMusicDj');
                   }}
-                  image={ImagePath.songIcon}
+                  image={ImagePath.liveDjIcon}
                   bgColor={
                     selectRight === 'liveMusicDj'
                       ? '#fff'
