@@ -114,26 +114,24 @@ const Login = props => {
         accessTokenExpiresAt: '',
         pushNotificationToken: '',
       };
-      try {
-        const res = await ApiCall(
-          'api/oauth/google',
-          'POST',
-          JSON.stringify(data),
-        );
-        console.log('google sign bydata ----', res.data);
-        if (res?.ok == true) {
-          await setData('userData', res?.data);
-          await setData('userToken', res?.meta?.token);
-          props.navigation.reset({
-            index: 0,
-            routes: [{name: 'BottomTab'}],
-          });
-        }
-      } catch (error) {
-        Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
-      } finally {
-        setIsLoadingGoogle(false);
-      }
+      ApiCall('api/oauth/google', 'POST', JSON.stringify(data))
+        .then(async res => {
+          console.log('google sign bydata ----', res.data);
+          if (res?.ok == true) {
+            await setData('userData', res?.data);
+            await setData('userToken', res?.meta?.token);
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'BottomTab'}],
+            });
+          }
+        })
+        .catch(error => {
+          Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+        })
+        .finally(() => {
+          setIsLoadingGoogle(false);
+        });
     } catch (error) {
       setIsLoadingGoogle(false);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

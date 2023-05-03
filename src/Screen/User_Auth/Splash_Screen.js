@@ -10,8 +10,11 @@ import {
   openSettings,
 } from 'react-native-permissions';
 import BackgroundTimer from 'react-native-background-timer';
+import {useDispatch} from 'react-redux';
+import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 
 const Splash_Screen = props => {
+  const dispatch = useDispatch();
   useEffect(() => {
     getData('userData').then(userdata => {
       console.log('userdata: ===', userdata);
@@ -54,14 +57,13 @@ const Splash_Screen = props => {
               let obj = {};
               obj.latitude = position.coords.latitude;
               obj.longitude = position.coords.longitude;
-              global.location = obj;
-              Geolocation.clearWatch();
+              dispatch(addCoordinates(obj));
             }
           },
           error => {
             console.log('location error', error.code, error.message);
           },
-          {enableHighAccuracy: false, timeout: 2000, maximumAge: 10000},
+          {enableHighAccuracy: false, timeout: 15000},
         );
       } else {
         request(
@@ -77,14 +79,13 @@ const Splash_Screen = props => {
                 if (position.coords) {
                   obj.latitude = position.coords.latitude;
                   obj.longitude = position.coords.longitude;
-                  global.location = obj;
-                  Geolocation.clearWatch();
+                  dispatch(addCoordinates(obj));
                 }
               },
               error => {
                 console.log(error.code, error.message);
               },
-              {enableHighAccuracy: false, timeout: 2000, maximumAge: 10000},
+              {enableHighAccuracy: false, timeout: 15000},
             );
           } else {
             console.log('-----error2:');

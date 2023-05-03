@@ -21,7 +21,7 @@ import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {COLORS, FONTS} from '../../Components/constants';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {spotLightApi} from '../../redux/reducers/spotLightSlice';
 import {artistApi} from '../../redux/reducers/artistSlice';
 import {LocationApi} from '../../redux/reducers/clubLocationSlice';
@@ -33,7 +33,9 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const Home = props => {
   const dispatch = useDispatch();
-
+  const locationLatLong = useSelector(
+    state => state.clubLocation.locationLatLong,
+  );
   const spotLightList = async () => {
     const data = await dispatch(spotLightApi()).then(data => {
       console.log('------spotLightList data--------', data.payload);
@@ -64,14 +66,10 @@ const Home = props => {
   useEffect(() => {
     fetchClubsSpotlight();
     fetchArtistSpotlight();
-  }, []);
-
-  useEffect(() => {
-    if (global?.location) {
+    if (locationLatLong) {
       clubsNearbyDataApi();
     }
-  }, [global?.location]);
-
+  }, []);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -120,13 +118,13 @@ const Home = props => {
   const [artistsSpotlight, setArtistsSpotlight] = useState([]);
   const fetchClubsSpotlight = () => {
     ApiCall(`api/clubs?isFeatured=true`, 'GET').then(res => {
-      console.log('+++++++++---spotlight--->', JSON.stringify(res?.data));
+      // console.log('+++++++++---spotlight--->', JSON.stringify(res?.data?.length));
       setClubsSpotlight(res?.data);
     });
   };
   const fetchArtistSpotlight = () => {
     ApiCall(`api/artists?isFeatured=true`, 'GET').then(res => {
-      console.log('(((((((---spotlight--->', JSON.stringify(res?.data));
+      // console.log('(((((((---spotlight--->', JSON.stringify(res?.data));
       setArtistsSpotlight(res?.data);
     });
   };
@@ -453,11 +451,11 @@ const Home = props => {
     );
   };
   const clubsNearbyDataApi = () => {
-    console.log('locationdata ---', global?.location);
+    console.log('locationdata ---', locationLatLong);
     try {
       ApiCall(
-        `api/nearby-clubs?coordinates=${global?.location?.latitude || ''},${
-          global?.location?.longitude || ''
+        `api/nearby-clubs?coordinates=${locationLatLong?.latitude || ''},${
+          locationLatLong?.longitude || ''
         }&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
       ).then(res => {

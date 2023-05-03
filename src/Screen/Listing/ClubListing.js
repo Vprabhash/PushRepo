@@ -23,11 +23,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
+import {useSelector} from 'react-redux';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = ({navigation, route}) => {
   const [, forceUpdate] = useReducer(x => x + 1, 0);
+  const locationLatLong = useSelector(
+    state => state.clubLocation.locationLatLong,
+  );
   const [clubs, setClubs] = useState([]);
   const [
     onEndReachedCalledDuringMomentum,
@@ -90,8 +94,8 @@ const ClubListing = ({navigation, route}) => {
     }
     try {
       const res = await ApiCall(
-        `api/clubs?&coordinates=${global?.location?.latitude || ''},${
-          global?.location?.longitude || ''
+        `api/clubs?&coordinates=${locationLatLong?.latitude || ''},${
+          locationLatLong?.longitude || ''
         }&page=${page}&vegNonVeg=${filteredData?.vegNonVeg || ''}&locality=${
           tempLocality?.join('|') || ''
         }&stagsAllowed=${filteredData?.stagsAllowed || ''}&musicGenre=${
