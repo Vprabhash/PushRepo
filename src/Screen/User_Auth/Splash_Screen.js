@@ -63,7 +63,7 @@ const Splash_Screen = props => {
           error => {
             console.log('location error', error.code, error.message);
           },
-          {enableHighAccuracy: false, timeout: 15000},
+          {enableHighAccuracy: true, timeout: 15000},
         );
       } else {
         request(
@@ -85,7 +85,7 @@ const Splash_Screen = props => {
               error => {
                 console.log(error.code, error.message);
               },
-              {enableHighAccuracy: false, timeout: 15000},
+              {enableHighAccuracy: true, timeout: 15000},
             );
           } else {
             console.log('-----error2:');
