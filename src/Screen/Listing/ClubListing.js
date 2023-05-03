@@ -102,7 +102,9 @@ const ClubListing = ({navigation, route}) => {
           tempdataGenres?.join('|') || ''
         }&kidsFriendly=${filteredData?.kidsFriendly || ''}&happyHoursTimings=${
           filteredData?.happyHours || ''
-        }&seeshaServe=${filteredData?.sheesha || ''}&city=Mumbai`,
+        }&seeshaServe=${filteredData?.sheesha || ''}&liveMusicDj=${
+          filteredData?.liveMusicDj || ''
+        }&city=Mumbai`,
         'GET',
       );
       console.log('---res--club listin---', res?.status);

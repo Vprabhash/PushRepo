@@ -53,6 +53,13 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
       menuTitleText: itemdata?.musicGenre || 'N/A',
     },
     {
+      menuIcon: ImagePath.songIcon,
+      menuTitle: 'Live Music/DJ',
+      menuTitleText: itemdata?.liveMusicDj || 'N/A',
+    },
+  ];
+  const stagsData = [
+    {
       menuIcon:
         itemdata?.stagsAllowed?.toLowerCase() === 'yes'
           ? ImagePath.doneIcon
@@ -60,7 +67,6 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
       menuTitle: 'Stags',
       // menuTitleText: itemdata?.stagsAllowed || 'N/A',
     },
-
     {
       menuIcon:
         itemdata?.seeshaServe?.toLowerCase() === 'yes'
@@ -89,7 +95,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
         style={{
           flex: 1,
           paddingVertical: 7,
-          // justifyContent: 'center',
+          justifyContent: 'center',
         }}>
         <View
           style={{
@@ -114,6 +120,30 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
       </TouchableOpacity>
     );
   };
+  const stagsRenderItem = ({item, index}) => {
+    return (
+      <View
+        style={{
+          paddingVertical: 7,
+          justifyContent: 'center',
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Image style={styles.menuIconCss} source={item.menuIcon} />
+          <View
+            style={{
+              justifyContent: 'center',
+              marginLeft: 15,
+            }}>
+            <Text style={styles.menuText}>{item.menuTitle}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View
@@ -133,6 +163,27 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             paddingHorizontal: 15,
             paddingVertical: 10,
           }}
+        />
+        <FlatList
+          data={stagsData}
+          horizontal
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={stagsRenderItem}
+          style={{
+            paddingHorizontal: 15,
+            paddingBottom: 10,
+          }}
+          contentContainerStyle={{
+            justifyContent: 'space-between',
+            flex: 1,
+          }}
+          ItemSeparatorComponent={
+            <View
+              style={{
+                width: 10,
+              }}
+            />
+          }
         />
       </SafeAreaView>
       <View style={{flexDirection: 'row'}}>

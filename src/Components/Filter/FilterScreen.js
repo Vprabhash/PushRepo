@@ -62,6 +62,9 @@ const FilterScreen = ({
   const [stages, setStages] = useState(selectedFilter?.stagsAllowed || '');
   const [sheesha, setSheesha] = useState(selectedFilter?.sheesha || '');
   const [artist, setArtist] = useState(selectedFilter?.artist || '');
+  const [liveMusicDj, setLiveMusicDj] = useState(
+    selectedFilter?.liveMusicDj || '',
+  );
   const [selectAllLocality, setSelectAllLocality] = useState(false);
   const [selectAllGenre, setSelectAllGenre] = useState(false);
 
@@ -491,6 +494,18 @@ const FilterScreen = ({
                   image={ImagePath.emog}
                   bgColor={
                     selectRight === 'Kids Friendly'
+                      ? '#fff'
+                      : 'rgba(205, 205, 205, 1)'
+                  }
+                />
+                <FilterData
+                  label={'Live Music/DJ'}
+                  onClick={() => {
+                    onSelectRightUi('liveMusicDj');
+                  }}
+                  image={ImagePath.songIcon}
+                  bgColor={
+                    selectRight === 'liveMusicDj'
                       ? '#fff'
                       : 'rgba(205, 205, 205, 1)'
                   }
@@ -1130,6 +1145,127 @@ const FilterScreen = ({
                 /> */}
               </>
             )}
+            {selectRight === 'liveMusicDj' && (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (liveMusicDj === 'LM') {
+                      setLiveMusicDj('');
+                    } else {
+                      setLiveMusicDj('LM');
+                    }
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      liveMusicDj == 'LM'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>Live Music</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (liveMusicDj === 'DJ') {
+                      setLiveMusicDj('');
+                    } else {
+                      setLiveMusicDj('DJ');
+                    }
+                  }}
+                  activeOpacity={0.5}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'rgba(214, 214, 214, 1)',
+                    paddingVertical: 12,
+                  }}>
+                  <Image
+                    style={{
+                      height: 11,
+                      width: 11,
+                      resizeMode: 'contain',
+                      tintColor: '#202020',
+                      borderWidth: 1,
+                      borderColor: '#202020',
+                    }}
+                    source={
+                      liveMusicDj == 'dj'
+                        ? ImagePath.checkSelected
+                        : ImagePath.checkBox
+                    }
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>DJ</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                {/* <View style={styles.clearInput}>
+                  <Image
+                    style={styles.searchIcon}
+                    source={ImagePath.searchIcon}
+                  />
+                  <TextInput
+                    style={{
+                      padding: 0,
+                      color: '#A5A5A5',
+                      fontWeight: '600',
+                      marginLeft: 5,
+                    }}
+                    placeholder="Search"
+                    placeholderTextColor={'#A5A5A5'}
+                  />
+                </View>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  onPress={() => {
+                    checkAll();
+                  }}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: 10,
+                  }}>
+                  <Image
+                    style={[
+                      styles.searchIcon,
+                      {borderWidth: 0.6, borderColor: '#000'},
+                    ]}
+                    source={ImagePath.checkBox}
+                  />
+                  <Text style={styles.selectAllText}>Select All</Text>
+                </TouchableOpacity> */}
+                {/* <FlatList
+                  data={genreData}
+                  renderItem={rendarItemGenre}
+                  extraData={genreData}
+                  showsVerticalScrollIndicator={false}
+                /> */}
+              </>
+            )}
           </View>
         </View>
         <View
@@ -1180,6 +1316,7 @@ const FilterScreen = ({
                 musicGenre: tempdataGenres,
                 kidsFriendly: kidsFriendly,
                 happyHours: happyHourTimings,
+                liveMusicDj: liveMusicDj,
               });
             }}>
             {/* <GradientText
