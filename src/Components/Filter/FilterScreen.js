@@ -1212,7 +1212,7 @@ const FilterScreen = ({
                       borderColor: '#202020',
                     }}
                     source={
-                      liveMusicDj == 'dj'
+                      liveMusicDj == 'DJ'
                         ? ImagePath.checkSelected
                         : ImagePath.checkBox
                     }
