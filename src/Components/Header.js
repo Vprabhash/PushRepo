@@ -64,7 +64,7 @@ const Header = props => {
               style={{
                 color: COLORS.black,
                 fontFamily: FONTS.AxiformaMedium,
-                fontSize: 12,
+                fontSize: 14,
               }}>
               {props.titalTwo}
             </Text>

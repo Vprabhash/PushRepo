@@ -30,6 +30,7 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleone, setModalVisibleone] = useState(false);
   const [modalVisibletwo, setModalVisibletwo] = useState(false);
   const [clubsNearby, setClubNearby] = useState([]);
   const scrollRef = useRef(null);
@@ -225,8 +226,34 @@ const ClubDetails = props => {
             backgroundColor="transparent"
             translucent={true}
           />
-
-          <Swiper
+          
+             <ImageView
+              images={
+                detailData?.media?.ambienceImages?.map(e => ({
+                  uri: e,
+                })) || []
+              }
+              imageIndex={0}
+              visible={modalVisibleone}
+              onRequestClose={() => setModalVisibleone(false)}
+              swipeToCloseEnabled={true}
+              FooterComponent={({imageIndex}) => {
+                return (
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      paddingBottom: 30,
+                      zIndex: 99,
+                      elevation: 3,
+                    }}>
+                    ({imageIndex + 1} /
+                    {detailData?.media?.ambienceImages?.length})
+                  </Text>
+                );
+              }}
+            />
+             <TouchableOpacity onPress={()=> setModalVisibleone(true)}>
+             <Swiper
             autoplay={true}
             autoplayTimeout={4}
             style={[styles.wrapper]}
@@ -280,6 +307,8 @@ const ClubDetails = props => {
                 }}
               />
             }>
+
+              
             {detailData?.media?.ambienceImages?.length ? (
               detailData?.media?.ambienceImages?.slice(0, 6)?.map(item => (
                 <View style={styles.slide}>
@@ -289,7 +318,9 @@ const ClubDetails = props => {
             ) : (
               <View />
             )}
-          </Swiper>
+              </Swiper>
+              </TouchableOpacity>
+          
           <View
             style={{
               flexDirection: 'row',

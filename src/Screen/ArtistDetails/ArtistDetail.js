@@ -157,7 +157,7 @@ const ArtistDetail = props => {
                 artistListDetail: item,
               });
             }}
-            activeOpacity={0.7}>
+            activeOpacity={0.8}>
             {item?.images ? (
               <Image
                 style={{
@@ -165,11 +165,12 @@ const ArtistDetail = props => {
                   width: '100%',
                   borderTopRightRadius: 10,
                   borderTopLeftRadius: 10,
-                  resizeMode: 'cover',
+                  resizeMode: 'stretch',
                 }}
                 source={{
                   uri: item?.images[0],
                 }}
+                
               />
             ) : (
               <View
@@ -181,7 +182,7 @@ const ArtistDetail = props => {
                 }}
               />
             )}
-          </TouchableOpacity>
+         
 
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <View>
@@ -200,6 +201,7 @@ const ArtistDetail = props => {
               {item?.musicGenre}
             </Text>
           </View>
+          </TouchableOpacity>
         </View>
       </View>
     );

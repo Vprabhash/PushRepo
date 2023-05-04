@@ -141,7 +141,7 @@ const SearchBar = props => {
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.listinhHeading}>{item?.name}</Text>
-              {item?.zomatoRating && (
+              {item?.zomatoRating ? (
                 <LinearGradient
                   style={{
                     flexDirection: 'row',
@@ -167,7 +167,7 @@ const SearchBar = props => {
                     {item?.zomatoRating || '-'}
                   </Text>
                 </LinearGradient>
-              )}
+              ):''}
             </View>
             {/* {item.type == 'dj' && ( */}
             {item?.cost && (
@@ -248,6 +248,7 @@ const SearchBar = props => {
                   setValuekey(text);
                 }}
                 value={valuekey}
+                onEndEditing={()=> searchApi()}
               />
               <TouchableOpacity
                 activeOpacity={0.5}
@@ -272,7 +273,7 @@ const SearchBar = props => {
 };
 export default SearchBar;
 const EmptyListMessage = () => {
-  return <Text style={styles.noDataText}>No Data Found</Text>;
+  return <Text style={styles.noDataText}>Search by Location, Genre, Artist or Club</Text>;
 };
 const styles = StyleSheet.create({
   iconStyle: {
