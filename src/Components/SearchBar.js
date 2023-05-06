@@ -141,31 +141,33 @@ const SearchBar = props => {
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.listinhHeading}>{item?.name}</Text>
-              <LinearGradient
-                style={{
-                  flexDirection: 'row',
-                  height: 24,
-                  width: 40,
-                  borderRadius: 5,
-                  justifyContent: 'center',
-                  backgroundColor: 'red',
-                  alignItems: 'center',
-                }}
-                start={{x: 0.3, y: 0.4}}
-                colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
-                <Image
-                  style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
-                  source={ImagePath.star}
-                />
-                <Text
+              {item?.zomatoRating ? (
+                <LinearGradient
                   style={{
-                    fontFamily: FONTS.RobotoBold,
-                    color: '#FFFFFF',
-                    fontSize: 12,
-                  }}>
-                  {item?.zomatoRating || '-'}
-                </Text>
-              </LinearGradient>
+                    flexDirection: 'row',
+                    height: 24,
+                    width: 40,
+                    borderRadius: 5,
+                    justifyContent: 'center',
+                    backgroundColor: 'red',
+                    alignItems: 'center',
+                  }}
+                  start={{x: 0.3, y: 0.4}}
+                  colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
+                  <Image
+                    style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
+                    source={ImagePath.star}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONTS.RobotoBold,
+                      color: '#FFFFFF',
+                      fontSize: 12,
+                    }}>
+                    {item?.zomatoRating || '-'}
+                  </Text>
+                </LinearGradient>
+              ) : null}
             </View>
             {/* {item.type == 'dj' && ( */}
             {item?.cost && (
