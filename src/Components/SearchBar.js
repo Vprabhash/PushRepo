@@ -141,33 +141,31 @@ const SearchBar = props => {
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.listinhHeading}>{item?.name}</Text>
-              {item?.zomatoRating ? (
-                <LinearGradient
+              <LinearGradient
+                style={{
+                  flexDirection: 'row',
+                  height: 24,
+                  width: 40,
+                  borderRadius: 5,
+                  justifyContent: 'center',
+                  backgroundColor: 'red',
+                  alignItems: 'center',
+                }}
+                start={{x: 0.3, y: 0.4}}
+                colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
+                <Image
+                  style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
+                  source={ImagePath.star}
+                />
+                <Text
                   style={{
-                    flexDirection: 'row',
-                    height: 24,
-                    width: 40,
-                    borderRadius: 5,
-                    justifyContent: 'center',
-                    backgroundColor: 'red',
-                    alignItems: 'center',
-                  }}
-                  start={{x: 0.3, y: 0.4}}
-                  colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
-                  <Image
-                    style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
-                    source={ImagePath.star}
-                  />
-                  <Text
-                    style={{
-                      fontFamily: FONTS.RobotoBold,
-                      color: '#FFFFFF',
-                      fontSize: 12,
-                    }}>
-                    {item?.zomatoRating || '-'}
-                  </Text>
-                </LinearGradient>
-              ):''}
+                    fontFamily: FONTS.RobotoBold,
+                    color: '#FFFFFF',
+                    fontSize: 12,
+                  }}>
+                  {item?.zomatoRating || '-'}
+                </Text>
+              </LinearGradient>
             </View>
             {/* {item.type == 'dj' && ( */}
             {item?.cost && (
@@ -222,6 +220,8 @@ const SearchBar = props => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              marginBottom: 10,
+
               //   justifyContent: 'center',
             }}>
             <TouchableOpacity
@@ -248,7 +248,7 @@ const SearchBar = props => {
                   setValuekey(text);
                 }}
                 value={valuekey}
-                onEndEditing={()=> searchApi()}
+                onSubmitEditing={searchApi}
               />
               <TouchableOpacity
                 activeOpacity={0.5}
@@ -273,7 +273,11 @@ const SearchBar = props => {
 };
 export default SearchBar;
 const EmptyListMessage = () => {
-  return <Text style={styles.noDataText}>Search by Location, Genre, Artist or Club</Text>;
+  return (
+    <Text style={styles.noDataText}>
+      Search by Location, Genre, Artist or Club
+    </Text>
+  );
 };
 const styles = StyleSheet.create({
   iconStyle: {

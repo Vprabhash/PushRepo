@@ -226,96 +226,93 @@ const ClubDetails = props => {
             backgroundColor="transparent"
             translucent={true}
           />
-          
-             <ImageView
-              images={
-                detailData?.media?.ambienceImages?.map(e => ({
-                  uri: e,
-                })) || []
-              }
-              imageIndex={0}
-              visible={modalVisibleone}
-              onRequestClose={() => setModalVisibleone(false)}
-              swipeToCloseEnabled={true}
-              FooterComponent={({imageIndex}) => {
-                return (
-                  <Text
-                    style={styles.imageView}>
-                    ({imageIndex + 1} /
-                    {detailData?.media?.ambienceImages?.length})
-                  </Text>
-                );
-              }}
-            />
-             <TouchableOpacity onPress={()=> setModalVisibleone(true)}>
-             <Swiper
-            autoplay={true}
-            autoplayTimeout={4}
-            style={[styles.wrapper]}
-            containerStyle={{
-              borderRadius: 8,
-              marginTop: 10,
-              marginHorizontal: 15,
-              overflow: 'hidden',
-            }}
-            paginationStyle={{
-              bottom: hp(0),
-              zIndex: 9,
-              backgroundColor: '#C9C9C9',
-              borderRadius: 20,
-              height: 18,
-              marginHorizontal: '38%',
-            }}
-            activeDotStyle={{
-              backgroundColor: '#717171',
-              width: 6,
-              height: 6,
-              borderRadius: 4,
-            }}
-            dotStyle={{
-              backgroundColor: COLORS.white,
-              width: 6,
-              height: 6,
-              borderRadius: 4,
-            }}
-            showsButtons={true}
-            showsPagination={true}
-            prevButton={
-              <Image
-                source={ImagePath.prew}
-                style={{
-                  height: 20,
-                  width: 20,
-                  marginBottom: 20,
-                  resizeMode: 'contain',
-                }}
-              />
-            }
-            nextButton={
-              <Image
-                source={ImagePath.next}
-                style={{
-                  height: 20,
-                  width: 20,
-                  marginBottom: 20,
-                  resizeMode: 'contain',
-                }}
-              />
-            }>
 
-              
-            {detailData?.media?.ambienceImages?.length ? (
-              detailData?.media?.ambienceImages?.slice(0, 6)?.map(item => (
-                <View style={styles.slide}>
-                  <Image style={styles.slideImg} source={{uri: item}} />
-                </View>
-              ))
-            ) : (
-              <View />
-            )}
-              </Swiper>
-              </TouchableOpacity>
-          
+          <ImageView
+            images={
+              detailData?.media?.ambienceImages?.map(e => ({
+                uri: e,
+              })) || []
+            }
+            imageIndex={0}
+            visible={modalVisibleone}
+            onRequestClose={() => setModalVisibleone(false)}
+            swipeToCloseEnabled={true}
+            FooterComponent={({imageIndex}) => {
+              return (
+                <Text style={styles.imageView}>
+                  ({imageIndex + 1} /{detailData?.media?.ambienceImages?.length}
+                  )
+                </Text>
+              );
+            }}
+          />
+          <TouchableOpacity onPress={() => setModalVisibleone(true)}>
+            <Swiper
+              autoplay={true}
+              autoplayTimeout={4}
+              style={[styles.wrapper]}
+              containerStyle={{
+                borderRadius: 8,
+                marginTop: 10,
+                marginHorizontal: 15,
+                overflow: 'hidden',
+              }}
+              paginationStyle={{
+                bottom: hp(0),
+                zIndex: 9,
+                backgroundColor: '#C9C9C9',
+                borderRadius: 20,
+                height: 18,
+                marginHorizontal: '38%',
+              }}
+              activeDotStyle={{
+                backgroundColor: '#717171',
+                width: 6,
+                height: 6,
+                borderRadius: 4,
+              }}
+              dotStyle={{
+                backgroundColor: COLORS.white,
+                width: 6,
+                height: 6,
+                borderRadius: 4,
+              }}
+              showsButtons={true}
+              showsPagination={true}
+              prevButton={
+                <Image
+                  source={ImagePath.prew}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    marginBottom: 20,
+                    resizeMode: 'contain',
+                  }}
+                />
+              }
+              nextButton={
+                <Image
+                  source={ImagePath.next}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    marginBottom: 20,
+                    resizeMode: 'contain',
+                  }}
+                />
+              }>
+              {detailData?.media?.ambienceImages?.length ? (
+                detailData?.media?.ambienceImages?.slice(0, 6)?.map(item => (
+                  <View style={styles.slide}>
+                    <Image style={styles.slideImg} source={{uri: item}} />
+                  </View>
+                ))
+              ) : (
+                <View />
+              )}
+            </Swiper>
+          </TouchableOpacity>
+
           <View
             style={{
               flexDirection: 'row',
@@ -398,7 +395,7 @@ const ClubDetails = props => {
                   color: '#FFFFFF',
                   fontSize: 12,
                 }}>
-                {detailData?.zomatoRating}
+                {detailData?.zomatoRating || '-'}
               </Text>
             </LinearGradient>
           </View>
@@ -455,8 +452,7 @@ const ClubDetails = props => {
               swipeToCloseEnabled={true}
               FooterComponent={({imageIndex}) => {
                 return (
-                  <Text
-                    style={styles.imageView}>
+                  <Text style={styles.imageView}>
                     ({imageIndex + 1} /
                     {detailData?.media?.drinkMenuImages?.length})
                   </Text>
@@ -505,8 +501,7 @@ const ClubDetails = props => {
               onRequestClose={() => setModalVisibletwo(false)}
               FooterComponent={({imageIndex}) => {
                 return (
-                  <Text
-                    style={styles.imageView}>
+                  <Text style={styles.imageView}>
                     ({imageIndex + 1} /
                     {detailData?.media?.foodMenuImages?.length})
                   </Text>
@@ -651,11 +646,11 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.AxiformaBold,
     color: COLORS.black,
   },
-  imageView:{
+  imageView: {
     alignSelf: 'center',
     paddingBottom: 30,
     zIndex: 99,
     elevation: 3,
-    color:'#fff'
-  }
+    color: '#fff',
+  },
 });
