@@ -128,7 +128,7 @@ const ClubDetails = props => {
   const clubsNearbyDataApi = async () => {
     try {
       const res = await ApiCall(
-        `api/nearby-clubs?coordinates=${detailData?.geoJson?.coordinates}`, //${19.136326},${72.82766}
+        `api/clubs?exclude=${detailData?._id}&coordinates=${detailData?.geoJson?.coordinates}`, //${19.136326},${72.82766}
         'GET',
       );
       setClubNearby(res?.data);
@@ -240,12 +240,7 @@ const ClubDetails = props => {
               FooterComponent={({imageIndex}) => {
                 return (
                   <Text
-                    style={{
-                      alignSelf: 'center',
-                      paddingBottom: 30,
-                      zIndex: 99,
-                      elevation: 3,
-                    }}>
+                    style={styles.imageView}>
                     ({imageIndex + 1} /
                     {detailData?.media?.ambienceImages?.length})
                   </Text>
@@ -461,12 +456,7 @@ const ClubDetails = props => {
               FooterComponent={({imageIndex}) => {
                 return (
                   <Text
-                    style={{
-                      alignSelf: 'center',
-                      paddingBottom: 30,
-                      zIndex: 99,
-                      elevation: 3,
-                    }}>
+                    style={styles.imageView}>
                     ({imageIndex + 1} /
                     {detailData?.media?.drinkMenuImages?.length})
                   </Text>
@@ -516,12 +506,7 @@ const ClubDetails = props => {
               FooterComponent={({imageIndex}) => {
                 return (
                   <Text
-                    style={{
-                      alignSelf: 'center',
-                      paddingBottom: 30,
-                      zIndex: 99,
-                      elevation: 3,
-                    }}>
+                    style={styles.imageView}>
                     ({imageIndex + 1} /
                     {detailData?.media?.foodMenuImages?.length})
                   </Text>
@@ -666,4 +651,11 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.AxiformaBold,
     color: COLORS.black,
   },
+  imageView:{
+    alignSelf: 'center',
+    paddingBottom: 30,
+    zIndex: 99,
+    elevation: 3,
+    color:'#fff'
+  }
 });

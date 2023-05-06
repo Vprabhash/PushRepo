@@ -165,7 +165,7 @@ const ArtistDetail = props => {
                   width: '100%',
                   borderTopRightRadius: 10,
                   borderTopLeftRadius: 10,
-                  resizeMode: 'stretch',
+                  resizeMode: 'cover',
                 }}
                 source={{
                   uri: item?.images[0],
