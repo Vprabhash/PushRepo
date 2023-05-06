@@ -15,6 +15,7 @@ const CustomTextInput = ({
   returnKeyType,
   onChangeText,
   secureTextEntry,
+  editable
 }) => {
   const containerStyle = { ...styles.inputMain, marginTop };
 
@@ -31,6 +32,7 @@ const CustomTextInput = ({
         ref={setRef}
         keyboardType={keyboardType}
         returnKeyType={returnKeyType}
+        editable={editable}
       />
       {iconPath && (
         <TouchableOpacity activeOpacity={0.5} onPress={onClickEye}>

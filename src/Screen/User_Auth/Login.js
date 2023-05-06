@@ -106,6 +106,8 @@ const Login = props => {
       // Alert.alert('success:' + JSON.stringify(userInfo));
       const data = {
         name: userInfo?.user?.name,
+        firstName:userInfo?.user?.givenName,
+        lastName:userInfo?.user?.familyName,
         email: userInfo?.user?.email,
         username: userInfo?.user?.email,
         profilePhotoUrl: userInfo?.user?.photo,

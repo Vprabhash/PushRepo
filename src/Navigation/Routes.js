@@ -19,6 +19,7 @@ import Home from '../Screen/Dashboard/Home';
 import ClubDetails from '../Screen/Details/ClubDetails';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 import Profile from '../Components/Profile/Profile';
+import EditProfile from '../Components/Profile/EditProfile';
 import SearchBar from '../Components/SearchBar';
 
 const Stack = createNativeStackNavigator();
@@ -110,9 +111,10 @@ function Routes() {
         />
         <Stack.Screen
           name="EditProfile"
-          component={ClubDetails}
+          component={EditProfile}
           options={{headerShown: false}}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

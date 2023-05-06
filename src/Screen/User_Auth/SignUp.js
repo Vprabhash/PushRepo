@@ -124,6 +124,8 @@ const SignUp = props => {
       console.log('lofuser data-------:', userInfo);
       const data = {
         name: userInfo?.user?.name,
+        firstName:userInfo?.user?.givenName,
+        lastName:userInfo?.user?.familyName,
         email: userInfo?.user?.email,
         username: userInfo?.user?.email,
         profilePhotoUrl: userInfo?.user?.photo,

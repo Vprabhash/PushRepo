@@ -34,7 +34,7 @@ const Profile = ({navigation}) => {
       Title: 'Edit Profile',
       Icon: ImagePath.rightIcon,
       onPress: () => {
-        // navigation.navigate('EditProfile');
+        navigation.navigate('EditProfile',{refresh:userProfile});
       },
     },
     {
@@ -72,6 +72,7 @@ const Profile = ({navigation}) => {
       console.log('---profile--user-----', res?.data);
       if (res?.data?.username) {
         setUserProfileData(res?.data);
+        setimg(res?.data?.avatarUrl)
       } else {
         Toast.show(
           res?.data?.message || 'Something went wrong',
@@ -101,6 +102,7 @@ const Profile = ({navigation}) => {
         skipBackup: true,
         path: 'images',
       },
+     includeBase64:true
     };
 
     launchImageLibrary(options, response => {
@@ -109,7 +111,7 @@ const Profile = ({navigation}) => {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        console.log('selected image', response.assets?.[0]?.uri);
+        console.log('selected image', response.assets?.[0]);
         setimg(response.assets?.[0]?.uri);
         uploadImage(response.assets?.[0]);
       }
@@ -359,7 +361,7 @@ const Profile = ({navigation}) => {
                         }`
                       : 'Unknown user'}
                   </Text>
-                  <Image
+                  {/* <Image
                     style={{
                       height: 16,
                       width: 16,
@@ -367,7 +369,7 @@ const Profile = ({navigation}) => {
                       marginLeft: 5,
                     }}
                     source={ImagePath.EditIcon}
-                  />
+                  /> */}
                 </View>
                 {userProfileData?.email && (
                   <Text
