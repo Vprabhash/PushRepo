@@ -170,7 +170,6 @@ const ArtistDetail = props => {
                 source={{
                   uri: item?.images[0],
                 }}
-                
               />
             ) : (
               <View
@@ -182,25 +181,26 @@ const ArtistDetail = props => {
                 }}
               />
             )}
-         
 
-          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
-            <View>
-              <Text style={styles.listinhHeading}>{item?.name}</Text>
-            </View>
-            {item?.type && (
-              <Text
-                style={[
-                  styles.listingText,
-                  {marginVertical: hp(0.3), textTransform: 'uppercase'},
-                ]}>
-                {item?.type?.toLowerCase() === 'artist' ? 'SINGER' : item?.type}
+            <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+              <View>
+                <Text style={styles.listinhHeading}>{item?.name}</Text>
+              </View>
+              {item?.type && (
+                <Text
+                  style={[
+                    styles.listingText,
+                    {marginVertical: hp(0.3), textTransform: 'uppercase'},
+                  ]}>
+                  {item?.type?.toLowerCase() === 'artist'
+                    ? 'SINGER'
+                    : item?.type}
+                </Text>
+              )}
+              <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+                {item?.musicGenre}
               </Text>
-            )}
-            <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-              {item?.musicGenre}
-            </Text>
-          </View>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
     color: '#575757',
   },
   listinhHeading: {
-    fontSize: 24,
+    fontSize: 18,
     fontFamily: FONTS.AxiformaBold,
     color: COLORS.black,
   },
