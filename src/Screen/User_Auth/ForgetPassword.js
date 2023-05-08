@@ -26,7 +26,7 @@ const height = Dimensions.get('window').height;
 const ForgetPassword = ({route, navigation}) => {
   const [email, setEmail] = useState(route?.params?.email || '');
   const [isLoading, setLoading] = useState(false);
-
+  const isReset = route.params?.isReset;
   const forgotPassApi = async () => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     if (!emailRegex.test(email)) {
@@ -94,7 +94,9 @@ const ForgetPassword = ({route, navigation}) => {
               'rgba(255, 255, 255, 0.6)',
               'rgba(255, 255, 255, 0.1)',
             ]}>
-            <Text style={styles.signIn}>Forget Password</Text>
+            <Text style={styles.signIn}>{`${
+              isReset ? 'Reset' : 'Forget'
+            } Password`}</Text>
             <Text
               style={[
                 styles.signIn,
@@ -104,7 +106,11 @@ const ForgetPassword = ({route, navigation}) => {
                   marginBottom: 56,
                 },
               ]}>
-              Don't worry, we'll help you get back into your account in no time!
+              {`Don't worry, we'll help you ${
+                isReset
+                  ? 'in resetting your password'
+                  : 'get back into your account'
+              } in no time!`}
             </Text>
             <CustomTextInput
               title="Enter your email"

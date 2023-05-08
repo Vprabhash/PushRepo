@@ -34,7 +34,7 @@ const Profile = ({navigation}) => {
       Title: 'Edit Profile',
       Icon: ImagePath.rightIcon,
       onPress: () => {
-        navigation.navigate('EditProfile',{refresh:userProfile});
+        navigation.navigate('EditProfile', {refresh: userProfile});
       },
     },
     {
@@ -42,9 +42,10 @@ const Profile = ({navigation}) => {
       Icon: ImagePath.rightIcon,
 
       onPress: () => {
-        console.log('userProfileData=====', userProfileData?.email);
+        console.log('userProfileData===', userProfileData?.email);
         navigation.navigate('ForgetPassword', {
           email: userProfileData?.email,
+          isReset: true,
         });
       },
     },
@@ -72,7 +73,7 @@ const Profile = ({navigation}) => {
       console.log('---profile--user-----', res?.data);
       if (res?.data?.username) {
         setUserProfileData(res?.data);
-        setimg(res?.data?.avatarUrl)
+        setimg(res?.data?.avatarUrl);
       } else {
         Toast.show(
           res?.data?.message || 'Something went wrong',
@@ -102,7 +103,7 @@ const Profile = ({navigation}) => {
         skipBackup: true,
         path: 'images',
       },
-     includeBase64:true
+      includeBase64: true,
     };
 
     launchImageLibrary(options, response => {

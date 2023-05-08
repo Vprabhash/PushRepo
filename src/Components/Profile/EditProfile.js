@@ -31,7 +31,9 @@ const EditProfile = props => {
   const [email, setEmail] = useState('');
   const [isLoading, setLoading] = useState(false);
 
-
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const handleEditProfile = async () => {
     var data = {
@@ -41,19 +43,23 @@ const EditProfile = props => {
     };
 
     try {
+      setLoading(true);
       const res = await ApiCall('api/user', 'POST', JSON.stringify(data));
       console.log('--EditProfile-----', res);
       if (res.ok == true) {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
-        props.route?.params?.refresh()
+        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        props.route?.params?.refresh();
         navigation.goBack();
       } else {
-        Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
       }
     } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+    } finally {
+      setLoading(false);
     }
   };
+
   const getUserData = async () => {
     try {
       const res = await ApiCall('api/user', 'GET');
@@ -71,13 +77,8 @@ const EditProfile = props => {
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
-  useEffect(() => {
-    getUserData();
-  }, []);
 
   return (
-
-    
     <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
@@ -109,9 +110,14 @@ const EditProfile = props => {
         />
 
         <View style={{marginHorizontal: 20}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:20}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 20,
+            }}>
             <View style={{width: '45%'}}>
-                <Text style={styles.labels} >First name</Text>
+              <Text style={styles.labels}>First name</Text>
               <CustomTextInput
                 title="First Name"
                 //   iconPath={ImagePath.msgIcon}
@@ -122,7 +128,7 @@ const EditProfile = props => {
               />
             </View>
             <View style={{width: '45%'}}>
-            <Text style={styles.labels} >Last name</Text>
+              <Text style={styles.labels}>Last name</Text>
               <CustomTextInput
                 title="Last Name"
                 //   iconPath={ImagePath.msgIcon}
@@ -133,7 +139,7 @@ const EditProfile = props => {
               />
             </View>
           </View>
-          <Text style={styles.labels} >Phone number</Text>
+          <Text style={styles.labels}>Phone number</Text>
           <CustomTextInput
             // marginTop={10}
             title="Phone Number"
@@ -142,7 +148,7 @@ const EditProfile = props => {
             }}
             value={number}
           />
-          <Text style={styles.labels} >Email</Text>
+          {/* <Text style={styles.labels}>Email Address</Text>
           <CustomTextInput
             // marginTop={10}
             title=" Email Address"
@@ -152,15 +158,14 @@ const EditProfile = props => {
             value={email}
             editable={false}
             iconPath={ImagePath.msgIcon}
-          />
+          /> */}
           <CustomButton
-            onclick={() => {
-                handleEditProfile();
-            }}
+            onclick={handleEditProfile}
             top={150}
             title="Update Profile"
             bgColor="#000"
             textColor="#fff"
+            isLoading={isLoading}
           />
         </View>
       </ImageBackground>
@@ -199,11 +204,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#000',
   },
-  labels:{
-    fontFamily: FONTS.AxiformaRegular,
-    fontSize: 14,
+  labels: {
+    fontFamily: FONTS.AxiformaMedium,
+    fontSize: 16,
     color: '#202020',
-    marginTop:5,
-    paddingLeft:10
-  }
+    marginTop: 15,
+    paddingLeft: 8,
+  },
 });

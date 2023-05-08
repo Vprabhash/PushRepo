@@ -44,7 +44,7 @@ const Otp = props => {
       };
       setLoading(true);
       try {
-        console.log("calling api for otp verify")
+        console.log('calling api for otp verify');
         const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
         console.log('---res--registerotp-----', res);
         if (res.ok == true) {
@@ -157,12 +157,13 @@ const Otp = props => {
           />
           <CustomButton
             onclick={() => {
-              if (forgetotp == 'otp'  ) {
-                if(Otp.length == 6){
-                props.navigation.navigate('ResetPassword', {
-                  Otp: Otp,
-                  email: email,
-                })}else{
+              if (forgetotp == 'otp') {
+                if (Otp.length == 6) {
+                  props.navigation.navigate('ResetPassword', {
+                    otp: Otp,
+                    email: email,
+                  });
+                } else {
                   Toast.show('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
                 }
               } else {
