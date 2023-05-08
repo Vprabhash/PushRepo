@@ -6,7 +6,10 @@ const ApiCall = async (Url, Method, Data) => {
   let CompleteUrl = BASE_URL + Url;
   var headers = new Headers();
   headers.append('Accept', 'application/json');
+  Data instanceof FormData?
+  headers.append('Content-Type', 'multipart/form-data'):
   headers.append('Content-Type', 'application/json');
+
   headers.append('Authorization', 'Bearer ' + authToken);
 
   console.log('HeaderToken  : ----- ', headers);

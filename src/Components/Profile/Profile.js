@@ -130,16 +130,18 @@ const Profile = ({navigation}) => {
             ? imageResponse.uri
             : imageResponse.uri.replace('file://', ''),
       });
-      console.log('---profile--data-----', {
-        name: imageResponse.fileName || 'profileImage',
-        type: imageResponse.type || 'jpg',
-        uri:
-          Platform.OS === 'android'
-            ? imageResponse.uri
-            : imageResponse.uri.replace('file://', ''),
-      });
+      // console.log('---profile--data-----', {
+      //   name: imageResponse.fileName || 'profileImage',
+      //   type: imageResponse.type || 'jpg',
+      //   uri:
+      //     Platform.OS === 'android'
+      //       ? imageResponse.uri
+      //       : imageResponse.uri.replace('file://', ''),
+      // });
+
+      console.log('---form--Data-----', typeof formData);
       const res = await ApiCall(`api/user/avatar`, 'POST', formData);
-      console.log('---profile--user-----', res?.data);
+      // console.log('---profile--user-----', res?.data);
 
       if (res?.data?.username) {
         setUserProfileData(res?.data);

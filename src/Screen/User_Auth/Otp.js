@@ -40,11 +40,12 @@ const Otp = props => {
       const data = {
         email: email,
         otp: Otp,
-        password: password,
+        password: 'password',
       };
       setLoading(true);
       try {
-        const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
+        console.log("calling api for otp verify")
+        const res = await ApiCall('api/reset-password', 'POST', JSON.stringify(data));
         console.log('---res--registerotp-----', res);
         if (res.ok == true) {
           await setData('userData', res?.data);

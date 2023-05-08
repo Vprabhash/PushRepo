@@ -111,7 +111,7 @@ const EditProfile = props => {
         <View style={{marginHorizontal: 20}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:20}}>
             <View style={{width: '45%'}}>
-                {/* <Text style>First name</Text> */}
+                <Text style={styles.labels} >First name</Text>
               <CustomTextInput
                 title="First Name"
                 //   iconPath={ImagePath.msgIcon}
@@ -122,7 +122,7 @@ const EditProfile = props => {
               />
             </View>
             <View style={{width: '45%'}}>
-            {/* <Text>First name</Text> */}
+            <Text style={styles.labels} >Last name</Text>
               <CustomTextInput
                 title="Last Name"
                 //   iconPath={ImagePath.msgIcon}
@@ -133,16 +133,18 @@ const EditProfile = props => {
               />
             </View>
           </View>
+          <Text style={styles.labels} >Phone number</Text>
           <CustomTextInput
-            marginTop={20}
+            // marginTop={10}
             title="Phone Number"
             onChangeText={text => {
               setNumber(text);
             }}
             value={number}
           />
+          <Text style={styles.labels} >Email</Text>
           <CustomTextInput
-            marginTop={20}
+            // marginTop={10}
             title=" Email Address"
             onChangeText={text => {
               setEmail(text);
@@ -197,4 +199,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#000',
   },
+  labels:{
+    fontFamily: FONTS.AxiformaRegular,
+    fontSize: 14,
+    color: '#202020',
+    marginTop:5,
+    paddingLeft:10
+  }
 });

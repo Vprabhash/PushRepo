@@ -529,7 +529,7 @@ const Home = props => {
             profileIcon={ImagePath.profilePic}
           />
         </View> */}
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
             <StatusBar
               barStyle="dark-content"
               hidden={false}
