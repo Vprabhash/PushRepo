@@ -262,7 +262,7 @@ const FilterScreen = ({
             resizeMode: 'contain',
             tintColor: '#202020',
             borderWidth: item.checked ? 0 : 0.3,
-            borderColor: item.checked ? '#202020' : '#202020',
+            borderColor: '#202020',
           }}
           source={item.checked ? ImagePath.checkSelected : ImagePath.checkBox}
         />
@@ -649,7 +649,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: artist == 'dj' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -683,7 +683,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: artist == 'artist' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -704,7 +704,11 @@ const FilterScreen = ({
               <>
                 <TouchableOpacity
                   onPress={() => {
-                    sheeshaSelect('yes');
+                    if (sheesha === 'yes') {
+                      sheeshaSelect('');
+                    } else {
+                      sheeshaSelect('yes');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -721,7 +725,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: sheesha == 'yes' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -738,7 +742,11 @@ const FilterScreen = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    sheeshaSelect('no');
+                    if (sheesha === 'no') {
+                      sheeshaSelect('');
+                    } else {
+                      sheeshaSelect('no');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -755,7 +763,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: sheesha == 'no' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -776,7 +784,11 @@ const FilterScreen = ({
               <>
                 <TouchableOpacity
                   onPress={() => {
-                    stagesSelect('yes');
+                    if (stages === 'yes') {
+                      stagesSelect('');
+                    } else {
+                      stagesSelect('yes');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -793,7 +805,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: stages == 'yes' ? 0 : 1,
                       borderColor: '#202020',
                     }}
                     source={
@@ -810,7 +822,11 @@ const FilterScreen = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    stagesSelect('no');
+                    if (stages === 'no') {
+                      stagesSelect('');
+                    } else {
+                      stagesSelect('no');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -827,7 +843,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: stages == 'no' ? 0 : 1,
                       borderColor: '#202020',
                     }}
                     source={
@@ -848,7 +864,11 @@ const FilterScreen = ({
               <>
                 <TouchableOpacity
                   onPress={() => {
-                    vegNonVegSelect('veg');
+                    if (vegNonVeg === 'veg') {
+                      vegNonVegSelect('');
+                    } else {
+                      vegNonVegSelect('veg');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -865,7 +885,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: vegNonVeg == 'veg' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -882,7 +902,11 @@ const FilterScreen = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    vegNonVegSelect('non-veg');
+                    if (vegNonVeg === 'non-veg') {
+                      vegNonVegSelect('');
+                    } else {
+                      vegNonVegSelect('non-veg');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -899,7 +923,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: vegNonVeg == 'non-veg' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -920,7 +944,11 @@ const FilterScreen = ({
               <>
                 <TouchableOpacity
                   onPress={() => {
-                    happyHourTimingSelect('yes');
+                    if (happyHourTimings === 'yes') {
+                      happyHourTimingSelect('');
+                    } else {
+                      happyHourTimingSelect('yes');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -937,7 +965,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: happyHourTimings == 'yes' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -954,7 +982,11 @@ const FilterScreen = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    happyHourTimingSelect('no');
+                    if (happyHourTimings === 'no') {
+                      happyHourTimingSelect('');
+                    } else {
+                      happyHourTimingSelect('no');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -971,7 +1003,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: happyHourTimings == 'no' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -1036,7 +1068,11 @@ const FilterScreen = ({
               <>
                 <TouchableOpacity
                   onPress={() => {
-                    kidsFriendlySelect('yes');
+                    if (kidsFriendly === 'yes') {
+                      kidsFriendlySelect('');
+                    } else {
+                      kidsFriendlySelect('yes');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -1053,7 +1089,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: kidsFriendly == 'yes' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -1070,7 +1106,11 @@ const FilterScreen = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    kidsFriendlySelect('no');
+                    if (kidsFriendly === 'no') {
+                      kidsFriendlySelect('');
+                    } else {
+                      kidsFriendlySelect('no');
+                    }
                   }}
                   activeOpacity={0.5}
                   style={{
@@ -1087,7 +1127,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: kidsFriendly == 'no' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -1170,7 +1210,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: liveMusicDj == 'LM' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
@@ -1208,7 +1248,7 @@ const FilterScreen = ({
                       width: 11,
                       resizeMode: 'contain',
                       tintColor: '#202020',
-                      borderWidth: 1,
+                      borderWidth: liveMusicDj == 'DJ' ? 0 : 0.3,
                       borderColor: '#202020',
                     }}
                     source={
