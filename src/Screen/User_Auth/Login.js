@@ -14,6 +14,7 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
@@ -106,8 +107,8 @@ const Login = props => {
       // Alert.alert('success:' + JSON.stringify(userInfo));
       const data = {
         name: userInfo?.user?.name,
-        firstName:userInfo?.user?.givenName,
-        lastName:userInfo?.user?.familyName,
+        firstName: userInfo?.user?.givenName,
+        lastName: userInfo?.user?.familyName,
         email: userInfo?.user?.email,
         username: userInfo?.user?.email,
         profilePhotoUrl: userInfo?.user?.photo,
@@ -151,17 +152,17 @@ const Login = props => {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <StatusBar
-        barStyle="dark-content"
-        hidden={false}
-        backgroundColor="transparent"
-        translucent={true}
-      />
+    <KeyboardAwareScrollView bounces={false} style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{height: height * 1.1, width: width}}>
+        style={{height: height + StatusBar.currentHeight, width: width}}>
+        <StatusBar
+          barStyle="light-content"
+          hidden={false}
+          backgroundColor="transparent"
+          translucent={true}
+        />
         <Image
           resizeMode={'cover'}
           source={ImagePath.dancePic}
@@ -294,7 +295,7 @@ const Login = props => {
           </View>
         </Modal>
       </ImageBackground>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
