@@ -3,7 +3,6 @@ import {
   Image,
   ImageBackground,
   Dimensions,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -13,11 +12,13 @@ import {
   Platform,
   Modal,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-simple-toast';
 import {useDispatch, useSelector} from 'react-redux';
 import ImagePath from '../../assets/ImagePath';
@@ -57,6 +58,7 @@ const SignUp = props => {
       );
       return;
     }
+    Keyboard.dismiss();
     if (confirmPassword === password) {
       const data = {
         email: email,
@@ -124,8 +126,8 @@ const SignUp = props => {
       console.log('lofuser data-------:', userInfo);
       const data = {
         name: userInfo?.user?.name,
-        firstName:userInfo?.user?.givenName,
-        lastName:userInfo?.user?.familyName,
+        firstName: userInfo?.user?.givenName,
+        lastName: userInfo?.user?.familyName,
         email: userInfo?.user?.email,
         username: userInfo?.user?.email,
         profilePhotoUrl: userInfo?.user?.photo,
@@ -181,141 +183,143 @@ const SignUp = props => {
     }
   };
   return (
-    <ImageBackground
-      source={ImagePath.Azzir_Bg}
-      resizeMode="cover"
-      style={{height: height * 1.1, width: width}}>
-      <StatusBar
-        barStyle="dark-content"
-        hidden={false}
-        backgroundColor="transparent"
-        translucent={true}
-      />
-      <Image
-        resizeMode={'cover'}
-        source={ImagePath.dancePic}
-        style={{
-          width: width,
-          height: height * 0.29,
-          borderBottomLeftRadius: 80,
-          borderBottomRightRadius: 80,
-        }}
-      />
-      <View style={styles.dot}>
+    <KeyboardAwareScrollView style={{flex: 1}}>
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: height + StatusBar.currentHeight, width: width}}>
+        <StatusBar
+          barStyle="light-content"
+          hidden={false}
+          backgroundColor="transparent"
+          translucent={true}
+        />
         <Image
-          source={ImagePath.star_logo}
+          resizeMode={'cover'}
+          source={ImagePath.dancePic}
           style={{
-            resizeMode: 'contain',
-            height: 70,
-            width: 70,
-            alignSelf: 'center',
+            width: width,
+            height: height * 0.29,
+            borderBottomLeftRadius: 80,
+            borderBottomRightRadius: 80,
           }}
         />
-      </View>
-      <View style={{marginHorizontal: 20, marginTop: -55}}>
-        <Text style={styles.signIn}>Sign Up</Text>
-        <CustomTextInput
-          title="Enter your email"
-          iconPath={ImagePath.msgIcon}
-          onChangeText={text => {
-            setEmail(text);
-          }}
-          value={email}
-        />
-        <CustomTextInput
-          marginTop={20}
-          title="Create password"
-          onChangeText={text => {
-            setPassword(text);
-          }}
-          value={password}
-          iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
-          secureTextEntry={!eyeShow}
-          onClickEye={() => {
-            onClickEye('password');
-          }}
-        />
-        <CustomTextInput
-          marginTop={20}
-          title=" Enter password again"
-          onChangeText={text => {
-            setConfirmPassword(text);
-          }}
-          value={confirmPassword}
-          iconPath={eyeShow2 ? ImagePath.eyeIcon : ImagePath.closeEye}
-          secureTextEntry={!eyeShow2}
-          onClickEye={() => {
-            onClickEye('confirmPassword');
-          }}
-        />
-        <CustomButton
-          onclick={() => {
-            handleSignUp();
-          }}
-          top={30}
-          title="Sign up"
-          bgColor="#000"
-          textColor="#fff"
-        />
-      </View>
-      <Text style={[styles.withText, {color: '#797979', marginTop: hp(4)}]}>
-        Or Sign up with
-      </Text>
-
-      <TouchableOpacity
-        onPress={() => {
-          signInFunction();
-        }}
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          marginTop: 15,
-          marginHorizontal: wp(7),
-        }}>
-        <Image source={ImagePath.google} style={styles.googleLogo} />
-        {Platform.OS === 'ios' && (
-          <Image source={ImagePath.apple} style={styles.googleLogo} />
-        )}
-      </TouchableOpacity>
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-        <Text style={[styles.withText, {color: '#000000'}]}>
-          Already have an account{' '}
+        <View style={styles.dot}>
+          <Image
+            source={ImagePath.star_logo}
+            style={{
+              resizeMode: 'contain',
+              height: 70,
+              width: 70,
+              alignSelf: 'center',
+            }}
+          />
+        </View>
+        <View style={{marginHorizontal: 20, marginTop: -55}}>
+          <Text style={styles.signIn}>Sign Up</Text>
+          <CustomTextInput
+            title="Enter your email"
+            iconPath={ImagePath.msgIcon}
+            onChangeText={text => {
+              setEmail(text);
+            }}
+            value={email}
+          />
+          <CustomTextInput
+            marginTop={20}
+            title="Create password"
+            onChangeText={text => {
+              setPassword(text);
+            }}
+            value={password}
+            iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
+            secureTextEntry={!eyeShow}
+            onClickEye={() => {
+              onClickEye('password');
+            }}
+          />
+          <CustomTextInput
+            marginTop={20}
+            title=" Enter password again"
+            onChangeText={text => {
+              setConfirmPassword(text);
+            }}
+            value={confirmPassword}
+            iconPath={eyeShow2 ? ImagePath.eyeIcon : ImagePath.closeEye}
+            secureTextEntry={!eyeShow2}
+            onClickEye={() => {
+              onClickEye('confirmPassword');
+            }}
+          />
+          <CustomButton
+            onclick={() => {
+              handleSignUp();
+            }}
+            top={30}
+            title="Sign up"
+            bgColor="#000"
+            textColor="#fff"
+          />
+        </View>
+        <Text style={[styles.withText, {color: '#797979', marginTop: hp(4)}]}>
+          Or Sign up with
         </Text>
+
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate('Login');
-          }}>
-          <Text style={[styles.withText, {textDecorationLine: 'underline'}]}>
-            Sign In
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <Modal
-        visible={isLoadingGoogle}
-        transparent={true}
-        style={{flex: 1}}
-        statusBarTranslucent={true}>
-        <View
+            signInFunction();
+          }}
           style={{
-            flex: 1,
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            justifyContent: 'center',
-            alignItems: 'center',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            marginTop: 15,
+            marginHorizontal: wp(7),
           }}>
+          <Image source={ImagePath.google} style={styles.googleLogo} />
+          {Platform.OS === 'ios' && (
+            <Image source={ImagePath.apple} style={styles.googleLogo} />
+          )}
+        </TouchableOpacity>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Text style={[styles.withText, {color: '#000000'}]}>
+            Already have an account{' '}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Login');
+            }}>
+            <Text style={[styles.withText, {textDecorationLine: 'underline'}]}>
+              Sign In
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Modal
+          visible={isLoadingGoogle}
+          transparent={true}
+          style={{flex: 1}}
+          statusBarTranslucent={true}>
           <View
             style={{
-              height: wp(30),
-              width: wp(30),
-              borderRadius: 10,
-              backgroundColor: COLORS.white,
+              flex: 1,
+              backgroundColor: 'rgba(0,0,0,0.8)',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <ActivityIndicator size="large" color={COLORS.primary} />
+            <View
+              style={{
+                height: wp(30),
+                width: wp(30),
+                borderRadius: 10,
+                backgroundColor: COLORS.white,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            </View>
           </View>
-        </View>
-      </Modal>
-    </ImageBackground>
+        </Modal>
+      </ImageBackground>
+    </KeyboardAwareScrollView>
   );
 };
 export default SignUp;
