@@ -54,6 +54,10 @@ const ArtistDetail = props => {
     clubsNearbyDataApi(page);
   }, [page, selectedFilter]);
 
+  useEffect(() => {
+    console.log('artistList', artistList.length);
+  }, [artistList]);
+
   function areAllKeysEmpty(obj) {
     return Object.values(obj).every(value => {
       if (Array.isArray(value)) {
@@ -64,7 +68,7 @@ const ArtistDetail = props => {
   }
 
   const clubsNearbyDataApi = async page => {
-    console.log('------page :', page);
+    // console.log('------page :', page);
 
     let tempdataGenres = [];
     for (let i = 0; i < selectedFilter?.musicGenre?.length; i++) {
@@ -75,19 +79,19 @@ const ArtistDetail = props => {
       }
     }
     try {
-      console.log(
-        'artist filter URL===',
-        `api/artists?page=${page}&musicGenre=${
-          tempdataGenres?.join('|') || ''
-        }&type=${selectedFilter?.artist || ''}`,
-      );
+      // console.log(
+      //   'artist filter URL===',
+      //   `api/artists?page=${page}&type=${
+      //     selectedFilter?.artist || ''
+      //   }&musicGenre=${tempdataGenres?.join('|') || ''}`,
+      // );
       const res = await ApiCall(
         `api/artists?page=${page}&musicGenre=${
           tempdataGenres?.join('|') || ''
         }&type=${selectedFilter?.artist || ''}`,
         'GET',
       );
-      console.log('---resartists--->', res?.data);
+      // console.log('---resartists--->', res?.data);
       if (Array.isArray(res?.data)) {
         if (page === 0) {
           setArtistList(res?.data);
@@ -119,11 +123,12 @@ const ArtistDetail = props => {
     } else {
       setPage(0);
     }
+    setDontCall(false);
     setSelectedFilter({});
   };
   const fetchMoreData = () => {
     // clubsNearbyDataApi(page + 1);
-    if (!onEndReachedCalledDuringMomentum) {
+    if (!onEndReachedCalledDuringMomentum && !loading) {
       setLoading(true);
       setPage(page + 1);
       setonEndReachedCalledDuringMomentum(true);
@@ -211,6 +216,7 @@ const ArtistDetail = props => {
     console.log('ArtistData-------:', data);
     setPage(0);
     setFilterComponent(false);
+    setDontCall(false);
     setSelectedFilter(data);
   };
 
@@ -299,7 +305,7 @@ const ArtistDetail = props => {
                 styles.fllter,
                 {
                   backgroundColor:
-                    selectedFilter?.artist?.toLowerCase() == 'dj'
+                    selectedFilter?.artist?.toLowerCase() === 'dj'
                       ? COLORS.primary
                       : COLORS.white,
                 },
@@ -307,6 +313,7 @@ const ArtistDetail = props => {
               activeOpacity={0.5}
               onPress={() => {
                 setPage(0);
+                setDontCall(false);
                 if (selectedFilter?.artist?.toLowerCase() !== 'dj') {
                   setSelectedFilter({artist: 'dj'});
                 } else {
@@ -330,7 +337,7 @@ const ArtistDetail = props => {
                   styles.filtersText,
                   {
                     color:
-                      selectedFilter?.artist?.toLowerCase() == 'dj'
+                      selectedFilter?.artist?.toLowerCase() === 'dj'
                         ? COLORS.white
                         : COLORS.primary,
                   },
@@ -351,6 +358,7 @@ const ArtistDetail = props => {
               activeOpacity={0.5}
               onPress={() => {
                 setPage(0);
+                setDontCall(false);
                 if (selectedFilter?.artist?.toLowerCase() !== 'artist') {
                   setSelectedFilter({artist: 'artist'});
                 } else {
