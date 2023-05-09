@@ -94,17 +94,17 @@ const ClubListing = ({navigation, route}) => {
     }
     try {
       const res = await ApiCall(
-        `api/clubs?&coordinates=${locationLatLong?.latitude || ''},${
-          locationLatLong?.longitude || ''
-        }&page=${page}&vegNonVeg=${filteredData?.vegNonVeg || ''}&locality=${
-          tempLocality?.join('|') || ''
-        }&stagsAllowed=${filteredData?.stagsAllowed || ''}&musicGenre=${
-          tempdataGenres?.join('|') || ''
-        }&kidsFriendly=${filteredData?.kidsFriendly || ''}&happyHoursTimings=${
-          filteredData?.happyHours || ''
-        }&seeshaServe=${filteredData?.sheesha || ''}&liveMusicDj=${
-          filteredData?.liveMusicDj || ''
-        }&city=Mumbai`,
+        `api/clubs?&coordinates=${locationLatLong?.latitude || ''}${
+          locationLatLong?.latitude ? ',' : ''
+        }${locationLatLong?.longitude || ''}&page=${page}&vegNonVeg=${
+          filteredData?.vegNonVeg || ''
+        }&locality=${tempLocality?.join('|') || ''}&stagsAllowed=${
+          filteredData?.stagsAllowed || ''
+        }&musicGenre=${tempdataGenres?.join('|') || ''}&kidsFriendly=${
+          filteredData?.kidsFriendly || ''
+        }&happyHoursTimings=${filteredData?.happyHours || ''}&seeshaServe=${
+          filteredData?.sheesha || ''
+        }&liveMusicDj=${filteredData?.liveMusicDj || ''}&city=Mumbai`,
         'GET',
       );
       console.log('---res--club listin---', res?.status);

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Image, ImageBackground, View, StatusBar} from 'react-native';
+import {Image, ImageBackground, View, StatusBar, Alert} from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import Geolocation from '@react-native-community/geolocation';
 import {getData} from '../../Components/Helper';
@@ -12,6 +12,7 @@ import {
 import BackgroundTimer from 'react-native-background-timer';
 import {useDispatch} from 'react-redux';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
+import Disclamer from '../../Components/Disclamer';
 
 const Splash_Screen = props => {
   const dispatch = useDispatch();
@@ -89,9 +90,19 @@ const Splash_Screen = props => {
             );
           } else {
             console.log('-----error2:');
-            setTimeout(() => {
-              openSettings();
-            }, 3000);
+            Alert.alert(
+              'Welcome to Azzir!',
+              'Please give the location permission to continue. \nAzzir collects location data for the following. \n - To detect your current location. \n - Recommending clubs near your location.',
+              [
+                {text: 'Confirm', onPress: () => openSettings()},
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('No Pressed'),
+                  style: 'cancel',
+                },
+              ],
+              {cancelable: false},
+            );
           }
         });
       }

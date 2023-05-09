@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useReducer} from 'react';
+import React, {useEffect, useState, useReducer, createRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -14,6 +14,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {
+  check,
+  PERMISSIONS,
+  request,
+  openSettings,
+} from 'react-native-permissions';
+import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
@@ -28,6 +34,8 @@ import {LocationApi} from '../../redux/reducers/clubLocationSlice';
 import {upComingEventApi} from '../../redux/reducers/upComingEventSlice';
 import ApiCall from '../../redux/CommanApi';
 import {ARTIST} from '../../services/Apis';
+import Disclamer from '../../Components/Disclamer';
+import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -70,6 +78,7 @@ const Home = props => {
       clubsNearbyDataApi();
     }
   }, []);
+  const modalref = createRef(null);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -97,6 +106,62 @@ const Home = props => {
   //   const res = await ApiCall(ARTIST, 'GET', data);
   //   console.log('---res----', res);
   // };
+
+  async function checkLocation() {
+    await check(
+      Platform.select({
+        android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+        ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
+      }),
+    ).then(result => {
+      if (result === 'granted') {
+        Geolocation.getCurrentPosition(
+          position => {
+            if (position.coords) {
+              console.log('location data:', position.coords);
+              let obj = {};
+              obj.latitude = position.coords.latitude;
+              obj.longitude = position.coords.longitude;
+              dispatch(addCoordinates(obj));
+            }
+          },
+          error => {
+            console.log('location error', error.code, error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000},
+        );
+      } else {
+        request(
+          Platform.select({
+            android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+            ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
+          }),
+        ).then(status => {
+          if (status === 'granted') {
+            Geolocation.getCurrentPosition(
+              position => {
+                let obj = {};
+                if (position.coords) {
+                  obj.latitude = position.coords.latitude;
+                  obj.longitude = position.coords.longitude;
+                  dispatch(addCoordinates(obj));
+                }
+              },
+              error => {
+                console.log(error.code, error.message);
+              },
+              {enableHighAccuracy: true, timeout: 15000},
+            );
+          } else {
+            console.log('-----error2:');
+            setTimeout(() => {
+              openSettings();
+            }, 3000);
+          }
+        });
+      }
+    });
+  }
 
   const fetchMoreData = () => {
     if (!onEndReachedCalledDuringMomentum) {
@@ -425,13 +490,17 @@ const Home = props => {
             style={{
               fontSize: 20,
               color: COLORS.white,
-              fontFamily: FONTS.PTItalic,
+              fontFamily: FONTS.AxiformaSemiBold,
             }}>
             {item.name}
           </Text>
           <Text
             style={[
-              {color: COLORS.white, fontSize: 12, fontFamily: FONTS.PTBold},
+              {
+                color: COLORS.white,
+                fontSize: 12,
+                fontFamily: FONTS.AxiformaMedium,
+              },
             ]}>
             {/* {item.musicGenre} */}
             Restrobar
@@ -441,7 +510,7 @@ const Home = props => {
               {
                 fontSize: 10,
                 color: COLORS.white,
-                fontFamily: FONTS.PTBold,
+                fontFamily: FONTS.AxiformaRegular,
               },
             ]}>
             {item.locality}, {item.city}
@@ -454,9 +523,9 @@ const Home = props => {
     console.log('locationdata ---', locationLatLong);
     try {
       ApiCall(
-        `api/nearby-clubs?coordinates=${locationLatLong?.latitude || ''},${
-          locationLatLong?.longitude || ''
-        }&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
+        `api/nearby-clubs?coordinates=${locationLatLong?.latitude || ''}${
+          locationLatLong?.latitude ? ',' : ''
+        }${locationLatLong?.longitude || ''}&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
       ).then(res => {
         if (res?.data?.length) {
@@ -502,7 +571,13 @@ const Home = props => {
             }}
           />
         )}
-        <Text style={[styles.titleText1, {width: wp(50)}]}>{item?.name}</Text>
+        <Text
+          style={[
+            styles.titleText1,
+            {width: wp(50), fontFamily: FONTS.AxiformaSemiBold},
+          ]}>
+          {item?.name}
+        </Text>
         <Text style={styles.LoctionText}>
           {item?.locality}, {item?.city}
         </Text>
@@ -529,7 +604,9 @@ const Home = props => {
             profileIcon={ImagePath.profilePic}
           />
         </View> */}
-          <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            contentContainerStyle={{flexGrow: 1}}
+            showsVerticalScrollIndicator={false}>
             <StatusBar
               barStyle="dark-content"
               hidden={false}
@@ -598,7 +675,7 @@ const Home = props => {
               data={clubsNearby?.slice(0, 5)}
               renderItem={ClubNarDatarenderItem}
               // ListFooterComponent={renderFooter}
-              style={{marginTop: 20, marginBottom: -30}}
+              style={{marginTop: 20, marginBottom: -hp(2)}}
               // onEndReachedThreshold={0.7}
               // onMomentumScrollBegin={() => {
               //   setonEndReachedCalledDuringMomentum(false);
@@ -612,7 +689,36 @@ const Home = props => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={styles.titleText1}>No Clubs Found</Text>
+                  {locationLatLong?.latitude ? (
+                    <Text style={styles.titleText1}>No Clubs Found</Text>
+                  ) : (
+                    <View>
+                      <Text
+                        style={[
+                          styles.titleText1,
+                          {marginHorizontal: 30, textAlign: 'center'},
+                        ]}>
+                        AZZIR needs to detect you location to show the clubs
+                        near you.
+                      </Text>
+                      <View
+                        style={{
+                          width: 100,
+                          alignSelf: 'center',
+                          marginBottom: -hp(2),
+                        }}>
+                        <CustomButton
+                          onclick={() => {
+                            openSettings();
+                          }}
+                          top={10}
+                          title="ALLOW"
+                          bgColor="#000"
+                          textColor="#fff"
+                        />
+                      </View>
+                    </View>
+                  )}
                 </View>
               }
             />
@@ -736,6 +842,13 @@ const Home = props => {
           </ScrollView>
         </SafeAreaView>
       </ImageBackground>
+      {/* <Disclamer
+        ref={modalref}
+        onpress={async () => {
+          checkLocation();
+          modalref.current.hide();
+        }}
+      /> */}
     </View>
   );
 };

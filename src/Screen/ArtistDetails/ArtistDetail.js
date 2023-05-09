@@ -163,29 +163,41 @@ const ArtistDetail = props => {
               });
             }}
             activeOpacity={0.8}>
-            {item?.images ? (
-              <Image
-                style={{
-                  height: hp(29),
-                  width: '100%',
-                  borderTopRightRadius: 10,
-                  borderTopLeftRadius: 10,
-                  resizeMode: 'cover',
-                }}
-                source={{
-                  uri: item?.images[0],
-                }}
-              />
-            ) : (
-              <View
-                style={{
-                  height: hp(29),
-                  width: '100%',
-                  borderTopRightRadius: 10,
-                  borderTopLeftRadius: 10,
-                }}
-              />
-            )}
+            <View
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+                justifyContent: 'flex-start',
+                position: 'relative',
+                flex: 1,
+              }}>
+              {item?.images ? (
+                <Image
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                    borderTopRightRadius: 10,
+                    borderTopLeftRadius: 10,
+                    position: 'absolute',
+                    top: 0,
+                  }}
+                  source={{
+                    uri: item?.images[0],
+                  }}
+                />
+              ) : (
+                <View
+                  style={{
+                    height: hp(29),
+                    width: '100%',
+                    borderTopRightRadius: 10,
+                    borderTopLeftRadius: 10,
+                  }}
+                />
+              )}
+            </View>
 
             <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
               <View>

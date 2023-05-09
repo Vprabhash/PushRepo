@@ -169,7 +169,13 @@ const ClubDetails = props => {
             }}
           />
         )}
-        <Text style={[styles.titleText, {width: wp(50)}]}>{item?.name}</Text>
+        <Text
+          style={[
+            styles.titleText,
+            {width: wp(50), fontFamily: FONTS.AxiformaSemiBold},
+          ]}>
+          {item?.name}
+        </Text>
         <Text style={styles.LoctionText}>
           {item?.locality}, {item?.city}
         </Text>
@@ -652,5 +658,6 @@ const styles = StyleSheet.create({
     zIndex: 99,
     elevation: 3,
     color: '#fff',
+    fontFamily: FONTS.AxiformaRegular,
   },
 });
