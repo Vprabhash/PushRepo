@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -30,19 +30,20 @@ const ArtistDetail = props => {
     setonEndReachedCalledDuringMomentum,
   ] = useState(true);
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [valuekey, setValuekey] = useState('');
   const [filterComponent, setFilterComponent] = useState(false);
   const [artistList, setArtistList] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState({});
   const [dontCall, setDontCall] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const flatListRef = useRef(null);
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       // const routes = props.navigation.getState()?.routes;
       // const prevRoute = routes[routes.length - 3];
       // console.log(prevRoute, 'ROUTE===');
-      // clubsNearbyDataApi(1);
+      // fetchArtistsData(1);
       // setValuekey('');
       // setSelectedFilter({});
       setFilterComponent(false);
@@ -51,7 +52,7 @@ const ArtistDetail = props => {
   }, []);
 
   useEffect(() => {
-    clubsNearbyDataApi(page);
+    fetchArtistsData(page);
   }, [page, selectedFilter]);
 
   useEffect(() => {
@@ -67,7 +68,7 @@ const ArtistDetail = props => {
     });
   }
 
-  const clubsNearbyDataApi = async page => {
+  const fetchArtistsData = async page => {
     // console.log('------page :', page);
 
     let tempdataGenres = [];
@@ -110,6 +111,7 @@ const ArtistDetail = props => {
       setDontCall(true);
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     } finally {
+      setIsLoading(false);
       setLoading(false);
       setFilterComponent(false);
     }
@@ -127,7 +129,7 @@ const ArtistDetail = props => {
     setSelectedFilter({});
   };
   const fetchMoreData = () => {
-    // clubsNearbyDataApi(page + 1);
+    // fetchArtistsData(page + 1);
     if (!onEndReachedCalledDuringMomentum && !loading) {
       setLoading(true);
       setPage(page + 1);
@@ -324,6 +326,11 @@ const ArtistDetail = props => {
               ]}
               activeOpacity={0.5}
               onPress={() => {
+                flatListRef?.current?.scrollToOffset({
+                  animated: false,
+                  offset: 0,
+                });
+                setIsLoading(true);
                 setPage(0);
                 setDontCall(false);
                 if (selectedFilter?.artist?.toLowerCase() !== 'dj') {
@@ -369,6 +376,11 @@ const ArtistDetail = props => {
               ]}
               activeOpacity={0.5}
               onPress={() => {
+                flatListRef?.current?.scrollToOffset({
+                  animated: false,
+                  offset: 0,
+                });
+                setIsLoading(true);
                 setPage(0);
                 setDontCall(false);
                 if (selectedFilter?.artist?.toLowerCase() !== 'artist') {
@@ -403,17 +415,26 @@ const ArtistDetail = props => {
               </Text>
             </TouchableOpacity>
           </View>
-          <FlatList
-            data={artistList}
-            renderItem={artistListRenderItem}
-            ListFooterComponent={renderFooter}
-            onEndReachedThreshold={0.3}
-            onMomentumScrollBegin={() => {
-              setonEndReachedCalledDuringMomentum(false);
-            }}
-            onEndReached={dontCall ? null : fetchMoreData}
-            ListEmptyComponent={EmptyListMessage}
-          />
+          {isLoading ? (
+            <ActivityIndicator
+              size={'large'}
+              color={COLORS.primary}
+              style={{flex: 1, alignSelf: 'center'}}
+            />
+          ) : (
+            <FlatList
+              ref={flatListRef}
+              data={artistList}
+              renderItem={artistListRenderItem}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.3}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={dontCall ? null : fetchMoreData}
+              ListEmptyComponent={EmptyListMessage}
+            />
+          )}
         </View>
       </ImageBackground>
     </View>
