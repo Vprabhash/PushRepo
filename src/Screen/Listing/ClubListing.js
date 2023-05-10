@@ -94,20 +94,41 @@ const ClubListing = ({navigation, route}) => {
       }
     }
     try {
-      const res = await ApiCall(
-        `api/clubs?&coordinates=${locationLatLong?.latitude || ''}${
-          locationLatLong?.latitude ? ',' : ''
-        }${locationLatLong?.longitude || ''}&page=${page}&vegNonVeg=${
-          filteredData?.vegNonVeg || ''
-        }&locality=${tempLocality?.join('|') || ''}&stagsAllowed=${
-          filteredData?.stagsAllowed || ''
-        }&musicGenre=${tempdataGenres?.join('|') || ''}&kidsFriendly=${
-          filteredData?.kidsFriendly || ''
-        }&happyHoursTimings=${filteredData?.happyHours || ''}&seeshaServe=${
-          filteredData?.sheesha || ''
-        }&liveMusicDj=${filteredData?.liveMusicDj || ''}&city=Mumbai`,
-        'GET',
-      );
+      const queryParams = new URLSearchParams();
+      if (locationLatLong?.latitude || locationLatLong?.longitude) {
+        queryParams.append(
+          'coordinates',
+          [locationLatLong.latitude, locationLatLong.longitude].join(','),
+        );
+      }
+      if (filteredData?.vegNonVeg) {
+        queryParams.append('vegNonVeg', filteredData);
+      }
+      if (tempLocality?.length) {
+        queryParams.append('locality', tempLocality?.join('|'));
+      }
+      if (filteredData?.stagsAllowed) {
+        queryParams.append('stagsAllowed', filteredData?.stagsAllowed);
+      }
+      if (tempdataGenres?.length) {
+        queryParams.append('musicGenre', tempdataGenres?.join('|'));
+      }
+      if (filteredData?.kidsFriendly) {
+        queryParams.append('kidsFriendly', filteredData?.kidsFriendly);
+      }
+      if (filteredData?.happyHours) {
+        queryParams.append('happyHoursTimings', filteredData?.happyHours);
+      }
+      if (filteredData?.sheesha) {
+        queryParams.append('seeshaServe', filteredData?.sheesha);
+      }
+      if (filteredData?.liveMusicDj) {
+        queryParams.append('liveMusicDj', filteredData?.liveMusicDj);
+      }
+      if ('city') {
+        queryParams.append('city', 'Mumbai');
+      }
+      const res = await ApiCall(`api/clubs?${queryParams}`, 'GET');
       console.log('---res--club listin---', res?.status);
       // setStatus(res?.status);
       if (Array.isArray(res?.data)) {
@@ -133,6 +154,7 @@ const ClubListing = ({navigation, route}) => {
       }
     } catch (error) {
       setDontCall(false);
+      console.log(error);
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);

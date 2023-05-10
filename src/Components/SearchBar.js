@@ -11,8 +11,8 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   View,
-  TextInput,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -20,6 +20,12 @@ import {
 } from 'react-native-responsive-screen';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
+import {Menu, Provider} from 'react-native-paper';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 
 import ImagePath from '../assets/ImagePath';
 import {COLORS, FONTS} from './constants';
@@ -32,11 +38,33 @@ const SearchBar = props => {
   const [clubs, setClubs] = useState();
 
   useEffect(() => {
+    searchRecommendation();
+    setValuekey('');
     searchApi();
-    setValuekey();
   }, []);
 
   const [valuekey, setValuekey] = useState('');
+  const [recommendation, setRecommendation] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const animation = useSharedValue(0);
+  const popularSearchTerms = ['Term 1', 'Term 2', 'Term 3', 'Term 4'];
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: withTiming(animation.value, {duration: 500})}],
+    };
+  });
+
+  const openMenu = () => {
+    setVisible(true);
+    animation.value = 100;
+  };
+
+  const closeMenu = () => {
+    setVisible(false);
+    animation.value = 0;
+  };
+
   const searchApi = async text => {
     if (valuekey) {
       const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
@@ -50,6 +78,18 @@ const SearchBar = props => {
     } else {
       //   setPage(1);
     }
+  };
+  const searchRecommendation = async () => {
+    ApiCall(`api/recommendations?city=mumbai`, 'GET')
+      .then(res => {
+        console.log('----recommendation: ', res);
+        if (res?.ok) {
+          setRecommendation(res?.data?.data);
+        }
+      })
+      .catch(err => {
+        console.log('----recommendation erorr: ', err);
+      });
   };
   const _renderItem = ({item, index}) => {
     return (
@@ -206,6 +246,7 @@ const SearchBar = props => {
     );
   };
   return (
+    // <Provider>
     <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
@@ -240,7 +281,12 @@ const SearchBar = props => {
                 source={ImagePath.goBack}
               />
             </TouchableOpacity>
-            <View style={[styles.inputMain]}>
+            {/* <View style={{flex: 1, backgroundColor: 'red'}}>
+                <Menu
+                  visible={visible}
+                  onDismiss={closeMenu}
+                  anchor={ */}
+            <View onPress={openMenu} style={[styles.inputMain]}>
               <TextInput
                 style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
                 placeholderTextColor="rgba(0, 0, 0, 0.7)"
@@ -252,6 +298,19 @@ const SearchBar = props => {
                 value={valuekey}
                 onSubmitEditing={searchApi}
               />
+              {valuekey && (
+                <TouchableOpacity
+                  style={{marginRight: 10}}
+                  activeOpacity={0.5}
+                  onPress={() => {
+                    setValuekey('');
+                  }}>
+                  <Image
+                    source={ImagePath.closeIcon}
+                    style={styles.iconStyle}
+                  />
+                </TouchableOpacity>
+              )}
               <TouchableOpacity
                 activeOpacity={0.5}
                 onPress={() => {
@@ -260,7 +319,76 @@ const SearchBar = props => {
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
             </View>
+            {/* }> */}
+            {/* <Animated.View style={[animatedStyles]}> */}
+
+            {/* </Animated.View>
+                </Menu>
+              </View> */}
           </View>
+          {recommendation ? (
+            <>
+              {!valuekey && (
+                <Text
+                  style={{
+                    color: COLORS.black,
+                    fontFamily: FONTS.AxiformaSemiBold,
+                    marginLeft: 10,
+                    marginBottom: 5,
+                  }}>
+                  Trending Recommendations
+                </Text>
+              )}
+              {!valuekey && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}>
+                  {recommendation?.map(item => {
+                    let data = [].concat(
+                      item.localities,
+                      item.generes,
+                      item.clubs,
+                      item.artists,
+                    );
+                    return (
+                      <>
+                        {data?.map(term => {
+                          return (
+                            <TouchableOpacity
+                              onPress={() => {
+                                setValuekey(term);
+                              }}
+                              style={{
+                                paddingHorizontal: 20,
+                                paddingVertical: 5,
+                                borderRadius: 40,
+                                borderWidth: 1,
+                                borderColor: COLORS.primary,
+                                marginLeft: 10,
+                                marginBottom: 10,
+                              }}>
+                              <Text
+                                style={{
+                                  color: COLORS.black,
+                                  fontFamily: FONTS.AxiformaRegular,
+                                }}>
+                                {term}
+                              </Text>
+                            </TouchableOpacity>
+                          );
+                        })}
+                      </>
+                    );
+                  })}
+                </View>
+              )}
+            </>
+          ) : null}
+
           <FlatList
             data={clubs}
             renderItem={_renderItem}
@@ -271,6 +399,7 @@ const SearchBar = props => {
         </View>
       </ImageBackground>
     </View>
+    // </Provider>
   );
 };
 export default SearchBar;
