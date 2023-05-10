@@ -276,9 +276,7 @@ const SearchBar = props => {
 export default SearchBar;
 const EmptyListMessage = () => {
   return (
-    <Text style={styles.noDataText}>
-      Search by Location, Genre, Artist or Club
-    </Text>
+    <Text style={styles.noDataText}>Search by Area, Genre, Artist or Club</Text>
   );
 };
 const styles = StyleSheet.create({

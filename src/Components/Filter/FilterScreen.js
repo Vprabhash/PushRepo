@@ -419,7 +419,7 @@ const FilterScreen = ({
             ) : (
               <>
                 <FilterData
-                  label={'Locality'}
+                  label={'Area'}
                   onClick={() => {
                     onSelectRightUi('Locality');
                   }}
