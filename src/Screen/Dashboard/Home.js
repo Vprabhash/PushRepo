@@ -279,6 +279,7 @@ const Home = props => {
             position: 'absolute',
             bottom: 10,
             left: 30,
+            width: '70%',
           },
         ]}>
         {item.name}
