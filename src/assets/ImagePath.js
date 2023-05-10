@@ -91,4 +91,5 @@ export default {
   checkBox: require('./Image/checkBox.png'),
   checkSelected: require('./Image/checkSelected.png'),
   closeIcon: require('./Image/close.png'),
+  trendIcon: require('./Image/trend.png'),
 };

@@ -66,8 +66,8 @@ const SearchBar = props => {
   };
 
   const searchApi = async text => {
-    if (valuekey) {
-      const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
+    if (valuekey || text) {
+      const res = await ApiCall(`api/search?q=${text || valuekey}`, 'GET');
       console.log('---searchApi--->', JSON.stringify(res?.data?.clubs));
       let temArray = [];
       let clubs = res?.data?.clubs;
@@ -304,6 +304,7 @@ const SearchBar = props => {
                   activeOpacity={0.5}
                   onPress={() => {
                     setValuekey('');
+                    setClubs([]);
                   }}>
                   <Image
                     source={ImagePath.closeIcon}
@@ -329,15 +330,17 @@ const SearchBar = props => {
           {recommendation ? (
             <>
               {!valuekey && (
-                <Text
-                  style={{
-                    color: COLORS.black,
-                    fontFamily: FONTS.AxiformaSemiBold,
-                    marginLeft: 10,
-                    marginBottom: 5,
-                  }}>
-                  Trending Recommendations
-                </Text>
+                <View style={styles.hedingTextMain}>
+                  <Image
+                    style={styles.hedingImg}
+                    source={ImagePath.rightLine1}
+                  />
+                  <Text style={styles.cardText}>TRENDING IN YOUR CITY</Text>
+                  <Image
+                    style={styles.hedingImg}
+                    source={ImagePath.rightLine}
+                  />
+                </View>
               )}
               {!valuekey && (
                 <View
@@ -361,16 +364,24 @@ const SearchBar = props => {
                             <TouchableOpacity
                               onPress={() => {
                                 setValuekey(term);
+                                searchApi(term);
                               }}
                               style={{
-                                paddingHorizontal: 20,
+                                paddingHorizontal: 10,
                                 paddingVertical: 5,
                                 borderRadius: 40,
                                 borderWidth: 1,
                                 borderColor: COLORS.primary,
                                 marginLeft: 10,
-                                marginBottom: 10,
+                                marginBottom: 20,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
                               }}>
+                              <Image
+                                source={ImagePath.trendIcon}
+                                style={{height: 15, width: 15, marginRight: 8}}
+                              />
                               <Text
                                 style={{
                                   color: COLORS.black,
@@ -409,6 +420,22 @@ const EmptyListMessage = () => {
   );
 };
 const styles = StyleSheet.create({
+  hedingTextMain: {
+    marginTop: hp(4),
+    marginBottom: hp(2),
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  hedingImg: {width: '30%', resizeMode: 'contain'},
+  cardText: {
+    fontFamily: FONTS.AxiformaBold,
+    fontSize: 12,
+    marginHorizontal: 5,
+    textAlign: 'center',
+    color: COLORS.black,
+    letterSpacing: 2.5,
+  },
   iconStyle: {
     tintColor: COLORS.black,
     width: 16,
