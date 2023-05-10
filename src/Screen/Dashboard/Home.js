@@ -13,6 +13,7 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {
   check,
   PERMISSIONS,
@@ -260,7 +261,7 @@ const Home = props => {
         });
       }}
       style={{marginTop: 20}}>
-      <Image
+      <FastImage
         style={{
           height: wp(28),
           width: wp(28),
@@ -477,7 +478,7 @@ const Home = props => {
           marginRight: index == 0 ? 15 : 15,
           marginLeft: index == 0 ? 15 : 0,
         }}>
-        <Image
+        <FastImage
           style={{
             height: hp(26),
             width: wp(83),
@@ -553,7 +554,7 @@ const Home = props => {
           marginBottom: 10,
         }}>
         {item?.media?.ambienceImages?.length ? (
-          <Image
+          <FastImage
             style={{
               height: hp(20),
               width: wp(50),

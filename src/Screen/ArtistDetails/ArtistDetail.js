@@ -16,6 +16,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import FastImage from 'react-native-fast-image';
 import ImagePath from '../../assets/ImagePath';
 import Toast from 'react-native-simple-toast';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -176,7 +177,7 @@ const ArtistDetail = props => {
                 flex: 1,
               }}>
               {item?.images ? (
-                <Image
+                <FastImage
                   style={{
                     height: '100%',
                     width: '100%',

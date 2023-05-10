@@ -13,6 +13,7 @@ import {
   View,
   TextInput,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -38,7 +39,7 @@ const ClubListing = ({navigation, route}) => {
     setonEndReachedCalledDuringMomentum,
   ] = useState(true);
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [valuekey, setValuekey] = useState('');
   const [filteredData, setFilteredData] = useState({});
   const [dontCall, setDontCall] = useState(false);
@@ -140,7 +141,7 @@ const ClubListing = ({navigation, route}) => {
 
   const fetchMoreData = () => {
     console.log('calling');
-    if (!onEndReachedCalledDuringMomentum) {
+    if (!onEndReachedCalledDuringMomentum && !loading) {
       // if (status !== 'fallback-data') {
       setLoading(true);
       setPage(page + 1);
@@ -150,7 +151,7 @@ const ClubListing = ({navigation, route}) => {
   };
   const renderFooter = () => {
     return loading ? (
-      <View style={{paddingTop: 50, paddingBottom: 130}}>
+      <View style={{paddingTop: 50, paddingBottom: 80}}>
         <ActivityIndicator
           color={COLORS.primary}
           size={'small'}
@@ -187,7 +188,7 @@ const ClubListing = ({navigation, route}) => {
             }}
             activeOpacity={0.7}>
             {item?.media?.ambienceImages ? (
-              <Image
+              <FastImage
                 style={{
                   height: hp(29),
                   width: '100%',
@@ -364,6 +365,7 @@ const ClubListing = ({navigation, route}) => {
           <FlatList
             data={clubs}
             renderItem={_renderItem}
+            keyExtractor={(_, index) => index.toString()}
             ListFooterComponent={renderFooter}
             onEndReachedThreshold={0.3}
             onMomentumScrollBegin={() => {
@@ -371,6 +373,7 @@ const ClubListing = ({navigation, route}) => {
             }}
             onEndReached={dontCall ? null : fetchMoreData}
             ListEmptyComponent={EmptyListMessage}
+            maxToRenderPerBatch={15}
           />
         </View>
       </ImageBackground>
