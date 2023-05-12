@@ -305,9 +305,16 @@ const SearchBar = props => {
             width: wp(22),
             resizeMode: 'cover',
             borderRadius: wp(30),
+            marginBottom: 5,
           }}
         />
-        <Text style={{color: COLORS.black}}>{item.label}</Text>
+        <Text
+          style={{
+            color: COLORS.black,
+            fontFamily: FONTS.AxiformaRegular,
+          }}>
+          {item.label}
+        </Text>
       </TouchableOpacity>
     );
   };
