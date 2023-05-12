@@ -159,22 +159,26 @@ const Home = props => {
           {enableHighAccuracy: true, timeout: 15000},
         );
       } else {
-        Alert.alert(
-          'Welcome to Azzir!',
-          'Please give the location permission to continue. \nAzzir collects location data for the following. \n - To detect your current location. \n - Recommending clubs near your location.',
-          [
-            {
-              text: 'Confirm',
-              onPress: () => openSettings(),
-            },
-            {
-              text: 'Cancel',
-              onPress: () => console.log('No Pressed'),
-              style: 'cancel',
-            },
-          ],
-          {cancelable: false},
-        );
+        let obj = {};
+        obj.latitude = '';
+        obj.longitude = '';
+        dispatch(addCoordinates(obj));
+        // Alert.alert(
+        //   'Welcome to Azzir!',
+        //   'Please give the location permission to continue. \nAzzir collects location data for the following. \n - To detect your current location. \n - Recommending clubs near your location.',
+        //   [
+        //     {
+        //       text: 'Confirm',
+        //       onPress: () => openSettings(),
+        //     },
+        //     {
+        //       text: 'Cancel',
+        //       onPress: () => console.log('No Pressed'),
+        //       style: 'cancel',
+        //     },
+        //   ],
+        //   {cancelable: false},
+        // );
       }
     });
   }
