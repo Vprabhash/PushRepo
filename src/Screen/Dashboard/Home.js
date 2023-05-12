@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useReducer, createRef} from 'react';
+import React, {useEffect, useState, useReducer, createRef, useRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -12,6 +12,9 @@ import {
   View,
   TextInput,
   ActivityIndicator,
+  Alert,
+  Platform,
+  AppState,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {
@@ -37,11 +40,16 @@ import ApiCall from '../../redux/CommanApi';
 import {ARTIST} from '../../services/Apis';
 import Disclamer from '../../Components/Disclamer';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
+import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
+import Geolocation from '@react-native-community/geolocation';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const Home = props => {
   const dispatch = useDispatch();
+  const appState = useRef(AppState.currentState);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
   );
@@ -75,10 +83,28 @@ const Home = props => {
   useEffect(() => {
     fetchClubsSpotlight();
     fetchArtistSpotlight();
-    if (locationLatLong) {
+    AppState.addEventListener('change', handleAppStateChange);
+  }, []);
+
+  const handleAppStateChange = nextAppState => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('App has come to the foreground!');
+      checkLocation();
+    }
+
+    appState.current = nextAppState;
+    console.log('AppState', appState.current);
+  };
+
+  useEffect(() => {
+    if (locationLatLong?.latitude) {
       clubsNearbyDataApi();
     }
-  }, []);
+  }, [locationLatLong]);
+
   const modalref = createRef(null);
   const [
     onEndReachedCalledDuringMomentum,
@@ -116,6 +142,7 @@ const Home = props => {
       }),
     ).then(result => {
       if (result === 'granted') {
+        // setModalVisible(false);
         Geolocation.getCurrentPosition(
           position => {
             if (position.coords) {
@@ -132,34 +159,22 @@ const Home = props => {
           {enableHighAccuracy: true, timeout: 15000},
         );
       } else {
-        request(
-          Platform.select({
-            android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-            ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
-          }),
-        ).then(status => {
-          if (status === 'granted') {
-            Geolocation.getCurrentPosition(
-              position => {
-                let obj = {};
-                if (position.coords) {
-                  obj.latitude = position.coords.latitude;
-                  obj.longitude = position.coords.longitude;
-                  dispatch(addCoordinates(obj));
-                }
-              },
-              error => {
-                console.log(error.code, error.message);
-              },
-              {enableHighAccuracy: true, timeout: 15000},
-            );
-          } else {
-            console.log('-----error2:');
-            setTimeout(() => {
-              openSettings();
-            }, 3000);
-          }
-        });
+        Alert.alert(
+          'Welcome to Azzir!',
+          'Please give the location permission to continue. \nAzzir collects location data for the following. \n - To detect your current location. \n - Recommending clubs near your location.',
+          [
+            {
+              text: 'Confirm',
+              onPress: () => openSettings(),
+            },
+            {
+              text: 'Cancel',
+              onPress: () => console.log('No Pressed'),
+              style: 'cancel',
+            },
+          ],
+          {cancelable: false},
+        );
       }
     });
   }
@@ -533,7 +548,6 @@ const Home = props => {
         if (res?.data?.length) {
           setClubNearby(res?.data);
           clearTimeout();
-          forceUpdate();
         }
         console.log('clubsnearbydata ----', res?.data);
       });
@@ -586,6 +600,7 @@ const Home = props => {
       </TouchableOpacity>
     );
   };
+
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -845,10 +860,11 @@ const Home = props => {
         </SafeAreaView>
       </ImageBackground>
       {/* <Disclamer
-        ref={modalref}
-        onpress={async () => {
-          checkLocation();
-          modalref.current.hide();
+        isVisible={modalVisible}
+        setVisible={visible => setModalVisible(visible)}
+        onPress={async () => {
+          await openSettings();
+          setModalVisible(false);
         }}
       /> */}
     </View>
