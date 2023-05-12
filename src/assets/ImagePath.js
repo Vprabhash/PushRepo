@@ -95,7 +95,7 @@ export default {
 
   // search
   areaImage: require('./Image/locationImage.jpeg'),
-  genreImage: require('./Image/musicImage.png'),
+  genreImage: require('./Image/musicImg.jpg'),
   artistImage: require('./Image/singerImage.png'),
   clubImage: require('./Image/clubImage.png'),
 };
