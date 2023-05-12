@@ -94,7 +94,7 @@ export default {
   trendIcon: require('./Image/trend.png'),
 
   // search
-  areaImage: require('./Image/locationImage.png'),
+  areaImage: require('./Image/locationImage.jpeg'),
   genreImage: require('./Image/musicImage.png'),
   artistImage: require('./Image/singerImage.png'),
   clubImage: require('./Image/clubImage.png'),
