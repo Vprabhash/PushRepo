@@ -55,6 +55,29 @@ const SearchBar = props => {
     };
   });
 
+  const searchTypeImages = [
+    {
+      id: 1,
+      label: 'Area',
+      source: ImagePath.areaImage,
+    },
+    {
+      id: 2,
+      label: 'Genre',
+      source: ImagePath.genreImage,
+    },
+    {
+      id: 3,
+      label: 'Artist',
+      source: ImagePath.artistImage,
+    },
+    {
+      id: 4,
+      label: 'Club',
+      source: ImagePath.clubImage,
+    },
+  ];
+
   const openMenu = () => {
     setVisible(true);
     animation.value = 100;
@@ -245,6 +268,49 @@ const SearchBar = props => {
       </View>
     );
   };
+
+  const onPressSearchType = type => {
+    switch (type) {
+      case 'Area':
+        setValuekey('Vashi');
+        searchApi('Vashi');
+        break;
+      case 'Genre':
+        setValuekey('Bollywood');
+        searchApi('Bollywood');
+        break;
+      case 'Artist':
+        props.navigation.navigate('ArtistDetail');
+        break;
+      case 'Club':
+        props.navigation.navigate('ClubListing');
+        break;
+      default:
+        break;
+    }
+  };
+
+  const renderSearchImages = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => {
+          onPressSearchType(item?.label);
+        }}
+        style={styles.searchTypeButtonWrapper}>
+        <Image
+          source={item.source}
+          style={{
+            height: wp(22),
+            width: wp(22),
+            resizeMode: 'cover',
+            borderRadius: wp(30),
+          }}
+        />
+        <Text style={{color: COLORS.black}}>{item.label}</Text>
+      </TouchableOpacity>
+    );
+  };
   return (
     // <Provider>
     <View style={{flex: 1}}>
@@ -290,7 +356,7 @@ const SearchBar = props => {
               <TextInput
                 style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
                 placeholderTextColor="rgba(0, 0, 0, 0.7)"
-                placeholder={'Search'}
+                placeholder={'Search by Area, Genre, Artist or Club'}
                 onChangeText={text => {
                   // searchApi(text)
                   setValuekey(text);
@@ -327,76 +393,85 @@ const SearchBar = props => {
                 </Menu>
               </View> */}
           </View>
-          {recommendation ? (
+          {recommendation && !valuekey ? (
             <>
-              {!valuekey && (
-                <View style={styles.hedingTextMain}>
-                  <Image
-                    style={styles.hedingImg}
-                    source={ImagePath.rightLine1}
-                  />
-                  <Text style={styles.cardText}>TRENDING IN YOUR CITY</Text>
-                  <Image
-                    style={styles.hedingImg}
-                    source={ImagePath.rightLine}
-                  />
-                </View>
-              )}
-              {!valuekey && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start',
-                  }}>
-                  {recommendation?.map(item => {
-                    let data = [].concat(
-                      item.localities,
-                      item.generes,
-                      item.clubs,
-                      item.artists,
-                    );
-                    return (
-                      <>
-                        {data?.map(term => {
-                          return (
-                            <TouchableOpacity
-                              onPress={() => {
-                                setValuekey(term);
-                                searchApi(term);
-                              }}
+              <View style={styles.hedingTextMain}>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+                <Text style={styles.cardText}>SEARCH BY TYPE</Text>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+              </View>
+
+              {/* location type list */}
+              <FlatList
+                horizontal
+                data={searchTypeImages}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={renderSearchImages}
+                ItemSeparatorComponent={<View style={{width: wp(2)}} />}
+                style={{
+                  alignSelf: 'center',
+                  marginTop: 10,
+                }}
+                contentContainerStyle={{justifyContent: 'space-between'}}
+              />
+              <View style={styles.hedingTextMain}>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+                <Text style={styles.cardText}>TRENDING IN YOUR CITY</Text>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                }}>
+                {recommendation?.map(item => {
+                  let data = [].concat(
+                    item.localities,
+                    item.generes,
+                    item.clubs,
+                    item.artists,
+                  );
+                  return (
+                    <>
+                      {data?.map(term => {
+                        return (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setValuekey(term);
+                              searchApi(term);
+                            }}
+                            style={{
+                              paddingHorizontal: 10,
+                              paddingVertical: 5,
+                              borderRadius: 40,
+                              borderWidth: 1,
+                              borderColor: COLORS.primary,
+                              marginLeft: 10,
+                              marginBottom: 20,
+                              flexDirection: 'row',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}>
+                            <Image
+                              source={ImagePath.trendIcon}
+                              style={{height: 15, width: 15, marginRight: 8}}
+                            />
+                            <Text
                               style={{
-                                paddingHorizontal: 10,
-                                paddingVertical: 5,
-                                borderRadius: 40,
-                                borderWidth: 1,
-                                borderColor: COLORS.primary,
-                                marginLeft: 10,
-                                marginBottom: 20,
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
+                                color: COLORS.black,
+                                fontFamily: FONTS.AxiformaRegular,
                               }}>
-                              <Image
-                                source={ImagePath.trendIcon}
-                                style={{height: 15, width: 15, marginRight: 8}}
-                              />
-                              <Text
-                                style={{
-                                  color: COLORS.black,
-                                  fontFamily: FONTS.AxiformaRegular,
-                                }}>
-                                {term}
-                              </Text>
-                            </TouchableOpacity>
-                          );
-                        })}
-                      </>
-                    );
-                  })}
-                </View>
-              )}
+                              {term}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </>
+                  );
+                })}
+              </View>
             </>
           ) : null}
 
@@ -405,7 +480,7 @@ const SearchBar = props => {
             renderItem={_renderItem}
             onEndReachedThreshold={0.3}
             contentContainerStyle={{paddingTop: 20, paddingBottom: 50}}
-            ListEmptyComponent={EmptyListMessage}
+            // ListEmptyComponent={EmptyListMessage}
           />
         </View>
       </ImageBackground>
@@ -414,11 +489,11 @@ const SearchBar = props => {
   );
 };
 export default SearchBar;
-const EmptyListMessage = () => {
-  return (
-    <Text style={styles.noDataText}>Search by Area, Genre, Artist or Club</Text>
-  );
-};
+// const EmptyListMessage = () => {
+//   return (
+//     <Text style={styles.noDataText}>Search by Area, Genre, Artist or Club</Text>
+//   );
+// };
 const styles = StyleSheet.create({
   hedingTextMain: {
     marginTop: hp(4),
@@ -482,5 +557,9 @@ const styles = StyleSheet.create({
     height: hp(6),
     color: 'rgba(0, 0, 0, 0.3)',
     flex: 1,
+  },
+  searchTypeButtonWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

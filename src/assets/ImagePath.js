@@ -92,4 +92,10 @@ export default {
   checkSelected: require('./Image/checkSelected.png'),
   closeIcon: require('./Image/close.png'),
   trendIcon: require('./Image/trend.png'),
+
+  // search
+  areaImage: require('./Image/locationImage.png'),
+  genreImage: require('./Image/musicImage.png'),
+  artistImage: require('./Image/singerImage.png'),
+  clubImage: require('./Image/clubImage.png'),
 };

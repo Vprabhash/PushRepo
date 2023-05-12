@@ -643,8 +643,8 @@ const Home = props => {
               style={[styles.inputMain, {marginTop: 10}]}>
               <TextInput
                 style={[styles.textInput, {}]}
-                placeholder={'Search'}
-                placeholderTextColor={'rgba(0, 0, 0, 0.3)'}
+                placeholder={'Search by Area, Genre, Artist or Club'}
+                placeholderTextColor="rgba(0, 0, 0, 0.7)"
                 editable={false}
                 // onChangeText={onChangeText}
                 // value={value}
