@@ -272,8 +272,8 @@ const SearchBar = props => {
   const onPressSearchType = type => {
     switch (type) {
       case 'Area':
-        setValuekey('Vashi');
-        searchApi('Vashi');
+        setValuekey('Lower Parel');
+        searchApi('Lower Parel');
         break;
       case 'Genre':
         setValuekey('Bollywood');
@@ -404,25 +404,6 @@ const SearchBar = props => {
             <>
               <View style={styles.hedingTextMain}>
                 <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-                <Text style={styles.cardText}>SEARCH BY TYPE</Text>
-                <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-              </View>
-
-              {/* location type list */}
-              <FlatList
-                horizontal
-                data={searchTypeImages}
-                keyExtractor={(_, i) => i.toString()}
-                renderItem={renderSearchImages}
-                ItemSeparatorComponent={<View style={{width: wp(2)}} />}
-                style={{
-                  alignSelf: 'center',
-                  marginTop: 10,
-                }}
-                contentContainerStyle={{justifyContent: 'space-between'}}
-              />
-              <View style={styles.hedingTextMain}>
-                <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
                 <Text style={styles.cardText}>TRENDING IN YOUR CITY</Text>
                 <Image style={styles.hedingImg} source={ImagePath.rightLine} />
               </View>
@@ -479,6 +460,27 @@ const SearchBar = props => {
                   );
                 })}
               </View>
+              <View style={styles.hedingTextMain}>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+                <Text style={styles.cardText}>
+                  SEARCH BY AREA, GENRE, ARTIST OR CLUB
+                </Text>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+              </View>
+
+              {/* location type list */}
+              <FlatList
+                horizontal
+                data={searchTypeImages}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={renderSearchImages}
+                ItemSeparatorComponent={<View style={{width: wp(2)}} />}
+                style={{
+                  alignSelf: 'center',
+                  marginTop: 10,
+                }}
+                contentContainerStyle={{justifyContent: 'space-between'}}
+              />
             </>
           ) : null}
 
