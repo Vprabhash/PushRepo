@@ -95,6 +95,7 @@ const ClubListing = ({navigation, route}) => {
     }
     try {
       const queryParams = new URLSearchParams();
+      queryParams.append('page', page);
       if (locationLatLong?.latitude || locationLatLong?.longitude) {
         queryParams.append(
           'coordinates',

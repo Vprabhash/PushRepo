@@ -87,12 +87,15 @@ const ArtistDetail = props => {
       //     selectedFilter?.artist || ''
       //   }&musicGenre=${tempdataGenres?.join('|') || ''}`,
       // );
-      const res = await ApiCall(
-        `api/artists?page=${page}&musicGenre=${
-          tempdataGenres?.join('|') || ''
-        }&type=${selectedFilter?.artist || ''}`,
-        'GET',
-      );
+      const queryParams = new URLSearchParams();
+      queryParams.append('page', page);
+      if (tempdataGenres?.length) {
+        queryParams.append('musicGenre', tempdataGenres?.join('|'));
+      }
+      if (selectedFilter?.artist) {
+        queryParams.append('type', selectedFilter?.artist);
+      }
+      const res = await ApiCall(`api/artists?${queryParams}`, 'GET');
       // console.log('---resartists--->', res?.data);
       if (Array.isArray(res?.data)) {
         if (page === 0) {
