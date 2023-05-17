@@ -42,6 +42,9 @@ import Disclamer from '../../Components/Disclamer';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 import Geolocation from '@react-native-community/geolocation';
+import CitySelector from '../../Components/CitySelector';
+
+
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -634,7 +637,8 @@ const Home = props => {
               backgroundColor="transparent"
               translucent={true}
             />
-
+            <View style={{ flex: 1, flexWrap: 'wrap', flexDirection:'row',  justifyContent: 'center', marginTop: hp(2)}}>
+            <CitySelector />
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
@@ -657,7 +661,7 @@ const Home = props => {
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
             </TouchableOpacity>
-
+            </View>    
             {/* <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
@@ -679,7 +683,7 @@ const Home = props => {
               renderItem={SpotlightData_RenderItem}
               // ListFooterComponent={spotLightrenderFooter}
               // onEndReachedThreshold={0.7}
-              contentContainerStyle={{marginTop: 20}}
+              contentContainerStyle={{marginTop: 20, zIndex: 99}}
               // onMomentumScrollBegin={() => {
               //   setonEndReachedCalledDuringspotLight(false);
               // }}
@@ -877,7 +881,7 @@ const Home = props => {
 export default Home;
 const styles = StyleSheet.create({
   hedingTextMain: {
-    marginTop: hp(4),
+    marginTop: hp(2),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -935,12 +939,14 @@ const styles = StyleSheet.create({
   inputMain: {
     backgroundColor: '#fff',
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
     elevation: 16,
-    marginHorizontal: 15,
+    marginHorizontal: 10,
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),
+    flexBasis: '50%',
   },
   filtersText: {
     fontSize: 12,

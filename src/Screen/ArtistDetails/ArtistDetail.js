@@ -280,7 +280,7 @@ const ArtistDetail = props => {
               <TextInput
                 style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
                 placeholderTextColor="rgba(0, 0, 0, 0.7)"
-                placeholder={'Search artists'}
+                placeholder={'Search by Area, Genre, Artist or Club'}
                 editable={false}
                 onChangeText={text => {
                   // searchApi(text),
