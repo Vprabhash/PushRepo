@@ -12,6 +12,7 @@ import {
 import BackgroundTimer from 'react-native-background-timer';
 import {useDispatch} from 'react-redux';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
+
 import Disclamer from '../../Components/Disclamer';
 
 const Splash_Screen = props => {

@@ -5,6 +5,7 @@ import artistListReducer from './artistSlice';
 import spotLightReducer from './spotLightSlice';
 import clubLocationReducer from './clubLocationSlice';
 import upComingEventSlice from './upComingEventSlice';
+import citySelectorSlice from './citySelectorSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   spotLight: spotLightReducer,
   clubLocation: clubLocationReducer,
   upComingEvent: upComingEventSlice,
+  citySelector: citySelectorSlice,
 });
 
 export default rootReducer;

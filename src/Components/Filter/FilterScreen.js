@@ -20,7 +20,10 @@ import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../constants';
 import GradientText from '../GradientText';
 import ApiCall from '../../redux/CommanApi';
+import {useSelector} from 'react-redux';
+
 function FilterData({label, onClick, image, bgColor}) {
+  
   return (
     <TouchableOpacity
       onPress={() => {
@@ -42,6 +45,7 @@ const FilterScreen = ({
   isArtistFilter,
   selectedFilter,
 }) => {
+  const selectedCity = useSelector(state=>state.citySelector.selectedCity);
   const [searchLocality, setSearchLocality] = useState('');
   const [searchGenre, setSearchGenre] = useState('');
   const [localities, setLocalities] = useState([]);
@@ -80,7 +84,7 @@ const FilterScreen = ({
   // }
   useEffect(() => {
     filterApi();
-  }, [isArtistFilter]);
+  }, [isArtistFilter,selectedCity]);
 
   // select all localities
   useEffect(() => {
@@ -100,7 +104,7 @@ const FilterScreen = ({
 
   const filterApi = async () => {
     try {
-      const res = await ApiCall('api/filters', 'GET');
+      const res = await ApiCall('api/filters?city='+selectedCity, 'GET');
       console.log('Filters:', res?.data);
       const uniqueArray = res?.data?.localities?.map(item => {
         const foundLocality = savedLocalities.find(

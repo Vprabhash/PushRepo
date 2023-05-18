@@ -43,7 +43,7 @@ import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 import Geolocation from '@react-native-community/geolocation';
 import CitySelector from '../../Components/CitySelector';
-
+import HeaderCitySearch from '../../Components/HeaderCitySearch';
 
 
 const width = Dimensions.get('window').width;
@@ -637,31 +637,9 @@ const Home = props => {
               backgroundColor="transparent"
               translucent={true}
             />
-            <View style={{ flex: 1, flexWrap: 'wrap', flexDirection:'row',  justifyContent: 'center', marginTop: hp(2)}}>
-            <CitySelector />
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
+            <HeaderCitySearch onPress={() =>{
                 props.navigation.navigate('SearchBar');
-              }}
-              style={[styles.inputMain, {marginTop: 10}]}>
-              <TextInput
-                style={[styles.textInput, {}]}
-                placeholder={'Search by Area, Genre, Artist or Club'}
-                placeholderTextColor="rgba(0, 0, 0, 0.7)"
-                editable={false}
-                // onChangeText={onChangeText}
-                // value={value}
-              />
-              <TouchableOpacity
-                activeOpacity={0.5}
-                onPress={() => {
-                  ('');
-                }}>
-                <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
-              </TouchableOpacity>
-            </TouchableOpacity>
-            </View>    
+            }} />  
             {/* <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
@@ -936,18 +914,7 @@ const styles = StyleSheet.create({
     // width: '100%', alignSelf: 'center',marginVertical: 5,padding:10,backgroundColor: 'pink',
   },
 
-  inputMain: {
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 16,
-    marginHorizontal: 10,
-    borderRadius: 30,
-    paddingHorizontal: wp(4),
-    height: hp(6),
-    flexBasis: '50%',
-  },
+  
   filtersText: {
     fontSize: 12,
     color: COLORS.black,
@@ -966,20 +933,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     height: hp(4),
   },
-  iconStyle: {
-    tintColor: COLORS.black,
-    width: 16,
-    resizeMode: 'contain',
-    height: 16,
-  },
-  textInput: {
-    fontFamily: FONTS.RobotoRegular,
-    fontSize: 16,
-    padding: 0,
-    height: hp(6),
-    color: 'rgba(0, 0, 0, 0.3)',
-    flex: 1,
-  },
+  
+  
   titleText1: {
     color: COLORS.black,
     fontFamily: FONTS.AxiformaRegular,

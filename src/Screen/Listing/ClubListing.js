@@ -24,11 +24,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
+import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = ({navigation, route}) => {
+  const selectedCity = useSelector(state=>state.citySelector.selectedCity);
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
@@ -49,7 +51,7 @@ const ClubListing = ({navigation, route}) => {
   useEffect(() => {
     list(page);
     console.log('Page', page);
-  }, [page, filteredData]);
+  }, [page, filteredData,selectedCity]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -80,17 +82,17 @@ const ClubListing = ({navigation, route}) => {
     let tempLocality = [];
     for (let i = 0; i < filteredData?.locality?.length; i++) {
       if (filteredData?.locality[i].checked == true) {
-        let detaisl = {};
-        detaisl = filteredData?.locality[i].value;
-        tempLocality.push(detaisl);
+        let details = {};
+        details = filteredData?.locality[i].value;
+        tempLocality.push(details);
       }
     }
     let tempdataGenres = [];
     for (let i = 0; i < filteredData?.musicGenre?.length; i++) {
       if (filteredData?.musicGenre[i].checked == true) {
-        let detaisl = {};
-        detaisl = filteredData?.musicGenre[i].value;
-        tempdataGenres.push(detaisl);
+        let details = {};
+        details = filteredData?.musicGenre[i].value;
+        tempdataGenres.push(details);
       }
     }
     try {
@@ -127,8 +129,11 @@ const ClubListing = ({navigation, route}) => {
         queryParams.append('liveMusicDj', filteredData?.liveMusicDj);
       }
       if ('city') {
-        queryParams.append('city', 'Mumbai');
+        //queryParams.append('city', 'Mumbai');
+        console.log('-=-==-=-=-=-=-SC-=-=-=-=',selectedCity);
+        queryParams.append('city', selectedCity);
       }
+      console.log('=====********============',queryParams)
       const res = await ApiCall(`api/clubs?${queryParams}`, 'GET');
       console.log('---res--club listin---', res?.status);
       // setStatus(res?.status);
@@ -329,14 +334,17 @@ const ClubListing = ({navigation, route}) => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 5, flex: 1}}>
+        <View style={{marginHorizontal: 5, flex: 1, marginTop: 30}}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}
             backgroundColor="transparent"
             translucent={true}
           />
-          <TouchableOpacity
+          <HeaderCitySearch onPress={() =>{
+                navigation.navigate('SearchBar');
+            }} />
+          {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
               navigation.navigate('SearchBar');
@@ -357,7 +365,7 @@ const ClubListing = ({navigation, route}) => {
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             style={[
               styles.fllter,

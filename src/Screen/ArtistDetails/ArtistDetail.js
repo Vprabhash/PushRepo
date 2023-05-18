@@ -22,10 +22,14 @@ import Toast from 'react-native-simple-toast';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
+import HeaderCitySearch from '../../Components/HeaderCitySearch';
+import {useSelector} from 'react-redux';
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const ArtistDetail = props => {
+  const selectedCity = useSelector(state=>state.citySelector.selectedCity);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -54,7 +58,7 @@ const ArtistDetail = props => {
 
   useEffect(() => {
     fetchArtistsData(page);
-  }, [page, selectedFilter]);
+  }, [page, selectedFilter, selectedCity]);
 
   useEffect(() => {
     console.log('artistList', artistList.length);
@@ -75,9 +79,9 @@ const ArtistDetail = props => {
     let tempdataGenres = [];
     for (let i = 0; i < selectedFilter?.musicGenre?.length; i++) {
       if (selectedFilter?.musicGenre[i].checked == true) {
-        let detaisl = {};
-        detaisl = selectedFilter?.musicGenre[i].value;
-        tempdataGenres.push(detaisl);
+        let details = {};
+        details = selectedFilter?.musicGenre[i].value;
+        tempdataGenres.push(details);
       }
     }
     try {
@@ -269,8 +273,11 @@ const ArtistDetail = props => {
           backgroundColor="transparent"
           translucent={true}
         />
-        <View style={{marginHorizontal: 5, flex: 1}}>
-          <TouchableOpacity
+        <View style={{marginHorizontal: 5, flex: 1, marginTop: 30}}>
+        <HeaderCitySearch onPress={() =>{
+                props.navigation.navigate('SearchBar');
+            }} />
+          {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
               props.navigation.navigate('SearchBar');
@@ -296,7 +303,7 @@ const ArtistDetail = props => {
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View
             style={{
               flexDirection: 'row',

@@ -3,6 +3,9 @@ import {COLORS, FONTS} from './constants';
 //import DropDownPicker from 'react-native-dropdown-picker';
 import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import {useDispatch,useSelector} from 'react-redux';
+import {currentCity} from '../redux/reducers/citySelectorSlice';
+
 
 const data = [
   { label: 'Mumbai', value: 'Mumbai' },
@@ -13,10 +16,16 @@ import {
     heightPercentageToDP as hp,
   } from 'react-native-responsive-screen';
 
-const CitySelector = () => {
-    const [value, setValue] = useState(null);
-    const [isFocus, setIsFocus] = useState(false);
 
+
+const CitySelector = () => {
+    const dispatch = useDispatch();
+    const selectedCity = useSelector(state=>state.citySelector.selectedCity);
+    const [value, setValue] = useState(selectedCity || null);
+    const [isFocus, setIsFocus] = useState(false);
+    useEffect(()=>{
+        console.log(selectedCity)
+    },[selectedCity])
     const renderLabel = () => {
       if (value || isFocus) {
         return (
@@ -48,6 +57,7 @@ const CitySelector = () => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
+            dispatch(currentCity(item.value));
             setValue(item.value);
             setIsFocus(false);
           }}

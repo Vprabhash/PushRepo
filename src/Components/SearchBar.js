@@ -301,7 +301,7 @@ const SearchBar = props => {
         <Image
           source={item.source}
           style={{
-            height: wp(33),
+            height: wp(30),
             width: wp(42),
             borderRadius: 10,
             // marginLeft: 15,
@@ -439,13 +439,13 @@ const SearchBar = props => {
                                 searchApi(term);
                               }}
                               style={{
-                                paddingHorizontal: 10,
+                                paddingHorizontal: 8,
                                 paddingVertical: 5,
                                 borderRadius: 40,
                                 borderWidth: 1,
                                 borderColor: COLORS.primary,
                                 marginLeft: 10,
-                                marginBottom: 20,
+                                marginBottom: 15,
                                 flexDirection: 'row',
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -490,7 +490,7 @@ const SearchBar = props => {
                     flexWrap: 'wrap',
                     justifyContent: 'space-between',
                     alignSelf: 'center',
-                    marginTop: 20,
+                    marginTop: 10,
                   }}>
                   {searchTypeImages?.map((item, index) =>
                     renderSearchImages({item}),
@@ -537,7 +537,7 @@ export default SearchBar;
 // };
 const styles = StyleSheet.create({
   hedingTextMain: {
-    marginTop: hp(4),
+    marginTop: hp(2),
     marginBottom: hp(2),
     flexDirection: 'row',
     justifyContent: 'center',
