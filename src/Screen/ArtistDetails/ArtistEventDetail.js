@@ -113,27 +113,71 @@ const ArtistEventDetail = props => {
                   alignItems: 'center',
                   marginTop: 5,
                 }}>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() => {
-                    if (detailData?.instagramLink) {
-                      Linking.openURL(detailData?.instagramLink);
-                    } else {
-                      Toast.show(
-                        'Instagram link is not available',
-                        Toast.LONG,
-                        Toast.BOTTOM,
-                      );
-                    }
-                  }}
-                  style={[
-                    styles.btnmain,
-                    {borderBottomLeftRadius: 10, marginRight: 1},
-                  ]}>
-                  <Image style={styles.btnIcon} source={ImagePath.Instagram} />
-                  <Text style={styles.buttonText}>Instagram</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
+                {  detailData?.instagramLink? (
+                    <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => {
+                      if (detailData?.instagramLink) {
+                        Linking.openURL(detailData?.instagramLink);
+                      } else {
+                        Toast.show(
+                          'Instagram link is not available',
+                          Toast.LONG,
+                          Toast.BOTTOM,
+                        );
+                      }
+                    }}
+                    style={[
+                      styles.btnmain,
+                      {borderBottomLeftRadius: 10, marginRight: 1},
+                    ]}>
+                    <Image style={styles.btnIcon} source={ImagePath.Instagram} />
+                    <Text style={styles.buttonText}>Instagram</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => {
+                      if (detailData?.instagramLink) {
+                        Linking.openURL(detailData?.instagramLink);
+                      } else {
+                        Toast.show(
+                          'Instagram link is not available',
+                          Toast.LONG,
+                          Toast.BOTTOM,
+                        );
+                      }
+                    }}
+                    style={[
+                      styles.btnmainDisabled,
+                      {borderBottomLeftRadius: 10, marginRight: 1},
+                    ]}>
+                    <Image style={styles.btnIconDisabled} source={ImagePath.InstagramDisabled} />
+                    <Text style={styles.buttonText}>Instagram</Text>
+                  </TouchableOpacity>
+                ) }  
+                
+
+                { detailData?.youtubeChannelLink? (
+                   <TouchableOpacity
+                   activeOpacity={0.7}
+                   onPress={() => {
+                     if (detailData?.youtubeChannelLink) {
+                       Linking.openURL(detailData?.youtubeChannelLink);
+                     } else {
+                       Toast.show(
+                         'Youtube link is not available',
+                         Toast.LONG,
+                         Toast.BOTTOM,
+                       );
+                     }
+                   }}
+                   style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
+                   <Image style={styles.btnIcon} source={ImagePath.youtube} />
+                   <Text style={styles.buttonText}>YouTube</Text>
+                 </TouchableOpacity> 
+                ) : (
+                  <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
                     if (detailData?.youtubeChannelLink) {
@@ -146,10 +190,12 @@ const ArtistEventDetail = props => {
                       );
                     }
                   }}
-                  style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
-                  <Image style={styles.btnIcon} source={ImagePath.youtube} />
+                  style={[styles.btnmainDisabled, {borderBottomRightRadius: 10}]}>
+                  <Image style={styles.btnIconDisabled} source={ImagePath.youtubeDisabled} />
                   <Text style={styles.buttonText}>YouTube</Text>
                 </TouchableOpacity>
+                )  }
+                
               </View>
             </View>
           </View>
@@ -180,6 +226,16 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     justifyContent: 'center',
   },
+  btnmainDisabled: {
+    flexDirection: 'row',
+    flex: 0.5,
+    alignItems: 'center',
+    backgroundColor: '#a1a1a1',
+    borderWidth: 1,
+    height: hp('6.5%'),
+    borderColor: '#a1a1a1',
+    justifyContent: 'center',
+  },
   buttonText: {
     fontSize: 14,
     marginLeft: 5,
@@ -191,5 +247,10 @@ const styles = StyleSheet.create({
     height: 16,
     width: 16,
     resizeMode: 'contain',
+  },
+  btnIconDisabled: {
+    height: 16,
+    width: 16,
+    resizeMode: 'contain'
   },
 });

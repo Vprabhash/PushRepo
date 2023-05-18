@@ -30,6 +30,7 @@ const height = Dimensions.get('window').height;
 
 const ArtistDetail = props => {
   const selectedCity = useSelector(state=>state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state=>state.citySelector.userBaseCity);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -58,7 +59,7 @@ const ArtistDetail = props => {
 
   useEffect(() => {
     fetchArtistsData(page);
-  }, [page, selectedFilter, selectedCity]);
+  }, [page, selectedFilter, selectedCity,userBaseCity]);
 
   useEffect(() => {
     console.log('artistList', artistList.length);

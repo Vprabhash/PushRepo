@@ -51,6 +51,10 @@ const height = Dimensions.get('window').height;
 const Home = props => {
   const dispatch = useDispatch();
   const appState = useRef(AppState.currentState);
+
+  const selectedCity = useSelector(state=>state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state=>state.citySelector.userBaseCity);
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const locationLatLong = useSelector(
@@ -87,7 +91,7 @@ const Home = props => {
     fetchClubsSpotlight();
     fetchArtistSpotlight();
     AppState.addEventListener('change', handleAppStateChange);
-  }, []);
+  }, [selectedCity,userBaseCity]);
 
   const handleAppStateChange = nextAppState => {
     if (
@@ -205,13 +209,14 @@ const Home = props => {
   const [clubsSpotlight, setClubsSpotlight] = useState([]);
   const [artistsSpotlight, setArtistsSpotlight] = useState([]);
   const fetchClubsSpotlight = () => {
-    ApiCall(`api/clubs?isFeatured=true`, 'GET').then(res => {
+       
+    ApiCall(`api/clubs?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`, 'GET').then(res => {
       // console.log('+++++++++---spotlight--->', JSON.stringify(res?.data?.length));
       setClubsSpotlight(res?.data);
     });
   };
   const fetchArtistSpotlight = () => {
-    ApiCall(`api/artists?isFeatured=true`, 'GET').then(res => {
+    ApiCall(`api/artists?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`, 'GET').then(res => {
       // console.log('(((((((---spotlight--->', JSON.stringify(res?.data));
       setArtistsSpotlight(res?.data);
     });

@@ -199,7 +199,8 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           />
           <Text style={[styles.buttonText, {}]}>Direction</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        { itemdata?.whatsappNumber? (
+          <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
             if (itemdata?.whatsappNumber) {
@@ -219,7 +220,30 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <Image style={styles.btnIcon} source={ImagePath.WhatsApp} />
           <Text style={[styles.buttonText, {}]}>WhatsApp</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        ):(
+          <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            if (itemdata?.whatsappNumber) {
+              Linking.openURL(
+                'http://api.whatsapp.com/send?phone=91' +
+                  itemdata?.whatsappNumber,
+              );
+            } else {
+              Toast.show(
+                'Sorry! WhatsApp number is not available',
+                Toast.LONG,
+                Toast.BOTTOM,
+              );
+            }
+          }}
+          style={[styles.btnmainDisabled, {marginHorizontal: 1}]}>
+          <Image style={styles.btnIconDisabled} source={ImagePath.WhatsAppDisabled} />
+          <Text style={[styles.buttonText, {}]}>WhatsApp</Text>
+        </TouchableOpacity>
+        )}
+        { itemdata?.phoneNumber? (
+          <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
             Linking.openURL('tel:' + itemdata?.phoneNumber);
@@ -228,6 +252,18 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <Image style={styles.btnIcon} source={ImagePath.callIcon} />
           <Text style={[styles.buttonText, {}]}>Call</Text>
         </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              Linking.openURL('tel:' + itemdata?.phoneNumber);
+            }}
+            style={[styles.btnmainDisabled, {borderBottomRightRadius: 10}]}>
+            <Image style={styles.btnIconDisabled} source={ImagePath.callIconDisabled} />
+            <Text style={[styles.buttonText, {}]}>Call</Text>
+          </TouchableOpacity>
+        ) }
+        
       </View>
     </View>
   );
@@ -255,6 +291,16 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     justifyContent: 'center',
   },
+  btnmainDisabled: {
+    flexDirection: 'row',
+    flex: 0.4,
+    alignItems: 'center',
+    backgroundColor: '#a1a1a1',
+    borderWidth: 1,
+    height: hp('6.5%'),
+    borderColor: '#a1a1a1',
+    justifyContent: 'center',
+  },
   buttonText: {
     fontSize: 14,
     marginLeft: 5,
@@ -263,5 +309,6 @@ const styles = StyleSheet.create({
     // letterSpacing: 0.3,
   },
   btnIcon: {height: 16, width: 16, resizeMode: 'contain'},
+  btnIconDisabled: {height: 16, width: 16, resizeMode: 'contain'},
 });
 export default MenuCard;

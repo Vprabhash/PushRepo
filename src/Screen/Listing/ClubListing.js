@@ -31,6 +31,8 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = ({navigation, route}) => {
   const selectedCity = useSelector(state=>state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state=>state.citySelector.userBaseCity);
+
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
@@ -51,7 +53,7 @@ const ClubListing = ({navigation, route}) => {
   useEffect(() => {
     list(page);
     console.log('Page', page);
-  }, [page, filteredData,selectedCity]);
+  }, [page,filteredData,selectedCity]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -133,6 +135,7 @@ const ClubListing = ({navigation, route}) => {
         console.log('-=-==-=-=-=-=-SC-=-=-=-=',selectedCity);
         queryParams.append('city', selectedCity);
       }
+      queryParams.append('userBaseCity', userBaseCity);      
       console.log('=====********============',queryParams)
       const res = await ApiCall(`api/clubs?${queryParams}`, 'GET');
       console.log('---res--club listin---', res?.status);

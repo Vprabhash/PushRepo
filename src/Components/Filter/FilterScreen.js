@@ -46,6 +46,8 @@ const FilterScreen = ({
   selectedFilter,
 }) => {
   const selectedCity = useSelector(state=>state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state=>state.citySelector.userBaseCity);
+
   const [searchLocality, setSearchLocality] = useState('');
   const [searchGenre, setSearchGenre] = useState('');
   const [localities, setLocalities] = useState([]);
@@ -84,7 +86,7 @@ const FilterScreen = ({
   // }
   useEffect(() => {
     filterApi();
-  }, [isArtistFilter,selectedCity]);
+  }, [isArtistFilter,selectedCity,userBaseCity]);
 
   // select all localities
   useEffect(() => {
