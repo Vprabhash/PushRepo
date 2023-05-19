@@ -47,13 +47,16 @@ const ClubListing = ({ navigation, route }) => {
   const [valuekey, setValuekey] = useState('');
   const [filteredData, setFilteredData] = useState({});
   const [dontCall, setDontCall] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [status, setStatus] = useState('');
   const [isCall, setIsCall] = useState(true);
 
   useEffect(() => {
+    setLoader(true)
     list(page);
+    forceUpdate();
     console.log('Page', page, selectedCity);
-  }, [page, filteredData, selectedCity]);
+  }, [page, filteredData, selectedCity, userBaseCity]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -137,36 +140,38 @@ const ClubListing = ({ navigation, route }) => {
       }
       queryParams.append('userBaseCity', userBaseCity);
       console.log('=====********============', queryParams)
-      const res = await ApiCall(`api/clubs?${queryParams}`, 'GET');
-      console.log('---res--club listin---', res?.status);
-      // setStatus(res?.status);
-      if (Array.isArray(res?.data)) {
-        if (page === 0) {
-          // if (res?.status !== 'fallback-data') {
-          setClubs(res?.data);
-          // } else {
-          //   setClubs([]);
-          // }
-          setDontCall(false);
-        } else {
-          if (res?.data?.length) {
+      ApiCall(`api/clubs?${queryParams}`, 'GET').then((res) => {
+        console.log('---res--club listin---', res?.status);
+        // setStatus(res?.status);
+        if (Array.isArray(res?.data)) {
+          if (page === 0) {
             // if (res?.status !== 'fallback-data') {
-            setClubs([...clubs, ...res?.data]);
+            setClubs(res?.data);
+            // } else {
+            //   setClubs([]);
             // }
+            setDontCall(false);
           } else {
-            setDontCall(true);
+            if (res?.data?.length) {
+              // if (res?.status !== 'fallback-data') {
+              setClubs([...clubs, ...res?.data]);
+              // }
+            } else {
+              setDontCall(true);
+            }
           }
+        } else {
+          setDontCall(false);
+          Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
         }
-      } else {
-        setDontCall(false);
-        Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
-      }
+      })
     } catch (error) {
       setDontCall(false);
       console.log(error);
       Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
+      setLoader(false);
     }
   };
 
