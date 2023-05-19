@@ -57,6 +57,7 @@ const CitySelector = () => {
           dispatch(currentCity(item.value));
           setIsFocus(false);
         }}
+        itemTextStyle={styles.textItem}
       />
     </View>
   );
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexBasis: '35%',
     elevation: 16,
-    height: hp(6),
+    // height: hp(6),
     borderRadius: 30,
     marginVertical: 10,
     paddingHorizontal: 10,
@@ -93,9 +94,7 @@ const styles = StyleSheet.create({
   textItem: {
     fontFamily: FONTS.RobotoRegular,
     fontSize: 16,
-    padding: 0,
-    height: hp(6),
-    color: 'rgba(0, 0, 0)',
+    color: '#000000',
     flex: 1,
   },
   icon: {
@@ -106,17 +105,22 @@ const styles = StyleSheet.create({
   },
   itemTextStyle: {
     paddingVertical: 5,
+    fontFamily: FONTS.RobotoRegular,
+    color: '#000000',
   },
   placeholderStyle: {
     fontSize: 16,
-    color: '#000000'
+    color: '#000000',
+    fontFamily: FONTS.RobotoRegular,
   },
   selectedTextStyle: {
     fontSize: 16,
     color: '#000000',
+    fontFamily: FONTS.RobotoRegular,
   },
   inputSearchStyle: {
     fontSize: 16,
-    color: '#000000'
+    color: '#000000',
+    fontFamily: FONTS.RobotoRegular,
   },
 });
