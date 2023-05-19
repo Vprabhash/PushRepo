@@ -341,18 +341,18 @@ const ClubListing = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1 }}>
+      <StatusBar
+        barStyle="dark-content"
+        hidden={false}
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{ height: '100%' }}>
         <View style={{ marginHorizontal: 5, flex: 1, marginTop: 30 }}>
-          <StatusBar
-            barStyle="dark-content"
-            hidden={false}
-            backgroundColor="transparent"
-            translucent={true}
-          />
-          <HeaderCitySearch onChangeCity={onChangeCity} onPress={() => {
+          <HeaderCitySearch onPress={() => {
             navigation.navigate('SearchBar');
           }} />
           {/* <TouchableOpacity
