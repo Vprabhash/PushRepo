@@ -472,7 +472,7 @@ const ClubDetails = props => {
                   ? 15
                   : 0,
               }}>
-              {detailData?.media?.drinkMenuImages?.length && (
+              {detailData?.media?.drinkMenuImages?.length ? (
                 <>
                   <TouchableOpacity
                     onPress={() => {
@@ -494,7 +494,7 @@ const ClubDetails = props => {
                   </TouchableOpacity>
                   <Text style={styles.titleText}>Beverages</Text>
                 </>
-              )}
+              ) : null}
             </View>
             <ImageView
               images={
@@ -515,7 +515,7 @@ const ClubDetails = props => {
               }}
             />
             <View style={{marginRight: 15}}>
-              {detailData?.media?.foodMenuImages?.length && (
+              {detailData?.media?.foodMenuImages?.length ? (
                 <>
                   <TouchableOpacity
                     onPress={() => {
@@ -537,7 +537,7 @@ const ClubDetails = props => {
                   </TouchableOpacity>
                   <Text style={styles.titleText}>Food</Text>
                 </>
-              )}
+              ) : null}
             </View>
           </ScrollView>
           <Text style={[styles.aboutText]}>Clubs Nearby </Text>

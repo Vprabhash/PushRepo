@@ -223,7 +223,7 @@ const ClubListing = ({ navigation, route }) => {
               navigation.navigate('ClubDetails', { listDetail: item });
             }}
             activeOpacity={0.7}>
-            {item?.media?.ambienceImages ? (
+            {item?.media?.ambienceImages && item?.media?.ambienceImages?.length ? (
               <FastImage
                 style={{
                   height: hp(29),
