@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import {
   Image,
   ImageBackground,
@@ -21,15 +21,15 @@ import {
 import Toast from 'react-native-simple-toast';
 import ImagePath from '../../assets/ImagePath';
 import LinearGradient from 'react-native-linear-gradient';
-import { COLORS, FONTS } from '../../Components/constants';
+import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const ClubListing = ({ navigation, route }) => {
+const ClubListing = ({navigation, route}) => {
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
 
@@ -52,7 +52,7 @@ const ClubListing = ({ navigation, route }) => {
   const [isCall, setIsCall] = useState(true);
 
   useEffect(() => {
-    setLoader(true)
+    setLoader(true);
     list(page);
     forceUpdate();
     console.log('Page', page, selectedCity);
@@ -110,7 +110,7 @@ const ClubListing = ({ navigation, route }) => {
         );
       }
       if (filteredData?.vegNonVeg) {
-        queryParams.append('vegNonVeg', filteredData);
+        queryParams.append('vegNonVeg', filteredData?.vegNonVeg);
       }
       if (tempLocality?.length) {
         queryParams.append('locality', tempLocality?.join('|'));
@@ -139,8 +139,8 @@ const ClubListing = ({ navigation, route }) => {
         queryParams.append('city', selectedCity);
       }
       queryParams.append('userBaseCity', userBaseCity);
-      console.log('=====********============', queryParams)
-      ApiCall(`api/clubs?${queryParams}`, 'GET').then((res) => {
+      console.log('=====********============', queryParams);
+      ApiCall(`api/clubs?${queryParams}`, 'GET').then(res => {
         console.log('---res--club listin---', res?.status);
         // setStatus(res?.status);
         if (Array.isArray(res?.data)) {
@@ -164,7 +164,7 @@ const ClubListing = ({ navigation, route }) => {
           setDontCall(false);
           Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
         }
-      })
+      });
     } catch (error) {
       setDontCall(false);
       console.log(error);
@@ -187,11 +187,11 @@ const ClubListing = ({ navigation, route }) => {
   };
   const renderFooter = () => {
     return loading ? (
-      <View style={{ paddingTop: 50, paddingBottom: 80 }}>
+      <View style={{paddingTop: 50, paddingBottom: 80}}>
         <ActivityIndicator
           color={COLORS.primary}
           size={'small'}
-          style={{ marginLeft: 8 }}
+          style={{marginLeft: 8}}
         />
       </View>
     ) : null;
@@ -208,9 +208,9 @@ const ClubListing = ({ navigation, route }) => {
     }
   };
 
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
-      <View style={{ flex: 1, width: '100%', paddingBottom: hp(3) }}>
+      <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
           style={{
             marginHorizontal: 15,
@@ -220,10 +220,11 @@ const ClubListing = ({ navigation, route }) => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('ClubDetails', { listDetail: item });
+              navigation.navigate('ClubDetails', {listDetail: item});
             }}
             activeOpacity={0.7}>
-            {item?.media?.ambienceImages && item?.media?.ambienceImages?.length ? (
+            {item?.media?.ambienceImages &&
+            item?.media?.ambienceImages?.length ? (
               <FastImage
                 style={{
                   height: hp(29),
@@ -258,9 +259,9 @@ const ClubListing = ({ navigation, route }) => {
             }}
             source={item.heartIcon}
           />
-          <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.listinhHeading}>{item?.name}</Text>
               <LinearGradient
                 style={{
@@ -272,10 +273,10 @@ const ClubListing = ({ navigation, route }) => {
                   backgroundColor: 'red',
                   alignItems: 'center',
                 }}
-                start={{ x: 0.3, y: 0.4 }}
+                start={{x: 0.3, y: 0.4}}
                 colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
                 <Image
-                  style={{ height: 10, width: 10, tintColor: '#FFFFFF' }}
+                  style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
                   source={ImagePath.star}
                 />
                 <Text
@@ -288,7 +289,7 @@ const ClubListing = ({ navigation, route }) => {
                 </Text>
               </LinearGradient>
             </View>
-            <Text style={[styles.listingText, { marginVertical: hp(0.3) }]}>
+            <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
               Restrobar
             </Text>
             <View
@@ -325,9 +326,7 @@ const ClubListing = ({ navigation, route }) => {
     setFilterComponent(false);
   };
 
-  const onChangeCity = (city) => {
-
-  }
+  const onChangeCity = city => {};
   if (filterComponent) {
     return (
       <FilterScreen
@@ -340,7 +339,7 @@ const ClubListing = ({ navigation, route }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <StatusBar
         barStyle="dark-content"
         hidden={false}
@@ -350,11 +349,13 @@ const ClubListing = ({ navigation, route }) => {
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{ height: '100%' }}>
-        <View style={{ marginHorizontal: 5, flex: 1, marginTop: 30 }}>
-          <HeaderCitySearch onPress={() => {
-            navigation.navigate('SearchBar');
-          }} />
+        style={{height: '100%'}}>
+        <View style={{marginHorizontal: 5, flex: 1, marginTop: 30}}>
+          <HeaderCitySearch
+            onPress={() => {
+              navigation.navigate('SearchBar');
+            }}
+          />
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
