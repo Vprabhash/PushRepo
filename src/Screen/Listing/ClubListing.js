@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   Image,
   ImageBackground,
@@ -21,17 +21,17 @@ import {
 import Toast from 'react-native-simple-toast';
 import ImagePath from '../../assets/ImagePath';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS, FONTS} from '../../Components/constants';
+import { COLORS, FONTS } from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const ClubListing = ({navigation, route}) => {
-  const selectedCity = useSelector(state=>state.citySelector.selectedCity);
-  const userBaseCity = useSelector(state=>state.citySelector.userBaseCity);
+const ClubListing = ({ navigation, route }) => {
+  const selectedCity = useSelector(state => state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
 
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const locationLatLong = useSelector(
@@ -52,12 +52,12 @@ const ClubListing = ({navigation, route}) => {
 
   useEffect(() => {
     list(page);
-    console.log('Page', page);
-  }, [page,filteredData,selectedCity]);
+    console.log('Page', page, selectedCity);
+  }, [page, filteredData, selectedCity]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
-      console.log('this is params', route?.params);
+      // console.log('this is params', route?.params);
       // const routes = navigation.getState().routes;
       // const prevRoute = routes[routes.length - 2];
       // // console.log('this is params prevRoute', routes);
@@ -132,11 +132,11 @@ const ClubListing = ({navigation, route}) => {
       }
       if ('city') {
         //queryParams.append('city', 'Mumbai');
-        console.log('-=-==-=-=-=-=-SC-=-=-=-=',selectedCity);
+        console.log('-=-==-=-=-=-=-SC-=-=-=-=', selectedCity);
         queryParams.append('city', selectedCity);
       }
-      queryParams.append('userBaseCity', userBaseCity);      
-      console.log('=====********============',queryParams)
+      queryParams.append('userBaseCity', userBaseCity);
+      console.log('=====********============', queryParams)
       const res = await ApiCall(`api/clubs?${queryParams}`, 'GET');
       console.log('---res--club listin---', res?.status);
       // setStatus(res?.status);
@@ -182,11 +182,11 @@ const ClubListing = ({navigation, route}) => {
   };
   const renderFooter = () => {
     return loading ? (
-      <View style={{paddingTop: 50, paddingBottom: 80}}>
+      <View style={{ paddingTop: 50, paddingBottom: 80 }}>
         <ActivityIndicator
           color={COLORS.primary}
           size={'small'}
-          style={{marginLeft: 8}}
+          style={{ marginLeft: 8 }}
         />
       </View>
     ) : null;
@@ -203,9 +203,9 @@ const ClubListing = ({navigation, route}) => {
     }
   };
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     return (
-      <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
+      <View style={{ flex: 1, width: '100%', paddingBottom: hp(3) }}>
         <View
           style={{
             marginHorizontal: 15,
@@ -215,7 +215,7 @@ const ClubListing = ({navigation, route}) => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('ClubDetails', {listDetail: item});
+              navigation.navigate('ClubDetails', { listDetail: item });
             }}
             activeOpacity={0.7}>
             {item?.media?.ambienceImages ? (
@@ -253,9 +253,9 @@ const ClubListing = ({navigation, route}) => {
             }}
             source={item.heartIcon}
           />
-          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+          <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.listinhHeading}>{item?.name}</Text>
               <LinearGradient
                 style={{
@@ -267,10 +267,10 @@ const ClubListing = ({navigation, route}) => {
                   backgroundColor: 'red',
                   alignItems: 'center',
                 }}
-                start={{x: 0.3, y: 0.4}}
+                start={{ x: 0.3, y: 0.4 }}
                 colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
                 <Image
-                  style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
+                  style={{ height: 10, width: 10, tintColor: '#FFFFFF' }}
                   source={ImagePath.star}
                 />
                 <Text
@@ -283,7 +283,7 @@ const ClubListing = ({navigation, route}) => {
                 </Text>
               </LinearGradient>
             </View>
-            <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+            <Text style={[styles.listingText, { marginVertical: hp(0.3) }]}>
               Restrobar
             </Text>
             <View
@@ -320,6 +320,9 @@ const ClubListing = ({navigation, route}) => {
     setFilterComponent(false);
   };
 
+  const onChangeCity = (city) => {
+
+  }
   if (filterComponent) {
     return (
       <FilterScreen
@@ -332,21 +335,21 @@ const ClubListing = ({navigation, route}) => {
   }
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{height: '100%'}}>
-        <View style={{marginHorizontal: 5, flex: 1, marginTop: 30}}>
+        style={{ height: '100%' }}>
+        <View style={{ marginHorizontal: 5, flex: 1, marginTop: 30 }}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}
             backgroundColor="transparent"
             translucent={true}
           />
-          <HeaderCitySearch onPress={() =>{
-                navigation.navigate('SearchBar');
-            }} />
+          <HeaderCitySearch onChangeCity={onChangeCity} onPress={() => {
+            navigation.navigate('SearchBar');
+          }} />
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
