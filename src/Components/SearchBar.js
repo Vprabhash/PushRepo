@@ -273,6 +273,11 @@ const SearchBar = props => {
   const onPressSearchType = type => {
     switch (type) {
       case 'Area':
+        if (selectedCity.toLowerCase() === 'pune') {
+          setValuekey('Hinjewadi');
+          searchApi('Hinjewadi');
+          break;
+        }
         setValuekey('Lower Parel');
         searchApi('Lower Parel');
         break;
