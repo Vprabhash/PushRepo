@@ -45,15 +45,14 @@ import Geolocation from '@react-native-community/geolocation';
 import CitySelector from '../../Components/CitySelector';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 
-
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const Home = props => {
   const dispatch = useDispatch();
   const appState = useRef(AppState.currentState);
 
-  const selectedCity = useSelector(state=>state.citySelector.selectedCity);
-  const userBaseCity = useSelector(state=>state.citySelector.userBaseCity);
+  const selectedCity = useSelector(state => state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -91,7 +90,7 @@ const Home = props => {
     fetchClubsSpotlight();
     fetchArtistSpotlight();
     AppState.addEventListener('change', handleAppStateChange);
-  }, [selectedCity,userBaseCity]);
+  }, [selectedCity, userBaseCity]);
 
   const handleAppStateChange = nextAppState => {
     if (
@@ -209,14 +208,19 @@ const Home = props => {
   const [clubsSpotlight, setClubsSpotlight] = useState([]);
   const [artistsSpotlight, setArtistsSpotlight] = useState([]);
   const fetchClubsSpotlight = () => {
-       
-    ApiCall(`api/clubs?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`, 'GET').then(res => {
+    ApiCall(
+      `api/clubs?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`,
+      'GET',
+    ).then(res => {
       // console.log('+++++++++---spotlight--->', JSON.stringify(res?.data?.length));
       setClubsSpotlight(res?.data);
     });
   };
   const fetchArtistSpotlight = () => {
-    ApiCall(`api/artists?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`, 'GET').then(res => {
+    ApiCall(
+      `api/artists?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`,
+      'GET',
+    ).then(res => {
       // console.log('(((((((---spotlight--->', JSON.stringify(res?.data));
       setArtistsSpotlight(res?.data);
     });
@@ -505,15 +509,27 @@ const Home = props => {
           marginRight: index == 0 ? 15 : 15,
           marginLeft: index == 0 ? 15 : 0,
         }}>
-        <FastImage
-          style={{
-            height: hp(26),
-            width: wp(83),
-            resizeMode: 'cover',
-            borderRadius: 10,
-          }}
-          source={{uri: item?.media?.ambienceImages[0]}}
-        />
+        {item?.media?.ambienceImages?.length ? (
+          <FastImage
+            style={{
+              height: hp(26),
+              width: wp(83),
+              resizeMode: 'cover',
+              borderRadius: 10,
+            }}
+            source={{uri: item?.media?.ambienceImages[0] || ''}}
+          />
+        ) : (
+          <View
+            style={{
+              height: hp(26),
+              width: wp(83),
+              resizeMode: 'cover',
+              borderRadius: 10,
+              backgroundColor: COLORS.primary,
+            }}
+          />
+        )}
         <View style={{position: 'absolute', left: 15, bottom: 30}}>
           <Text
             style={{
@@ -642,9 +658,11 @@ const Home = props => {
               backgroundColor="transparent"
               translucent={true}
             />
-            <HeaderCitySearch onPress={() =>{
+            <HeaderCitySearch
+              onPress={() => {
                 props.navigation.navigate('SearchBar');
-            }} />  
+              }}
+            />
             {/* <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
@@ -919,7 +937,6 @@ const styles = StyleSheet.create({
     // width: '100%', alignSelf: 'center',marginVertical: 5,padding:10,backgroundColor: 'pink',
   },
 
-  
   filtersText: {
     fontSize: 12,
     color: COLORS.black,
@@ -938,8 +955,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     height: hp(4),
   },
-  
-  
+
   titleText1: {
     color: COLORS.black,
     fontFamily: FONTS.AxiformaRegular,

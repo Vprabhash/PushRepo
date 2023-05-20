@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { COLORS, FONTS } from './constants';
+import React, {useState, useEffect} from 'react';
+import {COLORS, FONTS} from './constants';
 //import DropDownPicker from 'react-native-dropdown-picker';
-import { StyleSheet, Text, View } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import { useDispatch, useSelector } from 'react-redux';
-import { currentCity } from '../redux/reducers/citySelectorSlice';
-
+import {StyleSheet, Text, View} from 'react-native';
+import {Dropdown} from 'react-native-element-dropdown';
+import {useDispatch, useSelector} from 'react-redux';
+import {currentCity} from '../redux/reducers/citySelectorSlice';
 
 const data = [
-  { label: 'Mumbai', value: 'Mumbai' },
-  { label: 'Pune', value: 'Pune' },
+  {label: 'Mumbai', value: 'Mumbai'},
+  {label: 'Pune', value: 'Pune'},
 ];
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
-
 
 const CitySelector = () => {
   const dispatch = useDispatch();
@@ -26,7 +23,7 @@ const CitySelector = () => {
   const renderLabel = () => {
     if (isFocus) {
       return (
-        <Text style={[styles.label, isFocus && { color: '#000000' }]}>
+        <Text style={[styles.label, isFocus && {color: '#000000'}]}>
           Select City
         </Text>
       );
@@ -38,13 +35,13 @@ const CitySelector = () => {
     <View style={styles.container}>
       {/* //{renderLabel()} */}
       <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data}
-        search
+        // search
         maxHeight={200}
         labelField="label"
         valueField="value"
@@ -61,7 +58,7 @@ const CitySelector = () => {
       />
     </View>
   );
-}
+};
 
 export default CitySelector;
 

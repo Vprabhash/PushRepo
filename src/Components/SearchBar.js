@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -20,16 +20,16 @@ import {
 } from 'react-native-responsive-screen';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
-import { Menu, Provider } from 'react-native-paper';
+import {Menu, Provider} from 'react-native-paper';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import ImagePath from '../assets/ImagePath';
-import { COLORS, FONTS } from './constants';
+import {COLORS, FONTS} from './constants';
 import ApiCall from '../redux/CommanApi';
 
 const width = Dimensions.get('window').width;
@@ -37,7 +37,6 @@ const height = Dimensions.get('window').height;
 
 const SearchBar = props => {
   const [clubs, setClubs] = useState();
-
 
   const [valuekey, setValuekey] = useState('');
   const [recommendation, setRecommendation] = useState(null);
@@ -47,7 +46,7 @@ const SearchBar = props => {
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: withTiming(animation.value, { duration: 500 }) }],
+      transform: [{translateY: withTiming(animation.value, {duration: 500})}],
     };
   });
   useEffect(() => {
@@ -91,7 +90,10 @@ const SearchBar = props => {
 
   const searchApi = async text => {
     if (valuekey || text) {
-      const res = await ApiCall(`api/search?q=${text || valuekey}&city=${selectedCity}`, 'GET');
+      const res = await ApiCall(
+        `api/search?q=${text || valuekey}&city=${selectedCity}`,
+        'GET',
+      );
       console.log('---searchApi--->', JSON.stringify(res?.data?.clubs));
       let temArray = [];
       let clubs = res?.data?.clubs;
@@ -115,9 +117,9 @@ const SearchBar = props => {
         console.log('----recommendation erorr: ', err);
       });
   };
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
-      <View style={{ flex: 1, width: '100%', paddingBottom: hp(3) }}>
+      <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
           style={{
             marginHorizontal: 10,
@@ -132,7 +134,7 @@ const SearchBar = props => {
                   artistListDetail: item,
                 });
               } else {
-                props.navigation.navigate('ClubDetails', { listDetail: item });
+                props.navigation.navigate('ClubDetails', {listDetail: item});
               }
             }}
             activeOpacity={0.7}>
@@ -201,9 +203,9 @@ const SearchBar = props => {
             }}
             source={ImagePath?.heartIcon}
           /> */}
-          <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text style={styles.listinhHeading}>{item?.name}</Text>
               {item?.zomatoRating ? (
                 <LinearGradient
@@ -216,10 +218,10 @@ const SearchBar = props => {
                     backgroundColor: 'red',
                     alignItems: 'center',
                   }}
-                  start={{ x: 0.3, y: 0.4 }}
+                  start={{x: 0.3, y: 0.4}}
                   colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
                   <Image
-                    style={{ height: 10, width: 10, tintColor: '#FFFFFF' }}
+                    style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
                     source={ImagePath.star}
                   />
                   <Text
@@ -235,13 +237,13 @@ const SearchBar = props => {
             </View>
             {/* {item.type == 'dj' && ( */}
             {item?.cost && (
-              <Text style={[styles.listingText, { marginVertical: hp(0.3) }]}>
+              <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
                 Restrobar
               </Text>
             )}
             {/* )} */}
             {item?.type && (
-              <Text style={[styles.listingText, { textTransform: 'uppercase' }]}>
+              <Text style={[styles.listingText, {textTransform: 'uppercase'}]}>
                 {item?.type?.toLowerCase() === 'artist' ? 'SINGER' : item?.type}
               </Text>
             )}
@@ -296,7 +298,7 @@ const SearchBar = props => {
     }
   };
 
-  const renderSearchImages = ({ item, index }) => {
+  const renderSearchImages = ({item, index}) => {
     return (
       <TouchableOpacity
         activeOpacity={0.6}
@@ -327,12 +329,12 @@ const SearchBar = props => {
   };
   return (
     // <Provider>
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{ height: '100%' }}>
-        <View style={{ marginHorizontal: 5, marginTop: 50 }}>
+        style={{height: '100%'}}>
+        <View style={{marginHorizontal: 5, marginTop: 50}}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}
@@ -351,7 +353,7 @@ const SearchBar = props => {
               onPress={() => {
                 props.navigation.goBack();
               }}
-              style={{ marginLeft: 5 }}>
+              style={{marginLeft: 5}}>
               <Image
                 style={{
                   height: 16,
@@ -368,7 +370,7 @@ const SearchBar = props => {
                   anchor={ */}
             <View onPress={openMenu} style={[styles.inputMain]}>
               <TextInput
-                style={[styles.textInput, { color: 'rgba(0, 0, 0, 0.7)' }]}
+                style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
                 placeholderTextColor="rgba(0, 0, 0, 0.7)"
                 placeholder={'Search by Area, Genre, Artist or Club'}
                 onChangeText={text => {
@@ -380,7 +382,7 @@ const SearchBar = props => {
               />
               {valuekey && (
                 <TouchableOpacity
-                  style={{ marginRight: 10 }}
+                  style={{marginRight: 10}}
                   activeOpacity={0.5}
                   onPress={() => {
                     setValuekey('');
@@ -458,7 +460,7 @@ const SearchBar = props => {
                               }}>
                               <Image
                                 source={ImagePath.trendIcon}
-                                style={{ height: 15, width: 15, marginRight: 8 }}
+                                style={{height: 15, width: 15, marginRight: 8}}
                               />
                               <Text
                                 style={{
@@ -499,7 +501,7 @@ const SearchBar = props => {
                     marginTop: 10,
                   }}>
                   {searchTypeImages?.map((item, index) =>
-                    renderSearchImages({ item }),
+                    renderSearchImages({item}),
                   )}
                 </View>
                 {/* <FlatList
@@ -526,8 +528,8 @@ const SearchBar = props => {
             renderItem={_renderItem}
             keyExtractor={(_, i) => i.toString()}
             onEndReachedThreshold={0.3}
-            contentContainerStyle={{ paddingTop: 20, paddingBottom: 50 }}
-          // ListEmptyComponent={EmptyListMessage}
+            contentContainerStyle={{paddingTop: 20, paddingBottom: 50}}
+            // ListEmptyComponent={EmptyListMessage}
           />
         </View>
       </ImageBackground>
@@ -543,13 +545,13 @@ export default SearchBar;
 // };
 const styles = StyleSheet.create({
   hedingTextMain: {
-    marginTop: hp(2),
+    marginTop: 40,
     marginBottom: hp(2),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  hedingImg: { width: '30%', resizeMode: 'contain' },
+  hedingImg: {width: '30%', resizeMode: 'contain'},
   cardText: {
     fontFamily: FONTS.AxiformaBold,
     fontSize: 12,
