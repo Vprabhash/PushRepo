@@ -113,7 +113,7 @@ const SignUp = props => {
           : '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
       androidClientId:
         '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
-      offlineAccess: true,
+      offlineAccess: false,
     });
   }, []);
 
