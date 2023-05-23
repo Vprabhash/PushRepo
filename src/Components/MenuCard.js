@@ -209,7 +209,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
                   itemdata?.whatsappNumber,
               );
             } else {
-              Toast.show(
+              Toast.showWithGravity(
                 'Sorry! WhatsApp number is not available',
                 Toast.LONG,
                 Toast.BOTTOM,
@@ -230,7 +230,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
                   itemdata?.whatsappNumber,
               );
             } else {
-              Toast.show(
+              Toast.showWithGravity(
                 'Sorry! WhatsApp number is not available',
                 Toast.LONG,
                 Toast.BOTTOM,

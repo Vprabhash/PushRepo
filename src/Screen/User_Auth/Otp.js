@@ -35,7 +35,7 @@ const Otp = props => {
   console.log('props signOtp--------', props.route.params);
   const OtpApi = async () => {
     if (Otp.length < 6) {
-      Toast.show('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
     } else {
       const data = {
         email: email,
@@ -62,10 +62,10 @@ const Otp = props => {
             });
           }
         } else {
-          Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
         }
       } catch (error) {
-        Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
       } finally {
         setLoading(false);
       }
@@ -79,13 +79,13 @@ const Otp = props => {
     try {
       const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
       console.log('---send-------', res);
-      Toast.show(
+      Toast.showWithGravity(
         res.message || 'Something went wrong',
         Toast.LONG,
         Toast.BOTTOM,
       );
     } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 
@@ -96,13 +96,13 @@ const Otp = props => {
     try {
       const res = await ApiCall('api/forgot-password', 'POST', data);
       console.log('--resForgetpass-----', res);
-      Toast.show(
+      Toast.showWithGravity(
         res.message || 'Something went wrong',
         Toast.LONG,
         Toast.BOTTOM,
       );
     } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 
@@ -164,7 +164,7 @@ const Otp = props => {
                     email: email,
                   });
                 } else {
-                  Toast.show('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
+                  Toast.showWithGravity('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
                 }
               } else {
                 OtpApi();

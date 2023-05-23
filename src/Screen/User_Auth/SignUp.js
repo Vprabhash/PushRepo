@@ -68,16 +68,16 @@ const SignUp = props => {
         const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
         console.log('---res--otp-----', res);
         if (res.ok == true) {
-          Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(res.message, Toast.LONG, Toast.BOTTOM);
           props.navigation.navigate('Otp', {
             email: email,
             password: password,
           });
         } else {
-          Toast.show(res.message, Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(res.message, Toast.LONG, Toast.BOTTOM);
         }
       } catch (error) {
-        Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
       } finally {
         setLoading(false);
       }
@@ -94,7 +94,7 @@ const SignUp = props => {
       //     console.log('---responsesignUp----', response);
       //   })
       //   .catch(error => {
-      //     Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      //     Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
       //     console.error('Sign up error:', error.message);
       //   });
     } else {
@@ -153,7 +153,7 @@ const SignUp = props => {
           });
         }
       } catch (error) {
-        Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
       } finally {
         setLoadingGoogle(false);
       }

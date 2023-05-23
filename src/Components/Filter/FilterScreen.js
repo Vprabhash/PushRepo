@@ -134,7 +134,7 @@ const FilterScreen = ({
       setGeneres(uniqueGenre);
       // setHappyHourTimings(res?.data?.happyHourTimings);
     } catch (error) {
-      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 

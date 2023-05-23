@@ -580,7 +580,7 @@ const Home = props => {
         console.log('clubsnearbydata ----', res?.data);
       });
     } catch (error) {
-      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
   const [clubsNearby, setClubNearby] = useState([]);

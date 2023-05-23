@@ -47,14 +47,14 @@ const EditProfile = props => {
       const res = await ApiCall('api/user', 'POST', JSON.stringify(data));
       console.log('--EditProfile-----', res);
       if (res.ok == true) {
-        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
         props.route?.params?.refresh();
         navigation.goBack();
       } else {
-        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
       }
     } catch (error) {
-      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
     }
@@ -74,7 +74,7 @@ const EditProfile = props => {
         setEmail(res?.data?.username);
       }
     } catch (error) {
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 

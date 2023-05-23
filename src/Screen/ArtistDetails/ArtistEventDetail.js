@@ -120,7 +120,7 @@ const ArtistEventDetail = props => {
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
                       } else {
-                        Toast.show(
+                        Toast.showWithGravity(
                           'Instagram link is not available',
                           Toast.LONG,
                           Toast.BOTTOM,
@@ -141,7 +141,7 @@ const ArtistEventDetail = props => {
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
                       } else {
-                        Toast.show(
+                        Toast.showWithGravity(
                           'Instagram link is not available',
                           Toast.LONG,
                           Toast.BOTTOM,
@@ -165,7 +165,7 @@ const ArtistEventDetail = props => {
                      if (detailData?.youtubeChannelLink) {
                        Linking.openURL(detailData?.youtubeChannelLink);
                      } else {
-                       Toast.show(
+                       Toast.showWithGravity(
                          'Youtube link is not available',
                          Toast.LONG,
                          Toast.BOTTOM,
@@ -183,7 +183,7 @@ const ArtistEventDetail = props => {
                     if (detailData?.youtubeChannelLink) {
                       Linking.openURL(detailData?.youtubeChannelLink);
                     } else {
-                      Toast.show(
+                      Toast.showWithGravity(
                         'Youtube link is not available',
                         Toast.LONG,
                         Toast.BOTTOM,

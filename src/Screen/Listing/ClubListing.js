@@ -162,13 +162,13 @@ const ClubListing = ({navigation, route}) => {
           }
         } else {
           setDontCall(false);
-          Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
         }
       });
     } catch (error) {
       setDontCall(false);
       console.log(error);
-      Toast.show(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
       setLoader(false);

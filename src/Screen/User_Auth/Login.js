@@ -76,12 +76,12 @@ const Login = props => {
           index: 0,
           routes: [{name: 'BottomTab'}],
         });
-        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
       } else {
-        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
       }
     } catch (error) {
-      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setIsLoading(false);
     }
@@ -130,7 +130,7 @@ const Login = props => {
           }
         })
         .catch(error => {
-          Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
         })
         .finally(() => {
           setIsLoadingGoogle(false);

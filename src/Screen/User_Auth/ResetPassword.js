@@ -72,11 +72,11 @@ const ResetPassword = ({route, navigation}) => {
         );
         console.log('---res--Lohin-----', res);
         if (res.ok == true) {
-          Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
           logOut();
         }
       } catch (error) {
-        Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
       }
     } else {
       Alert.alert(

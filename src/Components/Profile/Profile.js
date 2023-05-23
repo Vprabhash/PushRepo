@@ -75,14 +75,14 @@ const Profile = ({navigation}) => {
         setUserProfileData(res?.data);
         setimg(res?.data?.avatarUrl);
       } else {
-        Toast.show(
+        Toast.showWithGravity(
           res?.data?.message || 'Something went wrong',
           Toast.LONG,
           Toast.BOTTOM,
         );
       }
     } catch (error) {
-      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 
@@ -147,14 +147,14 @@ const Profile = ({navigation}) => {
       if (res?.data?.username) {
         setUserProfileData(res?.data);
       } else {
-        Toast.show(
+        Toast.showWithGravity(
           res?.data?.message || 'Something went wrong',
           Toast.LONG,
           Toast.BOTTOM,
         );
       }
     } catch (error) {
-      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
   const accountListRenderItem = ({item, index}) => {

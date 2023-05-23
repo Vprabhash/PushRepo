@@ -45,17 +45,17 @@ const ForgetPassword = ({route, navigation}) => {
       );
       console.log('--resForgetpass-----', res);
       if (res.ok == true) {
-        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
 
         navigation.navigate('Otp', {
           forgetmail: 'otp',
           email: email,
         });
       } else {
-        Toast.show(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
       }
     } catch (error) {
-      Toast.show(error?.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
     }
