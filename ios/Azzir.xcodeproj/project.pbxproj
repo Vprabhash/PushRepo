@@ -20,6 +20,7 @@
 		2DB4EED58C0E42D899CF570C /* Metropolis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0CE97380D7A42D38F12AA80 /* Metropolis-Medium.ttf */; };
 		2EDA278BEBD54B1A81E474FE /* Metropolis-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 319623DCC15E4356BD580138 /* Metropolis-Black.ttf */; };
 		30F16BF114114A679B16BF40 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63ECA6D793F444B38D8D8546 /* Inter-Bold.ttf */; };
+		317EC82E0FE2ED1A40B10878 /* Pods_Azzir.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B37CF06EC55E4AEC0147A9 /* Pods_Azzir.framework */; };
 		33CE83A0747A4F68A63CC57B /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 185FF0BC53E449578E33BDB2 /* Roboto-Black.ttf */; };
 		366B73D65BC844E98F950A79 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7087A67D500488CB8F1206A /* Inter-Thin.ttf */; };
 		36ECD0B921F742F39018DE2E /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BACEDAAD1164B13BBC2E308 /* Roboto-Light.ttf */; };
@@ -29,11 +30,56 @@
 		5699693C17B041EC8B58EB29 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F88CE21EBE8B462DA3721FA9 /* Roboto-Thin.ttf */; };
 		59D35737A68C426189DBD045 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE54E0D6A433487BAA5AFD9A /* Inter-ExtraLight.ttf */; };
 		5B0D7093795A44BCA9DB8F7A /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43D2E87DD33440988E5EF7D6 /* DMSans-Medium.ttf */; };
-		5BF1E38E8F862B9DE343A713 /* libPods-Azzir-AzzirTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DABA2014C2D22A56B9A4CA5 /* libPods-Azzir-AzzirTests.a */; };
 		6DCAED4087894DBF82FAF6C1 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D5ECC51E857479E943FCCBD /* DMSans-Regular.ttf */; };
 		73276142C3F744C5A4439410 /* HankenGrotesk-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */; };
 		74D4943A3E4144408CF84612 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */; };
+		7F29B00F2A1D06A400AB5B60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F29B00E2A1D06A400AB5B60 /* GoogleService-Info.plist */; };
+		7F79A5EC2A1C91C6003A607E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		7F79A5F02A1C9264003A607E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
+		7F79A5F12A1C9264003A607E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		7F79A5F22A1C9279003A607E /* Metropolis-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 319623DCC15E4356BD580138 /* Metropolis-Black.ttf */; };
+		7F79A5F32A1C9279003A607E /* Metropolis-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3EB574F89913405C92973717 /* Metropolis-Bold.ttf */; };
+		7F79A5F42A1C9279003A607E /* Metropolis-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F39B53B00EF4F3CB16E3473 /* Metropolis-Light.ttf */; };
+		7F79A5F52A1C9279003A607E /* Metropolis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0CE97380D7A42D38F12AA80 /* Metropolis-Medium.ttf */; };
+		7F79A5F62A1C9279003A607E /* Metropolis-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2000C2FAE335404C857822EC /* Metropolis-Regular.ttf */; };
+		7F79A5F72A1C9279003A607E /* Metropolis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F6BD729D9AA45CB847F02CF /* Metropolis-SemiBold.ttf */; };
+		7F79A5F82A1C9279003A607E /* HankenGrotesk-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 398821EAEC1E47259AA54280 /* HankenGrotesk-VariableFont_wght.ttf */; };
+		7F79A5F92A1C9279003A607E /* HankenGrotesk-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD12A3E750EA4663A4BC3337 /* HankenGrotesk-Black.ttf */; };
+		7F79A5FA2A1C9279003A607E /* HankenGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 868A123A3F014FB2A78B650C /* HankenGrotesk-Bold.ttf */; };
+		7F79A5FB2A1C9279003A607E /* HankenGrotesk-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */; };
+		7F79A5FC2A1C9279003A607E /* HankenGrotesk-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E01C5B396BC42829AB75416 /* HankenGrotesk-ExtraLight.ttf */; };
+		7F79A5FD2A1C9279003A607E /* HankenGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 672110960D5049EB81CF45F2 /* HankenGrotesk-Light.ttf */; };
+		7F79A5FE2A1C9279003A607E /* HankenGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B680208BC6F42E4AA88508B /* HankenGrotesk-Medium.ttf */; };
+		7F79A5FF2A1C9279003A607E /* HankenGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 312A819AEF74499E9EE359B2 /* HankenGrotesk-Regular.ttf */; };
+		7F79A6002A1C9279003A607E /* HankenGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 932924A87F414BEABFEB6B18 /* HankenGrotesk-SemiBold.ttf */; };
+		7F79A6012A1C9279003A607E /* HankenGrotesk-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB45E28371AE45608546E824 /* HankenGrotesk-Thin.ttf */; };
+		7F79A6022A1C9279003A607E /* PTSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CBAFDCB21524D138AC748EB /* PTSerif-Bold.ttf */; };
+		7F79A6032A1C9279003A607E /* PTSerif-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3C821D7D8424F25974B8886 /* PTSerif-Italic.ttf */; };
+		7F79A6042A1C9279003A607E /* PTSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C26705880C09491ABCA2A7AE /* PTSerif-Regular.ttf */; };
+		7F79A6052A1C9279003A607E /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 185FF0BC53E449578E33BDB2 /* Roboto-Black.ttf */; };
+		7F79A6062A1C9279003A607E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33640C7D8B044106B19939AE /* Roboto-Bold.ttf */; };
+		7F79A6072A1C9279003A607E /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BACEDAAD1164B13BBC2E308 /* Roboto-Light.ttf */; };
+		7F79A6082A1C9279003A607E /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 284D0FB1F3F942FDADDDD6EF /* Roboto-Medium.ttf */; };
+		7F79A6092A1C9279003A607E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C9BCF2059143A4916919F2 /* Roboto-Regular.ttf */; };
+		7F79A60A2A1C9279003A607E /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F88CE21EBE8B462DA3721FA9 /* Roboto-Thin.ttf */; };
+		7F79A60B2A1C9279003A607E /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 104CB82E1BE14084B7479457 /* DMSans-Bold.ttf */; };
+		7F79A60C2A1C9279003A607E /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43D2E87DD33440988E5EF7D6 /* DMSans-Medium.ttf */; };
+		7F79A60D2A1C9279003A607E /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D5ECC51E857479E943FCCBD /* DMSans-Regular.ttf */; };
+		7F79A60E2A1C9279003A607E /* Inter-VariableFont_slnt,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA3C1421A195474B9BEB3BF2 /* Inter-VariableFont_slnt,wght.ttf */; };
+		7F79A60F2A1C9279003A607E /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C74CBCC9D1F41388C39C5BB /* Inter-Black.ttf */; };
+		7F79A6102A1C9279003A607E /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63ECA6D793F444B38D8D8546 /* Inter-Bold.ttf */; };
+		7F79A6112A1C9279003A607E /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A653D2ADE5F54B1A87885CAC /* Inter-ExtraBold.ttf */; };
+		7F79A6122A1C9279003A607E /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE54E0D6A433487BAA5AFD9A /* Inter-ExtraLight.ttf */; };
+		7F79A6132A1C9279003A607E /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C49E850DC7BF4B5E84F0E741 /* Inter-Light.ttf */; };
+		7F79A6142A1C9279003A607E /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A29273591EE4207A68D325B /* Inter-Medium.ttf */; };
+		7F79A6152A1C9279003A607E /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */; };
+		7F79A6162A1C9279003A607E /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 448744E87E59483CB4AE1F03 /* Inter-SemiBold.ttf */; };
+		7F79A6172A1C9279003A607E /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7087A67D500488CB8F1206A /* Inter-Thin.ttf */; };
+		7F79A6182A1C9333003A607E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		7F79A61A2A1CA8FC003A607E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F79A6192A1CA8FC003A607E /* Foundation.framework */; };
+		7F79A61C2A1CA9F1003A607E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F79A61B2A1CA9F1003A607E /* CoreFoundation.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		872A32773A2247582D6FFF7D /* Pods_Azzir_AzzirTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90838FE10F653008D5FDC0D /* Pods_Azzir_AzzirTests.framework */; };
 		9739240FE8554D0D9187E3AC /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C49E850DC7BF4B5E84F0E741 /* Inter-Light.ttf */; };
 		974738060CC5426E9DBB7F0D /* Inter-VariableFont_slnt,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA3C1421A195474B9BEB3BF2 /* Inter-VariableFont_slnt,wght.ttf */; };
 		9C58057DE9364CC284D65131 /* HankenGrotesk-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD12A3E750EA4663A4BC3337 /* HankenGrotesk-Black.ttf */; };
@@ -50,76 +96,78 @@
 		E8F8D5E594C54D3195BE3A47 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C9BCF2059143A4916919F2 /* Roboto-Regular.ttf */; };
 		EF3CAB4EBA7E414AA5009FF8 /* Metropolis-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2000C2FAE335404C857822EC /* Metropolis-Regular.ttf */; };
 		F79644FDBDCD487D9A623E13 /* PTSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C26705880C09491ABCA2A7AE /* PTSerif-Regular.ttf */; };
-		FB077ADD14E7A42EF57DD95B /* libPods-Azzir.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF5C0A20CA5845B07C312287 /* libPods-Azzir.a */; };
 		FE54491C691D45BAB1ED4B88 /* PTSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CBAFDCB21524D138AC748EB /* PTSerif-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		00E356F41AD99517003FC87E /* PBXContainerItemProxy */ = {
+		7F79A5ED2A1C91D1003A607E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = "Azzir";
+			remoteInfo = Azzir;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* AzzirTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AzzirTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* AzzirTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzzirTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* AzzirTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AzzirTests.m"; sourceTree = "<group>"; };
-		0DABA2014C2D22A56B9A4CA5 /* libPods-Azzir-AzzirTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Azzir-AzzirTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E01C5B396BC42829AB75416 /* HankenGrotesk-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-ExtraLight.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-ExtraLight.ttf"; sourceTree = "<group>"; };
-		104CB82E1BE14084B7479457 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Bold.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Bold.ttf"; sourceTree = "<group>"; };
-		11C9BCF2059143A4916919F2 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
-		132FD2BEBB586487F64D028C /* Pods-Azzir.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir.release.xcconfig"; path = "Target Support Files/Pods-Azzir/Pods-Azzir.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Azzir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Azzir.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "Azzir/AppDelegate.h"; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = "Azzir/AppDelegate.mm"; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Azzir/Images.xcassets"; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Azzir/Info.plist"; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Azzir/main.m"; sourceTree = "<group>"; };
-		185FF0BC53E449578E33BDB2 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Black.ttf"; sourceTree = "<group>"; };
-		1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-ExtraBold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-ExtraBold.ttf"; sourceTree = "<group>"; };
-		1F39B53B00EF4F3CB16E3473 /* Metropolis-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Light.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Light.ttf"; sourceTree = "<group>"; };
-		1F6BD729D9AA45CB847F02CF /* Metropolis-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-SemiBold.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-SemiBold.ttf"; sourceTree = "<group>"; };
-		2000C2FAE335404C857822EC /* Metropolis-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Regular.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Regular.ttf"; sourceTree = "<group>"; };
-		284D0FB1F3F942FDADDDD6EF /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
-		2D5ECC51E857479E943FCCBD /* DMSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Regular.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Regular.ttf"; sourceTree = "<group>"; };
-		312A819AEF74499E9EE359B2 /* HankenGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Regular.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Regular.ttf"; sourceTree = "<group>"; };
-		319623DCC15E4356BD580138 /* Metropolis-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Black.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Black.ttf"; sourceTree = "<group>"; };
-		33640C7D8B044106B19939AE /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; };
-		398821EAEC1E47259AA54280 /* HankenGrotesk-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-VariableFont_wght.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/HankenGrotesk-VariableFont_wght.ttf"; sourceTree = "<group>"; };
-		3A29273591EE4207A68D325B /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Medium.ttf"; sourceTree = "<group>"; };
-		3C74CBCC9D1F41388C39C5BB /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Black.ttf"; sourceTree = "<group>"; };
-		3EB574F89913405C92973717 /* Metropolis-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Bold.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Bold.ttf"; sourceTree = "<group>"; };
-		43D2E87DD33440988E5EF7D6 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Medium.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Medium.ttf"; sourceTree = "<group>"; };
-		448744E87E59483CB4AE1F03 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
-		4BACEDAAD1164B13BBC2E308 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Light.ttf"; sourceTree = "<group>"; };
-		4CBAFDCB21524D138AC748EB /* PTSerif-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Bold.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Bold.ttf"; sourceTree = "<group>"; };
-		4ECC6ED6A62C75A0686991FF /* Pods-Azzir-AzzirTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir-AzzirTests.release.xcconfig"; path = "Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests.release.xcconfig"; sourceTree = "<group>"; };
-		63ECA6D793F444B38D8D8546 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Bold.ttf"; sourceTree = "<group>"; };
-		672110960D5049EB81CF45F2 /* HankenGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Light.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Light.ttf"; sourceTree = "<group>"; };
-		7B680208BC6F42E4AA88508B /* HankenGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Medium.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Medium.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "Azzir/LaunchScreen.storyboard"; sourceTree = "<group>"; };
-		868A123A3F014FB2A78B650C /* HankenGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Bold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Bold.ttf"; sourceTree = "<group>"; };
-		8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Regular.ttf"; sourceTree = "<group>"; };
-		932924A87F414BEABFEB6B18 /* HankenGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-SemiBold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
-		A0CE97380D7A42D38F12AA80 /* Metropolis-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Medium.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Medium.ttf"; sourceTree = "<group>"; };
-		A653D2ADE5F54B1A87885CAC /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
-		B3C821D7D8424F25974B8886 /* PTSerif-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Italic.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Italic.ttf"; sourceTree = "<group>"; };
-		C26705880C09491ABCA2A7AE /* PTSerif-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Regular.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Regular.ttf"; sourceTree = "<group>"; };
-		C49E850DC7BF4B5E84F0E741 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Light.ttf"; sourceTree = "<group>"; };
-		C7087A67D500488CB8F1206A /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Thin.ttf"; sourceTree = "<group>"; };
-		D655E637DCF0B675400CEA14 /* Pods-Azzir-AzzirTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir-AzzirTests.debug.xcconfig"; path = "Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DA3C1421A195474B9BEB3BF2 /* Inter-VariableFont_slnt,wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-VariableFont_slnt,wght.ttf"; path = "../src/assets/fonts/Inter/Inter-VariableFont_slnt,wght.ttf"; sourceTree = "<group>"; };
-		DD12A3E750EA4663A4BC3337 /* HankenGrotesk-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Black.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Black.ttf"; sourceTree = "<group>"; };
-		DE54E0D6A433487BAA5AFD9A /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../src/assets/fonts/Inter/static/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
-		DF5C0A20CA5845B07C312287 /* libPods-Azzir.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Azzir.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC7FAA7876844E130D568FC1 /* Pods-Azzir.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir.debug.xcconfig"; path = "Target Support Files/Pods-Azzir/Pods-Azzir.debug.xcconfig"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* AzzirTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AzzirTests.m; sourceTree = "<group>"; };
+		0E01C5B396BC42829AB75416 /* HankenGrotesk-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-ExtraLight.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-ExtraLight.ttf"; sourceTree = "<group>"; };
+		104CB82E1BE14084B7479457 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Bold.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Bold.ttf"; sourceTree = "<group>"; };
+		11BB7239467173DFA29CD873 /* Pods-Azzir.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir.debug.xcconfig"; path = "Target Support Files/Pods-Azzir/Pods-Azzir.debug.xcconfig"; sourceTree = "<group>"; };
+		11C9BCF2059143A4916919F2 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Azzir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Azzir.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Azzir/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Azzir/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Azzir/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Azzir/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Azzir/main.m; sourceTree = "<group>"; };
+		185FF0BC53E449578E33BDB2 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-ExtraBold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-ExtraBold.ttf"; sourceTree = "<group>"; };
+		1F39B53B00EF4F3CB16E3473 /* Metropolis-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Light.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Light.ttf"; sourceTree = "<group>"; };
+		1F6BD729D9AA45CB847F02CF /* Metropolis-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-SemiBold.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-SemiBold.ttf"; sourceTree = "<group>"; };
+		2000C2FAE335404C857822EC /* Metropolis-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Regular.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Regular.ttf"; sourceTree = "<group>"; };
+		284D0FB1F3F942FDADDDD6EF /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		2D5ECC51E857479E943FCCBD /* DMSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Regular.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Regular.ttf"; sourceTree = "<group>"; };
+		312A819AEF74499E9EE359B2 /* HankenGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Regular.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Regular.ttf"; sourceTree = "<group>"; };
+		319623DCC15E4356BD580138 /* Metropolis-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Black.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Black.ttf"; sourceTree = "<group>"; };
+		33640C7D8B044106B19939AE /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		398821EAEC1E47259AA54280 /* HankenGrotesk-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-VariableFont_wght.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/HankenGrotesk-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		3A29273591EE4207A68D325B /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Medium.ttf"; sourceTree = "<group>"; };
+		3C74CBCC9D1F41388C39C5BB /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Black.ttf"; sourceTree = "<group>"; };
+		3EB574F89913405C92973717 /* Metropolis-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Bold.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Bold.ttf"; sourceTree = "<group>"; };
+		43D2E87DD33440988E5EF7D6 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Medium.ttf"; path = "../src/assets/fonts/DM_Sans/DMSans-Medium.ttf"; sourceTree = "<group>"; };
+		448744E87E59483CB4AE1F03 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		4BACEDAAD1164B13BBC2E308 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		4CBAFDCB21524D138AC748EB /* PTSerif-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Bold.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Bold.ttf"; sourceTree = "<group>"; };
+		63ECA6D793F444B38D8D8546 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Bold.ttf"; sourceTree = "<group>"; };
+		672110960D5049EB81CF45F2 /* HankenGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Light.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Light.ttf"; sourceTree = "<group>"; };
+		76B37CF06EC55E4AEC0147A9 /* Pods_Azzir.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Azzir.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B680208BC6F42E4AA88508B /* HankenGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Medium.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Medium.ttf"; sourceTree = "<group>"; };
+		7F29B00E2A1D06A400AB5B60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7F79A6192A1CA8FC003A607E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7F79A61B2A1CA9F1003A607E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Azzir/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		868A123A3F014FB2A78B650C /* HankenGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Bold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Bold.ttf"; sourceTree = "<group>"; };
+		8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Regular.ttf"; sourceTree = "<group>"; };
+		932924A87F414BEABFEB6B18 /* HankenGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-SemiBold.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
+		9697E4E62A169D5FE0ADB440 /* Pods-Azzir.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir.release.xcconfig"; path = "Target Support Files/Pods-Azzir/Pods-Azzir.release.xcconfig"; sourceTree = "<group>"; };
+		A0CE97380D7A42D38F12AA80 /* Metropolis-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Medium.ttf"; path = "../src/assets/fonts/Axiforma/Metropolis-Medium.ttf"; sourceTree = "<group>"; };
+		A653D2ADE5F54B1A87885CAC /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.ttf"; path = "../src/assets/fonts/Inter/static/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
+		B3C821D7D8424F25974B8886 /* PTSerif-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Italic.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Italic.ttf"; sourceTree = "<group>"; };
+		C26705880C09491ABCA2A7AE /* PTSerif-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PTSerif-Regular.ttf"; path = "../src/assets/fonts/PT_Serif/PTSerif-Regular.ttf"; sourceTree = "<group>"; };
+		C49E850DC7BF4B5E84F0E741 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Light.ttf"; sourceTree = "<group>"; };
+		C7087A67D500488CB8F1206A /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../src/assets/fonts/Inter/static/Inter-Thin.ttf"; sourceTree = "<group>"; };
+		D90838FE10F653008D5FDC0D /* Pods_Azzir_AzzirTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Azzir_AzzirTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA3C1421A195474B9BEB3BF2 /* Inter-VariableFont_slnt,wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-VariableFont_slnt,wght.ttf"; path = "../src/assets/fonts/Inter/Inter-VariableFont_slnt,wght.ttf"; sourceTree = "<group>"; };
+		DD12A3E750EA4663A4BC3337 /* HankenGrotesk-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Black.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Black.ttf"; sourceTree = "<group>"; };
+		DE54E0D6A433487BAA5AFD9A /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../src/assets/fonts/Inter/static/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F88CE21EBE8B462DA3721FA9 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Thin.ttf"; sourceTree = "<group>"; };
-		FB45E28371AE45608546E824 /* HankenGrotesk-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Thin.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Thin.ttf"; sourceTree = "<group>"; };
+		F5782BF0AE6D36CD64B15E91 /* Pods-Azzir-AzzirTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir-AzzirTests.debug.xcconfig"; path = "Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F88CE21EBE8B462DA3721FA9 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		FB45E28371AE45608546E824 /* HankenGrotesk-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Thin.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Thin.ttf"; sourceTree = "<group>"; };
+		FB505C370AB0A473D285A932 /* Pods-Azzir-AzzirTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Azzir-AzzirTests.release.xcconfig"; path = "Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BF1E38E8F862B9DE343A713 /* libPods-Azzir-AzzirTests.a in Frameworks */,
+				872A32773A2247582D6FFF7D /* Pods_Azzir_AzzirTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +183,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB077ADD14E7A42EF57DD95B /* libPods-Azzir.a in Frameworks */,
+				7F79A61C2A1CA9F1003A607E /* CoreFoundation.framework in Frameworks */,
+				7F79A61A2A1CA8FC003A607E /* Foundation.framework in Frameworks */,
+				317EC82E0FE2ED1A40B10878 /* Pods_Azzir.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +198,7 @@
 				00E356F21AD99517003FC87E /* AzzirTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = "AzzirTests";
+			path = AzzirTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -169,15 +219,17 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = "Azzir";
+			name = Azzir;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F79A61B2A1CA9F1003A607E /* CoreFoundation.framework */,
+				7F79A6192A1CA8FC003A607E /* Foundation.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				DF5C0A20CA5845B07C312287 /* libPods-Azzir.a */,
-				0DABA2014C2D22A56B9A4CA5 /* libPods-Azzir-AzzirTests.a */,
+				76B37CF06EC55E4AEC0147A9 /* Pods_Azzir.framework */,
+				D90838FE10F653008D5FDC0D /* Pods_Azzir_AzzirTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -237,6 +289,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				7F29B00E2A1D06A400AB5B60 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Azzir */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AzzirTests */,
@@ -262,10 +315,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EC7FAA7876844E130D568FC1 /* Pods-Azzir.debug.xcconfig */,
-				132FD2BEBB586487F64D028C /* Pods-Azzir.release.xcconfig */,
-				D655E637DCF0B675400CEA14 /* Pods-Azzir-AzzirTests.debug.xcconfig */,
-				4ECC6ED6A62C75A0686991FF /* Pods-Azzir-AzzirTests.release.xcconfig */,
+				11BB7239467173DFA29CD873 /* Pods-Azzir.debug.xcconfig */,
+				9697E4E62A169D5FE0ADB440 /* Pods-Azzir.release.xcconfig */,
+				F5782BF0AE6D36CD64B15E91 /* Pods-Azzir-AzzirTests.debug.xcconfig */,
+				FB505C370AB0A473D285A932 /* Pods-Azzir-AzzirTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -277,20 +330,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AzzirTests" */;
 			buildPhases = (
-				5BF101FBC8E9B689A091EF09 /* [CP] Check Pods Manifest.lock */,
+				CD2FFDCFFE9F3D9C65AE6C6B /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				6DDB283AB0FEA3CB044B7191 /* [CP] Embed Pods Frameworks */,
-				BAD5C8F31C34CAAECB3AE823 /* [CP] Copy Pods Resources */,
+				8B448CFFB3B7C577F963DB26 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				00E356F51AD99517003FC87E /* PBXTargetDependency */,
+				7F79A5EE2A1C91D1003A607E /* PBXTargetDependency */,
 			);
-			name = "AzzirTests";
-			productname = "AzzirTests";
+			name = AzzirTests;
+			productName = AzzirTests;
 			productReference = 00E356EE1AD99517003FC87E /* AzzirTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -298,21 +350,22 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Azzir" */;
 			buildPhases = (
-				AC6E8AEB5A4675526682667E /* [CP] Check Pods Manifest.lock */,
+				67BB2F43F60C9FE40DDA8126 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				3C62A1E5EB053B613A9EBF46 /* [CP] Embed Pods Frameworks */,
-				5B4D57741D2933F68784E40F /* [CP] Copy Pods Resources */,
+				1A21BCF766E947856F26C37F /* [CP] Copy Pods Resources */,
+				1A7F25F98DCEA6B90AC2ACAE /* [CP-User] [RNFB] Core Configuration */,
+				5E04825632C2F840EE3B49B1 /* [CP-User] [RNFB] Crashlytics Configuration */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Azzir";
-			productName = "Azzir";
+			name = Azzir;
+			productName = Azzir;
 			productReference = 13B07F961A680F5B00A75B9A /* Azzir.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -357,6 +410,47 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F79A6182A1C9333003A607E /* Images.xcassets in Resources */,
+				7F79A5F22A1C9279003A607E /* Metropolis-Black.ttf in Resources */,
+				7F79A5F32A1C9279003A607E /* Metropolis-Bold.ttf in Resources */,
+				7F79A5F42A1C9279003A607E /* Metropolis-Light.ttf in Resources */,
+				7F79A5F52A1C9279003A607E /* Metropolis-Medium.ttf in Resources */,
+				7F79A5F62A1C9279003A607E /* Metropolis-Regular.ttf in Resources */,
+				7F79A5F72A1C9279003A607E /* Metropolis-SemiBold.ttf in Resources */,
+				7F79A5F82A1C9279003A607E /* HankenGrotesk-VariableFont_wght.ttf in Resources */,
+				7F79A5F92A1C9279003A607E /* HankenGrotesk-Black.ttf in Resources */,
+				7F79A5FA2A1C9279003A607E /* HankenGrotesk-Bold.ttf in Resources */,
+				7F79A5FB2A1C9279003A607E /* HankenGrotesk-ExtraBold.ttf in Resources */,
+				7F79A5FC2A1C9279003A607E /* HankenGrotesk-ExtraLight.ttf in Resources */,
+				7F79A5FD2A1C9279003A607E /* HankenGrotesk-Light.ttf in Resources */,
+				7F79A5FE2A1C9279003A607E /* HankenGrotesk-Medium.ttf in Resources */,
+				7F79A5FF2A1C9279003A607E /* HankenGrotesk-Regular.ttf in Resources */,
+				7F79A6002A1C9279003A607E /* HankenGrotesk-SemiBold.ttf in Resources */,
+				7F79A6012A1C9279003A607E /* HankenGrotesk-Thin.ttf in Resources */,
+				7F79A6022A1C9279003A607E /* PTSerif-Bold.ttf in Resources */,
+				7F79A6032A1C9279003A607E /* PTSerif-Italic.ttf in Resources */,
+				7F79A6042A1C9279003A607E /* PTSerif-Regular.ttf in Resources */,
+				7F79A6052A1C9279003A607E /* Roboto-Black.ttf in Resources */,
+				7F79A6062A1C9279003A607E /* Roboto-Bold.ttf in Resources */,
+				7F79A6072A1C9279003A607E /* Roboto-Light.ttf in Resources */,
+				7F79A6082A1C9279003A607E /* Roboto-Medium.ttf in Resources */,
+				7F79A6092A1C9279003A607E /* Roboto-Regular.ttf in Resources */,
+				7F79A60A2A1C9279003A607E /* Roboto-Thin.ttf in Resources */,
+				7F79A60B2A1C9279003A607E /* DMSans-Bold.ttf in Resources */,
+				7F79A60C2A1C9279003A607E /* DMSans-Medium.ttf in Resources */,
+				7F79A60D2A1C9279003A607E /* DMSans-Regular.ttf in Resources */,
+				7F79A60E2A1C9279003A607E /* Inter-VariableFont_slnt,wght.ttf in Resources */,
+				7F79A60F2A1C9279003A607E /* Inter-Black.ttf in Resources */,
+				7F79A6102A1C9279003A607E /* Inter-Bold.ttf in Resources */,
+				7F79A6112A1C9279003A607E /* Inter-ExtraBold.ttf in Resources */,
+				7F79A6122A1C9279003A607E /* Inter-ExtraLight.ttf in Resources */,
+				7F79A6132A1C9279003A607E /* Inter-Light.ttf in Resources */,
+				7F79A6142A1C9279003A607E /* Inter-Medium.ttf in Resources */,
+				7F79A6152A1C9279003A607E /* Inter-Regular.ttf in Resources */,
+				7F79A6162A1C9279003A607E /* Inter-SemiBold.ttf in Resources */,
+				7F79A6172A1C9279003A607E /* Inter-Thin.ttf in Resources */,
+				7F79A5F02A1C9264003A607E /* Info.plist in Resources */,
+				7F79A5F12A1C9264003A607E /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +497,7 @@
 				124AD0141461401D88A62FB4 /* Inter-Medium.ttf in Resources */,
 				74D4943A3E4144408CF84612 /* Inter-Regular.ttf in Resources */,
 				E1B996CAED594534BA14E3D3 /* Inter-SemiBold.ttf in Resources */,
+				7F29B00F2A1D06A400AB5B60 /* GoogleService-Info.plist in Resources */,
 				366B73D65BC844E98F950A79 /* Inter-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,24 +521,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		3C62A1E5EB053B613A9EBF46 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5B4D57741D2933F68784E40F /* [CP] Copy Pods Resources */ = {
+		1A21BCF766E947856F26C37F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -460,46 +538,34 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Azzir/Pods-Azzir-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5BF101FBC8E9B689A091EF09 /* [CP] Check Pods Manifest.lock */ = {
+		1A7F25F98DCEA6B90AC2ACAE /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Azzir-AzzirTests-checkManifestLockResult.txt",
-			);
+			name = "[CP-User] [RNFB] Core Configuration";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -Ku -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -Ku -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    if ! python3 --version >/dev/null 2>&1; then echo \"python3 not found, firebase.json file processing error.\" && exit 1; fi\n    _JSON_OUTPUT_BASE64=$(python3 -c 'import json,sys,base64;print(base64.b64encode(bytes(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"', '\"'rb'\"').read())['${_JSON_ROOT}']), '\"'utf-8'\"')).decode())' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.analytics_registration_with_ad_network_enabled\n  _ANALYTICS_REGISTRATION_WITH_AD_NETWORK=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_registration_with_ad_network_enabled\")\n  if [[ $_ANALYTICS_REGISTRATION_WITH_AD_NETWORK ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_REGISTRATION_WITH_AD_NETWORK_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_REGISTRATION_WITH_AD_NETWORK\")\")\n  fi\n\n  # config.google_analytics_automatic_screen_reporting_enabled\n  _ANALYTICS_AUTO_SCREEN_REPORTING=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_automatic_screen_reporting_enabled\")\n  if [[ $_ANALYTICS_AUTO_SCREEN_REPORTING ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAutomaticScreenReportingEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_SCREEN_REPORTING\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
 		};
-		6DDB283AB0FEA3CB044B7191 /* [CP] Embed Pods Frameworks */ = {
+		5E04825632C2F840EE3B49B1 /* [CP-User] [RNFB] Crashlytics Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
+			name = "[CP-User] [RNFB] Crashlytics Configuration";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\nif [[ ${PODS_ROOT} ]]; then\n  echo \"info: Exec FirebaseCrashlytics Run from Pods\"\n  \"${PODS_ROOT}/FirebaseCrashlytics/run\"\nelse\n  echo \"info: Exec FirebaseCrashlytics Run from framework\"\n  \"${PROJECT_DIR}/FirebaseCrashlytics.framework/run\"\nfi\n";
 		};
-		AC6E8AEB5A4675526682667E /* [CP] Check Pods Manifest.lock */ = {
+		67BB2F43F60C9FE40DDA8126 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -521,7 +587,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BAD5C8F31C34CAAECB3AE823 /* [CP] Copy Pods Resources */ = {
+		8B448CFFB3B7C577F963DB26 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -536,6 +602,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Azzir-AzzirTests/Pods-Azzir-AzzirTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD2FFDCFFE9F3D9C65AE6C6B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Azzir-AzzirTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -564,6 +652,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F79A5EC2A1C91C6003A607E /* main.m in Sources */,
 				00E356F31AD99517003FC87E /* AzzirTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -580,25 +669,27 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
+		7F79A5EE2A1C91D1003A607E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* Azzir */;
-			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+			targetProxy = 7F79A5ED2A1C91D1003A607E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D655E637DCF0B675400CEA14 /* Pods-Azzir-AzzirTests.debug.xcconfig */;
+			baseConfigurationReference = F5782BF0AE6D36CD64B15E91 /* Pods-Azzir-AzzirTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "AzzirTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				INFOPLIST_FILE = AzzirTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -609,20 +700,26 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.azzir";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azzir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Azzir.app/Azzir";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4ECC6ED6A62C75A0686991FF /* Pods-Azzir-AzzirTests.release.xcconfig */;
+			baseConfigurationReference = FB505C370AB0A473D285A932 /* Pods-Azzir-AzzirTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = "AzzirTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				INFOPLIST_FILE = AzzirTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -633,24 +730,29 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.azzir";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azzir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Azzir.app/Azzir";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EC7FAA7876844E130D568FC1 /* Pods-Azzir.debug.xcconfig */;
+			baseConfigurationReference = 11BB7239467173DFA29CD873 /* Pods-Azzir.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "Azzir/Info.plist";
-             INFOPLIST_KEY_CFBundleDisplayName = "Azzir";
+				GCC_INPUT_FILETYPE = automatic;
+				INFOPLIST_FILE = Azzir/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Azzir;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -661,8 +763,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.azzir";
-				PRODUCT_NAME = "Azzir";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azzir;
+				PRODUCT_NAME = Azzir;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -671,15 +773,16 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 132FD2BEBB586487F64D028C /* Pods-Azzir.release.xcconfig */;
+			baseConfigurationReference = 9697E4E62A169D5FE0ADB440 /* Pods-Azzir.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "Azzir/Info.plist";
-             INFOPLIST_KEY_CFBundleDisplayName = "Azzir";
+				GCC_INPUT_FILETYPE = automatic;
+				INFOPLIST_FILE = Azzir/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Azzir;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -690,8 +793,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.azzir";
-				PRODUCT_NAME = "Azzir";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azzir;
+				PRODUCT_NAME = Azzir;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -730,7 +833,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -746,7 +849,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -758,6 +861,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
@@ -802,7 +906,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -811,7 +915,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -822,6 +926,7 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
