@@ -18,7 +18,8 @@ flipper_config = FlipperConfiguration.disabled
 linkage = 'static' #ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
 end
 
 # pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
@@ -49,7 +50,7 @@ target 'Azzir' do
     inherit! :complete
     # Pods for testing
   end
-  
+
   pre_install do |installer|
     Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
   

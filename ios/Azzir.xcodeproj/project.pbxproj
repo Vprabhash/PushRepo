@@ -33,7 +33,7 @@
 		6DCAED4087894DBF82FAF6C1 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D5ECC51E857479E943FCCBD /* DMSans-Regular.ttf */; };
 		73276142C3F744C5A4439410 /* HankenGrotesk-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B796E314F3B480498B30CB4 /* HankenGrotesk-ExtraBold.ttf */; };
 		74D4943A3E4144408CF84612 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A0142C60442A5ABD8E4D0 /* Inter-Regular.ttf */; };
-		7F29B00F2A1D06A400AB5B60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F29B00E2A1D06A400AB5B60 /* GoogleService-Info.plist */; };
+		7F29B0112A1D0EA200AB5B60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F29B0102A1D0EA200AB5B60 /* GoogleService-Info.plist */; };
 		7F79A5EC2A1C91C6003A607E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7F79A5F02A1C9264003A607E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
 		7F79A5F12A1C9264003A607E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -145,7 +145,7 @@
 		672110960D5049EB81CF45F2 /* HankenGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Light.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Light.ttf"; sourceTree = "<group>"; };
 		76B37CF06EC55E4AEC0147A9 /* Pods_Azzir.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Azzir.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B680208BC6F42E4AA88508B /* HankenGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Medium.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Medium.ttf"; sourceTree = "<group>"; };
-		7F29B00E2A1D06A400AB5B60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7F29B0102A1D0EA200AB5B60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7F79A6192A1CA8FC003A607E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F79A61B2A1CA9F1003A607E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Azzir/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -289,7 +289,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				7F29B00E2A1D06A400AB5B60 /* GoogleService-Info.plist */,
+				7F29B0102A1D0EA200AB5B60 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Azzir */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AzzirTests */,
@@ -497,7 +497,7 @@
 				124AD0141461401D88A62FB4 /* Inter-Medium.ttf in Resources */,
 				74D4943A3E4144408CF84612 /* Inter-Regular.ttf in Resources */,
 				E1B996CAED594534BA14E3D3 /* Inter-SemiBold.ttf in Resources */,
-				7F29B00F2A1D06A400AB5B60 /* GoogleService-Info.plist in Resources */,
+				7F29B0112A1D0EA200AB5B60 /* GoogleService-Info.plist in Resources */,
 				366B73D65BC844E98F950A79 /* Inter-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
