@@ -9,7 +9,6 @@ import {
   request,
   openSettings,
 } from 'react-native-permissions';
-import BackgroundTimer from 'react-native-background-timer';
 import {useDispatch} from 'react-redux';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 
@@ -36,11 +35,6 @@ const Splash_Screen = props => {
         }, 1000);
       }
     });
-
-    // BackgroundTimer.start();
-    // BackgroundTimer.runBackgroundTimer(() => {
-    //   checkLocation();
-    // }, 3000);
     checkLocation();
   }, []);
 
