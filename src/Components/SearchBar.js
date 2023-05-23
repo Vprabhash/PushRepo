@@ -20,8 +20,7 @@ import {
 } from 'react-native-responsive-screen';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
-import {Menu, Provider} from 'react-native-paper';
-import Animated, {
+import {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
@@ -40,15 +39,9 @@ const SearchBar = props => {
 
   const [valuekey, setValuekey] = useState('');
   const [recommendation, setRecommendation] = useState(null);
-  const [visible, setVisible] = useState(false);
   const animation = useSharedValue(0);
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      transform: [{translateY: withTiming(animation.value, {duration: 500})}],
-    };
-  });
   useEffect(() => {
     searchRecommendation();
     setValuekey('');
@@ -77,16 +70,6 @@ const SearchBar = props => {
       source: ImagePath.clubImage,
     },
   ];
-
-  const openMenu = () => {
-    setVisible(true);
-    animation.value = 100;
-  };
-
-  const closeMenu = () => {
-    setVisible(false);
-    animation.value = 0;
-  };
 
   const searchApi = async text => {
     if (valuekey || text) {
@@ -328,7 +311,6 @@ const SearchBar = props => {
     );
   };
   return (
-    // <Provider>
     <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
@@ -363,12 +345,7 @@ const SearchBar = props => {
                 source={ImagePath.goBack}
               />
             </TouchableOpacity>
-            {/* <View style={{flex: 1, backgroundColor: 'red'}}>
-                <Menu
-                  visible={visible}
-                  onDismiss={closeMenu}
-                  anchor={ */}
-            <View onPress={openMenu} style={[styles.inputMain]}>
+            <View style={[styles.inputMain]}>
               <TextInput
                 style={[styles.textInput, {color: 'rgba(0, 0, 0, 0.7)'}]}
                 placeholderTextColor="rgba(0, 0, 0, 0.7)"
@@ -402,12 +379,6 @@ const SearchBar = props => {
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
             </View>
-            {/* }> */}
-            {/* <Animated.View style={[animatedStyles]}> */}
-
-            {/* </Animated.View>
-                </Menu>
-              </View> */}
           </View>
           <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
             {recommendation && !valuekey ? (
@@ -534,7 +505,6 @@ const SearchBar = props => {
         </View>
       </ImageBackground>
     </View>
-    // </Provider>
   );
 };
 export default SearchBar;
