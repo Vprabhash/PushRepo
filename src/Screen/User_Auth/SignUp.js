@@ -32,6 +32,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {setData} from '../../Components/Helper';
+import appleAuth from '@invertase/react-native-apple-authentication';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const SignUp = props => {
@@ -115,6 +116,14 @@ const SignUp = props => {
         '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
       offlineAccess: false,
     });
+    return (
+      appleAuth.isSupported &&
+      appleAuth.onCredentialRevoked(async () => {
+        console.log(
+          'If this function executes, User Credentials have been Revoked',
+        );
+      })
+    );
   }, []);
 
   const signInFunction = async () => {
@@ -169,6 +178,55 @@ const SignUp = props => {
         Alert.alert('play services not available or outdated');
       } else {
         console.log('Something went wrong', error.toString());
+      }
+    }
+  };
+
+  const onAppleSignIn = async () => {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+    console.log(appleAuthRequestResponse, '===');
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+    console.log(credentialState, "this is credentialState")
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      // user is authenticated
+      // setApple(true);
+      // socialLogin(appleAuthRequestResponse?.identityToken, 'apple');
+      setLoadingGoogle(true);
+      ApiCall('api/oauth/apple', 'POST', JSON.stringify(appleAuthRequestResponse))
+        .then(async res => {
+          setLoadingGoogle(false);
+          console.log('apple sign bydata ----', res);
+          if (res?.ok == true) {
+            await setData('userData', res?.data);
+            await setData('userToken', res?.meta?.token);
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'BottomTab'}],
+            });
+          }
+        })
+        .catch(error => {
+          Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
+        })
+        .finally(() => {
+          setLoadingGoogle(false);
+        });
+    } else {
+      if (isEmpty(appleAuthRequestResponse?.identityToken)) {
+        Toast.showWithGravity(
+          'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       }
     }
   };
@@ -265,24 +323,29 @@ const SignUp = props => {
           Or Sign up with
         </Text>
 
-        <TouchableOpacity
-          onPress={() => {
-            signInFunction();
-          }}
+        <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-around',
-            marginTop: 15,
+            justifyContent: 'space-between',
+            width: '65%',
+            alignSelf:'center',
             marginHorizontal: wp(7),
+            marginTop: 10,
           }}>
-          <Image source={ImagePath.google} style={styles.googleLogo} />
+          <TouchableOpacity
+            onPress={signInFunction}>
+            <Image source={ImagePath.google} style={styles.googleLogo} />
+          </TouchableOpacity>
           {Platform.OS === 'ios' && (
-            <Image source={ImagePath.apple} style={styles.googleLogo} />
+            <TouchableOpacity
+              onPress={onAppleSignIn}>
+              <Image source={ImagePath.apple} style={styles.googleLogo} />
+            </TouchableOpacity>
           )}
-        </TouchableOpacity>
+        </View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <Text style={[styles.withText, {color: '#000000'}]}>
-            Already have an account{' '}
+            Already have an account?{' '}
           </Text>
           <TouchableOpacity
             onPress={() => {

@@ -146,6 +146,7 @@
 		76B37CF06EC55E4AEC0147A9 /* Pods_Azzir.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Azzir.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B680208BC6F42E4AA88508B /* HankenGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HankenGrotesk-Medium.ttf"; path = "../src/assets/fonts/Hanken_Grotesk/static/HankenGrotesk-Medium.ttf"; sourceTree = "<group>"; };
 		7F29B0102A1D0EA200AB5B60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7F29B0122A1E055D00AB5B60 /* Azzir.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Azzir.entitlements; path = Azzir/Azzir.entitlements; sourceTree = "<group>"; };
 		7F79A6192A1CA8FC003A607E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7F79A61B2A1CA9F1003A607E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Azzir/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -212,6 +213,7 @@
 		13B07FAE1A68108700A75B9A /* Azzir */ = {
 			isa = PBXGroup;
 			children = (
+				7F29B0122A1E055D00AB5B60 /* Azzir.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -747,7 +749,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Azzir/Azzir.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q83G94327R;
 				ENABLE_BITCODE = NO;
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = Azzir/Info.plist;
@@ -778,7 +782,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Azzir/Azzir.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q83G94327R;
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = Azzir/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Azzir;

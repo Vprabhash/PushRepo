@@ -46,17 +46,17 @@
 			</dict>
 		</dict>
 	</dict>
-	  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-  <string>YOUR TEXT</string>
-  <key>NSLocationAlwaysUsageDescription</key>
-  <string>YOUR TEXT</string>
-  <key>NSLocationTemporaryUsageDescriptionDictionary</key>
-  <dict>
-    <key>YOUR-PURPOSE-KEY</key>
-    <string>YOUR TEXT</string>
-  </dict>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>YOUR TEXT</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs to get your location to set current location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs to get your location to set current location</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>YOUR-PURPOSE-KEY</key>
+		<string>YOUR TEXT</string>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs to get your location to set current location</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Metropolis-Black.ttf</string>
