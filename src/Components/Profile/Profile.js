@@ -11,10 +11,11 @@ import {
   FlatList,
   TextInput,
   Platform,
+  Alert,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import ApiCall from '../../redux/CommanApi';
 import CustomButton from '../TextInput_And_Button/CustomButton';
@@ -50,6 +51,11 @@ const Profile = ({navigation}) => {
       },
     },
     {
+      Title: 'Location Info',
+      Icon: ImagePath.rightIcon,
+      onPress: () => locationAlert(),
+    },
+    {
       Title: 'Log out',
       Icon: ImagePath.rightIcon,
       onPress: () => logOut(),
@@ -62,10 +68,18 @@ const Profile = ({navigation}) => {
     {Title: 'Event Reminders', Icon: ImagePath.rightIcon},
     {Title: 'Artist Updates', Icon: ImagePath.rightIcon},
   ]);
-
+  const locationLatLong = useSelector(
+    state => state.clubLocation.locationLatLong,
+  );
+  const selectedCity = useSelector(state => state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
   useEffect(() => {
     userProfile();
   }, []);
+
+  const locationAlert = () => {
+    Alert.alert('Location Info',`Latitude: ${locationLatLong?.latitude}${'\n'}Longitude: ${locationLatLong?.longitude}${'\n'}Selected City: ${selectedCity}${'\n'}Base City: ${userBaseCity}`)
+  }
 
   const userProfile = async () => {
     try {
@@ -362,7 +376,7 @@ const Profile = ({navigation}) => {
                       ? `${userProfileData?.firstName || ''} ${
                           userProfileData?.lastName || ''
                         }`
-                      : 'Unknown user'}
+                      : 'Anonymous'}
                   </Text>
                   {/* <Image
                     style={{
