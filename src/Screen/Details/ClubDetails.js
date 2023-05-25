@@ -413,7 +413,7 @@ const ClubDetails = props => {
               color: COLORS.black,
               marginHorizontal: 15,
               marginTop: 20,
-              fontFamily: FONTS.HankenGroteskReglur,
+              fontFamily: FONTS.AxiformaRegular,
             }}>
             {detailData?.address}
           </Text>
