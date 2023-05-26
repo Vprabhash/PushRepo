@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   TextInput,
+  Platform,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -24,6 +25,7 @@ import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
+import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -274,7 +276,7 @@ const ArtistDetail = props => {
           backgroundColor="transparent"
           translucent={true}
         />
-        <View style={{marginHorizontal: 5, flex: 1, marginTop: 30}}>
+        <View style={{marginHorizontal: 5, flex: 1, marginTop: Platform.OS == 'ios' ? getStatusBarHeight() : 30}}>
         <HeaderCitySearch onPress={() =>{
                 props.navigation.navigate('SearchBar');
             }} />

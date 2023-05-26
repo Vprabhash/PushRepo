@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  Platform,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {
@@ -26,6 +27,7 @@ import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
+import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -350,7 +352,7 @@ const ClubListing = ({navigation, route}) => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 5, flex: 1, marginTop: 30}}>
+        <View style={{marginHorizontal: 5, flex: 1, marginTop: Platform.OS === 'ios' ? getStatusBarHeight() : 44}}>
           <HeaderCitySearch
             onPress={() => {
               navigation.navigate('SearchBar');

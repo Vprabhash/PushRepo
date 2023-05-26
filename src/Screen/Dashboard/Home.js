@@ -630,7 +630,7 @@ const Home = props => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1,}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
@@ -672,7 +672,6 @@ const Home = props => {
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>
           </TouchableOpacity> */}
-
             <View style={styles.hedingTextMain}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
               <Text style={styles.cardText}>CLUBS IN SPOTLIGHT</Text>
@@ -682,9 +681,10 @@ const Home = props => {
               horizontal={true}
               data={clubsSpotlight}
               renderItem={SpotlightData_RenderItem}
+              showsHorizontalScrollIndicator={false}
               // ListFooterComponent={spotLightrenderFooter}
               // onEndReachedThreshold={0.7}
-              contentContainerStyle={{marginTop: 20, zIndex: 99}}
+              contentContainerStyle={{marginTop: 20, zIndex: 99, paddingStart:5}}
               // onMomentumScrollBegin={() => {
               //   setonEndReachedCalledDuringspotLight(false);
               // }}
@@ -700,8 +700,9 @@ const Home = props => {
               horizontal={true}
               data={clubsNearby?.slice(0, 5)}
               renderItem={ClubNarDatarenderItem}
+              showsHorizontalScrollIndicator={false}
               // ListFooterComponent={renderFooter}
-              style={{marginTop: 20, marginBottom: -hp(2)}}
+              style={{marginTop: 20, marginBottom: -hp(2),paddingStart:5}}
               // onEndReachedThreshold={0.7}
               // onMomentumScrollBegin={() => {
               //   setonEndReachedCalledDuringMomentum(false);
@@ -769,7 +770,8 @@ const Home = props => {
               horizontal={true}
               data={artistsSpotlight}
               renderItem={artistRenderItem}
-              contentContainerStyle={{paddingRight: 15}}
+              contentContainerStyle={{paddingStart:5}}
+              showsHorizontalScrollIndicator={false}
               // ListFooterComponent={artistRenderFooter}
               // onEndReachedThreshold={0.7}
               // onMomentumScrollBegin={() => {

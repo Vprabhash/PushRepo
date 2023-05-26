@@ -12,6 +12,7 @@ import {
   TextInput,
   Platform,
   Alert,
+  Linking,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -51,9 +52,26 @@ const Profile = ({navigation}) => {
       },
     },
     {
+      Title: 'Deactivate Account',
+      Icon: ImagePath.rightIcon,
+      onPress: () => deacctivateAcc(),
+    },
+    {
       Title: 'Location Info',
       Icon: ImagePath.rightIcon,
       onPress: () => locationAlert(),
+    },
+    {
+      Title: 'Terms & Conditions',
+      Icon: ImagePath.rightIcon,
+      onPress: () =>
+        Linking.openURL('https://www.azzirevents.com/terms_conditions.html'),
+    },
+    {
+      Title: 'Privacy Policy',
+      Icon: ImagePath.rightIcon,
+      onPress: () =>
+        Linking.openURL('https://www.azzirevents.com/privacy_policy.html'),
     },
     {
       Title: 'Log out',
@@ -78,8 +96,13 @@ const Profile = ({navigation}) => {
   }, []);
 
   const locationAlert = () => {
-    Alert.alert('Location Info',`Latitude: ${locationLatLong?.latitude}${'\n'}Longitude: ${locationLatLong?.longitude}${'\n'}Selected City: ${selectedCity}${'\n'}Base City: ${userBaseCity}`)
-  }
+    Alert.alert(
+      'Location Info',
+      `Latitude: ${locationLatLong?.latitude}${'\n'}Longitude: ${
+        locationLatLong?.longitude
+      }${'\n'}Selected City: ${selectedCity}${'\n'}Base City: ${userBaseCity}`,
+    );
+  };
 
   const userProfile = async () => {
     try {
@@ -110,6 +133,44 @@ const Profile = ({navigation}) => {
     });
   };
 
+  const deacctivateAcc = () => {
+    Alert.alert(
+      'Deactivate Account',
+      'Are you sure you want to deactivate your account?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            console.log('Deactivate pressed');
+            try {
+              const res = await ApiCall(`api/user/deactivate`, 'POST');
+              console.log('---deactivate--user-----', res);
+              if (res.ok) {
+                Toast.showWithGravity(
+                  res?.message || 'Something went wrong',
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                );
+                logOut();
+              } else {
+                Toast.showWithGravity(
+                  res?.message || 'Something went wrong',
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                );
+              }
+            } catch (error) {
+              Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
+            }
+          },
+        },
+      ],
+    );
+  };
   const openPicker = () => {
     const options = {
       title: 'Select Image',
@@ -332,7 +393,7 @@ const Profile = ({navigation}) => {
         backgroundColor="transparent"
         translucent={true}
       />
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView bounces={false} contentContainerStyle={{flexGrow: 1}}>
         <ImageBackground
           source={ImagePath.Azzir_Bg}
           resizeMode="cover"
@@ -394,6 +455,7 @@ const Profile = ({navigation}) => {
                       color: COLORS.black,
                       fontFamily: FONTS.AxiformaMedium,
                       fontSize: 12,
+                      width: wp(60),
                     }}>
                     {userProfileData?.email}
                   </Text>

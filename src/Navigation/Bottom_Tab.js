@@ -72,8 +72,7 @@ function BottomTab() {
           // position: 'absolute',
           // bottom: 5,
           height: Platform.OS === 'ios' ? 100 : 65,
-          borderRadius: 65,
-
+          borderRadius: 100,
           backgroundColor: '#fff',
           overflow: 'hidden',
         },

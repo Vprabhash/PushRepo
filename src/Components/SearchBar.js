@@ -13,6 +13,7 @@ import {
   View,
   SafeAreaView,
   TextInput,
+  Platform,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -30,6 +31,7 @@ import {useSelector} from 'react-redux';
 import ImagePath from '../assets/ImagePath';
 import {COLORS, FONTS} from './constants';
 import ApiCall from '../redux/CommanApi';
+import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -316,7 +318,7 @@ const SearchBar = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 5, marginTop: 50}}>
+        <View style={{marginHorizontal: 10, marginTop: Platform.OS =='ios'? getStatusBarHeight() : 50}}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}

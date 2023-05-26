@@ -12,6 +12,7 @@ import {
   View,
   TouchableOpacity,
   BackHandler,
+  Platform,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -26,6 +27,7 @@ import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import ImageView from 'react-native-image-viewing';
 import Header from '../../Components/Header';
+import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-screen-helper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
@@ -145,8 +147,7 @@ const ClubDetails = props => {
           props.navigation.push('ClubDetails', {listDetail: item});
         }}
         style={{
-          marginLeft: index == 0 ? 15 : 0,
-          marginRight: index == 2 ? 15 : 15,
+          marginLeft: index == 0 ? 20 : 0,
           marginBottom: 10,
         }}>
         {item?.media?.ambienceImages?.length ? (
@@ -192,9 +193,9 @@ const ClubDetails = props => {
           style={{
             backgroundColor: '#fff',
             elevation: 10,
-            paddingTop: 46,
+            paddingTop: Platform.OS == 'ios'? getStatusBarHeight() : 46,
             paddingBottom: 14,
-            paddingHorizontal: 15,
+            paddingLeft: 10,
           }}>
           <Header
             Back_Arrow={ImagePath.goBack}
@@ -260,7 +261,7 @@ const ClubDetails = props => {
               containerStyle={{
                 borderRadius: 8,
                 marginTop: 10,
-                marginHorizontal: 15,
+                marginHorizontal: 20,
                 overflow: 'hidden',
               }}
               paginationStyle={{
@@ -324,7 +325,7 @@ const ClubDetails = props => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               marginTop: 5,
-              marginHorizontal: 15,
+              marginHorizontal: 20,
             }}>
             <View style={{width: '80%'}}>
               <View
@@ -411,7 +412,7 @@ const ClubDetails = props => {
               lineHeight: 22,
               marginTop: 9,
               color: COLORS.black,
-              marginHorizontal: 15,
+              marginHorizontal: 20,
               marginTop: 20,
               fontFamily: FONTS.AxiformaRegular,
             }}>
@@ -467,7 +468,7 @@ const ClubDetails = props => {
             />
             <View
               style={{
-                marginLeft: 15,
+                marginLeft: 20,
                 marginRight: detailData?.media?.drinkMenuImages?.length
                   ? 15
                   : 0,
@@ -481,7 +482,7 @@ const ClubDetails = props => {
                     <Image
                       style={{
                         height: hp(20),
-                        width: wp(44),
+                        width: wp(43),
                         resizeMode: 'cover',
                         borderRadius: 10,
                       }}
@@ -514,7 +515,7 @@ const ClubDetails = props => {
                 );
               }}
             />
-            <View style={{marginRight: 15}}>
+            <View style={{marginRight: 20}}>
               {detailData?.media?.foodMenuImages?.length ? (
                 <>
                   <TouchableOpacity
@@ -524,7 +525,7 @@ const ClubDetails = props => {
                     <Image
                       style={{
                         height: hp(20),
-                        width: wp(44),
+                        width: wp(43),
                         resizeMode: 'cover',
                         borderRadius: 10,
                       }}
@@ -545,6 +546,8 @@ const ClubDetails = props => {
             horizontal={true}
             data={clubsNearby}
             renderItem={ClubNarDatarenderItem}
+            ItemSeparatorComponent={<View style={{width: 20}} />}
+            contentContainerStyle={{paddingEnd: 20, paddingBottom: getBottomSpace()}}
             ListEmptyComponent={
               <View
                 style={{
@@ -567,7 +570,7 @@ const styles = StyleSheet.create({
   aboutText: {
     color: '#202020',
     fontSize: 20,
-    marginLeft: 15,
+    marginLeft: 20,
     marginBottom: 10,
     marginTop: 20,
     fontFamily: FONTS.AxiformaBold,
@@ -626,7 +629,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     elevation: 5,
-    marginHorizontal: 15,
+    marginHorizontal: 20,
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),

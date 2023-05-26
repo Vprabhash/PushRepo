@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  TextInput,
+  Text,
 } from 'react-native';
 import ImagePath from '../assets/ImagePath';
 import CitySelector from './CitySelector';
@@ -20,25 +20,18 @@ import {
 const HeaderCitySearch = ({ onPress }) => {
 
   return (
-    <View style={{ flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center', marginTop: hp(1) }}>
+    <View style={{  flexDirection: 'row', justifyContent: 'center', marginTop: hp(1) }}>
       <CitySelector />
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={onPress}
-        style={[styles.inputMain, { marginTop: 10 }]}>
-        <TextInput
-          style={[styles.textInput, {}]}
-          placeholder={'Search by Area, Genre, Artist or Club'}
-          placeholderTextColor="rgba(0, 0, 0, 0.7)"
-          editable={false}
-        // onChangeText={onChangeText}
-        // value={value}
-        />
+        style={[styles.inputMain, { marginTop: 10 , zIndex: 2000}]}>
+        <Text numberOfLines={1} style={styles.textInput}>
+        {'Search by Area, Genre, Artist or Club'}
+        </Text>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => {
-            ('');
-          }}>
+          onPress={onPress}>
           <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
         </TouchableOpacity>
       </TouchableOpacity>
@@ -59,13 +52,12 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),
-    flexBasis: '50%',
+    flexBasis: '55%',
   },
   textInput: {
     fontFamily: FONTS.RobotoRegular,
     fontSize: 16,
     padding: 0,
-    height: hp(6),
     color: 'rgba(0, 0, 0, 0.3)',
     flex: 1,
   },

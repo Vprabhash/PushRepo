@@ -5,6 +5,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentCity} from '../redux/reducers/citySelectorSlice';
+import Toast from 'react-native-simple-toast';
 
 const data = [
   {label: 'Mumbai', value: 'Mumbai'},
@@ -14,11 +15,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import ApiCall from '../redux/CommanApi';
 
 const CitySelector = () => {
   const dispatch = useDispatch();
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const [isFocus, setIsFocus] = useState(false);
+  const [cities, setCities] = useState([]);
 
   const renderLabel = () => {
     if (isFocus) {
@@ -30,6 +33,25 @@ const CitySelector = () => {
     }
     return null;
   };
+  useEffect(() => {
+    fetchCities()
+  }, [])
+
+  const fetchCities = () => {
+    try {
+      ApiCall('api/cities', 'GET').then(res => {
+        if(res?.data?.length){
+          let temp = res?.data?.map((e) => ({
+            label: e.name, value: e.name
+          }))
+          console.log('clubsnearbydata ----', res?.data, temp);
+          setCities(temp);
+        }
+      });
+    } catch (error) {
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -40,7 +62,7 @@ const CitySelector = () => {
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
-        data={data}
+        data={cities}
         // search
         maxHeight={200}
         labelField="label"

@@ -21,6 +21,7 @@ import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import {setData} from '../../Components/Helper';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -62,7 +63,11 @@ const Otp = props => {
             });
           }
         } else {
-          Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(
+            'Something went wrong',
+            Toast.LONG,
+            Toast.BOTTOM,
+          );
         }
       } catch (error) {
         Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
@@ -112,100 +117,106 @@ const Otp = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%', justifyContent: 'center'}}>
-        {/* <View
+        <KeyboardAwareScrollView style={{}}>
+          {/* <View
           style={{
             paddingHorizontal: 20,
             height: '100%',
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
             justifyContent: 'center',
           }}> */}
-        <LinearGradient
-          style={{
-            paddingHorizontal: 20,
-            height: height * 0.7,
-            justifyContent: 'center',
-          }}
-          start={{x: 0, y: 0}}
-          end={{x: 0, y: 1}}
-          colors={[
-            'rgba(255, 255, 255, 0.1)',
-            'rgba(255, 255, 255, 0.6)',
-            'rgba(255, 255, 255, 0.6)',
-            'rgba(255, 255, 255, 0.1)',
-          ]}>
-          <Text style={styles.signIn}>Enter OTP</Text>
-          <Text
-            style={[
-              styles.signIn,
-              {
-                fontSize: 22,
-                fontFamily: FONTS.DMSansRegular,
-                marginBottom: 20,
-                lineHeight: 30,
-              },
-            ]}>
-            Check your email, we’ve sent you the pin at {email}
-          </Text>
-          <OTPTextInput
-            textInputStyle={{width: 40}}
-            inputCount={6}
-            returnKeyType={'next'}
-            handleTextChange={text => setOtp(text)}
-            defaultValue={Otp}
-            tintColor={'gray'}
-            borderBottomWidth={1}
-          />
-          <CustomButton
-            onclick={() => {
-              if (forgetotp == 'otp') {
-                if (Otp.length == 6) {
-                  props.navigation.navigate('ResetPassword', {
-                    otp: Otp,
-                    email: email,
-                  });
-                } else {
-                  Toast.showWithGravity('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
-                }
-              } else {
-                OtpApi();
-              }
-              // props.navigation.navigate('Login');
-            }}
-            top={30}
-            title="Submit OTP"
-            bgColor="#000"
-            textColor="#fff"
-            isLoading={isLoading}
-          />
-          <View
+          <LinearGradient
             style={{
-              flexDirection: 'row',
+              paddingHorizontal: 20,
+              height: height,
               justifyContent: 'center',
-              marginTop: hp(4.2),
-            }}>
-            <Text style={[styles.withText]}>Didn’t receive pin </Text>
-            <TouchableOpacity
-              onPress={() => {
+            }}
+            start={{x: 0, y: 0}}
+            end={{x: 0, y: 1}}
+            colors={[
+              'rgba(255, 255, 255, 0.1)',
+              'rgba(255, 255, 255, 0.6)',
+              'rgba(255, 255, 255, 0.6)',
+              'rgba(255, 255, 255, 0.1)',
+            ]}>
+            <Text style={styles.signIn}>Enter OTP</Text>
+            <Text
+              style={[
+                styles.signIn,
+                {
+                  fontSize: 22,
+                  fontFamily: FONTS.DMSansRegular,
+                  marginBottom: 20,
+                  lineHeight: 30,
+                },
+              ]}>
+              Check your email, we’ve sent you the pin at {email}
+            </Text>
+            <OTPTextInput
+              textInputStyle={{width: 40}}
+              inputCount={6}
+              returnKeyType={'next'}
+              handleTextChange={text => setOtp(text)}
+              defaultValue={Otp}
+              tintColor={'gray'}
+              borderBottomWidth={1}
+            />
+            <CustomButton
+              onclick={() => {
                 if (forgetotp == 'otp') {
-                  // Alert.alert('ok');
-                  resendforgetmailOtp();
+                  if (Otp.length == 6) {
+                    props.navigation.navigate('ResetPassword', {
+                      otp: Otp,
+                      email: email,
+                    });
+                  } else {
+                    Toast.showWithGravity(
+                      'Enter valid OTP',
+                      Toast.LONG,
+                      Toast.BOTTOM,
+                    );
+                  }
                 } else {
-                  // Alert.alert('orrrk');
-                  resendOtp();
+                  OtpApi();
                 }
-                // resendOtp();
+                // props.navigation.navigate('Login');
+              }}
+              top={30}
+              title="Submit OTP"
+              bgColor="#000"
+              textColor="#fff"
+              isLoading={isLoading}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: hp(4.2),
               }}>
-              <Text
-                style={[
-                  styles.withText,
-                  {color: COLORS.black, textDecorationLine: 'underline'},
-                ]}>
-                Resend
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </LinearGradient>
-        {/* </View> */}
+              <Text style={[styles.withText]}>Didn’t receive pin </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  if (forgetotp == 'otp') {
+                    // Alert.alert('ok');
+                    resendforgetmailOtp();
+                  } else {
+                    // Alert.alert('orrrk');
+                    resendOtp();
+                  }
+                  // resendOtp();
+                }}>
+                <Text
+                  style={[
+                    styles.withText,
+                    {color: COLORS.black, textDecorationLine: 'underline'},
+                  ]}>
+                  Resend
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </LinearGradient>
+          {/* </View> */}
+        </KeyboardAwareScrollView>
       </ImageBackground>
     </View>
   );

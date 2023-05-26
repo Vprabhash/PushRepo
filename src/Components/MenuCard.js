@@ -149,7 +149,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
     <View
       style={{
         backgroundColor: '#FFFFFF',
-        marginHorizontal: 15,
+        marginHorizontal: 20,
         elevation: 4,
         borderRadius: 10,
       }}>

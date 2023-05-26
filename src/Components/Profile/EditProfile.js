@@ -7,6 +7,7 @@ import {
   Text,
   View,
   Alert,
+  Platform,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,6 +19,7 @@ import ApiCall from '../../redux/CommanApi';
 import Header from '../Header';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -88,7 +90,7 @@ const EditProfile = props => {
           style={{
             backgroundColor: '#fff',
             elevation: 10,
-            paddingTop: 46,
+            paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
             paddingBottom: 14,
             paddingHorizontal: 15,
           }}>
