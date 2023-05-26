@@ -44,6 +44,7 @@ import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 import Geolocation from '@react-native-community/geolocation';
 import CitySelector from '../../Components/CitySelector';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
+import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -634,8 +635,7 @@ const Home = props => {
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{height: '100%'}}>
-        <SafeAreaView>
+        style={{height: '100%', paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46}}>
           {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
@@ -868,7 +868,6 @@ const Home = props => {
             />
           </SafeAreaView> */}
           </ScrollView>
-        </SafeAreaView>
       </ImageBackground>
       {/* <Disclamer
         isVisible={modalVisible}

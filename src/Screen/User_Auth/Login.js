@@ -28,9 +28,7 @@ import {ARTIST, SIGN_IN} from '../../services/Apis';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setData} from '../../Components/Helper';
-import {
-  appleAuth,
-} from '@invertase/react-native-apple-authentication';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 import {
@@ -174,14 +172,18 @@ const Login = props => {
     const credentialState = await appleAuth.getCredentialStateForUser(
       appleAuthRequestResponse.user,
     );
-    console.log(credentialState, "this is credentialState")
+    console.log(credentialState, 'this is credentialState');
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
       // setApple(true);
       // socialLogin(appleAuthRequestResponse?.identityToken, 'apple');
       setIsLoadingGoogle(true);
-      ApiCall('api/oauth/apple', 'POST', JSON.stringify(appleAuthRequestResponse))
+      ApiCall(
+        'api/oauth/apple',
+        'POST',
+        JSON.stringify(appleAuthRequestResponse),
+      )
         .then(async res => {
           setIsLoadingGoogle(false);
           console.log('apple sign bydata ----', res);
@@ -202,11 +204,7 @@ const Login = props => {
         });
     } else {
       if (isEmpty(appleAuthRequestResponse?.identityToken)) {
-        Toast.showWithGravity(
-          'Something went wrong',
-          Toast.LONG,
-          Toast.BOTTOM,
-        );
+        Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
       }
     }
   };
@@ -301,8 +299,8 @@ const Login = props => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            width: '65%',
-            alignSelf:'center',
+            width: Platform.OS === 'ios' ? '65%' : null,
+            alignSelf: 'center',
             marginHorizontal: wp(7),
             marginTop: 10,
           }}>

@@ -194,14 +194,18 @@ const SignUp = props => {
     const credentialState = await appleAuth.getCredentialStateForUser(
       appleAuthRequestResponse.user,
     );
-    console.log(credentialState, "this is credentialState")
+    console.log(credentialState, 'this is credentialState');
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
       // setApple(true);
       // socialLogin(appleAuthRequestResponse?.identityToken, 'apple');
       setLoadingGoogle(true);
-      ApiCall('api/oauth/apple', 'POST', JSON.stringify(appleAuthRequestResponse))
+      ApiCall(
+        'api/oauth/apple',
+        'POST',
+        JSON.stringify(appleAuthRequestResponse),
+      )
         .then(async res => {
           setLoadingGoogle(false);
           console.log('apple sign bydata ----', res);
@@ -222,11 +226,7 @@ const SignUp = props => {
         });
     } else {
       if (isEmpty(appleAuthRequestResponse?.identityToken)) {
-        Toast.showWithGravity(
-          'Something went wrong',
-          Toast.LONG,
-          Toast.BOTTOM,
-        );
+        Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
       }
     }
   };
@@ -327,18 +327,16 @@ const SignUp = props => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            width: '65%',
-            alignSelf:'center',
+            width: Platform.OS === 'ios' ? '65%' : null,
+            alignSelf: 'center',
             marginHorizontal: wp(7),
             marginTop: 10,
           }}>
-          <TouchableOpacity
-            onPress={signInFunction}>
+          <TouchableOpacity onPress={signInFunction}>
             <Image source={ImagePath.google} style={styles.googleLogo} />
           </TouchableOpacity>
           {Platform.OS === 'ios' && (
-            <TouchableOpacity
-              onPress={onAppleSignIn}>
+            <TouchableOpacity onPress={onAppleSignIn}>
               <Image source={ImagePath.apple} style={styles.googleLogo} />
             </TouchableOpacity>
           )}

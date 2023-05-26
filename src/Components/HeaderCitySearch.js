@@ -20,7 +20,7 @@ import {
 const HeaderCitySearch = ({ onPress }) => {
 
   return (
-    <View style={{  flexDirection: 'row', justifyContent: 'center', marginTop: hp(1) }}>
+    <View style={{  flexDirection: 'row', marginHorizontal:20, marginTop: hp(1) }}>
       <CitySelector />
       <TouchableOpacity
         activeOpacity={0.5}
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),
-    flexBasis: '55%',
+    width: wp(52),
   },
   textInput: {
     fontFamily: FONTS.RobotoRegular,

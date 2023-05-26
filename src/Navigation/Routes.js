@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import {View, Text} from 'react-native';
+import analytics from '@react-native-firebase/analytics';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Splash_Screen from '../Screen/User_Auth/Splash_Screen';
@@ -25,8 +26,26 @@ import SearchBar from '../Components/SearchBar';
 const Stack = createNativeStackNavigator();
 
 function Routes() {
+  const routeNameRef = React.useRef();
+  const navigationRef = React.useRef();
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef?.current?.getCurrentRoute()?.name;
+      }}
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef?.current;
+        const currentRouteName = navigationRef?.current?.getCurrentRoute()?.name;
+
+        if (previousRouteName !== currentRouteName) {
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
+        }
+        routeNameRef.current = currentRouteName;
+      }}>
       <Stack.Navigator initialRouteName="Splash_Screen">
         <Stack.Screen
           name="Splash_Screen"
@@ -114,7 +133,6 @@ function Routes() {
           component={EditProfile}
           options={{headerShown: false}}
         />
-        
       </Stack.Navigator>
     </NavigationContainer>
   );

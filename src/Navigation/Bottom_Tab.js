@@ -69,7 +69,7 @@ function BottomTab() {
           elevation: 3,
           borderTopWidth: 1,
           marginTop: 0.5,
-          // position: 'absolute',
+          position: 'absolute',
           // bottom: 5,
           height: Platform.OS === 'ios' ? 100 : 65,
           borderRadius: 100,

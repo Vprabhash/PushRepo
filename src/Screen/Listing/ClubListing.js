@@ -28,6 +28,7 @@ import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
 import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -351,13 +352,13 @@ const ClubListing = ({navigation, route}) => {
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{height: '100%'}}>
-        <View style={{marginHorizontal: 5, flex: 1, marginTop: Platform.OS === 'ios' ? getStatusBarHeight() : 44}}>
+        style={{height: '100%', paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46}}>
           <HeaderCitySearch
             onPress={() => {
               navigation.navigate('SearchBar');
             }}
           />
+          <View style={{marginHorizontal: 5, flex: 1}}>
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
@@ -420,7 +421,7 @@ const ClubListing = ({navigation, route}) => {
             ListEmptyComponent={EmptyListMessage}
             maxToRenderPerBatch={15}
           />
-        </View>
+          </View>
       </ImageBackground>
     </View>
   );

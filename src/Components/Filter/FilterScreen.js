@@ -567,7 +567,7 @@ const FilterScreen = ({
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
-                <View style={{maxHeight: hp(65)}}>
+                <View style={{maxHeight: hp(62)}}>
                   <FlatList
                     data={localities?.filter(e =>
                       e.label.includes(searchLocality),
@@ -1318,6 +1318,9 @@ const FilterScreen = ({
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
+            zIndex: 99,
+            position:'absolute',
+            bottom:0
           }}>
           <TouchableOpacity
             activeOpacity={0.7}
