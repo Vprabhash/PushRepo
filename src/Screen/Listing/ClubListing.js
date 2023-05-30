@@ -352,12 +352,14 @@ const ClubListing = ({navigation, route}) => {
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{height: '100%', paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46}}>
+        style={{height: '100%'}}>
+          <View style={{paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46}}>
           <HeaderCitySearch
             onPress={() => {
               navigation.navigate('SearchBar');
             }}
           />
+          </View>
           <View style={{marginHorizontal: 5, flex: 1}}>
           {/* <TouchableOpacity
             activeOpacity={0.5}

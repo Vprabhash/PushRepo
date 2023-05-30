@@ -631,11 +631,11 @@ const Home = props => {
   };
 
   return (
-    <View style={{flex: 1,}}>
+    <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{height: '100%', paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46}}>
+        style={{height: '100%'}}>
           {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
@@ -651,18 +651,21 @@ const Home = props => {
         </View> */}
           <ScrollView
             contentContainerStyle={{flexGrow: 1}}
-            showsVerticalScrollIndicator={false}>
+            showsVerticalScrollIndicator={false}
+            >
             <StatusBar
               barStyle="dark-content"
               hidden={false}
               backgroundColor="transparent"
               translucent={true}
             />
+            <View style={{paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46}}>
             <HeaderCitySearch
               onPress={() => {
                 props.navigation.navigate('SearchBar');
               }}
-            />
+              />
+              </View>
             {/* <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
