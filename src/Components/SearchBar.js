@@ -79,13 +79,13 @@ const SearchBar = props => {
         `api/search?q=${text || valuekey}&city=${selectedCity}`,
         'GET',
       );
-      console.log('---searchApi--->', JSON.stringify(res?.data?.clubs));
+      console.log('---searchApi--->', `api/search?q=${text || valuekey}&city=${selectedCity}`);
       let temArray = [];
       let clubs = res?.data?.clubs;
       let artist = res?.data?.artists;
       temArray = clubs.concat(artist);
       setClubs(temArray);
-      console.log('--------temArray: ', temArray);
+      // console.log('--------temArray: ', temArray);
     } else {
       //   setPage(1);
     }
@@ -357,7 +357,7 @@ const SearchBar = props => {
                   setValuekey(text);
                 }}
                 value={valuekey}
-                onSubmitEditing={searchApi}
+                onSubmitEditing={() => searchApi(valuekey)}
               />
               {valuekey && (
                 <TouchableOpacity
@@ -376,7 +376,7 @@ const SearchBar = props => {
               <TouchableOpacity
                 activeOpacity={0.5}
                 onPress={() => {
-                  searchApi();
+                  searchApi(valuekey);
                 }}>
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
