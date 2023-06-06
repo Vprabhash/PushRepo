@@ -49,18 +49,18 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs to get your location to set current location</string>
+	<string>Turning on the locations services allows us to show you clubs in your area.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs to get your location to set current location</string>
+	<string>Turning on the locations services allows us to show you clubs in your area.</string>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>YOUR-PURPOSE-KEY</key>
 		<string>YOUR TEXT</string>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs to get your location to set current location</string>
+	<string>Turning on the locations services allows us to show you clubs in your area.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires access to the photo library.</string>
+	<string>Allow access to photos to upload photos from your library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Metropolis-Black.ttf</string>
