@@ -402,6 +402,7 @@ const SearchBar = props => {
                     flexWrap: 'wrap',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
+                    marginBottom: 20,
                   }}>
                   {recommendation?.map(item => {
                     let data = [].concat(
@@ -426,7 +427,7 @@ const SearchBar = props => {
                                 borderWidth: 1,
                                 borderColor: COLORS.primary,
                                 marginLeft: 10,
-                                marginBottom: 15,
+                                marginBottom: 10,
                                 flexDirection: 'row',
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -517,7 +518,7 @@ export default SearchBar;
 // };
 const styles = StyleSheet.create({
   hedingTextMain: {
-    marginTop: 40,
+    marginTop: 10,
     marginBottom: hp(2),
     flexDirection: 'row',
     justifyContent: 'center',

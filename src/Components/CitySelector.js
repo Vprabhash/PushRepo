@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   textItem: {
     fontFamily: FONTS.RobotoRegular,
-    fontSize: 16,
+    fontSize: 14,
     color: '#000000',
     flex: 1,
   },
