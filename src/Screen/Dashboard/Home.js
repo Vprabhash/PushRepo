@@ -45,6 +45,7 @@ import Geolocation from '@react-native-community/geolocation';
 import CitySelector from '../../Components/CitySelector';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import { showLoader } from '../../redux/reducers/loaderSlice';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -80,12 +81,13 @@ const Home = props => {
       console.log('------UpComingEventList data--------', data.payload);
     });
   };
-  // useEffect(() => {
-  //   spotLightList();
-  //   clubLocationList();
-  //   artistList();
-  //   UpComingEventList();
-  // }, []);
+  useEffect(() => {
+    // spotLightList();
+    // clubLocationList();
+    // artistList();
+    // UpComingEventList();
+    // dispatch(showLoader(false));
+  }, []);
 
   useEffect(() => {
     fetchClubsSpotlight();

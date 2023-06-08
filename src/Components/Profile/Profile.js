@@ -52,7 +52,7 @@ const Profile = ({navigation}) => {
       },
     },
     {
-      Title: 'Deactivate Account',
+      Title: 'Delete Account',
       Icon: ImagePath.rightIcon,
       onPress: () => deacctivateAcc(),
     },
@@ -135,11 +135,11 @@ const Profile = ({navigation}) => {
 
   const deacctivateAcc = () => {
     Alert.alert(
-      'Deactivate Account',
-      'Are you sure you want to deactivate your account?',
+      'Delete Account',
+      'Are you sure you want to delete your account?',
       [
         {
-          text: 'Cancel',
+          text: 'No',
           onPress: () => {},
         },
         {
@@ -151,7 +151,7 @@ const Profile = ({navigation}) => {
               console.log('---deactivate--user-----', res);
               if (res.ok) {
                 Toast.showWithGravity(
-                  res?.message || 'Something went wrong',
+                  'Account Deleted Successfully',
                   Toast.LONG,
                   Toast.BOTTOM,
                 );

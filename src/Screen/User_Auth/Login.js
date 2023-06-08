@@ -15,6 +15,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {showLoader} from '../../redux/reducers/loaderSlice';
+import {useDispatch, useSelector} from 'react-redux';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
@@ -37,6 +39,8 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 const Login = props => {
+  const dispatch = useDispatch();
+  const loader = useSelector(state => state.loader.isLoading);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [eyeShow, setEyeShow] = useState('');
@@ -111,7 +115,10 @@ const Login = props => {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
-      setIsLoadingGoogle(true);
+      if(Platform.OS == 'android'){
+        dispatch(showLoader(true));
+      }
+      // setIsLoadingGoogle(true);
       console.log('lofuser data-------:', userInfo);
       // Alert.alert('success:' + JSON.stringify(userInfo));
       const data = {
@@ -130,8 +137,8 @@ const Login = props => {
         .then(async res => {
           console.log('google sign bydata ----', res.data);
           if (res?.ok == true) {
-            await setData('userData', res?.data);
             await setData('userToken', res?.meta?.token);
+            await setData('userData', res?.data);
             props.navigation.reset({
               index: 0,
               routes: [{name: 'BottomTab'}],
@@ -139,13 +146,16 @@ const Login = props => {
           }
         })
         .catch(error => {
+          dispatch(showLoader(false));
           Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
         })
         .finally(() => {
-          setIsLoadingGoogle(false);
+          // dispatch(showLoader(false));
+          // setIsLoadingGoogle(false);
         });
     } catch (error) {
-      setIsLoadingGoogle(false);
+      dispatch(showLoader(false));
+      // setIsLoadingGoogle(false);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // sign in was cancelled
         // Alert.alert('cancelled');
@@ -178,18 +188,20 @@ const Login = props => {
       // user is authenticated
       // setApple(true);
       // socialLogin(appleAuthRequestResponse?.identityToken, 'apple');
-      setIsLoadingGoogle(true);
+      // setIsLoadingGoogle(true);
+      // dispatch(showLoader(true));
       ApiCall(
         'api/oauth/apple',
         'POST',
         JSON.stringify(appleAuthRequestResponse),
       )
         .then(async res => {
-          setIsLoadingGoogle(false);
+          // setIsLoadingGoogle(false);
+          // dispatch(showLoader(false));
           console.log('apple sign bydata ----', res);
           if (res?.ok == true) {
-            await setData('userData', res?.data);
             await setData('userToken', res?.meta?.token);
+            await setData('userData', res?.data);
             props.navigation.reset({
               index: 0,
               routes: [{name: 'BottomTab'}],
@@ -197,10 +209,12 @@ const Login = props => {
           }
         })
         .catch(error => {
+          dispatch(showLoader(false));
           Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
         })
         .finally(() => {
-          setIsLoadingGoogle(false);
+          // dispatch(showLoader(false));
+          // setIsLoadingGoogle(false);
         });
     } else {
       if (isEmpty(appleAuthRequestResponse?.identityToken)) {
@@ -336,7 +350,7 @@ const Login = props => {
           </TouchableOpacity>
         </View>
         <Modal
-          visible={isLoadingGoogle}
+          visible={loader}
           transparent={true}
           style={{flex: 1}}
           statusBarTranslucent={true}>
