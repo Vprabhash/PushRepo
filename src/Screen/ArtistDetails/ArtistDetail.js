@@ -61,11 +61,22 @@ const ArtistDetail = props => {
 
   useEffect(() => {
     fetchArtistsData(page);
+    toTop()
   }, [page, selectedFilter, selectedCity,userBaseCity]);
 
   useEffect(() => {
     console.log('artistList', artistList.length);
+    
   }, [artistList]);
+
+const toTop = () => {
+    // use current
+    flatListRef?.current?.scrollToOffset({
+      animated: true,
+      offset: 0,
+    });
+}
+
 
   function areAllKeysEmpty(obj) {
     return Object.values(obj).every(value => {
@@ -160,6 +171,7 @@ const ArtistDetail = props => {
   };
 
   const artistListRenderItem = ({item, index}) => {
+    // console.log(item,"item===")
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View

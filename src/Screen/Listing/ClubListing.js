@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, {useState, useEffect, useReducer,useRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -36,6 +36,8 @@ const ClubListing = ({navigation, route}) => {
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
 
+  const flatListRef = useRef(null);
+
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
@@ -58,6 +60,7 @@ const ClubListing = ({navigation, route}) => {
     setLoader(true);
     list(page);
     forceUpdate();
+    toTop()
     console.log('Page', page, selectedCity);
   }, [page, filteredData, selectedCity, userBaseCity]);
 
@@ -76,6 +79,13 @@ const ClubListing = ({navigation, route}) => {
       setFilterComponent(false);
     });
   }, []);
+  const toTop = () => {
+    // use current
+    flatListRef?.current?.scrollToOffset({
+      animated: true,
+      offset: 0,
+    });
+}
 
   function areAllKeysEmpty(obj) {
     return Object.values(obj).every(value => {
@@ -411,6 +421,7 @@ const ClubListing = ({navigation, route}) => {
           </TouchableOpacity>
 
           <FlatList
+           ref={flatListRef}
             data={clubs}
             renderItem={_renderItem}
             keyExtractor={(_, index) => index.toString()}

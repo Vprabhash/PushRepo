@@ -22,6 +22,8 @@ import ImagePath from '../../assets/ImagePath';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
+import ApiCall from '../../redux/CommanApi';
+import FastImage from 'react-native-fast-image';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -32,6 +34,7 @@ const EventListing = props => {
   ] = useState(true);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [data, setData]=useState([])
   const renderFooter = () => {
     return (
       <View>
@@ -45,13 +48,41 @@ const EventListing = props => {
       </View>
     );
   };
-
+  function getMonthName(monthNumber) {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+  
+    return date.toLocaleString('en-US', { month: 'long' });
+  }
   const list = async () => {
-    let data = {
-      page: page + 1,
-    };
-    const res = await ApiCall(ARTIST, 'GET', data);
-    console.log('---res--logIn--artist---', res);
+    const queryParams = new URLSearchParams();
+    queryParams.append('upcoming', page);
+    const res = await ApiCall(`api/events?${queryParams}`, 'GET');
+    console.log('---res--logIn--artist---', res?.data);
+    if (Array.isArray(res?.data)) {
+    let newData=  res?.data?.map((e)=>{
+      // console.log(typeof e?.artists[0]?.images[0]);
+        return {
+          id:e?._id,
+          mapIcon:  e?.artists[0]?.images[0],
+          title: e?.title,
+          singerName: e?.artists[0]?.name,
+          barLocation: e?.address?.city,
+          price: e?.club?.cost,
+          priceText: e?.priceText,
+          cardDAte: e?.eventDate?.slice(8,10),
+          cardDAte1:getMonthName(e?.eventDate?.slice(5,7)),
+        }
+      })
+      setENTRIES1(newData)
+      setData(res?.data)
+    }
+    // let data = {
+    //   page: page + 1,
+    // };
+    // const res = await ApiCall(ARTIST, 'GET', data);
+    
+    
   };
   useEffect(() => {
     list();
@@ -120,11 +151,14 @@ const EventListing = props => {
     },
   ]);
   const _renderItem = ({item, index}) => {
+    console.log(item?.mapIcon)
     return (
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate('ArtistPlayingDetail');
+            props.navigation.navigate('ArtistPlayingDetail',{
+              artistData:data.filter(e=>e?._id===item.id)
+            });
           }}
           style={{
             marginHorizontal: 15,
@@ -132,15 +166,22 @@ const EventListing = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          <Image
+          {(item?.mapIcon!=null && typeof item?.mapIcon=="string") ? 
+          <FastImage
             style={{
               height: hp(29),
               width: '100%',
               borderTopRightRadius: 10,
               borderTopLeftRadius: 10,
             }}
-            source={item.mapIcon}
-          />
+            source={{uri:item?.mapIcon || ''}}
+            // source={ImagePath.upcoming_Evn_Img3}
+            // onError={(error)=>console.warn(error)}
+          />:(
+            <View>
+
+            </View>
+          )}
           <View
             style={{
               height: 39,
@@ -191,7 +232,7 @@ const EventListing = props => {
                       color: COLORS.black,
                     },
                   ]}>
-                  {item.price}
+                  {'₹'+item.price}
                 </Text>
                 <Text
                   style={[
@@ -284,7 +325,7 @@ const EventListing = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
+        <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
             searchIcon={ImagePath.searchIcon}
@@ -342,8 +383,8 @@ const EventListing = props => {
               onEndReached={fetchMoreData}
             />
           </SafeAreaView>
-        </ScrollView> */}
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        </ScrollView>
+        {/* {<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <View style={styles.hedingTextMain}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <View style={{}}>
@@ -351,7 +392,7 @@ const EventListing = props => {
             </View>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
-        </View>
+        </View>} */}
       </ImageBackground>
     </View>
   );

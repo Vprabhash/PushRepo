@@ -17,7 +17,7 @@ import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
 const Tab = createBottomTabNavigator();
 
 const Club = createNativeStackNavigator();
-const clubStack = () => {
+const ClubStack = () => {
   return (
     <Club.Navigator initialRouteName="ClubListing">
       <Club.Screen
@@ -33,7 +33,7 @@ const clubStack = () => {
     </Club.Navigator>
   );
 };
-const homeStack = () => {
+const HomeStack = () => {
   return (
     <Club.Navigator initialRouteName="Home">
       <Club.Screen
@@ -69,6 +69,7 @@ function BottomTab() {
           elevation: 3,
           borderTopWidth: 1,
           marginTop: 0.5,
+          marginBottom:2,
           // position: 'absolute',
           // bottom: 5,
           height: Platform.OS === 'ios' ? 100 : 65,
@@ -84,7 +85,7 @@ function BottomTab() {
       })}>
       <Tab.Screen
         name="Home"
-        component={homeStack}
+        component={HomeStack}
         options={{
           headerShown: false,
           tabBarLabel: 'HOME',
@@ -98,7 +99,7 @@ function BottomTab() {
       />
       <Tab.Screen
         name="ClubListing"
-        component={clubStack}
+        component={ClubStack}
         options={{
           headerShown: false,
           tabBarLabel: 'CLUB',

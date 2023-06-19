@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {COLORS, FONTS} from './constants';
 //import DropDownPicker from 'react-native-dropdown-picker';
-import {StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
 import {currentCity} from '../redux/reducers/citySelectorSlice';
 import Toast from 'react-native-simple-toast';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const data = [
   {label: 'Mumbai', value: 'Mumbai'},
@@ -77,6 +78,9 @@ const CitySelector = () => {
           setIsFocus(false);
         }}
         itemTextStyle={styles.textItem}
+        itemContainerStyle={{}}
+        containerStyle={{marginTop:6, width:wp(28),marginLeft:-5}}
+
       />
     </View>
   );
@@ -108,6 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     color: '#000000',
+    // marginTop:10
   },
   textItem: {
     fontFamily: FONTS.RobotoRegular,
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.RobotoRegular,
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: RFValue(16,Dimensions.get('window').height),
     color: '#000000',
     fontFamily: FONTS.RobotoRegular,
   },

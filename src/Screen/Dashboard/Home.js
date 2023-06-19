@@ -41,7 +41,8 @@ import {ARTIST} from '../../services/Apis';
 import Disclamer from '../../Components/Disclamer';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import CitySelector from '../../Components/CitySelector';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
@@ -57,6 +58,7 @@ const Home = props => {
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [getPermission, setGetPermission]=useState(false)
 
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
@@ -92,16 +94,20 @@ const Home = props => {
   useEffect(() => {
     fetchClubsSpotlight();
     fetchArtistSpotlight();
-    AppState.addEventListener('change', handleAppStateChange);
+    AppState.addEventListener('change', 
+    handleAppStateChange);
   }, [selectedCity, userBaseCity]);
 
   const handleAppStateChange = nextAppState => {
+   
     if (
       appState.current.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
       console.log('App has come to the foreground!');
-      checkLocation();
+      // if(getPermission){
+        checkLocation();
+      // }
     }
 
     appState.current = nextAppState;
@@ -151,9 +157,11 @@ const Home = props => {
       }),
     ).then(result => {
       if (result === 'granted') {
+        setGetPermission(true)
         // setModalVisible(false);
         Geolocation.getCurrentPosition(
           position => {
+            console.log(position,"position===")
             if (position.coords) {
               console.log('location data:', position.coords);
               let obj = {};
@@ -165,7 +173,8 @@ const Home = props => {
           error => {
             console.log('location error', error.code, error.message);
           },
-          {enableHighAccuracy: true, timeout: 15000},
+          // {enableHighAccuracy: true, timeout: 15000},
+          { enableHighAccuracy: false, timeout: 500000 }
         );
       } else {
         let obj = {};
@@ -294,7 +303,8 @@ const Home = props => {
           artistListDetail: item,
         });
       }}
-      style={{marginTop: 20}}>
+      style={{marginTop: 20}}
+      >
       <FastImage
         style={{
           height: wp(28),
@@ -311,8 +321,8 @@ const Home = props => {
             color: COLORS.white,
             fontSize: 12,
             fontFamily: FONTS.AxiformaMedium,
-            position: 'absolute',
-            bottom: 10,
+            // position: 'absolute',
+            bottom: 28,
             left: 30,
             width: '70%',
           },
@@ -521,6 +531,7 @@ const Home = props => {
               borderRadius: 10,
             }}
             source={{uri: item?.media?.ambienceImages[0] || ''}}
+            
           />
         ) : (
           <View
@@ -721,9 +732,12 @@ const Home = props => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  {locationLatLong?.latitude ? (
+                    {console.log(locationLatLong,"locationLatLong?.latitude===")}
+                  {(locationLatLong?.latitude && locationLatLong?.longitude)? (
                     <Text style={styles.titleText1}>No Clubs Found</Text>
                   ) : (
+                    <>
+                    {/* { !getPermission &&  */}
                     <View>
                       <Text
                         style={[
@@ -750,6 +764,8 @@ const Home = props => {
                         />
                       </View>
                     </View>
+                    {/* } */}
+                    </>
                   )}
                 </View>
               }
@@ -808,7 +824,7 @@ const Home = props => {
               style={[styles.iconStyle, {width: 10, height: 8}]}
             />
           </TouchableOpacity> */}
-            <View style={styles.hedingTextMain}>
+            <View style={[styles.hedingTextMain,{marginTop:0}]}>
               <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
               <Text style={styles.cardText}>UPCOMING EVENTS</Text>
               <Image style={styles.hedingImg} source={ImagePath.rightLine} />
