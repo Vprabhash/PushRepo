@@ -24,17 +24,38 @@ import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FastImage from 'react-native-fast-image';
+import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
+import HeaderCitySearch from '../../Components/HeaderCitySearch';
+import moment from 'moment';
+import {useSelector} from 'react-redux';
+import Toast from 'react-native-simple-toast';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const EventListing = props => {
+  const locationLatLong = useSelector(
+    state => state.clubLocation.locationLatLong,
+  );
+  const selectedCity = useSelector(state => state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
   ] = useState(true);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [data, setData]=useState([])
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [nearByEvents, setNearByEvents] = useState([]);
+  const [dontCall, setDontCall] = useState(false);
+
+  useEffect(() => {
+    list(page);
+  }, [page, selectedCity, userBaseCity]);
+
+  useEffect(() => {
+    eventsNearbyDataApi();
+  }, [locationLatLong]);
+
   const renderFooter = () => {
     return (
       <View>
@@ -48,116 +69,94 @@ const EventListing = props => {
       </View>
     );
   };
+
   function getMonthName(monthNumber) {
     const date = new Date();
     date.setMonth(monthNumber - 1);
-  
-    return date.toLocaleString('en-US', { month: 'long' });
+
+    return date.toLocaleString('en-US', {month: 'long'});
   }
-  const list = async () => {
+
+  const list = async page => {
     const queryParams = new URLSearchParams();
-    queryParams.append('upcoming', page);
+    queryParams.append('upcoming', 1);
+    queryParams.append('page', page);
+    queryParams.append('city', selectedCity);
+    queryParams.append('userBaseCity', userBaseCity);
     const res = await ApiCall(`api/events?${queryParams}`, 'GET');
     console.log('---res--logIn--artist---', res?.data);
     if (Array.isArray(res?.data)) {
-    let newData=  res?.data?.map((e)=>{
-      // console.log(typeof e?.artists[0]?.images[0]);
-        return {
-          id:e?._id,
-          mapIcon:  e?.artists[0]?.images[0],
-          title: e?.title,
-          singerName: e?.artists[0]?.name,
-          barLocation: e?.address?.city,
-          price: e?.club?.cost,
-          priceText: e?.priceText,
-          cardDAte: e?.eventDate?.slice(8,10),
-          cardDAte1:getMonthName(e?.eventDate?.slice(5,7)),
-        }
-      })
-      setENTRIES1(newData)
-      setData(res?.data)
+      setEvents(res?.data);
     }
-    // let data = {
-    //   page: page + 1,
-    // };
-    // const res = await ApiCall(ARTIST, 'GET', data);
-    
-    
+    if (Array.isArray(res?.data)) {
+      if (page === 0) {
+        setEvents(res?.data);
+        setDontCall(false);
+      } else {
+        if (res?.data?.length) {
+          setEvents([...events, ...res?.data]);
+        } else {
+          setDontCall(true);
+        }
+      }
+    } else {
+      setDontCall(false);
+      Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
+    }
   };
-  useEffect(() => {
-    list();
-  }, []);
+
+  const eventsNearbyDataApi = () => {
+    console.log('locationdata ---', locationLatLong);
+    try {
+      ApiCall(
+        `api/events?coordinates=${locationLatLong?.latitude || ''}${
+          locationLatLong?.latitude ? ',' : ''
+        }${locationLatLong?.longitude || ''}&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
+        'GET',
+      ).then(res => {
+        if (Array.isArray(res?.data)) {
+          // console.log(res?.data, '=========');
+          setNearByEvents(res?.data);
+          // if (page === 0) {
+          //   setNearByEvents(res?.data);
+          //   setDontCall(false);
+          // } else {
+          //   if (res?.data?.length) {
+          //     setNearByEvents([...nearByEvents, ...res?.data]);
+          //   } else {
+          //     setDontCall(true);
+          //   }
+          // }
+        } else {
+          setDontCall(false);
+          Toast.showWithGravity(
+            'Something went wrong',
+            Toast.LONG,
+            Toast.BOTTOM,
+          );
+        }
+        console.log('clubsnearbydata ----', res?.data);
+      });
+    } catch (error) {
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
 
   const fetchMoreData = () => {
-    if (!onEndReachedCalledDuringMomentum) {
-      list();
+    if (!onEndReachedCalledDuringMomentum && !loading) {
       setLoading(true);
+      setPage(page + 1);
       setonEndReachedCalledDuringMomentum(true);
-    } else {
-      setLoading(false);
     }
   };
-  const [ENTRIES1, setENTRIES1] = useState([
-    {
-      mapIcon: ImagePath.upcoming_Evn_Img,
-      title: 'Justice Tour',
-      singerName: 'By Arijit Singh',
-      barLocation: 'Colaba, Mumbai',
-      price: '₹1499',
-      priceText: 'onwards',
-      cardDAte: '07',
-      cardDAte1: 'APR',
-    },
-    {
-      mapIcon: ImagePath.upcoming_Evn_Img1,
-      title: 'Runaway',
-      singerName: 'By Arijit Singh',
-      barLocation: 'Colaba, Mumbai',
-      price: '₹1499',
-      priceText: 'onwards',
-      cardDAte: '07',
-      cardDAte1: 'APR',
-    },
 
-    {
-      mapIcon: ImagePath.upcoming_Evn_Img2,
-      title: 'Sweetener',
-      singerName: 'By Ariana Grande',
-      barLocation: 'Colaba, Mumbai',
-      price: '₹1499',
-      priceText: 'onwards',
-      cardDAte: '07',
-      cardDAte1: 'APR',
-    },
-    {
-      mapIcon: ImagePath.upcoming_Evn_Img3,
-      title: 'Red',
-      singerName: 'By Taylor Swift',
-      barLocation: 'Colaba, Mumbai',
-      price: '₹1499',
-      priceText: 'onwards',
-      cardDAte: '07',
-      cardDAte1: 'APR',
-    },
-    {
-      mapIcon: ImagePath.upcoming_Evn_Img4,
-      title: 'Happier Than Ever',
-      singerName: 'By Billie Eilish',
-      barLocation: 'Colaba, Mumbai',
-      price: '₹1499',
-      priceText: 'onwards',
-      cardDAte: '07',
-      cardDAte1: 'APR',
-    },
-  ]);
   const _renderItem = ({item, index}) => {
-    console.log(item?.mapIcon)
     return (
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate('ArtistPlayingDetail',{
-              artistData:data.filter(e=>e?._id===item.id)
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
             });
           }}
           style={{
@@ -166,26 +165,34 @@ const EventListing = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {(item?.mapIcon!=null && typeof item?.mapIcon=="string") ? 
-          <FastImage
-            style={{
-              height: hp(29),
-              width: '100%',
-              borderTopRightRadius: 10,
-              borderTopLeftRadius: 10,
-            }}
-            source={{uri:item?.mapIcon || ''}}
-            // source={ImagePath.upcoming_Evn_Img3}
-            // onError={(error)=>console.warn(error)}
-          />:(
-            <View>
-
-            </View>
+          {item?.artists?.length &&
+          item?.artists[0]?.images?.length &&
+          item?.artists[0]?.images[0] &&
+          typeof item?.artists[0]?.images[0] == 'string' ? (
+            <FastImage
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+              source={{uri: item?.artists[0]?.images[0]}}
+            />
+          ) : (
+            <View
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+                backgroundColor: COLORS.gray,
+              }}
+            />
           )}
           <View
             style={{
               height: 39,
-              width: 32,
+              minWidth: 32,
               justifyContent: 'center',
               borderRadius: 10,
               backgroundColor: '#FFFFFF',
@@ -200,7 +207,7 @@ const EventListing = props => {
                 fontFamily: FONTS.AxiformaBold,
                 fontSize: 12,
               }}>
-              {item.cardDAte}
+              {moment(item?.eventDate).format('DD')}
             </Text>
             <Text
               style={{
@@ -208,38 +215,37 @@ const EventListing = props => {
                 textAlign: 'center',
                 fontFamily: FONTS.AxiformaRegular,
                 fontSize: 12,
+                textTransform: 'uppercase',
               }}>
-              {item.cardDAte1}
+              {moment(item?.eventDate).format('MMM')}
             </Text>
           </View>
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
-            <Text style={[styles.singerName]}>{item.singerName}</Text>
+            <Text style={[styles.singerName, {width: '70%'}]}>
+              By {item?.artists?.map(e => e?.name)?.join(', ')}
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.listinhText1, {}]}>{item.barLocation}</Text>
+              <Text style={styles.listingText}>
+                {[item?.address?.locality || '', item?.address?.city || '']
+                  .filter(e => e)
+                  .join(', ')}
+              </Text>
               <View style={{marginTop: -10, alignItems: 'center'}}>
-                <Text
-                  style={[
-                    styles.listinhHeading1,
-                    {
-                      fontSize: 12,
-                      fontFamily: FONTS.AxiformaMedium,
-                      color: COLORS.black,
-                    },
-                  ]}>
-                  {'₹'+item.price}
+                <Text style={[styles.listingText, {color: COLORS.black}]}>
+                  {'₹' + item?.price?.amount}
                 </Text>
                 <Text
                   style={[
                     styles.listinhText,
                     {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
                   ]}>
-                  {item.priceText}
+                  onwards
                 </Text>
               </View>
             </View>
@@ -248,41 +254,15 @@ const EventListing = props => {
       </View>
     );
   };
-  const EventListingData = [
-    {
-      mapIcon: ImagePath.Nucleya_Event,
-      title: 'Arambh ft. Nucleya',
-      date: 'Fri, 09 Apr',
-      time: '02:00 PM - 10:00 PM',
-      location: 'Gomti Nagar, Lucknow',
-      price: '₹1499',
-      priceText: 'onwards',
-    },
-    {
-      mapIcon: ImagePath.Nucleya_Event1,
-      title: 'The Math ft. Dua',
-      date: 'Fri, 09 Apr',
-      time: '02:00 PM - 10:00 PM',
-      location: 'Gomti Nagar, Lucknow',
-      price: '₹1499',
-      priceText: 'onwards',
-    },
-    {
-      mapIcon: ImagePath.Nucleya_Event,
-      title: 'Night L. ft. Divine',
-      date: 'Fri, 09 Apr',
-      time: '02:00 PM - 10:00 PM',
-      location: 'Gomti Nagar, Lucknow',
-      price: '₹1499',
-      priceText: 'onwards',
-    },
-  ];
+
   const eventRenderItem = ({item, index}) => {
     return (
       <View style={{flex: 1, width: '50%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
-            props.navigation.navigate('ArtistDetail');
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
+            });
           }}
           style={{
             marginLeft: 15,
@@ -291,41 +271,85 @@ const EventListing = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          <Image
-            style={{
-              height: hp(22),
-              width: '100%',
-              resizeMode: 'cover',
-              borderTopRightRadius: 10,
-              borderTopLeftRadius: 10,
-            }}
-            source={item.mapIcon}
-          />
+          {item?.artists?.length &&
+          item?.artists[0]?.images?.length &&
+          item?.artists[0]?.images[0] &&
+          typeof item?.artists[0]?.images[0] == 'string' ? (
+            <Image
+              style={{
+                height: hp(18),
+                width: wp(45),
+                resizeMode: 'cover',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+              source={{uri: item?.artists[0]?.images[0]}}
+            />
+          ) : (
+            <View
+              style={{
+                height: hp(22),
+                width: wp(45),
+                resizeMode: 'cover',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+            />
+          )}
           <View style={{padding: wp(3)}}>
-            <Text style={[styles.listinhHeading1, {marginBottom: hp(1)}]}>
+            <Text style={[styles.listinhHeading1, {marginBottom: hp(0.5)}]}>
               {item.title}
             </Text>
-            <Text style={styles.listinhText}>{item.date}</Text>
-            <Text style={styles.listinhText}>{item.time}</Text>
-            <Text style={styles.listinhText}>{item.location}</Text>
-            <Text style={[styles.listinhHeading1, {marginTop: hp(2)}]}>
-              {item.price}
+            <Text
+              style={[
+                styles.singerName,
+                {
+                  width: '100%',
+                  marginTop: 0,
+                },
+              ]}>
+              By {item?.artists?.map(e => e?.name)?.join(', ')}
             </Text>
-            <Text style={[styles.listinhText, {marginTop: 0}]}>
-              {item.priceText}
+            <Text style={styles.listinhText}>
+              {item?.eventDate
+                ? moment(item?.eventDate).format('ddd, DD MMM')
+                : null}
             </Text>
+            <Text style={styles.listinhText}>
+              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+                item?.eventEndTime,
+              ).format('hh:mm A')}`}
+            </Text>
+            <Text style={[styles.listinhText, {width: '98%'}]}>
+              {[item?.address?.locality || '', item?.address?.city || '']
+                .filter(e => e)
+                .join(', ')}
+            </Text>
+            <Text
+              style={[
+                styles.listingText,
+                {color: COLORS.black, marginTop: hp(2)},
+              ]}>
+              {'₹' + item?.price?.amount}
+            </Text>
+            <Text style={[styles.listinhText, {marginTop: 0}]}>onwards</Text>
           </View>
         </TouchableOpacity>
       </View>
     );
   };
+
+  const EmptyListMessage = () => {
+    return <Text style={styles.noDataText}>No Events Found</Text>;
+  };
+
   return (
     <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
+        {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
             searchIcon={ImagePath.searchIcon}
@@ -334,9 +358,21 @@ const EventListing = props => {
             iconWidth={18}
             profileIcon={ImagePath.profilePic}
           />
+        </View> */}
+        <View
+          style={{
+            paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
+          }}>
+          <HeaderCitySearch
+            onPress={() => {
+              props.navigation.navigate('SearchBar');
+            }}
+          />
         </View>
-
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}
@@ -346,43 +382,39 @@ const EventListing = props => {
 
           <View style={styles.hedingTextMain}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <View style={{}}>
-              <Text style={styles.cardText}>Events near me</Text>
-            </View>
+            <Text style={styles.cardText}>Events near me</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
-          <SafeAreaView>
+          {nearByEvents?.length ? (
             <FlatList
               horizontal
-              data={EventListingData}
+              data={nearByEvents}
               renderItem={eventRenderItem}
             />
-          </SafeAreaView>
-          <View style={[styles.hedingTextMain, {}]}>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <View style={{}}>
-              <Text
-                style={[
-                  styles.cardText,
-                  {fontSize: 16, fontFamily: FONTS.AxiformaMedium},
-                ]}>
-                UPCOMING EVENTS IN TOWN
+          ) : (
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={[styles.noDataText, {marginTop: 0}]}>
+                No Events Found
               </Text>
             </View>
+          )}
+          <View style={[styles.hedingTextMain, {}]}>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+            <Text style={styles.cardText}>UPCOMING EVENTS IN TOWN</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
-          <SafeAreaView>
-            <FlatList
-              data={ENTRIES1}
-              renderItem={_renderItem}
-              ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringMomentum(false);
-              }}
-              onEndReached={fetchMoreData}
-            />
-          </SafeAreaView>
+          <FlatList
+            data={events}
+            renderItem={_renderItem}
+            ListFooterComponent={renderFooter}
+            onEndReachedThreshold={0.3}
+            onMomentumScrollBegin={() => {
+              setonEndReachedCalledDuringMomentum(false);
+            }}
+            onEndReached={dontCall ? null : fetchMoreData}
+            ListEmptyComponent={EmptyListMessage}
+            maxToRenderPerBatch={15}
+          />
         </ScrollView>
         {/* {<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <View style={styles.hedingTextMain}>
@@ -407,7 +439,7 @@ const styles = StyleSheet.create({
     color: '#575757',
   },
   hedingTextMain: {
-    marginTop: 24,
+    marginVertical: hp(2),
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
@@ -415,9 +447,13 @@ const styles = StyleSheet.create({
   },
   hedingImg: {width: wp(30), resizeMode: 'contain'},
   cardText: {
-    fontFamily: FONTS.AxiformaSemiBold,
-    fontSize: 20,
-    color: 'rgba(32, 32, 32, 1)',
+    fontFamily: FONTS.AxiformaBold,
+    fontSize: 12,
+    marginHorizontal: 5,
+    textAlign: 'center',
+    color: COLORS.black,
+    letterSpacing: 2.5,
+    textTransform: 'uppercase',
   },
 
   listinhHeading1: {
@@ -441,5 +477,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.RobotoMedium,
     color: '#5B5959',
+  },
+  noDataText: {
+    color: COLORS.black,
+    fontFamily: FONTS.AxiformaRegular,
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: hp(1),
+  },
+  listingText: {
+    fontSize: 14,
+    fontFamily: FONTS.RobotoRegular,
+    color: '#575757',
   },
 });

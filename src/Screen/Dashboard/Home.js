@@ -45,8 +45,8 @@ import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 import Geolocation from 'react-native-geolocation-service';
 import CitySelector from '../../Components/CitySelector';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
-import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
-import { showLoader } from '../../redux/reducers/loaderSlice';
+import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
+import {showLoader} from '../../redux/reducers/loaderSlice';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -58,7 +58,7 @@ const Home = props => {
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [getPermission, setGetPermission]=useState(false)
+  const [getPermission, setGetPermission] = useState(false);
 
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
@@ -94,19 +94,17 @@ const Home = props => {
   useEffect(() => {
     fetchClubsSpotlight();
     fetchArtistSpotlight();
-    AppState.addEventListener('change', 
-    handleAppStateChange);
+    AppState.addEventListener('change', handleAppStateChange);
   }, [selectedCity, userBaseCity]);
 
   const handleAppStateChange = nextAppState => {
-   
     if (
       appState.current.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
       console.log('App has come to the foreground!');
       // if(getPermission){
-        checkLocation();
+      checkLocation();
       // }
     }
 
@@ -157,11 +155,11 @@ const Home = props => {
       }),
     ).then(result => {
       if (result === 'granted') {
-        setGetPermission(true)
+        setGetPermission(true);
         // setModalVisible(false);
         Geolocation.getCurrentPosition(
           position => {
-            console.log(position,"position===")
+            console.log(position, 'position===');
             if (position.coords) {
               console.log('location data:', position.coords);
               let obj = {};
@@ -174,7 +172,7 @@ const Home = props => {
             console.log('location error', error.code, error.message);
           },
           // {enableHighAccuracy: true, timeout: 15000},
-          { enableHighAccuracy: false, timeout: 500000 }
+          {enableHighAccuracy: false, timeout: 500000},
         );
       } else {
         let obj = {};
@@ -303,8 +301,7 @@ const Home = props => {
           artistListDetail: item,
         });
       }}
-      style={{marginTop: 20}}
-      >
+      style={{marginTop: 20}}>
       <FastImage
         style={{
           height: wp(28),
@@ -531,7 +528,6 @@ const Home = props => {
               borderRadius: 10,
             }}
             source={{uri: item?.media?.ambienceImages[0] || ''}}
-            
           />
         ) : (
           <View
@@ -589,7 +585,6 @@ const Home = props => {
       ).then(res => {
         if (res?.data?.length) {
           setClubNearby(res?.data);
-          clearTimeout();
         }
         console.log('clubsnearbydata ----', res?.data);
       });
@@ -649,7 +644,7 @@ const Home = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-          {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
+        {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
             title="Near me"
@@ -662,24 +657,26 @@ const Home = props => {
             profileIcon={ImagePath.profilePic}
           />
         </View> */}
-          <ScrollView
-            contentContainerStyle={{flexGrow: 1}}
-            showsVerticalScrollIndicator={false}
-            >
-            <StatusBar
-              barStyle="dark-content"
-              hidden={false}
-              backgroundColor="transparent"
-              translucent={true}
-            />
-            <View style={{paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46}}>
+        <ScrollView
+          contentContainerStyle={{flexGrow: 1}}
+          showsVerticalScrollIndicator={false}>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={false}
+            backgroundColor="transparent"
+            translucent={true}
+          />
+          <View
+            style={{
+              paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
+            }}>
             <HeaderCitySearch
               onPress={() => {
                 props.navigation.navigate('SearchBar');
               }}
-              />
-              </View>
-            {/* <TouchableOpacity
+            />
+          </View>
+          {/* <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
             onPress={() => {
@@ -688,55 +685,55 @@ const Home = props => {
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>
           </TouchableOpacity> */}
-            <View style={styles.hedingTextMain}>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>CLUBS IN SPOTLIGHT</Text>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-            </View>
-            <FlatList
-              horizontal={true}
-              data={clubsSpotlight}
-              renderItem={SpotlightData_RenderItem}
-              showsHorizontalScrollIndicator={false}
-              // ListFooterComponent={spotLightrenderFooter}
-              // onEndReachedThreshold={0.7}
-              contentContainerStyle={{marginTop: 20, zIndex: 99, paddingStart:5}}
-              // onMomentumScrollBegin={() => {
-              //   setonEndReachedCalledDuringspotLight(false);
-              // }}
-              // onEndReached={fetchSpotlightData}
-            />
-            <View style={styles.hedingTextMain}>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>CLUBS NEARBY</Text>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-            </View>
-            {/* <SafeAreaView> */}
-            <FlatList
-              horizontal={true}
-              data={clubsNearby?.slice(0, 5)}
-              renderItem={ClubNarDatarenderItem}
-              showsHorizontalScrollIndicator={false}
-              // ListFooterComponent={renderFooter}
-              style={{marginTop: 20, marginBottom: -hp(2),paddingStart:5}}
-              // onEndReachedThreshold={0.7}
-              // onMomentumScrollBegin={() => {
-              //   setonEndReachedCalledDuringMomentum(false);
-              // }}
-              // onEndReached={fetchMoreData}
-              ListEmptyComponent={
-                <View
-                  style={{
-                    width: width,
-                    paddingBottom: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                    {console.log(locationLatLong,"locationLatLong?.latitude===")}
-                  {(locationLatLong?.latitude && locationLatLong?.longitude)? (
-                    <Text style={styles.titleText1}>No Clubs Found</Text>
-                  ) : (
-                    <>
+          <View style={styles.hedingTextMain}>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+            <Text style={styles.cardText}>CLUBS IN SPOTLIGHT</Text>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+          </View>
+          <FlatList
+            horizontal={true}
+            data={clubsSpotlight}
+            renderItem={SpotlightData_RenderItem}
+            showsHorizontalScrollIndicator={false}
+            // ListFooterComponent={spotLightrenderFooter}
+            // onEndReachedThreshold={0.7}
+            contentContainerStyle={{marginTop: 20, zIndex: 99, paddingStart: 5}}
+            // onMomentumScrollBegin={() => {
+            //   setonEndReachedCalledDuringspotLight(false);
+            // }}
+            // onEndReached={fetchSpotlightData}
+          />
+          <View style={styles.hedingTextMain}>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+            <Text style={styles.cardText}>CLUBS NEARBY</Text>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+          </View>
+          {/* <SafeAreaView> */}
+          <FlatList
+            horizontal={true}
+            data={clubsNearby?.slice(0, 5)}
+            renderItem={ClubNarDatarenderItem}
+            showsHorizontalScrollIndicator={false}
+            // ListFooterComponent={renderFooter}
+            style={{marginTop: 20, marginBottom: -hp(2), paddingStart: 5}}
+            // onEndReachedThreshold={0.7}
+            // onMomentumScrollBegin={() => {
+            //   setonEndReachedCalledDuringMomentum(false);
+            // }}
+            // onEndReached={fetchMoreData}
+            ListEmptyComponent={
+              <View
+                style={{
+                  width: width,
+                  paddingBottom: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {console.log(locationLatLong, 'locationLatLong?.latitude===')}
+                {locationLatLong?.latitude && locationLatLong?.longitude ? (
+                  <Text style={styles.titleText1}>No Clubs Found</Text>
+                ) : (
+                  <>
                     {/* { !getPermission &&  */}
                     <View>
                       <Text
@@ -765,12 +762,12 @@ const Home = props => {
                       </View>
                     </View>
                     {/* } */}
-                    </>
-                  )}
-                </View>
-              }
-            />
-            {/* <FlatList
+                  </>
+                )}
+              </View>
+            }
+          />
+          {/* <FlatList
               horizontal={true}
               data={Tabs}
               renderItem={_renderItem}
@@ -781,26 +778,26 @@ const Home = props => {
               }}
               onEndReached={fetchMoreData}
             /> */}
-            {/* </SafeAreaView> */}
-            <View style={styles.hedingTextMain}>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>ARTISTS IN SPOTLIGHT</Text>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-            </View>
-            <FlatList
-              horizontal={true}
-              data={artistsSpotlight}
-              renderItem={artistRenderItem}
-              contentContainerStyle={{paddingStart:5}}
-              showsHorizontalScrollIndicator={false}
-              // ListFooterComponent={artistRenderFooter}
-              // onEndReachedThreshold={0.7}
-              // onMomentumScrollBegin={() => {
-              //   setonEndReachedCalledDuringArtist(false);
-              // }}
-              // onEndReached={fetchArtistData}
-            />
-            {/* <TouchableOpacity
+          {/* </SafeAreaView> */}
+          <View style={styles.hedingTextMain}>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+            <Text style={styles.cardText}>ARTISTS IN SPOTLIGHT</Text>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+          </View>
+          <FlatList
+            horizontal={true}
+            data={artistsSpotlight}
+            renderItem={artistRenderItem}
+            contentContainerStyle={{paddingStart: 5}}
+            showsHorizontalScrollIndicator={false}
+            // ListFooterComponent={artistRenderFooter}
+            // onEndReachedThreshold={0.7}
+            // onMomentumScrollBegin={() => {
+            //   setonEndReachedCalledDuringArtist(false);
+            // }}
+            // onEndReached={fetchArtistData}
+          />
+          {/* <TouchableOpacity
             style={[
               styles.fllter,
               {
@@ -824,26 +821,26 @@ const Home = props => {
               style={[styles.iconStyle, {width: 10, height: 8}]}
             />
           </TouchableOpacity> */}
-            <View style={[styles.hedingTextMain,{marginTop:0}]}>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-              <Text style={styles.cardText}>UPCOMING EVENTS</Text>
-              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-            </View>
+          <View style={[styles.hedingTextMain, {marginTop: 0}]}>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+            <Text style={styles.cardText}>UPCOMING EVENTS</Text>
+            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+          </View>
+          <View
+            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <View
-              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: 100,
-                }}>
-                {/* <Image style={styles.hedingImg} source={ImagePath.rightLine1} /> */}
-                <Text style={styles.cardText}> Coming Soon </Text>
-                {/* <Image style={styles.hedingImg} source={ImagePath.rightLine} /> */}
-              </View>
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 100,
+              }}>
+              {/* <Image style={styles.hedingImg} source={ImagePath.rightLine1} /> */}
+              <Text style={styles.cardText}> Coming Soon </Text>
+              {/* <Image style={styles.hedingImg} source={ImagePath.rightLine} /> */}
             </View>
-            {/* <SafeAreaView style={{marginBottom: 10}}>
+          </View>
+          {/* <SafeAreaView style={{marginBottom: 10}}>
             <FlatList
               horizontal={true}
               data={UpcomingData}
@@ -868,9 +865,9 @@ const Home = props => {
               }
             />
           </SafeAreaView> */}
-            {/* <Text style={[styles.aboutText]}>Clubs Nearby </Text> */}
+          {/* <Text style={[styles.aboutText]}>Clubs Nearby </Text> */}
 
-            {/* <SafeAreaView style={{marginBottom: 20}}>
+          {/* <SafeAreaView style={{marginBottom: 20}}>
             <FlatList
               horizontal={true}
               data={clubsNearby}
@@ -888,7 +885,7 @@ const Home = props => {
               }
             />
           </SafeAreaView> */}
-          </ScrollView>
+        </ScrollView>
       </ImageBackground>
       {/* <Disclamer
         isVisible={modalVisible}

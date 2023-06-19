@@ -25,49 +25,22 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {COLORS, FONTS} from '../../Components/constants';
 import FastImage from 'react-native-fast-image';
 import Swiper from 'react-native-swiper';
+import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
+import moment from 'moment';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistPlayingDetail = props => {
   const {artistData} = props?.route?.params;
   const [modalVisibleone, setModalVisibleone] = useState(false);
 
-   const date = new Date(artistData[0]?.eventDate)
-    .toLocaleString('en-us', {
-      weekday: 'short',
-      month: 'short',
-      day: '2-digit',
-      hour: 'numeric',
-    })
-    .split(',');
-
-  date.splice(2, 0, 'At');
-
-  const array = date;
-  const str = array.join(' ');
-  const ENTRIES1 = [
-    {
-      mapIcon1: artistData[0]?.artists[0]?.images[0] || ImagePath.aadat,
-      title1: artistData[0]?.title || 'Worth The Shot',
-      singerName: 'By',
-      singerNametwo: artistData[0]?.artists[0]?.name || ' DJ Nyk',
-      mapIcon: ImagePath.watchIcon,
-      title: str || 'Fri Mar 24 at 8:00 PM ',
-      location: ImagePath.location,
-      locationText: artistData[0]?.club?.locality || 'Ametrine24, Bhopal',
-      play: ImagePath.play_pause,
-      playText: 'Live Music Concert',
-      btn: artistData[0]?.club?.cost || 'Free',
-      btnText: artistData[0]?.priceText || 'Onwards',
-      locationCors: artistData[0]?.club?.geoJson?.coordinates,
-    },
-  ];
-  const _renderItem = ({item, index}) => {
+  const _renderItem = () => {
     return (
       <View
         style={{
           flex: 1,
-          width: '100%',
           marginBottom: 7,
+          marginHorizontal: 15,
+          marginTop: 20,
           // backgroundColor: 'red',
         }}>
         <View
@@ -90,7 +63,7 @@ const ArtistPlayingDetail = props => {
                   overflow: 'hidden',
                 }}
                 paginationStyle={{
-                  bottom: hp(0),
+                  bottom: hp(1),
                   zIndex: 9,
                   backgroundColor: '#C9C9C9',
                   borderRadius: 20,
@@ -133,8 +106,8 @@ const ArtistPlayingDetail = props => {
                     }}
                   />
                 }>
-                {artistData[0]?.artists[0]?.images.length ? (
-                  artistData[0]?.artists[0]?.images?.map(item => (
+                {artistData?.artists[0]?.images.length ? (
+                  artistData?.artists[0]?.images?.slice(0, 5)?.map(item => (
                     <View style={styles.slide}>
                       <FastImage style={styles.slideImg} source={{uri: item}} />
                     </View>
@@ -145,19 +118,18 @@ const ArtistPlayingDetail = props => {
               </Swiper>
             </Pressable>
           }
-          {/* { typeof item?.mapIcon1==="string" && 
-          <FastImage
-            style={{height: hp(29), width: '100%', borderRadius: 10}}
-            // source={item.mapIcon1}
-            source={{uri:item?.mapIcon1}}
-          />} */}
           <View style={{paddingHorizontal: 15, paddingVertical: hp(2)}}>
-            <Text style={[styles.listinhHeading]}>{item.title1}</Text>
+            <Text style={[styles.listinhHeading]}>{artistData?.title}</Text>
             <Text style={[styles.singerName]}>
-              {item.singerName}
-              <Text style={{textDecorationLine: 'underline', paddingLeft: 5}}>
-                {` `}
-                {item.singerNametwo}
+              By{' '}
+              <Text
+                style={{textDecorationLine: 'underline', paddingLeft: 5}}
+                onPress={() =>
+                  props.navigation.navigate('ArtistEventDetail', {
+                    artistListDetail: artistData?.artists[0],
+                  })
+                }>
+                {artistData?.artists[0]?.name}
               </Text>
             </Text>
             <View
@@ -173,12 +145,17 @@ const ArtistPlayingDetail = props => {
                   width: 17,
                   resizeMode: 'contain',
                 }}
-                source={item.mapIcon}
+                source={ImagePath.watchIcon}
               />
               <View style={{flex: 0.7}}>
-                <View style={{}}>
-                  <Text style={styles.listinhHeading1}>{item.title}</Text>
-                </View>
+                <Text style={styles.listinhHeading1}>
+                  {' '}
+                  {`${moment(artistData?.eventStartTime).format(
+                    'ddd MMM DD',
+                  )} at ${moment(artistData?.eventStartTime).format(
+                    'hh:mm A',
+                  )}`}
+                </Text>
               </View>
             </View>
             <View
@@ -194,12 +171,17 @@ const ArtistPlayingDetail = props => {
                   width: 17,
                   resizeMode: 'contain',
                 }}
-                source={item.location}
+                source={ImagePath.location}
               />
               <View style={{flex: 0.6}}>
                 <View style={{}}>
                   <Text style={styles.listinhHeading1}>
-                    {item.locationText}
+                    {[
+                      artistData?.address?.locality || '',
+                      artistData?.address?.city || '',
+                    ]
+                      .filter(e => e)
+                      .join(', ')}
                   </Text>
                 </View>
               </View>
@@ -217,15 +199,11 @@ const ArtistPlayingDetail = props => {
                   width: 17,
                   resizeMode: 'contain',
                 }}
-                source={item.play}
+                source={ImagePath.play_pause}
               />
-              <View style={{}}>
-                <View style={{}}>
-                  <Text style={styles.listinhHeading1}>{item.playText}</Text>
-                </View>
-              </View>
+              <Text style={styles.listinhHeading1}>{'Live Music Concert'}</Text>
             </View>
-            {item.btnText && (
+            {artistData?.priceText && (
               <TouchableOpacity
                 activeOpacity={0.5}
                 style={{
@@ -246,8 +224,7 @@ const ArtistPlayingDetail = props => {
                     fontFamily: FONTS.RobotoBlack,
                     fontSize: 12,
                   }}>
-                  {'₹'}
-                  {item.btn}
+                  {'₹' + artistData?.price?.amount}
                 </Text>
                 <Text
                   style={{
@@ -256,7 +233,7 @@ const ArtistPlayingDetail = props => {
                     fontFamily: FONTS.RobotoMedium,
                     fontSize: 12,
                   }}>
-                  {item.btnText}
+                  onwards
                 </Text>
               </TouchableOpacity>
             )}
@@ -273,13 +250,12 @@ const ArtistPlayingDetail = props => {
               marginTop: 10,
             }}
             onPress={() => {
-              console.log(ENTRIES1[0]?.locationCors[0]);
               const scheme = Platform.select({
                 ios: 'maps://0,0?q=',
                 android: 'geo:0,0?q=',
               });
-              const latLng = `${ENTRIES1[0]?.locationCors[0]},${ENTRIES1[0]?.locationCors[1]}`;
-              const label = ENTRIES1[0]?.locationText;
+              const latLng = artistData?.club?.geoJson?.coordinates?.join(',');
+              const label = artistData?.locationText;
               const url = Platform.select({
                 ios: `${scheme}${label}@${latLng}`,
                 android: `${scheme}${latLng}(${label})`,
@@ -287,7 +263,10 @@ const ArtistPlayingDetail = props => {
 
               Linking.openURL(url);
             }}>
-            <Image style={styles.btnIcon} source={ImagePath.direction} />
+            <Image
+              style={[styles.btnIcon, {tintColor: null}]}
+              source={ImagePath.direction}
+            />
             <Text style={styles.buttonText}>Get Direction</Text>
           </TouchableOpacity>
         </View>
@@ -304,7 +283,7 @@ const ArtistPlayingDetail = props => {
         <View
           style={{
             backgroundColor: COLORS.white,
-            marginTop: 36,
+            marginTop: getStatusBarHeight(),
             paddingVertical: 13,
             marginHorizontal: 15,
             elevation: 19,
@@ -328,11 +307,9 @@ const ArtistPlayingDetail = props => {
             translucent={true}
           />
 
-          <SafeAreaView>
-            <FlatList data={ENTRIES1} renderItem={_renderItem} />
-          </SafeAreaView>
+          {_renderItem()}
 
-          <View
+          {/* <View
             style={{
               backgroundColor: '#FFFFFF',
               paddingVertical: 22,
@@ -363,7 +340,7 @@ const ArtistPlayingDetail = props => {
               The concert will be held on Saturday, October 1st, 2022. Gates
               will open at 6:00 PM, and the show will start at 8:00 PM.{' '}
             </Text>
-          </View>
+          </View> */}
         </ScrollView>
       </ImageBackground>
     </View>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer,useRef} from 'react';
+import React, {useState, useEffect, useReducer, useRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -27,8 +27,8 @@ import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
-import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -60,7 +60,7 @@ const ClubListing = ({navigation, route}) => {
     setLoader(true);
     list(page);
     forceUpdate();
-    toTop()
+    toTop();
     console.log('Page', page, selectedCity);
   }, [page, filteredData, selectedCity, userBaseCity]);
 
@@ -85,7 +85,7 @@ const ClubListing = ({navigation, route}) => {
       animated: true,
       offset: 0,
     });
-}
+  };
 
   function areAllKeysEmpty(obj) {
     return Object.values(obj).every(value => {
@@ -175,7 +175,11 @@ const ClubListing = ({navigation, route}) => {
           }
         } else {
           setDontCall(false);
-          Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(
+            'Something went wrong',
+            Toast.LONG,
+            Toast.BOTTOM,
+          );
         }
       });
     } catch (error) {
@@ -329,7 +333,7 @@ const ClubListing = ({navigation, route}) => {
   };
   const [filterComponent, setFilterComponent] = useState(false);
   const onPressApply = async data => {
-    console.log('-------filterApi', data);
+    // console.log('-------filterApi', data);
     setFilteredData(data);
     setFilterComponent(false);
     setPage(0);
@@ -363,14 +367,17 @@ const ClubListing = ({navigation, route}) => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-          <View style={{paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46}}>
+        <View
+          style={{
+            paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
+          }}>
           <HeaderCitySearch
             onPress={() => {
               navigation.navigate('SearchBar');
             }}
           />
-          </View>
-          <View style={{marginHorizontal: 5, flex: 1}}>
+        </View>
+        <View style={{marginHorizontal: 5, flex: 1}}>
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
@@ -421,7 +428,7 @@ const ClubListing = ({navigation, route}) => {
           </TouchableOpacity>
 
           <FlatList
-           ref={flatListRef}
+            ref={flatListRef}
             data={clubs}
             renderItem={_renderItem}
             keyExtractor={(_, index) => index.toString()}
@@ -434,7 +441,7 @@ const ClubListing = ({navigation, route}) => {
             ListEmptyComponent={EmptyListMessage}
             maxToRenderPerBatch={15}
           />
-          </View>
+        </View>
       </ImageBackground>
     </View>
   );
