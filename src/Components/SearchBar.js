@@ -31,7 +31,7 @@ import {useSelector} from 'react-redux';
 import ImagePath from '../assets/ImagePath';
 import {COLORS, FONTS} from './constants';
 import ApiCall from '../redux/CommanApi';
-import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -79,7 +79,10 @@ const SearchBar = props => {
         `api/search?q=${text || valuekey}&city=${selectedCity}`,
         'GET',
       );
-      console.log('---searchApi--->', `api/search?q=${text || valuekey}&city=${selectedCity}`);
+      console.log(
+        '---searchApi--->',
+        `api/search?q=${text || valuekey}&city=${selectedCity}`,
+      );
       let temArray = [];
       let clubs = res?.data?.clubs;
       let artist = res?.data?.artists;
@@ -260,13 +263,16 @@ const SearchBar = props => {
   const onPressSearchType = type => {
     switch (type) {
       case 'Area':
-        if (selectedCity.toLowerCase() === 'pune') {
-          setValuekey('Hinjewadi');
-          searchApi('Hinjewadi');
-          break;
-        }
-        setValuekey('Lower Parel');
-        searchApi('Lower Parel');
+        setValuekey(
+          recommendation?.length && recommendation[0]?.localities?.length
+            ? recommendation[0]?.localities[0]
+            : '',
+        );
+        searchApi(
+          recommendation?.length && recommendation[0]?.localities?.length
+            ? recommendation[0]?.localities[0]
+            : '',
+        );
         break;
       case 'Genre':
         setValuekey('Bollywood');
@@ -318,7 +324,11 @@ const SearchBar = props => {
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
         style={{height: '100%'}}>
-        <View style={{marginHorizontal: 10, marginTop: Platform.OS =='ios'? getStatusBarHeight() : 50}}>
+        <View
+          style={{
+            marginHorizontal: 10,
+            marginTop: Platform.OS == 'ios' ? getStatusBarHeight() : 50,
+          }}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}
