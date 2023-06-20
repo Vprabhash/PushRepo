@@ -70,13 +70,6 @@ const EventListing = props => {
     );
   };
 
-  function getMonthName(monthNumber) {
-    const date = new Date();
-    date.setMonth(monthNumber - 1);
-
-    return date.toLocaleString('en-US', {month: 'long'});
-  }
-
   const list = async page => {
     const queryParams = new URLSearchParams();
     queryParams.append('upcoming', 1);
@@ -106,7 +99,6 @@ const EventListing = props => {
   };
 
   const eventsNearbyDataApi = () => {
-    console.log('locationdata ---', locationLatLong);
     try {
       ApiCall(
         `api/events?coordinates=${locationLatLong?.latitude || ''}${
@@ -135,7 +127,6 @@ const EventListing = props => {
             Toast.BOTTOM,
           );
         }
-        console.log('clubsnearbydata ----', res?.data);
       });
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);

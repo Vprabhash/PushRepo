@@ -47,6 +47,8 @@ import CitySelector from '../../Components/CitySelector';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import {showLoader} from '../../redux/reducers/loaderSlice';
+import Toast from 'react-native-simple-toast';
+import moment from 'moment';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -83,13 +85,13 @@ const Home = props => {
       console.log('------UpComingEventList data--------', data.payload);
     });
   };
-  useEffect(() => {
-    // spotLightList();
-    // clubLocationList();
-    // artistList();
-    // UpComingEventList();
-    // dispatch(showLoader(false));
-  }, []);
+  // useEffect(() => {
+  // spotLightList();
+  // clubLocationList();
+  // artistList();
+  // UpComingEventList();
+  // dispatch(showLoader(false));
+  // }, []);
 
   useEffect(() => {
     fetchClubsSpotlight();
@@ -117,6 +119,10 @@ const Home = props => {
       clubsNearbyDataApi();
     }
   }, [locationLatLong]);
+
+  useEffect(() => {
+    UpcomingDataList(eventPage);
+  }, [eventPage]);
 
   const modalref = createRef(null);
   const [
@@ -328,36 +334,41 @@ const Home = props => {
       </Text>
     </TouchableOpacity>
   );
+
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [eventPage, setEventPage] = useState(0);
   const [
     onEndReachedCalledDuringUpcoming,
     setonEndReachedCalledDuringUpcoming,
   ] = useState(true);
-  const [Upcomingpage, setupcomingPage] = useState(1);
   const [Upcomingloading, setupcomingLoading] = useState(true);
-  const UpcomingrenderFooter = () => {
-    return (
-      <View>
-        {Upcomingloading ? (
-          <ActivityIndicator
-            color={'#fff'}
-            size={'large'}
-            style={{marginLeft: 8}}
-          />
-        ) : null}
-      </View>
-    );
-  };
-  const UpcomingDataList = async () => {
-    let data = {
-      page: Upcomingpage + 1,
-    };
-    const res = await ApiCall(ARTIST, 'GET', data);
-    console.log('---res--logIn--artist---', res);
+  // const [dontCall, setDontCall] = useState(false);
+  const UpcomingDataList = async page => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('upcoming', 1);
+    queryParams.append('page', eventPage);
+    const res = await ApiCall(`api/events?${queryParams}`, 'GET');
+    console.log('---res--logIn--artist---', res?.data);
+    if (Array.isArray(res?.data)) {
+      if (page === 0) {
+        setUpcomingEvents(res?.data);
+        // setDontCall(false);
+      } else {
+        if (res?.data?.length) {
+          setUpcomingEvents([...upcomingEvents, ...res?.data]);
+        } else {
+          // setDontCall(true);
+        }
+      }
+    } else {
+      // setDontCall(false);
+      Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
+    }
   };
 
   const fetchUpcomingData = () => {
     if (!onEndReachedCalledDuringUpcoming) {
-      UpcomingDataList();
+      setEventPage(eventPage + 1);
       setupcomingLoading(true);
       setonEndReachedCalledDuringUpcoming(true);
     } else {
@@ -365,39 +376,75 @@ const Home = props => {
     }
   };
 
-  const [UpcomingData, setupcomingData] = useState([
-    // {
-    //   mapIcon: ImagePath.eventImg,
-    //   button: 'CONCERT',
-    //   Name: 'Darshan Raval',
-    //   icon: ImagePath.location,
-    //   Location: '10 Downing Street, Near Bombay hospital',
-    // },
-    // {
-    //   mapIcon: ImagePath.eventImg1,
-    //   button: 'CONCERT',
-    //   Name: 'Divine',
-    //   icon: ImagePath.location,
-    //   Location: '10 Downing Street, Near Bombay hospital',
-    // },
-  ]);
-
   const UpcomingData_RenderItem = ({item, index}) => {
     return (
-      <View style={{}}>
-        <Image
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.navigate('ArtistPlayingDetail', {
+            artistData: item,
+          });
+        }}>
+        {item?.artists?.length &&
+        item?.artists[0]?.images?.length &&
+        item?.artists[0]?.images[0] &&
+        typeof item?.artists[0]?.images[0] == 'string' ? (
+          <FastImage
+            style={{
+              marginLeft: 15,
+              marginRight: index == 1 ? 15 : 0,
+              height: hp(20),
+              width: wp(50),
+              resizeMode: 'cover',
+              borderRadius: 10,
+            }}
+            source={{uri: item?.artists[0]?.images[0]}}
+          />
+        ) : (
+          <View
+            style={{
+              marginLeft: 15,
+              marginRight: index == 1 ? 15 : 0,
+              height: hp(20),
+              width: wp(50),
+              resizeMode: 'cover',
+              borderRadius: 10,
+              backgroundColor: COLORS.gray,
+            }}
+          />
+        )}
+        <View
           style={{
-            marginLeft: 15,
-            marginRight: index == 1 ? 15 : 0,
-            height: hp(20),
-            width: wp(50),
-            resizeMode: 'cover',
+            height: 39,
+            minWidth: 32,
+            justifyContent: 'center',
             borderRadius: 10,
-          }}
-          source={item.mapIcon}
-        />
+            backgroundColor: '#FFFFFF',
+            position: 'absolute',
+            top: 8,
+            right: 8,
+          }}>
+          <Text
+            style={{
+              color: '#666666',
+              textAlign: 'center',
+              fontFamily: FONTS.AxiformaBold,
+              fontSize: 12,
+            }}>
+            {moment(item?.eventDate).format('DD')}
+          </Text>
+          <Text
+            style={{
+              color: '#666666',
+              textAlign: 'center',
+              fontFamily: FONTS.AxiformaRegular,
+              fontSize: 12,
+              textTransform: 'uppercase',
+            }}>
+            {moment(item?.eventDate).format('MMM')}
+          </Text>
+        </View>
         <View style={{position: 'absolute', left: 27, bottom: 9}}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{
               borderRadius: 10,
               backgroundColor: '#5B5959',
@@ -415,15 +462,23 @@ const Home = props => {
               ]}>
               {item.button}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <Text
             style={{
               fontSize: 12,
               color: COLORS.white,
-              fontFamily: FONTS.RobotoBold,
-              marginVertical: hp(1.5),
+              fontFamily: FONTS.AxiformaBold,
             }}>
-            {item.Name}
+            {item?.title}
+          </Text>
+          <Text
+            style={{
+              fontSize: 8,
+              color: COLORS.white,
+              fontFamily: FONTS.AxiformaBold,
+              marginBottom: hp(1.5),
+            }}>
+            By {item?.artists?.map(e => e?.name)?.join(', ')}
           </Text>
           <View style={{flexDirection: 'row'}}>
             <Image
@@ -433,7 +488,7 @@ const Home = props => {
                 tintColor: 'rgba(255, 175, 175, 1)',
                 resizeMode: 'contain',
               }}
-              source={item.icon}
+              source={ImagePath.location}
             />
             <Text
               style={[
@@ -441,13 +496,29 @@ const Home = props => {
                   fontSize: 8,
                   color: COLORS.white,
                   marginLeft: 3,
-                  fontFamily: FONTS.RobotoBold,
+                  fontFamily: FONTS.AxiformaBold,
                 },
               ]}>
-              {item.Location}
+              {[item?.address?.locality || '', item?.address?.city || '']
+                .filter(e => e)
+                .join(', ')}
             </Text>
           </View>
         </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const UpcomingrenderFooter = () => {
+    return (
+      <View>
+        {Upcomingloading ? (
+          <ActivityIndicator
+            color={'#fff'}
+            size={'large'}
+            style={{marginLeft: 8}}
+          />
+        ) : null}
       </View>
     );
   };
@@ -813,7 +884,7 @@ const Home = props => {
             onPress={() => {
               ('');
             }}>
-            <Text style={[styles.filtersText, {fontFamily: FONTS.RobotoBold}]}>
+            <Text style={[styles.filtersText, {fontFamily: FONTS.AxiformaBold}]}>
               Explore More
             </Text>
             <Image
@@ -826,7 +897,7 @@ const Home = props => {
             <Text style={styles.cardText}>UPCOMING EVENTS</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
-          <View
+          {/* <View
             style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <View
               style={{
@@ -835,36 +906,33 @@ const Home = props => {
                 justifyContent: 'center',
                 height: 100,
               }}>
-              {/* <Image style={styles.hedingImg} source={ImagePath.rightLine1} /> */}
               <Text style={styles.cardText}> Coming Soon </Text>
-              {/* <Image style={styles.hedingImg} source={ImagePath.rightLine} /> */}
             </View>
-          </View>
-          {/* <SafeAreaView style={{marginBottom: 10}}>
-            <FlatList
-              horizontal={true}
-              data={UpcomingData}
-              renderItem={UpcomingData_RenderItem}
-              ListFooterComponent={UpcomingrenderFooter}
-              onEndReachedThreshold={0.7}
-              onMomentumScrollBegin={() => {
-                setonEndReachedCalledDuringUpcoming(false);
-              }}
-              onEndReached={fetchUpcomingData}
-              ListEmptyComponent={
-                <View
-                  style={{
-                    height: 100,
-                    width: width,
-                    paddingBottom: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={styles.titleText1}>Coming Soon</Text>
-                </View>
-              }
-            />
-          </SafeAreaView> */}
+          </View> */}
+          <FlatList
+            horizontal
+            data={upcomingEvents}
+            renderItem={UpcomingData_RenderItem}
+            contentContainerStyle={{marginVertical: 20, marginHorizontal: 5}}
+            ListFooterComponent={UpcomingrenderFooter}
+            onEndReachedThreshold={0.7}
+            onMomentumScrollBegin={() => {
+              setonEndReachedCalledDuringUpcoming(false);
+            }}
+            onEndReached={fetchUpcomingData}
+            ListEmptyComponent={
+              <View
+                style={{
+                  height: 100,
+                  width: width,
+                  paddingBottom: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.titleText1}>No Events Found</Text>
+              </View>
+            }
+          />
           {/* <Text style={[styles.aboutText]}>Clubs Nearby </Text> */}
 
           {/* <SafeAreaView style={{marginBottom: 20}}>

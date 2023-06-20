@@ -27,7 +27,14 @@ import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import ImageView from 'react-native-image-viewing';
 import Header from '../../Components/Header';
-import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-screen-helper';
+import {useSelector} from 'react-redux';
+import FastImage from 'react-native-fast-image';
+import moment from 'moment';
+import UpcomingEventModal from '../../Components/UpcomingEventModal';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
@@ -35,18 +42,51 @@ const ClubDetails = props => {
   const [modalVisibleone, setModalVisibleone] = useState(false);
   const [modalVisibletwo, setModalVisibletwo] = useState(false);
   const [clubsNearby, setClubNearby] = useState([]);
+  const [
+    onEndReachedCalledDuringMomentum,
+    setonEndReachedCalledDuringMomentum,
+  ] = useState(true);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [isEventModalVisible, setIsEventModalVisible] = useState(false);
   const scrollRef = useRef(null);
   const detailData = props?.route?.params?.listDetail;
-  // const ENTRIES1 = [
-  //   {
-  //     mapIcon: ImagePath.upcoming_Evn_Img,
-  //     title: 'Fabulous friday',
-  //     singerName: 'by ',
-  //     singerNameIcon: ImagePath.Explore,
-  //     musicIcon: ImagePath.menuUser3,
-  //     musicText: 'Bollywood, Commercial',
-  //   },
-  // ];
+  const scrollToEnd = () => {
+    scrollRef?.current?.scrollToEnd({animation: true});
+  };
+  const locationLatLong = useSelector(
+    state => state.clubLocation.locationLatLong,
+  );
+  const selectedCity = useSelector(state => state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
+  const [dontCall, setDontCall] = useState(false);
+  useEffect(() => {
+    clubsNearbyDataApi();
+    eventList(page);
+    // BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    // return () => {
+    //   BackHandler.removeEventListener(
+    //     'hardwareBackPress',
+    //     handleBackButtonClick,
+    //   );
+    // };
+  }, []);
+
+  function handleBackButtonClick() {
+    props.navigation.navigate('ClubListing', {screenName: 'ClubListing'});
+    return true;
+  }
+  const ENTRIES1 = [
+    {
+      mapIcon: ImagePath.upcoming_Evn_Img,
+      title: 'Fabulous friday',
+      singerName: 'by ',
+      singerNameIcon: ImagePath.Explore,
+      musicIcon: ImagePath.menuUser3,
+      musicText: 'Bollywood, Commercial',
+    },
+  ];
   // const _renderItem = ({item, index}) => {
   //   return (
   //     <View style={{flex: 1, width: '100%', marginBottom: 31}}>
@@ -64,10 +104,10 @@ const ClubDetails = props => {
   //             borderTopRightRadius: 10,
   //             borderTopLeftRadius: 10,
   //           }}
-  //           source={item.mapIcon}
+  //           source={ImagePath.upcoming_Evn_Img}
   //         />
   //         <View style={{paddingHorizontal: wp(3), paddingVertical: hp(3)}}>
-  //           <Text style={styles.listinhHeading}>{item.title}</Text>
+  //           <Text style={styles.listinhHeading}>{item?.title || ''}</Text>
   //           <View style={{flexDirection: 'row', marginTop: hp(2)}}>
   //             <Image
   //               style={{
@@ -76,10 +116,10 @@ const ClubDetails = props => {
   //                 borderRadius: 10,
   //                 resizeMode: 'contain',
   //               }}
-  //               source={item.singerNameIcon}
+  //               source={ImagePath.Explore}
   //             />
   //             <Text style={[styles.singerName]}>
-  //               {item.singerName}
+  //               By{' '}
   //               <Text
   //                 style={[
   //                   styles.singerName,
@@ -95,10 +135,9 @@ const ClubDetails = props => {
   //                 height: 17,
   //                 width: 17,
   //                 tintColor: '#D200FD',
-  //    cc             borderRadius: 10,
   //                 resizeMode: 'contain',
   //               }}
-  //               source={item.musicIcon}
+  //               source={ImagePath.menuUser3}
   //             />
   //             <Text style={[styles.singerName]}>{item.musicText}</Text>
   //           </View>
@@ -107,26 +146,6 @@ const ClubDetails = props => {
   //     </View>
   //   );
   // };
-  const scrollToEnd = () => {
-    scrollRef?.current?.scrollToEnd({animation: true});
-  };
-  useEffect(() => {
-    clubsNearbyDataApi();
-
-    // BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
-    // return () => {
-    //   BackHandler.removeEventListener(
-    //     'hardwareBackPress',
-    //     handleBackButtonClick,
-    //   );
-    // };
-  }, []);
-
-  function handleBackButtonClick() {
-    props.navigation.navigate('ClubListing', {screenName: 'ClubListing'});
-    return true;
-  }
-
   const clubsNearbyDataApi = async () => {
     try {
       const res = await ApiCall(
@@ -137,6 +156,30 @@ const ClubDetails = props => {
       console.log('clubsnearbydata ----', res.data);
     } catch (error) {
       Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+    }
+  };
+
+  const eventList = async page => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('upcoming', 1);
+    queryParams.append('page', page);
+    queryParams.append('clubId', detailData?._id);
+    const res = await ApiCall(`api/events?${queryParams}`, 'GET');
+    console.log('---res--logIn--artist---', res?.data);
+    if (Array.isArray(res?.data)) {
+      if (page === 0) {
+        setEvents(res?.data);
+        setDontCall(false);
+      } else {
+        if (res?.data?.length) {
+          setEvents([...events, ...res?.data]);
+        } else {
+          setDontCall(true);
+        }
+      }
+    } else {
+      setDontCall(false);
+      Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
     }
   };
 
@@ -183,6 +226,186 @@ const ClubDetails = props => {
       </TouchableOpacity>
     );
   };
+
+  const isTodaysEvent = eventDate => {
+    const today = moment();
+    const event = moment(eventDate);
+
+    return today.isSame(event, 'day');
+  };
+
+  const haveTodaysEvent = () => {
+    if (!events) {
+      return [];
+    }
+
+    return events.filter(e => isTodaysEvent(e.eventDate));
+  };
+
+  const _renderItem = ({item, index}) => {
+    return (
+      <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
+            });
+          }}
+          style={{
+            marginHorizontal: 20,
+            borderRadius: 10,
+            backgroundColor: '#FFFFFF',
+            elevation: 4,
+          }}>
+          {item?.artists?.length &&
+          item?.artists[0]?.images?.length &&
+          item?.artists[0]?.images[0] &&
+          typeof item?.artists[0]?.images[0] == 'string' ? (
+            <FastImage
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+              source={{uri: item?.artists[0]?.images[0]}}
+            />
+          ) : (
+            <View
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+                backgroundColor: COLORS.gray,
+              }}
+            />
+          )}
+          {/* <View
+            style={{
+              height: 39,
+              minWidth: 32,
+              justifyContent: 'center',
+              borderRadius: 10,
+              backgroundColor: '#FFFFFF',
+              position: 'absolute',
+              top: 8,
+              right: 8,
+            }}>
+            <Text
+              style={{
+                color: '#666666',
+                textAlign: 'center',
+                fontFamily: FONTS.AxiformaBold,
+                fontSize: 12,
+              }}>
+              {moment(item?.eventDate).format('DD')}
+            </Text>
+            <Text
+              style={{
+                color: '#666666',
+                textAlign: 'center',
+                fontFamily: FONTS.AxiformaRegular,
+                fontSize: 12,
+                textTransform: 'uppercase',
+              }}>
+              {moment(item?.eventDate).format('MMM')}
+            </Text>
+          </View> */}
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+            <Text style={styles.listinhHeading}>{item.title}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 10,
+                alignItems: 'center',
+              }}>
+              <Image
+                style={{
+                  height: 20,
+                  width: 20,
+                  borderRadius: 10,
+                  resizeMode: 'contain',
+                }}
+                source={{uri: item?.artists[0]?.images[0]}}
+              />
+              <Text style={[styles.singerName]}>By </Text>
+              {item?.artists?.length
+                ? item?.artists?.map(e => {
+                    return (
+                      <Text
+                        style={[
+                          styles.singerName,
+                          {
+                            width: '70%',
+                            textDecorationLine: 'underline',
+                            marginLeft: 0,
+                          },
+                        ]}
+                        onPress={() =>
+                          props.navigation.navigate('ArtistEventDetail', {
+                            artistListDetail: e,
+                          })
+                        }>
+                        {e?.name}
+                      </Text>
+                    );
+                  })
+                : null}
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View style={{flexDirection: 'row', marginTop: 10}}>
+                <Image
+                  style={{
+                    height: 17,
+                    width: 17,
+                    tintColor: '#D200FD',
+                    resizeMode: 'contain',
+                    marginRight: 2,
+                  }}
+                  source={ImagePath.menuUser3}
+                />
+                {item?.artists?.length
+                  ? item?.artists?.map(e => {
+                      return (
+                        <Text
+                          style={[styles.singerName]}
+                          onPress={() =>
+                            props.navigation.navigate('ArtistEventDetail', {
+                              artistListDetail: e,
+                            })
+                          }>
+                          {e?.musicGenre}
+                        </Text>
+                      );
+                    })
+                  : null}
+              </View>
+              {/* <View style={{marginTop: -10, alignItems: 'center'}}>
+                <Text style={[styles.listingText, {color: COLORS.black}]}>
+                  {'₹' + item?.price?.amount}
+                </Text>
+                <Text
+                  style={[
+                    styles.listinhText,
+                    {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+                  ]}>
+                  onwards
+                </Text>
+              </View> */}
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -193,7 +416,7 @@ const ClubDetails = props => {
           style={{
             backgroundColor: '#fff',
             elevation: 10,
-            paddingTop: Platform.OS == 'ios'? getStatusBarHeight() : 46,
+            paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
             paddingBottom: 14,
             paddingLeft: 10,
           }}>
@@ -420,11 +643,31 @@ const ClubDetails = props => {
           </Text>
           <Text style={styles.aboutText}>About the Club</Text>
           <MenuCard scrollToEnd={scrollToEnd} itemdata={detailData} />
-          {/* <Text style={styles.aboutText}>Whats Happening Today </Text>
+          <Text style={styles.aboutText}>
+            {haveTodaysEvent()?.length
+              ? 'Whats Happening Today'
+              : 'Upcoming Event'}
+          </Text>
           <View style={{marginHorizontal: 0}}>
-            <FlatList data={ENTRIES1} renderItem={_renderItem} />
-          </View> */}
-          {/* <TouchableOpacity style={{alignSelf: 'center', marginTop: 20}}>
+            <FlatList
+              data={haveTodaysEvent()}
+              keyExtractor={(_, i) => i.toString()}
+              renderItem={_renderItem}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    width: width,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.titleText}>No Events Found</Text>
+                </View>
+              }
+            />
+          </View>
+          <TouchableOpacity
+            style={{alignSelf: 'center', marginTop: 20}}
+            onPress={() => setIsEventModalVisible(true)}>
             <LinearGradient
               style={{
                 height: 43,
@@ -444,7 +687,7 @@ const ClubDetails = props => {
                 Events for the month
               </Text>
             </LinearGradient>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <Text style={[styles.aboutText, {marginTop: 25}]}>Menu</Text>
           <ScrollView style={{flexDirection: 'row'}} horizontal>
             <ImageView
@@ -547,7 +790,10 @@ const ClubDetails = props => {
             data={clubsNearby}
             renderItem={ClubNarDatarenderItem}
             ItemSeparatorComponent={<View style={{width: 20}} />}
-            contentContainerStyle={{paddingEnd: 20, paddingBottom: getBottomSpace()}}
+            contentContainerStyle={{
+              paddingEnd: 20,
+              paddingBottom: getBottomSpace(),
+            }}
             ListEmptyComponent={
               <View
                 style={{
@@ -559,6 +805,19 @@ const ClubDetails = props => {
                 <Text style={styles.titleText}>No Clubs Found</Text>
               </View>
             }
+          />
+          <UpcomingEventModal
+            visible={isEventModalVisible}
+            data={events}
+            onPress={e => {
+              setIsEventModalVisible(false);
+              props.navigation.navigate('ArtistPlayingDetail', {
+                artistData: e,
+              });
+            }}
+            onPressCancel={() => {
+              setIsEventModalVisible(false);
+            }}
           />
         </ScrollView>
       </ImageBackground>
@@ -662,5 +921,10 @@ const styles = StyleSheet.create({
     elevation: 3,
     color: '#fff',
     fontFamily: FONTS.AxiformaRegular,
+  },
+  listingText: {
+    fontSize: 14,
+    fontFamily: FONTS.RobotoRegular,
+    color: '#575757',
   },
 });

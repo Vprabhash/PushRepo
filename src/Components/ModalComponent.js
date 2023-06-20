@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Modal,
 } from 'react-native';
 import CustomButton from './TextInput_And_Button/CustomButton';
 import {
@@ -13,10 +14,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {COLORS, FONTS} from './constants';
+import ImagePath from '../assets/ImagePath';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const ModalComponent = props => {
-  const [modalVisible, setModalVisible] = useState(false);
+const ModalComponent = ({visible = false, onPress}) => {
+  const [modalVisible, setModalVisible] = useState(visible);
 
   return (
     <View style={styles.centeredView}>

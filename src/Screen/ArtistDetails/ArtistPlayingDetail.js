@@ -58,8 +58,8 @@ const ArtistPlayingDetail = props => {
                 style={[styles.wrapper]}
                 containerStyle={{
                   borderRadius: 8,
-                  marginTop: 10,
-                  marginHorizontal: 20,
+                  marginTop: 15,
+                  marginHorizontal: 15,
                   overflow: 'hidden',
                 }}
                 paginationStyle={{
@@ -149,12 +149,11 @@ const ArtistPlayingDetail = props => {
               />
               <View style={{flex: 0.7}}>
                 <Text style={styles.listinhHeading1}>
-                  {' '}
                   {`${moment(artistData?.eventStartTime).format(
                     'ddd MMM DD',
                   )} at ${moment(artistData?.eventStartTime).format(
                     'hh:mm A',
-                  )}`}
+                  )} to ${moment(artistData?.eventEndTime).format('hh:mm A')}`}
                 </Text>
               </View>
             </View>
@@ -186,7 +185,7 @@ const ArtistPlayingDetail = props => {
                 </View>
               </View>
             </View>
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 marginTop: 14,
@@ -202,7 +201,7 @@ const ArtistPlayingDetail = props => {
                 source={ImagePath.play_pause}
               />
               <Text style={styles.listinhHeading1}>{'Live Music Concert'}</Text>
-            </View>
+            </View> */}
             {artistData?.priceText && (
               <TouchableOpacity
                 activeOpacity={0.5}
@@ -290,8 +289,10 @@ const ArtistPlayingDetail = props => {
           }}>
           <Header
             Back_Arrow={ImagePath.goBack}
-            title="Artist playing Nearby"
-            titalTwo="DJ NYK- Wort the shot"
+            title="Event Details"
+            titalTwo={`${artistData?.artists[0]?.name || ''} - ${
+              artistData?.title || ''
+            }`}
             iconHeight={20}
             iconWidth={29}
             onclick={() => {

@@ -61,7 +61,6 @@ const ClubListing = ({navigation, route}) => {
     list(page);
     forceUpdate();
     toTop();
-    console.log('Page', page, selectedCity);
   }, [page, filteredData, selectedCity, userBaseCity]);
 
   useEffect(() => {
@@ -426,21 +425,28 @@ const ClubListing = ({navigation, route}) => {
               }}
             /> */}
           </TouchableOpacity>
-
-          <FlatList
-            ref={flatListRef}
-            data={clubs}
-            renderItem={_renderItem}
-            keyExtractor={(_, index) => index.toString()}
-            ListFooterComponent={renderFooter}
-            onEndReachedThreshold={0.3}
-            onMomentumScrollBegin={() => {
-              setonEndReachedCalledDuringMomentum(false);
-            }}
-            onEndReached={dontCall ? null : fetchMoreData}
-            ListEmptyComponent={EmptyListMessage}
-            maxToRenderPerBatch={15}
-          />
+          {loader ? (
+            <ActivityIndicator
+              size={'large'}
+              color={COLORS.black}
+              style={{alignSelf: 'center'}}
+            />
+          ) : (
+            <FlatList
+              ref={flatListRef}
+              data={clubs}
+              renderItem={_renderItem}
+              keyExtractor={(_, index) => index.toString()}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0.3}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={dontCall ? null : fetchMoreData}
+              ListEmptyComponent={EmptyListMessage}
+              maxToRenderPerBatch={15}
+            />
+          )}
         </View>
       </ImageBackground>
     </View>

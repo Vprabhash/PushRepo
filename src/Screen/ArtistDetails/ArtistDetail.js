@@ -25,14 +25,14 @@ import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
-import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const ArtistDetail = props => {
-  const selectedCity = useSelector(state=>state.citySelector.selectedCity);
-  const userBaseCity = useSelector(state=>state.citySelector.userBaseCity);
+  const selectedCity = useSelector(state => state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -61,22 +61,20 @@ const ArtistDetail = props => {
 
   useEffect(() => {
     fetchArtistsData(page);
-    toTop()
-  }, [page, selectedFilter, selectedCity,userBaseCity]);
+    toTop();
+  }, [page, selectedFilter, selectedCity, userBaseCity]);
 
   useEffect(() => {
     console.log('artistList', artistList.length);
-    
   }, [artistList]);
 
-const toTop = () => {
+  const toTop = () => {
     // use current
     flatListRef?.current?.scrollToOffset({
       animated: true,
       offset: 0,
     });
-}
-
+  };
 
   function areAllKeysEmpty(obj) {
     return Object.values(obj).every(value => {
@@ -288,10 +286,21 @@ const toTop = () => {
           backgroundColor="transparent"
           translucent={true}
         />
-        <View style={{marginHorizontal: 5, flex: 1, marginTop: Platform.OS == 'ios' ? getStatusBarHeight() : 30}}>
-        <HeaderCitySearch onPress={() =>{
-                props.navigation.navigate('SearchBar');
-            }} />
+        <View
+          style={{
+            paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
+          }}>
+          <HeaderCitySearch
+            onPress={() => {
+              props.navigation.navigate('SearchBar');
+            }}
+          />
+        </View>
+        <View
+          style={{
+            marginHorizontal: 5,
+            flex: 1,
+          }}>
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {

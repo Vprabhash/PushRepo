@@ -10,6 +10,9 @@ import {
   View,
   Linking,
   TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+  Pressable,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -19,6 +22,11 @@ import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
 import Header from '../../Components/Header';
 import Toast from 'react-native-simple-toast';
+import moment from 'moment';
+import ApiCall from '../../redux/CommanApi';
+import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
+import UpcomingEventModal from '../../Components/UpcomingEventModal';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -26,6 +34,373 @@ const ArtistEventDetail = props => {
   const [clubsNearby, setClubNearby] = useState([]);
   const detailData = props?.route?.params?.artistListDetail;
 
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [eventPage, setEventPage] = useState(0);
+  const [
+    onEndReachedCalledDuringUpcoming,
+    setonEndReachedCalledDuringUpcoming,
+  ] = useState(true);
+  const [Upcomingloading, setupcomingLoading] = useState(false);
+  const [isEventModalVisible, setIsEventModalVisible] = useState(false);
+  // const [dontCall, setDontCall] = useState(false);
+
+  useEffect(() => {
+    UpcomingDataList(eventPage);
+  }, [eventPage]);
+  const UpcomingDataList = async page => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('upcoming', 1);
+    queryParams.append('page', eventPage);
+    queryParams.append('artistId', detailData?._id);
+    const res = await ApiCall(`api/events?${queryParams}`, 'GET');
+    console.log('---res--logIn--artist---', res?.data);
+    if (Array.isArray(res?.data)) {
+      if (page === 0) {
+        setUpcomingEvents(res?.data);
+        // setDontCall(false);
+      } else {
+        if (res?.data?.length) {
+          setUpcomingEvents([...upcomingEvents, ...res?.data]);
+        } else {
+          // setDontCall(true);
+        }
+      }
+    } else {
+      // setDontCall(false);
+      Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
+    }
+  };
+
+  const isTodaysEvent = eventDate => {
+    const today = moment();
+    const event = moment(eventDate);
+
+    return today.isSame(event, 'day');
+  };
+
+  const haveTodaysEvent = () => {
+    if (!upcomingEvents) {
+      return [];
+    }
+
+    return upcomingEvents.filter(e => isTodaysEvent(e.eventDate));
+  };
+
+  const fetchUpcomingData = () => {
+    if (!onEndReachedCalledDuringUpcoming) {
+      setEventPage(eventPage + 1);
+      setupcomingLoading(true);
+      setonEndReachedCalledDuringUpcoming(true);
+    } else {
+      setupcomingLoading(false);
+    }
+  };
+
+  const UpcomingData_RenderItem = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        style={{height: hp(20)}}
+        onPress={() => {
+          props.navigation.navigate('ArtistPlayingDetail', {
+            artistData: item,
+          });
+        }}>
+        {item?.artists?.length &&
+        item?.artists[0]?.images?.length &&
+        item?.artists[0]?.images[0] &&
+        typeof item?.artists[0]?.images[0] == 'string' ? (
+          <FastImage
+            style={{
+              marginLeft: 15,
+              marginRight: index == 1 ? 15 : 0,
+              height: hp(20),
+              width: wp(50),
+              resizeMode: 'cover',
+              borderRadius: 10,
+            }}
+            source={{uri: item?.artists[0]?.images[0]}}
+          />
+        ) : (
+          <View
+            style={{
+              marginLeft: 15,
+              marginRight: index == 1 ? 15 : 0,
+              height: hp(20),
+              width: wp(50),
+              resizeMode: 'cover',
+              borderRadius: 10,
+              backgroundColor: COLORS.gray,
+            }}
+          />
+        )}
+        <View
+          style={{
+            height: 39,
+            minWidth: 32,
+            justifyContent: 'center',
+            borderRadius: 10,
+            backgroundColor: '#FFFFFF',
+            position: 'absolute',
+            top: 8,
+            right: 8,
+          }}>
+          <Text
+            style={{
+              color: '#666666',
+              textAlign: 'center',
+              fontFamily: FONTS.AxiformaBold,
+              fontSize: 12,
+            }}>
+            {moment(item?.eventDate).format('DD')}
+          </Text>
+          <Text
+            style={{
+              color: '#666666',
+              textAlign: 'center',
+              fontFamily: FONTS.AxiformaRegular,
+              fontSize: 12,
+              textTransform: 'uppercase',
+            }}>
+            {moment(item?.eventDate).format('MMM')}
+          </Text>
+        </View>
+        <View style={{position: 'absolute', left: 27, bottom: 9}}>
+          {/* <TouchableOpacity
+            style={{
+              borderRadius: 10,
+              backgroundColor: '#5B5959',
+              alignSelf: 'flex-start',
+              paddingHorizontal: wp(3),
+              paddingVertical: wp(1),
+            }}>
+            <Text
+              style={[
+                {
+                  color: COLORS.white,
+                  fontSize: 7,
+                  fontFamily: FONTS.RobotoMedium,
+                },
+              ]}>
+              {item.button}
+            </Text>
+          </TouchableOpacity> */}
+          <Text
+            style={{
+              fontSize: 12,
+              color: COLORS.white,
+              fontFamily: FONTS.AxiformaBold,
+            }}>
+            {item?.title}
+          </Text>
+          <Text
+            style={{
+              fontSize: 8,
+              color: COLORS.white,
+              fontFamily: FONTS.AxiformaBold,
+              marginBottom: hp(1.5),
+            }}>
+            By {item?.artists?.map(e => e?.name)?.join(', ')}
+          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Image
+              style={{
+                height: 10,
+                width: 10,
+                tintColor: 'rgba(255, 175, 175, 1)',
+                resizeMode: 'contain',
+              }}
+              source={ImagePath.location}
+            />
+            <Text
+              style={[
+                {
+                  fontSize: 8,
+                  color: COLORS.white,
+                  marginLeft: 3,
+                  fontFamily: FONTS.AxiformaBold,
+                },
+              ]}>
+              {[item?.address?.locality || '', item?.address?.city || '']
+                .filter(e => e)
+                .join(', ')}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const UpcomingrenderFooter = () => {
+    return (
+      <View>
+        {Upcomingloading ? (
+          <ActivityIndicator
+            color={COLORS.black}
+            size={'large'}
+            style={{marginLeft: 8}}
+          />
+        ) : null}
+      </View>
+    );
+  };
+
+  const _renderItem = ({item, index}) => {
+    return (
+      <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
+            });
+          }}
+          style={{
+            marginHorizontal: 20,
+            borderRadius: 10,
+            backgroundColor: '#FFFFFF',
+            elevation: 4,
+          }}>
+          {item?.artists?.length &&
+          item?.artists[0]?.images?.length &&
+          item?.artists[0]?.images[0] &&
+          typeof item?.artists[0]?.images[0] == 'string' ? (
+            <FastImage
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+              source={{uri: item?.artists[0]?.images[0]}}
+            />
+          ) : (
+            <View
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+                backgroundColor: COLORS.gray,
+              }}
+            />
+          )}
+          {/* <View
+            style={{
+              height: 39,
+              minWidth: 32,
+              justifyContent: 'center',
+              borderRadius: 10,
+              backgroundColor: '#FFFFFF',
+              position: 'absolute',
+              top: 8,
+              right: 8,
+            }}>
+            <Text
+              style={{
+                color: '#666666',
+                textAlign: 'center',
+                fontFamily: FONTS.AxiformaBold,
+                fontSize: 12,
+              }}>
+              {moment(item?.eventDate).format('DD')}
+            </Text>
+            <Text
+              style={{
+                color: '#666666',
+                textAlign: 'center',
+                fontFamily: FONTS.AxiformaRegular,
+                fontSize: 12,
+                textTransform: 'uppercase',
+              }}>
+              {moment(item?.eventDate).format('MMM')}
+            </Text>
+          </View> */}
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+            <Text style={styles.listinhHeading}>{item.title}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 10,
+                alignItems: 'center',
+              }}>
+              <Image
+                style={{
+                  height: 20,
+                  width: 20,
+                  borderRadius: 10,
+                  resizeMode: 'contain',
+                }}
+                source={{uri: item?.artists[0]?.images[0]}}
+              />
+              <Text style={[styles.singerName]}>By </Text>
+              {item?.artists?.length
+                ? item?.artists?.map(e => {
+                    return (
+                      <Text
+                        style={[
+                          styles.singerName,
+                          {
+                            width: '70%',
+                            marginLeft: 0,
+                          },
+                        ]}>
+                        {e?.name}
+                      </Text>
+                    );
+                  })
+                : null}
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View style={{flexDirection: 'row', marginTop: 10}}>
+                <Image
+                  style={{
+                    height: 17,
+                    width: 17,
+                    tintColor: '#D200FD',
+                    resizeMode: 'contain',
+                    marginRight: 2,
+                  }}
+                  source={ImagePath.menuUser3}
+                />
+                {item?.artists?.length
+                  ? item?.artists?.map(e => {
+                      return (
+                        <Text
+                          style={[styles.singerName]}
+                          onPress={() =>
+                            props.navigation.navigate('ArtistEventDetail', {
+                              artistListDetail: e,
+                            })
+                          }>
+                          {e?.musicGenre}
+                        </Text>
+                      );
+                    })
+                  : null}
+              </View>
+              {/* <View style={{marginTop: -10, alignItems: 'center'}}>
+                <Text style={[styles.listingText, {color: COLORS.black}]}>
+                  {'₹' + item?.price?.amount}
+                </Text>
+                <Text
+                  style={[
+                    styles.listinhText,
+                    {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+                  ]}>
+                  onwards
+                </Text>
+              </View> */}
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
   return (
     <View style={{flex: 1}}>
       {/* <View style={{marginTop: 50, marginBottom: 10}}></View> */}
@@ -96,15 +471,17 @@ const ArtistEventDetail = props => {
                 <View>
                   <Text style={styles.listinhHeading}>{detailData?.name}</Text>
                 </View>
-                <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-                  {detailData?.musicGenre}
-                </Text>
                 <Text
                   style={[
                     styles.listingText,
                     {marginVertical: hp(0.3), textTransform: 'uppercase'},
                   ]}>
-                  {detailData?.type}
+                  {detailData?.type?.toLowerCase() === 'artist'
+                    ? 'SINGER'
+                    : detailData?.type}
+                </Text>
+                <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+                  {detailData?.musicGenre}
                 </Text>
               </View>
               <View
@@ -113,8 +490,8 @@ const ArtistEventDetail = props => {
                   alignItems: 'center',
                   marginTop: 5,
                 }}>
-                {  detailData?.instagramLink? (
-                    <TouchableOpacity
+                {detailData?.instagramLink ? (
+                  <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
                       if (detailData?.instagramLink) {
@@ -131,7 +508,10 @@ const ArtistEventDetail = props => {
                       styles.btnmain,
                       {borderBottomLeftRadius: 10, marginRight: 1},
                     ]}>
-                    <Image style={styles.btnIcon} source={ImagePath.Instagram} />
+                    <Image
+                      style={styles.btnIcon}
+                      source={ImagePath.Instagram}
+                    />
                     <Text style={styles.buttonText}>Instagram</Text>
                   </TouchableOpacity>
                 ) : (
@@ -152,52 +532,146 @@ const ArtistEventDetail = props => {
                       styles.btnmainDisabled,
                       {borderBottomLeftRadius: 10, marginRight: 1},
                     ]}>
-                    <Image style={styles.btnIconDisabled} source={ImagePath.InstagramDisabled} />
+                    <Image
+                      style={styles.btnIconDisabled}
+                      source={ImagePath.InstagramDisabled}
+                    />
                     <Text style={styles.buttonText}>Instagram</Text>
                   </TouchableOpacity>
-                ) }  
-                
+                )}
 
-                { detailData?.youtubeChannelLink? (
-                   <TouchableOpacity
-                   activeOpacity={0.7}
-                   onPress={() => {
-                     if (detailData?.youtubeChannelLink) {
-                       Linking.openURL(detailData?.youtubeChannelLink);
-                     } else {
-                       Toast.showWithGravity(
-                         'Youtube link is not available',
-                         Toast.LONG,
-                         Toast.BOTTOM,
-                       );
-                     }
-                   }}
-                   style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
-                   <Image style={styles.btnIcon} source={ImagePath.youtube} />
-                   <Text style={styles.buttonText}>YouTube</Text>
-                 </TouchableOpacity> 
+                {detailData?.youtubeChannelLink ? (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => {
+                      if (detailData?.youtubeChannelLink) {
+                        Linking.openURL(detailData?.youtubeChannelLink);
+                      } else {
+                        Toast.showWithGravity(
+                          'Youtube link is not available',
+                          Toast.LONG,
+                          Toast.BOTTOM,
+                        );
+                      }
+                    }}
+                    style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
+                    <Image style={styles.btnIcon} source={ImagePath.youtube} />
+                    <Text style={styles.buttonText}>YouTube</Text>
+                  </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() => {
-                    if (detailData?.youtubeChannelLink) {
-                      Linking.openURL(detailData?.youtubeChannelLink);
-                    } else {
-                      Toast.showWithGravity(
-                        'Youtube link is not available',
-                        Toast.LONG,
-                        Toast.BOTTOM,
-                      );
-                    }
-                  }}
-                  style={[styles.btnmainDisabled, {borderBottomRightRadius: 10}]}>
-                  <Image style={styles.btnIconDisabled} source={ImagePath.youtubeDisabled} />
-                  <Text style={styles.buttonText}>YouTube</Text>
-                </TouchableOpacity>
-                )  }
-                
+                    activeOpacity={0.7}
+                    onPress={() => {
+                      if (detailData?.youtubeChannelLink) {
+                        Linking.openURL(detailData?.youtubeChannelLink);
+                      } else {
+                        Toast.showWithGravity(
+                          'Youtube link is not available',
+                          Toast.LONG,
+                          Toast.BOTTOM,
+                        );
+                      }
+                    }}
+                    style={[
+                      styles.btnmainDisabled,
+                      {borderBottomRightRadius: 10},
+                    ]}>
+                    <Image
+                      style={styles.btnIconDisabled}
+                      source={ImagePath.youtubeDisabled}
+                    />
+                    <Text style={styles.buttonText}>YouTube</Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
+            {/* <View style={[styles.hedingTextMain, {marginTop: 30}]}>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+              <Text style={styles.cardText}>UPCOMING EVENTS</Text>
+              <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+            </View>
+            <FlatList
+              horizontal
+              data={upcomingEvents}
+              renderItem={UpcomingData_RenderItem}
+              contentContainerStyle={{marginVertical: 20, marginHorizontal: 5}}
+              ListFooterComponent={UpcomingrenderFooter}
+              onEndReachedThreshold={0.7}
+              onMomentumScrollBegin={() => {
+                setonEndReachedCalledDuringUpcoming(false);
+              }}
+              onEndReached={fetchUpcomingData}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    height: 50,
+                    width: width,
+                    paddingBottom: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.titleText1}>No Events Found</Text>
+                </View>
+              }
+            /> */}
+            <Text style={styles.aboutText}>
+              {haveTodaysEvent()?.length
+                ? 'Whats Happening Today'
+                : 'Upcoming Event'}
+            </Text>
+            <View style={{marginTop: 10}}>
+              <FlatList
+                data={upcomingEvents}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={_renderItem}
+                ListEmptyComponent={
+                  <View
+                    style={{
+                      width: width,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text style={styles.titleText1}>No Events Found</Text>
+                  </View>
+                }
+              />
+            </View>
+            <TouchableOpacity
+              style={{alignSelf: 'center', marginBottom: 40}}
+              onPress={() => setIsEventModalVisible(true)}>
+              <LinearGradient
+                style={{
+                  height: 43,
+                  width: 176,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 40,
+                }}
+                start={{x: 0.4, y: 0}}
+                colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
+                <Text
+                  style={{
+                    fontFamily: FONTS.AxiformaBlack,
+                    color: '#FFFFFF',
+                    fontSize: 14,
+                  }}>
+                  Events for the month
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <UpcomingEventModal
+              visible={isEventModalVisible}
+              data={upcomingEvents}
+              onPress={e => {
+                setIsEventModalVisible(false);
+                props.navigation.navigate('ArtistPlayingDetail', {
+                  artistData: e,
+                });
+              }}
+              onPressCancel={() => {
+                setIsEventModalVisible(false);
+              }}
+            />
           </View>
         </ImageBackground>
       </ScrollView>
@@ -251,6 +725,41 @@ const styles = StyleSheet.create({
   btnIconDisabled: {
     height: 16,
     width: 16,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+  },
+  hedingTextMain: {
+    marginTop: hp(2),
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  hedingImg: {width: '30%', resizeMode: 'contain'},
+  cardText: {
+    fontFamily: FONTS.AxiformaBold,
+    fontSize: 12,
+    marginHorizontal: 5,
+    textAlign: 'center',
+    color: COLORS.black,
+    letterSpacing: 2.5,
+  },
+  titleText1: {
+    color: COLORS.black,
+    fontFamily: FONTS.AxiformaRegular,
+    fontSize: 16,
+  },
+  aboutText: {
+    color: '#202020',
+    fontSize: 20,
+    marginLeft: 20,
+    marginBottom: 10,
+    marginTop: 20,
+    fontFamily: FONTS.AxiformaBold,
+  },
+  singerName: {
+    fontSize: 14,
+    marginLeft: 8,
+    fontFamily: FONTS.RobotoRegular,
+    color: '#5B5959',
   },
 });
