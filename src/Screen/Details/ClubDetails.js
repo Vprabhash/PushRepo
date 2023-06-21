@@ -648,23 +648,25 @@ const ClubDetails = props => {
               ? 'Whats Happening Today'
               : 'Upcoming Event'}
           </Text>
-          <View style={{marginHorizontal: 0}}>
-            <FlatList
-              data={haveTodaysEvent()}
-              keyExtractor={(_, i) => i.toString()}
-              renderItem={_renderItem}
-              ListEmptyComponent={
-                <View
-                  style={{
-                    width: width,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={styles.titleText}>No Events Found</Text>
-                </View>
-              }
-            />
-          </View>
+          <FlatList
+            data={
+              haveTodaysEvent()?.length
+                ? haveTodaysEvent()
+                : events?.slice(0, 1)
+            }
+            keyExtractor={(_, i) => i.toString()}
+            renderItem={_renderItem}
+            ListEmptyComponent={
+              <View
+                style={{
+                  width: width,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.titleText}>No Events Found</Text>
+              </View>
+            }
+          />
           <TouchableOpacity
             style={{alignSelf: 'center', marginTop: 20}}
             onPress={() => setIsEventModalVisible(true)}>

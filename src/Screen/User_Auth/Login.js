@@ -101,6 +101,9 @@ const Login = props => {
         '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
       offlineAccess: false,
     });
+    props.navigation.addListener('focus', () => {
+      dispatch(showLoader(false));
+    });
     return (
       appleAuth.isSupported &&
       appleAuth.onCredentialRevoked(async () => {
@@ -115,7 +118,7 @@ const Login = props => {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signOut();
       const userInfo = await GoogleSignin.signIn();
-      if(Platform.OS == 'android'){
+      if (Platform.OS == 'android') {
         dispatch(showLoader(true));
       }
       // setIsLoadingGoogle(true);
@@ -200,6 +203,7 @@ const Login = props => {
           // dispatch(showLoader(false));
           console.log('apple sign bydata ----', res);
           if (res?.ok == true) {
+            dispatch(showLoader(false));
             await setData('userToken', res?.meta?.token);
             await setData('userData', res?.data);
             props.navigation.reset({

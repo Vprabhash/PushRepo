@@ -101,7 +101,7 @@ const EventListing = props => {
   const eventsNearbyDataApi = () => {
     try {
       ApiCall(
-        `api/events?coordinates=${locationLatLong?.latitude || ''}${
+        `api/events?upcoming=1&coordinates=${locationLatLong?.latitude || ''}${
           locationLatLong?.latitude ? ',' : ''
         }${locationLatLong?.longitude || ''}&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
