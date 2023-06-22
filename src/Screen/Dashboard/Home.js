@@ -119,9 +119,9 @@ const Home = props => {
     }
   }, [locationLatLong?.latitude]);
 
-  useEffect(() => {
-    UpcomingDataList(eventPage);
-  }, [eventPage]);
+  // useEffect(() => {
+  //   UpcomingDataList(eventPage);
+  // }, [eventPage]);
 
   const modalref = createRef(null);
   const [
@@ -384,26 +384,21 @@ const Home = props => {
             artistData: item,
           });
         }}>
-        {item?.artists?.length &&
-        item?.artists[0]?.images?.length &&
-        item?.artists[0]?.images[0] &&
-        typeof item?.artists[0]?.images[0] == 'string' ? (
+        {item?.images?.length &&
+        item?.images[0] &&
+        typeof item?.images[0]?.path == 'string' ? (
           <FastImage
             style={{
-              marginLeft: 15,
-              marginRight: index == 1 ? 15 : 0,
               height: hp(20),
               width: wp(50),
               resizeMode: 'cover',
               borderRadius: 10,
             }}
-            source={{uri: item?.artists[0]?.images[0]}}
+            source={{uri: item?.images[0]?.path}}
           />
         ) : (
           <View
             style={{
-              marginLeft: 15,
-              marginRight: index == 1 ? 15 : 0,
               height: hp(20),
               width: wp(50),
               resizeMode: 'cover',
@@ -443,7 +438,7 @@ const Home = props => {
             {moment(item?.eventDate).format('MMM')}
           </Text>
         </View>
-        <View style={{position: 'absolute', left: 27, bottom: 9}}>
+        <View style={{position: 'absolute', left: 9, bottom: 9}}>
           {/* <TouchableOpacity
             style={{
               borderRadius: 10,
@@ -473,12 +468,22 @@ const Home = props => {
           </Text>
           <Text
             style={{
-              fontSize: 8,
+              fontSize: 10,
               color: COLORS.white,
               fontFamily: FONTS.AxiformaBold,
-              marginBottom: hp(1.5),
             }}>
             By {item?.artists?.map(e => e?.name)?.join(', ')}
+          </Text>
+          <Text
+            style={{
+              fontSize: 10,
+              color: COLORS.white,
+              fontFamily: FONTS.AxiformaRegular,
+              marginBottom: hp(1),
+            }}>
+            {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+              item?.eventEndTime,
+            ).format('hh:mm A')}`}
           </Text>
           <View style={{flexDirection: 'row'}}>
             <Image
@@ -922,13 +927,21 @@ const Home = props => {
             horizontal
             data={upcomingEvents}
             renderItem={UpcomingData_RenderItem}
-            contentContainerStyle={{marginVertical: 20, marginHorizontal: 5}}
-            ListFooterComponent={UpcomingrenderFooter}
+            contentContainerStyle={{
+              marginVertical: 20,
+              marginHorizontal: 5,
+              paddingStart: 15,
+              paddingEnd: 15,
+            }}
+            // ListFooterComponent={UpcomingrenderFooter}
             onEndReachedThreshold={0.7}
             onMomentumScrollBegin={() => {
               setonEndReachedCalledDuringUpcoming(false);
             }}
-            onEndReached={fetchUpcomingData}
+            ItemSeparatorComponent={() => {
+              return <View style={{width: 15}} />;
+            }}
+            // onEndReached={fetchUpcomingData}
             ListEmptyComponent={
               <View
                 style={{

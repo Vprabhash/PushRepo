@@ -230,6 +230,11 @@ const EventListing = props => {
             <Text style={[styles.singerName, {width: '70%'}]}>
               By {item?.artists?.map(e => e?.name)?.join(', ')}
             </Text>
+            <Text style={styles.listinhText}>
+              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+                item?.eventEndTime,
+              ).format('hh:mm A')}`}
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -340,7 +345,13 @@ const EventListing = props => {
               ]}>
               {'₹' + item?.price?.amount}
             </Text>
-            <Text style={[styles.listinhText, {marginTop: 0}]}>onwards</Text>
+            <Text
+              style={[
+                styles.listinhText,
+                {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+              ]}>
+              onwards
+            </Text>
           </View>
         </TouchableOpacity>
       </View>

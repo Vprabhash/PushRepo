@@ -633,6 +633,7 @@ const ArtistEventDetail = props => {
                       width: width,
                       justifyContent: 'center',
                       alignItems: 'center',
+                      marginBottom: hp(4),
                     }}>
                     <Text style={styles.titleText1}>No Events Found</Text>
                   </View>
@@ -662,21 +663,21 @@ const ArtistEventDetail = props => {
                 </Text>
               </LinearGradient>
             </TouchableOpacity>
-            <UpcomingEventModal
-              visible={isEventModalVisible}
-              data={upcomingEvents}
-              onPress={e => {
-                setIsEventModalVisible(false);
-                props.navigation.navigate('ArtistPlayingDetail', {
-                  artistData: e,
-                });
-              }}
-              onPressCancel={() => {
-                setIsEventModalVisible(false);
-              }}
-            />
           </View>
         </ImageBackground>
+        <UpcomingEventModal
+          visible={isEventModalVisible}
+          data={upcomingEvents}
+          onPress={e => {
+            setIsEventModalVisible(false);
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: e,
+            });
+          }}
+          onPressCancel={() => {
+            setIsEventModalVisible(false);
+          }}
+        />
       </ScrollView>
     </View>
   );

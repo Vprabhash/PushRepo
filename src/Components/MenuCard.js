@@ -31,7 +31,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
     },
     {
       menuIcon: ImagePath.menuUser,
-      menuTitle: `₹${itemdata?.cost}`,
+      menuTitle: itemdata?.cost ? `₹${itemdata?.cost}` : '₹',
       menuTitleText: itemdata?.averageCost2People || 'N/A',
     },
     {
@@ -43,7 +43,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
       menuIcon: ImagePath.menuUser2,
       menuTitle: 'Menu',
       menuTitleText:
-        itemdata?.vegNonVeg.toLowerCase() === 'non-veg'
+        itemdata?.vegNonVeg?.toLowerCase() === 'non-veg'
           ? `${itemdata?.vegNonVeg}`
           : itemdata?.vegNonVeg || 'N/A',
     },
@@ -199,59 +199,62 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           />
           <Text style={[styles.buttonText, {}]}>Direction</Text>
         </TouchableOpacity>
-        { itemdata?.whatsappNumber? (
+        {itemdata?.whatsappNumber ? (
           <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            if (itemdata?.whatsappNumber) {
-              Linking.openURL(
-                'http://api.whatsapp.com/send?phone=91' +
-                  itemdata?.whatsappNumber,
-              );
-            } else {
-              Toast.showWithGravity(
-                'Sorry! WhatsApp number is not available',
-                Toast.LONG,
-                Toast.BOTTOM,
-              );
-            }
-          }}
-          style={[styles.btnmain, {marginHorizontal: 1}]}>
-          <Image style={styles.btnIcon} source={ImagePath.WhatsApp} />
-          <Text style={[styles.buttonText, {}]}>WhatsApp</Text>
-        </TouchableOpacity>
-        ):(
+            activeOpacity={0.7}
+            onPress={() => {
+              if (itemdata?.whatsappNumber) {
+                Linking.openURL(
+                  'http://api.whatsapp.com/send?phone=91' +
+                    itemdata?.whatsappNumber,
+                );
+              } else {
+                Toast.showWithGravity(
+                  'Sorry! WhatsApp number is not available',
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                );
+              }
+            }}
+            style={[styles.btnmain, {marginHorizontal: 1}]}>
+            <Image style={styles.btnIcon} source={ImagePath.WhatsApp} />
+            <Text style={[styles.buttonText, {}]}>WhatsApp</Text>
+          </TouchableOpacity>
+        ) : (
           <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            if (itemdata?.whatsappNumber) {
-              Linking.openURL(
-                'http://api.whatsapp.com/send?phone=91' +
-                  itemdata?.whatsappNumber,
-              );
-            } else {
-              Toast.showWithGravity(
-                'Sorry! WhatsApp number is not available',
-                Toast.LONG,
-                Toast.BOTTOM,
-              );
-            }
-          }}
-          style={[styles.btnmainDisabled, {marginHorizontal: 1}]}>
-          <Image style={styles.btnIconDisabled} source={ImagePath.WhatsAppDisabled} />
-          <Text style={[styles.buttonText, {}]}>WhatsApp</Text>
-        </TouchableOpacity>
+            activeOpacity={0.7}
+            onPress={() => {
+              if (itemdata?.whatsappNumber) {
+                Linking.openURL(
+                  'http://api.whatsapp.com/send?phone=91' +
+                    itemdata?.whatsappNumber,
+                );
+              } else {
+                Toast.showWithGravity(
+                  'Sorry! WhatsApp number is not available',
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                );
+              }
+            }}
+            style={[styles.btnmainDisabled, {marginHorizontal: 1}]}>
+            <Image
+              style={styles.btnIconDisabled}
+              source={ImagePath.WhatsAppDisabled}
+            />
+            <Text style={[styles.buttonText, {}]}>WhatsApp</Text>
+          </TouchableOpacity>
         )}
-        { itemdata?.phoneNumber? (
+        {itemdata?.phoneNumber ? (
           <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            Linking.openURL('tel:' + itemdata?.phoneNumber);
-          }}
-          style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
-          <Image style={styles.btnIcon} source={ImagePath.callIcon} />
-          <Text style={[styles.buttonText, {}]}>Call</Text>
-        </TouchableOpacity>
+            activeOpacity={0.7}
+            onPress={() => {
+              Linking.openURL('tel:' + itemdata?.phoneNumber);
+            }}
+            style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
+            <Image style={styles.btnIcon} source={ImagePath.callIcon} />
+            <Text style={[styles.buttonText, {}]}>Call</Text>
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity
             activeOpacity={0.7}
@@ -259,11 +262,13 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
               Linking.openURL('tel:' + itemdata?.phoneNumber);
             }}
             style={[styles.btnmainDisabled, {borderBottomRightRadius: 10}]}>
-            <Image style={styles.btnIconDisabled} source={ImagePath.callIconDisabled} />
+            <Image
+              style={styles.btnIconDisabled}
+              source={ImagePath.callIconDisabled}
+            />
             <Text style={[styles.buttonText, {}]}>Call</Text>
           </TouchableOpacity>
-        ) }
-        
+        )}
       </View>
     </View>
   );

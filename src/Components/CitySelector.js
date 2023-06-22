@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   textItem: {
     fontFamily: FONTS.RobotoRegular,
-    fontSize: 14,
+    fontSize: RFValue(14, Dimensions.get('window').height),
     color: '#000000',
     flex: 1,
   },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.RobotoRegular,
   },
   selectedTextStyle: {
-    fontSize: RFValue(16, Dimensions.get('window').height),
+    fontSize: RFValue(14, Dimensions.get('window').height),
     color: '#000000',
     fontFamily: FONTS.RobotoRegular,
   },
