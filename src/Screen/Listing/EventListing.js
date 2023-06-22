@@ -51,12 +51,13 @@ const EventListing = props => {
 
   useEffect(() => {
     setPage(0);
+    list(0);
     toTop();
   }, [selectedCity, userBaseCity]);
 
   useEffect(() => {
     list(page);
-  }, [page]);
+  }, [page, selectedCity, userBaseCity]);
 
   useEffect(() => {
     eventsNearbyDataApi();
