@@ -67,7 +67,6 @@ const ClubListing = ({navigation, route}) => {
   useEffect(() => {
     setLoader(true);
     list(page);
-    toTop();
     forceUpdate();
   }, [page, filteredData]);
 

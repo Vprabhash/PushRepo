@@ -60,13 +60,14 @@ const ArtistDetail = props => {
   }, []);
 
   useEffect(() => {
-    fetchArtistsData(page);
+    setPage(0);
+    fetchArtistsData(0);
     toTop();
-  }, [page, selectedFilter, selectedCity, userBaseCity]);
+  }, [selectedCity, userBaseCity]);
 
   useEffect(() => {
-    console.log('artistList', artistList.length);
-  }, [artistList]);
+    fetchArtistsData(page);
+  }, [page, selectedFilter, selectedCity, userBaseCity]);
 
   const toTop = () => {
     // use current
@@ -111,8 +112,11 @@ const ArtistDetail = props => {
       if (selectedFilter?.artist) {
         queryParams.append('type', selectedFilter?.artist);
       }
+      if (selectedCity) {
+        queryParams.append('city', selectedCity);
+      }
       const res = await ApiCall(`api/artists?${queryParams}`, 'GET');
-      // console.log('---resartists--->', res?.data);
+      console.log('---resartists--->', res?.data?.length);
       if (Array.isArray(res?.data)) {
         if (page === 0) {
           setArtistList(res?.data);

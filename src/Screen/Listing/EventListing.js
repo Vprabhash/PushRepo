@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -33,6 +33,7 @@ import Toast from 'react-native-simple-toast';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const EventListing = props => {
+  const flatListRef = useRef(null);
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
   );
@@ -49,12 +50,25 @@ const EventListing = props => {
   const [dontCall, setDontCall] = useState(false);
 
   useEffect(() => {
+    setPage(0);
+    toTop();
+  }, [selectedCity, userBaseCity]);
+
+  useEffect(() => {
     list(page);
-  }, [page, selectedCity, userBaseCity]);
+  }, [page]);
 
   useEffect(() => {
     eventsNearbyDataApi();
   }, [locationLatLong]);
+
+  const toTop = () => {
+    // use current
+    flatListRef?.current?.scrollToOffset({
+      animated: true,
+      offset: 0,
+    });
+  };
 
   const renderFooter = () => {
     return (
@@ -363,8 +377,8 @@ const EventListing = props => {
           />
         </View>
         <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
+          style={{
+            flex: 1,
           }}>
           <StatusBar
             barStyle="dark-content"
@@ -391,14 +405,18 @@ const EventListing = props => {
               </Text>
             </View>
           )}
-          <View style={[styles.hedingTextMain, {}]}>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <Text style={styles.cardText}>UPCOMING EVENTS IN TOWN</Text>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-          </View>
+
           <FlatList
+            ref={flatListRef}
             data={events}
             renderItem={_renderItem}
+            ListHeaderComponent={
+              <View style={styles.hedingTextMain}>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+                <Text style={styles.cardText}>UPCOMING EVENTS IN TOWN</Text>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+              </View>
+            }
             ListFooterComponent={renderFooter}
             onEndReachedThreshold={0.3}
             onMomentumScrollBegin={() => {
