@@ -32,6 +32,8 @@ import ImagePath from '../assets/ImagePath';
 import {COLORS, FONTS} from './constants';
 import ApiCall from '../redux/CommanApi';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
+import moment from 'moment';
+import FastImage from 'react-native-fast-image';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -86,9 +88,10 @@ const SearchBar = props => {
       let temArray = [];
       let clubs = res?.data?.clubs;
       let artist = res?.data?.artists;
-      temArray = clubs.concat(artist);
+      let events = res?.data?.events?.map(e => ({...e, type: 'event'}));
+      temArray = clubs.concat(artist, events);
       setClubs(temArray);
-      // console.log('--------temArray: ', temArray);
+      console.log('--------temArray: ', temArray);
     } else {
       //   setPage(1);
     }
@@ -106,6 +109,9 @@ const SearchBar = props => {
       });
   };
   const _renderItem = ({item, index}) => {
+    if (item?.type === 'event') {
+      return <RenderEvent item={item} index={index} />;
+    }
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <View
@@ -249,13 +255,119 @@ const SearchBar = props => {
                 </Text>
               )}
               {item?.cost && (
-                <Text style={styles.listingText} numberOfLines={1}>
+                <Text
+                  style={[styles.listingText, {color: COLORS.black}]}
+                  numberOfLines={1}>
                   ₹{item?.cost}
                 </Text>
               )}
             </View>
           </View>
         </View>
+      </View>
+    );
+  };
+
+  const RenderEvent = ({item, index}) => {
+    return (
+      <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
+            });
+          }}
+          style={{
+            marginHorizontal: 10,
+            borderRadius: 10,
+            backgroundColor: '#FFFFFF',
+            elevation: 4,
+          }}>
+          {item?.images?.length &&
+          item?.images[0] &&
+          typeof item?.images[0]?.path == 'string' ? (
+            <FastImage
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+              source={{uri: item?.images[0]?.path}}
+            />
+          ) : (
+            <View
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+                backgroundColor: COLORS.gray,
+              }}
+            />
+          )}
+          <View
+            style={{
+              height: 39,
+              minWidth: 32,
+              justifyContent: 'center',
+              borderRadius: 10,
+              backgroundColor: '#FFFFFF',
+              position: 'absolute',
+              top: 8,
+              right: 8,
+            }}>
+            <Text
+              style={{
+                color: '#666666',
+                textAlign: 'center',
+                fontFamily: FONTS.AxiformaBold,
+                fontSize: 12,
+              }}>
+              {moment(item?.eventDate).format('DD')}
+            </Text>
+            <Text
+              style={{
+                color: '#666666',
+                textAlign: 'center',
+                fontFamily: FONTS.AxiformaRegular,
+                fontSize: 12,
+                textTransform: 'uppercase',
+              }}>
+              {moment(item?.eventDate).format('MMM')}
+            </Text>
+          </View>
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+            <Text style={styles.listinhHeading}>{item.title}</Text>
+            <Text style={[styles.singerName, {width: '70%'}]}>
+              By {item?.artists?.map(e => e?.name)?.join(', ')}
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <Text style={styles.listingText}>
+                {[item?.address?.locality || '', item?.address?.city || '']
+                  .filter(e => e)
+                  .join(', ')}
+              </Text>
+              <View style={{alignItems: 'flex-end'}}>
+                <Text style={[styles.listingText, {color: COLORS.black}]}>
+                  {'₹' + item?.price?.amount}
+                </Text>
+                {/* <Text
+                  style={[
+                    styles.listingText,
+                    {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+                  ]}>
+                  onwards
+                </Text> */}
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -594,5 +706,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: hp(2),
+  },
+  singerName: {
+    fontSize: 12,
+    marginVertical: hp(0.5),
+    fontFamily: FONTS.AxiformaBold,
+    color: '#575757',
   },
 });

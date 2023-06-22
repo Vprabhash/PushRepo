@@ -58,10 +58,18 @@ const ClubListing = ({navigation, route}) => {
 
   useEffect(() => {
     setLoader(true);
-    list(page);
-    forceUpdate();
+    setPage(0);
+    list(0);
     toTop();
-  }, [page, filteredData, selectedCity, userBaseCity]);
+    forceUpdate();
+  }, [selectedCity, userBaseCity]);
+
+  useEffect(() => {
+    setLoader(true);
+    list(page);
+    toTop();
+    forceUpdate();
+  }, [page, filteredData]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -146,7 +154,6 @@ const ClubListing = ({navigation, route}) => {
         queryParams.append('liveMusicDj', filteredData?.liveMusicDj);
       }
       if ('city') {
-        //queryParams.append('city', 'Mumbai');
         console.log('-=-==-=-=-=-=-SC-=-=-=-=', selectedCity);
         queryParams.append('city', selectedCity);
       }

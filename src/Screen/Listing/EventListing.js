@@ -156,10 +156,9 @@ const EventListing = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {item?.artists?.length &&
-          item?.artists[0]?.images?.length &&
-          item?.artists[0]?.images[0] &&
-          typeof item?.artists[0]?.images[0] == 'string' ? (
+          {item?.images?.length &&
+          item?.images[0] &&
+          typeof item?.images[0]?.path == 'string' ? (
             <FastImage
               style={{
                 height: hp(29),
@@ -167,7 +166,7 @@ const EventListing = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{uri: item?.artists[0]?.images[0]}}
+              source={{uri: item?.images[0]?.path}}
             />
           ) : (
             <View
@@ -263,9 +262,8 @@ const EventListing = props => {
             elevation: 4,
           }}>
           {item?.artists?.length &&
-          item?.artists[0]?.images?.length &&
-          item?.artists[0]?.images[0] &&
-          typeof item?.artists[0]?.images[0] == 'string' ? (
+          item?.images[0] &&
+          typeof item?.images[0]?.path == 'string' ? (
             <Image
               style={{
                 height: hp(18),
@@ -274,7 +272,7 @@ const EventListing = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{uri: item?.artists[0]?.images[0]}}
+              source={{uri: item?.images[0]?.path}}
             />
           ) : (
             <View
@@ -287,8 +285,12 @@ const EventListing = props => {
               }}
             />
           )}
-          <View style={{padding: wp(3)}}>
-            <Text style={[styles.listinhHeading1, {marginBottom: hp(0.5)}]}>
+          <View style={{padding: wp(3), width: wp(38)}}>
+            <Text
+              style={[
+                styles.listinhHeading1,
+                {marginBottom: hp(0.5), width: wp(38)},
+              ]}>
               {item.title}
             </Text>
             <Text

@@ -106,10 +106,13 @@ const ArtistPlayingDetail = props => {
                     }}
                   />
                 }>
-                {artistData?.artists[0]?.images.length ? (
-                  artistData?.artists[0]?.images?.slice(0, 5)?.map(item => (
+                {artistData?.images.length ? (
+                  artistData?.images?.slice(0, 5)?.map(item => (
                     <View style={styles.slide}>
-                      <FastImage style={styles.slideImg} source={{uri: item}} />
+                      <FastImage
+                        style={styles.slideImg}
+                        source={{uri: item?.path}}
+                      />
                     </View>
                   ))
                 ) : (

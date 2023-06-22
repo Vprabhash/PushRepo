@@ -259,10 +259,9 @@ const ArtistEventDetail = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {item?.artists?.length &&
-          item?.artists[0]?.images?.length &&
-          item?.artists[0]?.images[0] &&
-          typeof item?.artists[0]?.images[0] == 'string' ? (
+          {item?.images?.length &&
+          item?.images[0] &&
+          typeof item?.images[0]?.path == 'string' ? (
             <FastImage
               style={{
                 height: hp(29),
@@ -270,7 +269,7 @@ const ArtistEventDetail = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{uri: item?.artists[0]?.images[0]}}
+              source={{uri: item.images[0]?.path}}
             />
           ) : (
             <View
@@ -621,7 +620,11 @@ const ArtistEventDetail = props => {
             </Text>
             <View style={{marginTop: 10}}>
               <FlatList
-                data={upcomingEvents}
+                data={
+                  haveTodaysEvent()?.length
+                    ? haveTodaysEvent()
+                    : upcomingEvents?.slice(0, 1)
+                }
                 keyExtractor={(_, i) => i.toString()}
                 renderItem={_renderItem}
                 ListEmptyComponent={
@@ -753,7 +756,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 20,
     marginBottom: 10,
-    marginTop: 20,
+    marginTop: 40,
     fontFamily: FONTS.AxiformaBold,
   },
   singerName: {

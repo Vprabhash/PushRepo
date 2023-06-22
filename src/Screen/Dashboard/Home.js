@@ -41,8 +41,8 @@ import {ARTIST} from '../../services/Apis';
 import Disclamer from '../../Components/Disclamer';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
-// import Geolocation from '@react-native-community/geolocation';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from 'react-native-geolocation-service';
 import CitySelector from '../../Components/CitySelector';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
@@ -96,6 +96,7 @@ const Home = props => {
   useEffect(() => {
     fetchClubsSpotlight();
     fetchArtistSpotlight();
+    UpcomingDataList(0);
     AppState.addEventListener('change', handleAppStateChange);
   }, [selectedCity, userBaseCity]);
 
@@ -105,9 +106,7 @@ const Home = props => {
       nextAppState === 'active'
     ) {
       console.log('App has come to the foreground!');
-      // if(getPermission){
       checkLocation();
-      // }
     }
 
     appState.current = nextAppState;
@@ -118,7 +117,7 @@ const Home = props => {
     if (locationLatLong?.latitude) {
       clubsNearbyDataApi();
     }
-  }, [locationLatLong]);
+  }, [locationLatLong?.latitude]);
 
   useEffect(() => {
     UpcomingDataList(eventPage);
@@ -307,7 +306,7 @@ const Home = props => {
           artistListDetail: item,
         });
       }}
-      style={{marginTop: 20}}>
+      style={{marginTop: 20, height: wp(28)}}>
       <FastImage
         style={{
           height: wp(28),
@@ -347,6 +346,7 @@ const Home = props => {
     const queryParams = new URLSearchParams();
     queryParams.append('upcoming', 1);
     queryParams.append('page', eventPage);
+    queryParams.append('city', selectedCity);
     const res = await ApiCall(`api/events?${queryParams}`, 'GET');
     console.log('---res--logIn--artist---', res?.data);
     if (Array.isArray(res?.data)) {
@@ -773,6 +773,16 @@ const Home = props => {
             //   setonEndReachedCalledDuringspotLight(false);
             // }}
             // onEndReached={fetchSpotlightData}
+            ListEmptyComponent={
+              <View
+                style={{
+                  width: width,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={styles.titleText1}>No Clubs Found</Text>
+              </View>
+            }
           />
           <View style={styles.hedingTextMain}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
@@ -800,8 +810,7 @@ const Home = props => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                {console.log(locationLatLong, 'locationLatLong?.latitude===')}
-                {locationLatLong?.latitude && locationLatLong?.longitude ? (
+                {locationLatLong?.latitude ? (
                   <Text style={styles.titleText1}>No Clubs Found</Text>
                 ) : (
                   <>
@@ -892,7 +901,7 @@ const Home = props => {
               style={[styles.iconStyle, {width: 10, height: 8}]}
             />
           </TouchableOpacity> */}
-          <View style={[styles.hedingTextMain, {marginTop: 0}]}>
+          <View style={[styles.hedingTextMain]}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <Text style={styles.cardText}>UPCOMING EVENTS</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
@@ -969,7 +978,7 @@ const Home = props => {
 export default Home;
 const styles = StyleSheet.create({
   hedingTextMain: {
-    marginTop: hp(2),
+    marginTop: hp(3),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

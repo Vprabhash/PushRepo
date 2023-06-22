@@ -71,13 +71,12 @@ const UpcomingEventModal = ({
                         alignItems: 'center',
                       }}>
                       <View style={styles.rectangle4}>
-                        {item?.artists?.length &&
-                        item?.artists[0]?.images?.length &&
-                        item?.artists[0]?.images[0] &&
-                        typeof item?.artists[0]?.images[0] == 'string' ? (
+                        {item?.images?.length &&
+                        item?.images[0] &&
+                        typeof item?.images[0]?.path == 'string' ? (
                           <FastImage
                             style={styles.clipPath}
-                            source={{uri: item?.artists[0]?.images[0]}}
+                            source={{uri: item?.images[0]?.path}}
                           />
                         ) : (
                           <View
