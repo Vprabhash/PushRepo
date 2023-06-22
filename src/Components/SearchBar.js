@@ -342,6 +342,15 @@ const SearchBar = props => {
             <Text style={[styles.singerName, {width: '70%'}]}>
               By {item?.artists?.map(e => e?.name)?.join(', ')}
             </Text>
+            <Text
+              style={[
+                styles.singerName,
+                {fontFamily: FONTS.AxiformaRegular, marginTop: 0},
+              ]}>
+              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+                item?.eventEndTime,
+              ).format('hh:mm A')}`}
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
