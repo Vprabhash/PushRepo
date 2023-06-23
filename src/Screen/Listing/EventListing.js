@@ -227,9 +227,26 @@ const EventListing = props => {
           </View>
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
-            <Text style={[styles.singerName, {width: '70%'}]}>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginVertical: 2,
+                alignItems: 'center',
+              }}>
+              {item?.artists[0]?.images[0] ? <Image
+                style={{
+                  height: 20,
+                  width: 20,
+                  borderRadius: 10,
+                  resizeMode: 'contain',
+                  marginRight:6
+                }}
+                source={{uri: item?.artists[0]?.images[0]}}
+              /> : null}
+            <Text style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
               By {item?.artists?.map(e => e?.name)?.join(', ')}
             </Text>
+            </View>
             <Text style={styles.listinhText}>
               {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
                 item?.eventEndTime,

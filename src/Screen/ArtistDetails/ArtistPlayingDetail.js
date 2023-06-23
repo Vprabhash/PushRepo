@@ -27,254 +27,12 @@ import FastImage from 'react-native-fast-image';
 import Swiper from 'react-native-swiper';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import moment from 'moment';
+import ImageView from 'react-native-image-viewing';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistPlayingDetail = props => {
   const {artistData} = props?.route?.params;
   const [modalVisibleone, setModalVisibleone] = useState(false);
-
-  const _renderItem = () => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          marginBottom: 7,
-          marginHorizontal: 15,
-          marginTop: 20,
-          // backgroundColor: 'red',
-        }}>
-        <View
-          style={{
-            // marginHorizontal: 15,
-            borderRadius: 10,
-            backgroundColor: '#FFFFFF',
-            elevation: 4,
-          }}>
-          {
-            <Pressable onPress={() => setModalVisibleone(true)}>
-              <Swiper
-                autoplay={true}
-                autoplayTimeout={4}
-                style={[styles.wrapper]}
-                containerStyle={{
-                  borderRadius: 8,
-                  marginTop: 15,
-                  marginHorizontal: 15,
-                  overflow: 'hidden',
-                }}
-                paginationStyle={{
-                  bottom: hp(1),
-                  zIndex: 9,
-                  backgroundColor: '#C9C9C9',
-                  borderRadius: 20,
-                  height: 18,
-                  marginHorizontal: '38%',
-                }}
-                activeDotStyle={{
-                  backgroundColor: '#717171',
-                  width: 6,
-                  height: 6,
-                  borderRadius: 4,
-                }}
-                dotStyle={{
-                  backgroundColor: COLORS.white,
-                  width: 6,
-                  height: 6,
-                  borderRadius: 4,
-                }}
-                showsButtons={true}
-                showsPagination={true}
-                prevButton={
-                  <Image
-                    source={ImagePath.prew}
-                    style={{
-                      height: 20,
-                      width: 20,
-                      marginBottom: 20,
-                      resizeMode: 'contain',
-                    }}
-                  />
-                }
-                nextButton={
-                  <Image
-                    source={ImagePath.next}
-                    style={{
-                      height: 20,
-                      width: 20,
-                      marginBottom: 20,
-                      resizeMode: 'contain',
-                    }}
-                  />
-                }>
-                {artistData?.images.length ? (
-                  artistData?.images?.slice(0, 5)?.map(item => (
-                    <View style={styles.slide}>
-                      <FastImage
-                        style={styles.slideImg}
-                        source={{uri: item?.path}}
-                      />
-                    </View>
-                  ))
-                ) : (
-                  <View />
-                )}
-              </Swiper>
-            </Pressable>
-          }
-          <View style={{paddingHorizontal: 15, paddingVertical: hp(2)}}>
-            <Text style={[styles.listinhHeading]}>{artistData?.title}</Text>
-            <Text style={[styles.singerName]}>
-              By{' '}
-              <Text
-                style={{textDecorationLine: 'underline', paddingLeft: 5}}
-                onPress={() =>
-                  props.navigation.navigate('ArtistEventDetail', {
-                    artistListDetail: artistData?.artists[0],
-                  })
-                }>
-                {artistData?.artists[0]?.name}
-              </Text>
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 22,
-                alignItems: 'center',
-              }}>
-              <Image
-                style={{
-                  height: 17,
-                  tintColor: COLORS.black,
-                  width: 17,
-                  resizeMode: 'contain',
-                }}
-                source={ImagePath.watchIcon}
-              />
-              <View style={{flex: 0.7}}>
-                <Text style={styles.listinhHeading1}>
-                  {`${moment(artistData?.eventStartTime).format(
-                    'ddd MMM DD',
-                  )} at ${moment(artistData?.eventStartTime).format(
-                    'hh:mm A',
-                  )} to ${moment(artistData?.eventEndTime).format('hh:mm A')}`}
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 14,
-                alignItems: 'center',
-              }}>
-              <Image
-                style={{
-                  height: 17,
-                  tintColor: COLORS.black,
-                  width: 17,
-                  resizeMode: 'contain',
-                }}
-                source={ImagePath.location}
-              />
-              <View style={{flex: 0.6}}>
-                <View style={{}}>
-                  <Text style={styles.listinhHeading1}>
-                    {[
-                      artistData?.address?.locality || '',
-                      artistData?.address?.city || '',
-                    ]
-                      .filter(e => e)
-                      .join(', ')}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 14,
-                alignItems: 'center',
-              }}>
-              <Image
-                style={{
-                  height: 17,
-                  tintColor: COLORS.black,
-                  width: 17,
-                  resizeMode: 'contain',
-                }}
-                source={ImagePath.play_pause}
-              />
-              <Text style={styles.listinhHeading1}>{'Live Music Concert'}</Text>
-            </View> */}
-            {artistData?.priceText && (
-              <TouchableOpacity
-                activeOpacity={0.5}
-                style={{
-                  position: 'absolute',
-                  borderWidth: 1,
-                  borderColor: '#DD2AFB',
-                  borderRadius: 10,
-                  height: 56,
-                  width: 56,
-                  justifyContent: 'center',
-                  right: 15,
-                  bottom: 20,
-                }}>
-                <Text
-                  style={{
-                    color: '#DD2AFB',
-                    textAlign: 'center',
-                    fontFamily: FONTS.RobotoBlack,
-                    fontSize: 12,
-                  }}>
-                  {'₹' + artistData?.price?.amount}
-                </Text>
-                <Text
-                  style={{
-                    color: '#DD2AFB',
-                    textAlign: 'center',
-                    fontFamily: FONTS.RobotoMedium,
-                    fontSize: 12,
-                  }}>
-                  onwards
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              borderTopWidth: 1,
-              borderTopColor: '#9D9D9D',
-              paddingVertical: 8,
-              alignItems: 'center',
-              marginTop: 10,
-            }}
-            onPress={() => {
-              const scheme = Platform.select({
-                ios: 'maps://0,0?q=',
-                android: 'geo:0,0?q=',
-              });
-              const latLng = artistData?.club?.geoJson?.coordinates?.join(',');
-              const label = artistData?.locationText;
-              const url = Platform.select({
-                ios: `${scheme}${label}@${latLng}`,
-                android: `${scheme}${latLng}(${label})`,
-              });
-
-              Linking.openURL(url);
-            }}>
-            <Image
-              style={[styles.btnIcon, {tintColor: null}]}
-              source={ImagePath.direction}
-            />
-            <Text style={styles.buttonText}>Get Direction</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
 
   return (
     <View style={{flex: 1}}>
@@ -310,9 +68,301 @@ const ArtistPlayingDetail = props => {
             backgroundColor="transparent"
             translucent={true}
           />
+          <View
+            style={{
+              flex: 1,
+              marginBottom: 7,
+              marginHorizontal: 15,
+              marginTop: 20,
+              // backgroundColor: 'red',
+            }}>
+            <View
+              style={{
+                // marginHorizontal: 15,
+                borderRadius: 10,
+                backgroundColor: '#FFFFFF',
+                elevation: 4,
+              }}>
+              {
+                <Pressable onPress={() => setModalVisibleone(true)}>
+                  <Swiper
+                    autoplay={true}
+                    autoplayTimeout={4}
+                    style={[styles.wrapper]}
+                    containerStyle={{
+                      borderRadius: 8,
+                      marginTop: 15,
+                      marginHorizontal: 15,
+                      overflow: 'hidden',
+                    }}
+                    paginationStyle={{
+                      bottom: hp(1),
+                      zIndex: 9,
+                      backgroundColor: '#C9C9C9',
+                      borderRadius: 20,
+                      height: 18,
+                      marginHorizontal: '38%',
+                    }}
+                    activeDotStyle={{
+                      backgroundColor: '#717171',
+                      width: 6,
+                      height: 6,
+                      borderRadius: 4,
+                    }}
+                    dotStyle={{
+                      backgroundColor: COLORS.white,
+                      width: 6,
+                      height: 6,
+                      borderRadius: 4,
+                    }}
+                    showsButtons={true}
+                    showsPagination={true}
+                    prevButton={
+                      <Image
+                        source={ImagePath.prew}
+                        style={{
+                          height: 20,
+                          width: 20,
+                          marginBottom: 20,
+                          resizeMode: 'contain',
+                        }}
+                      />
+                    }
+                    nextButton={
+                      <Image
+                        source={ImagePath.next}
+                        style={{
+                          height: 20,
+                          width: 20,
+                          marginBottom: 20,
+                          resizeMode: 'contain',
+                        }}
+                      />
+                    }>
+                    {artistData?.images.length ? (
+                      artistData?.images?.slice(0, 5)?.map(item => (
+                        <View style={styles.slide}>
+                          <FastImage
+                            style={styles.slideImg}
+                            source={{uri: item?.path}}
+                          />
+                        </View>
+                      ))
+                    ) : (
+                      <View />
+                    )}
+                  </Swiper>
+                </Pressable>
+              }
+              <View style={{paddingHorizontal: 15, paddingVertical: hp(2)}}>
+                <Text style={[styles.listinhHeading]}>
+                  {artistData?.title}
+                  <Text
+                    style={[styles.listinhHeading]}
+                    onPress={() => {
+                      props.navigation.navigate('ClubDetails', {
+                        listDetail: artistData?.club,
+                      });
+                    }}>
+                    {' '}
+                    at {artistData?.club?.name}
+                  </Text>
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 6,
+                  }}>
+                  {artistData?.artists?.length &&
+                  artistData?.artists[0]?.images?.length &&
+                  artistData?.artists[0]?.images[0] ? (
+                    <Image
+                      style={{
+                        height: 30,
+                        width: 30,
+                        borderRadius: 30,
+                        resizeMode: 'contain',
+                        marginRight: 6,
+                      }}
+                      source={{uri: artistData?.artists[0]?.images[0]}}
+                    />
+                  ) : null}
+                  <Text style={[styles.singerName, {marginTop: 0}]}>
+                    By{' '}
+                    <Text
+                      style={{textDecorationLine: 'underline', paddingLeft: 5}}
+                      onPress={() =>
+                        props.navigation.navigate('ArtistEventDetail', {
+                          artistListDetail: artistData?.artists[0],
+                        })
+                      }>
+                      {artistData?.artists[0]?.name}
+                    </Text>
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 22,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{
+                      height: 17,
+                      tintColor: COLORS.black,
+                      width: 17,
+                      resizeMode: 'contain',
+                    }}
+                    source={ImagePath.watchIcon}
+                  />
+                  <View style={{flex: 0.7}}>
+                    <Text style={styles.listinhHeading1}>
+                      {`${moment(artistData?.eventStartTime).format(
+                        'ddd MMM DD',
+                      )} at ${moment(artistData?.eventStartTime).format(
+                        'hh:mm A',
+                      )} to ${moment(artistData?.eventEndTime).format(
+                        'hh:mm A',
+                      )}`}
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 14,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{
+                      height: 17,
+                      tintColor: COLORS.black,
+                      width: 17,
+                      resizeMode: 'contain',
+                    }}
+                    source={ImagePath.location}
+                  />
+                  <View style={{flex: 0.6}}>
+                    <View style={{}}>
+                      <Text style={styles.listinhHeading1}>
+                        {[
+                          artistData?.address?.locality || '',
+                          artistData?.address?.city || '',
+                        ]
+                          .filter(e => e)
+                          .join(', ')}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                {/* <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 14,
+                alignItems: 'center',
+              }}>
+              <Image
+                style={{
+                  height: 17,
+                  tintColor: COLORS.black,
+                  width: 17,
+                  resizeMode: 'contain',
+                }}
+                source={ImagePath.play_pause}
+              />
+              <Text style={styles.listinhHeading1}>{'Live Music Concert'}</Text>
+            </View> */}
+                {artistData?.price?.amount && (
+                  <TouchableOpacity
+                    activeOpacity={0.5}
+                    style={{
+                      position: 'absolute',
+                      borderWidth: 1,
+                      borderColor: '#DD2AFB',
+                      borderRadius: 10,
+                      height: 56,
+                      width: 56,
+                      justifyContent: 'center',
+                      right: 15,
+                      bottom: 20,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#DD2AFB',
+                        textAlign: 'center',
+                        fontFamily: FONTS.RobotoBlack,
+                        fontSize: 12,
+                      }}>
+                      {'₹' + artistData?.price?.amount}
+                    </Text>
+                    <Text
+                      style={{
+                        color: '#DD2AFB',
+                        textAlign: 'center',
+                        fontFamily: FONTS.RobotoMedium,
+                        fontSize: 12,
+                      }}>
+                      onwards
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  borderTopWidth: 1,
+                  borderTopColor: '#9D9D9D',
+                  paddingVertical: 8,
+                  alignItems: 'center',
+                  marginTop: 10,
+                }}
+                onPress={() => {
+                  const scheme = Platform.select({
+                    ios: 'maps://0,0?q=',
+                    android: 'geo:0,0?q=',
+                  });
+                  const latLng =
+                    artistData?.club?.geoJson?.coordinates?.join(',');
+                  const label = artistData?.locationText;
+                  const url = Platform.select({
+                    ios: `${scheme}${label}@${latLng}`,
+                    android: `${scheme}${latLng}(${label})`,
+                  });
 
-          {_renderItem()}
+                  Linking.openURL(url);
+                }}>
+                <Image
+                  style={[styles.btnIcon, {tintColor: null}]}
+                  source={ImagePath.direction}
+                />
+                <Text style={styles.buttonText}>Get Direction</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
 
+          <ImageView
+            visible={modalVisibleone}
+            images={
+              artistData?.images?.length
+                ? artistData?.images?.map(e => ({
+                    uri: e?.path,
+                  }))
+                : []
+            }
+            imageIndex={0}
+            onRequestClose={() => setModalVisibleone(false)}
+            swipeToCloseEnabled={true}
+            FooterComponent={({imageIndex}) => {
+              return (
+                <Text style={styles.imageView}>
+                  {`(${imageIndex + 1}/${artistData?.images?.length})`}
+                </Text>
+              );
+            }}
+          />
           {/* <View
             style={{
               backgroundColor: '#FFFFFF',
@@ -390,5 +440,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: '100%',
     height: 300,
+  },
+  imageView: {
+    alignSelf: 'center',
+    paddingBottom: 30,
+    zIndex: 99,
+    elevation: 3,
+    color: '#fff',
+    fontFamily: FONTS.AxiformaRegular,
   },
 });

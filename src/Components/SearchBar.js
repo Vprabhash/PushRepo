@@ -339,9 +339,30 @@ const SearchBar = props => {
           </View>
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
-            <Text style={[styles.singerName, {width: '70%'}]}>
+            <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginVertical: 6,
+                  }}>
+                  {item?.artists?.length &&
+                  item?.artists[0]?.images?.length &&
+                  item?.artists[0]?.images[0] ? (
+                    <Image
+                      style={{
+                        height: 20,
+                        width: 20,
+                        borderRadius: 20,
+                        resizeMode: 'contain',
+                        marginRight: 6,
+                      }}
+                      source={{uri: item?.artists[0]?.images[0]}}
+                    />
+                  ) : null}
+            <Text style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
               By {item?.artists?.map(e => e?.name)?.join(', ')}
             </Text>
+            </View>
             <Text
               style={[
                 styles.singerName,
