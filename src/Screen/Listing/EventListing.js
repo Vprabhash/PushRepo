@@ -233,19 +233,24 @@ const EventListing = props => {
                 marginVertical: 2,
                 alignItems: 'center',
               }}>
-              {item?.artists[0]?.images[0] ? <Image
-                style={{
-                  height: 20,
-                  width: 20,
-                  borderRadius: 10,
-                  resizeMode: 'contain',
-                  marginRight:6
-                }}
-                source={{uri: item?.artists[0]?.images[0]}}
-              /> : null}
-            <Text style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
-              By {item?.artists?.map(e => e?.name)?.join(', ')}
-            </Text>
+              {item?.artists?.length &&
+              item?.artists[0]?.images?.length &&
+              item?.artists[0]?.images[0] ? (
+                <Image
+                  style={{
+                    height: 20,
+                    width: 20,
+                    borderRadius: 10,
+                    resizeMode: 'contain',
+                    marginRight: 6,
+                  }}
+                  source={{uri: item?.artists[0]?.images[0]}}
+                />
+              ) : null}
+              <Text
+                style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
+                By {item?.artists?.map(e => e?.name)?.join(', ')}
+              </Text>
             </View>
             <Text style={styles.listinhText}>
               {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
@@ -422,11 +427,7 @@ const EventListing = props => {
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
           </View>
           {nearByEvents?.length ? (
-            <FlatList
-              horizontal
-              data={nearByEvents}
-              renderItem={_renderItem}
-            />
+            <FlatList horizontal data={nearByEvents} renderItem={_renderItem} />
           ) : (
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <Text style={[styles.noDataText, {marginTop: 0}]}>
