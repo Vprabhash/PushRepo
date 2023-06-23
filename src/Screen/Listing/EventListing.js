@@ -158,7 +158,7 @@ const EventListing = props => {
 
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
+      <View style={{width: wp(100), marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
             props.navigation.navigate('ArtistPlayingDetail', {
@@ -408,7 +408,7 @@ const EventListing = props => {
             <FlatList
               horizontal
               data={nearByEvents}
-              renderItem={eventRenderItem}
+              renderItem={_renderItem}
             />
           ) : (
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -439,15 +439,6 @@ const EventListing = props => {
             maxToRenderPerBatch={15}
           />
         </ScrollView>
-        {/* {<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <View style={styles.hedingTextMain}>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <View style={{}}>
-              <Text style={styles.cardText}> Coming Soon </Text>
-            </View>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-          </View>
-        </View>} */}
       </ImageBackground>
     </View>
   );
