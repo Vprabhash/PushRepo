@@ -232,19 +232,19 @@ const ClubListing = ({navigation, route}) => {
 
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
-        <View
-          style={{
-            marginHorizontal: 15,
-            borderRadius: 10,
-            backgroundColor: '#FFFFFF',
-            elevation: 4,
-          }}>
-          <TouchableOpacity
+      <TouchableOpacity
             onPress={() => {
               navigation.navigate('ClubDetails', {listDetail: item});
             }}
-            activeOpacity={0.7}>
+            activeOpacity={0.7}
+            style={{
+              flex: 1,
+              marginHorizontal: 15,
+              borderRadius: 10,
+              backgroundColor: '#FFFFFF',
+              marginBottom: hp(3), elevation:4
+            }}>
+          <View>
             {item?.media?.ambienceImages &&
             item?.media?.ambienceImages?.length ? (
               <FastImage
@@ -269,7 +269,7 @@ const ClubListing = ({navigation, route}) => {
                 }}
               />
             )}
-          </TouchableOpacity>
+          </View>
           <Image
             style={{
               height: 20,
@@ -328,8 +328,7 @@ const ClubListing = ({navigation, route}) => {
               </Text>
             </View>
           </View>
-        </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
