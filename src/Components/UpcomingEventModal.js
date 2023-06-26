@@ -114,6 +114,7 @@ const UpcomingEventModal = ({
                   </TouchableOpacity>
                 );
               }}
+              contentContainerStyle={{paddingBottom: 80}}
               ListEmptyComponent={
                 <View
                   style={{
@@ -121,7 +122,9 @@ const UpcomingEventModal = ({
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={styles.titleText}>No Events Found</Text>
+                  <Text style={[styles.titleText, {textAlign: 'center'}]}>
+                    No Upcoming Events.{'\n'}Please check back later.
+                  </Text>
                 </View>
               }
             />

@@ -238,9 +238,9 @@ const EventListing = props => {
               item?.artists[0]?.images[0] ? (
                 <Image
                   style={{
-                    height: 20,
-                    width: 20,
-                    borderRadius: 10,
+                    height: 30,
+                    width: 30,
+                    borderRadius: 20,
                     resizeMode: 'contain',
                     marginRight: 6,
                   }}
@@ -263,13 +263,23 @@ const EventListing = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={styles.listingText}>
-                {[item?.address?.locality || '', item?.address?.city || '']
+              <Text style={[styles.listingText, {width: '70%'}]}>
+                <Text
+                  style={[styles.listingText]}
+                  onPress={() =>
+                    props.navigation.navigate('ClubDetails', {
+                      listDetail: item?.club,
+                    })
+                  }>
+                  {item?.club?.name}
+                </Text>
+                ,{' '}
+                {[item?.club?.locality || '', item?.address?.city || '']
                   .filter(e => e)
                   .join(', ')}
               </Text>
               <View style={{marginTop: -10, alignItems: 'center'}}>
-                <Text style={[styles.listingText, {color: COLORS.black}]}>
+                <Text style={[styles.listingText]}>
                   {'₹' + item?.price?.amount}
                 </Text>
                 <Text
@@ -360,11 +370,7 @@ const EventListing = props => {
                 .filter(e => e)
                 .join(', ')}
             </Text>
-            <Text
-              style={[
-                styles.listingText,
-                {color: COLORS.black, marginTop: hp(2)},
-              ]}>
+            <Text style={[styles.listingText, {marginTop: hp(2)}]}>
               {'₹' + item?.price?.amount}
             </Text>
             <Text
@@ -381,7 +387,11 @@ const EventListing = props => {
   };
 
   const EmptyListMessage = () => {
-    return <Text style={styles.noDataText}>No Events Found</Text>;
+    return (
+      <Text style={styles.noDataText}>
+        No Upcoming Events. Please check back later.
+      </Text>
+    );
   };
 
   return (
@@ -430,8 +440,12 @@ const EventListing = props => {
             <FlatList horizontal data={nearByEvents} renderItem={_renderItem} />
           ) : (
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={[styles.noDataText, {marginTop: 0}]}>
-                No Events Found
+              <Text
+                style={[
+                  styles.noDataText,
+                  {textAlign: 'center', marginTop: 0},
+                ]}>
+                No Upcoming Events.{'\n'}Please check back later.
               </Text>
             </View>
           )}

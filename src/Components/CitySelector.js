@@ -79,7 +79,7 @@ const CitySelector = () => {
           setIsFocus(false);
         }}
         itemTextStyle={styles.textItem}
-        containerStyle={{marginTop: 6, width: wp(28), marginLeft: -5}}
+        containerStyle={{marginTop: 6,flexBasis: '50%', marginLeft: -5}}
       />
     </View>
   );
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    flexBasis: '35%',
+    flexBasis: '50%',
     elevation: 99,
     height: hp(6),
     borderRadius: 30,
@@ -104,13 +104,14 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    flexBasis: '35%',
+    flexBasis: '50%',
   },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     color: '#000000',
+    width: wp(48)
     // marginTop:10
   },
   textItem: {
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize:RFValue(14, Dimensions.get('window').height),
     color: '#000000',
     fontFamily: FONTS.RobotoRegular,
   },

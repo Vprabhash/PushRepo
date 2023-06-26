@@ -42,22 +42,22 @@ const ArtistPlayingDetail = props => {
         style={{height: '100%'}}>
         <View
           style={{
-            backgroundColor: COLORS.white,
-            marginTop: getStatusBarHeight(),
-            paddingVertical: 13,
-            marginHorizontal: 15,
-            elevation: 19,
+            backgroundColor: '#fff',
+            elevation: 10,
+            paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
+            paddingBottom: 14,
+            paddingLeft: 10,
           }}>
           <Header
             Back_Arrow={ImagePath.goBack}
-            title="Event Details"
-            titalTwo={`${artistData?.artists[0]?.name || ''} - ${
-              artistData?.title || ''
-            }`}
-            iconHeight={20}
-            iconWidth={29}
+            titalTwo="Event Details"
+            iconHeight={15}
+            iconWidth={30}
             onclick={() => {
               props.navigation.goBack();
+              // props.navigation.navigate('ClubListing', {
+              //   screenName: 'ClubListing',
+              // });
             }}
           />
         </View>
@@ -168,7 +168,7 @@ const ArtistPlayingDetail = props => {
                     at {artistData?.club?.name}
                   </Text>
                 </Text>
-                <View
+                {/* <View
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -200,7 +200,57 @@ const ArtistPlayingDetail = props => {
                       {artistData?.artists[0]?.name}
                     </Text>
                   </Text>
-                </View>
+                </View> */}
+                {artistData?.artists?.length ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: 10,
+                      alignItems: 'center',
+                    }}>
+                    {artistData?.artists[0]?.images?.length &&
+                    artistData?.artists[0]?.images[0] ? (
+                      <Image
+                        style={{
+                          height: 40,
+                          width: 40,
+                          borderRadius: 20,
+                          resizeMode: 'contain',
+                          marginRight: 10,
+                        }}
+                        source={{uri: artistData?.artists[0]?.images[0]}}
+                      />
+                    ) : null}
+                    <Text style={[styles.singerName]}>By </Text>
+                    <View style={{width: '70%'}}>
+                      {artistData?.artists?.length
+                        ? artistData?.artists?.map(e => {
+                            return (
+                              <Text
+                                style={[
+                                  styles.singerName,
+                                  {
+                                    textDecorationLine: 'underline',
+                                    marginLeft: 0,
+                                  },
+                                ]}
+                                onPress={() =>
+                                  props.navigation.navigate(
+                                    'ArtistEventDetail',
+                                    {
+                                      artistListDetail: e,
+                                    },
+                                  )
+                                }>
+                                {e?.name}
+                              </Text>
+                            );
+                          })
+                        : null}
+                    </View>
+                  </View>
+                ) : null}
+
                 <View
                   style={{
                     flexDirection: 'row',
@@ -228,6 +278,41 @@ const ArtistPlayingDetail = props => {
                     </Text>
                   </View>
                 </View>
+
+                {/* {artistData?.club ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: 14,
+                      alignItems: 'center',
+                    }}>
+                    <Image
+                      style={{
+                        height: 17,
+                        tintColor: COLORS.black,
+                        width: 17,
+                        resizeMode: 'contain',
+                      }}
+                      source={ImagePath.location}
+                    />
+                    <View style={{flex: 0.6}}>
+                      <Text
+                        style={[
+                          styles.listinhHeading1,
+                          {
+                            textDecorationLine: 'underline',
+                          },
+                        ]}
+                        onPress={() =>
+                          props.navigation.navigate('ClubDetails', {
+                            listDetail: artistData?.club,
+                          })
+                        }>
+                        {artistData?.club?.name}
+                      </Text>
+                    </View>
+                  </View>
+                ) : null} */}
                 <View
                   style={{
                     flexDirection: 'row',
@@ -244,16 +329,29 @@ const ArtistPlayingDetail = props => {
                     source={ImagePath.location}
                   />
                   <View style={{flex: 0.6}}>
-                    <View style={{}}>
-                      <Text style={styles.listinhHeading1}>
-                        {[
-                          artistData?.address?.locality || '',
-                          artistData?.address?.city || '',
-                        ]
-                          .filter(e => e)
-                          .join(', ')}
+                    <Text style={styles.listinhHeading1}>
+                      <Text
+                        style={[
+                          styles.listinhHeading1,
+                          {
+                            textDecorationLine: 'underline',
+                          },
+                        ]}
+                        onPress={() =>
+                          props.navigation.navigate('ClubDetails', {
+                            listDetail: artistData?.club,
+                          })
+                        }>
+                        {artistData?.club?.name}
                       </Text>
-                    </View>
+                      ,{' '}
+                      {[
+                        artistData?.club?.locality || '',
+                        artistData?.address?.city || '',
+                      ]
+                        .filter(e => e)
+                        .join(', ')}
+                    </Text>
                   </View>
                 </View>
                 {/* <View
@@ -313,11 +411,12 @@ const ArtistPlayingDetail = props => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
-                  borderTopWidth: 1,
-                  borderTopColor: '#9D9D9D',
                   paddingVertical: 8,
                   alignItems: 'center',
+                  backgroundColor: COLORS.primary,
                   marginTop: 10,
+                  borderBottomRightRadius: 10,
+                  borderBottomLeftRadius: 10,
                 }}
                 onPress={() => {
                   const scheme = Platform.select({
@@ -418,7 +517,7 @@ const styles = StyleSheet.create({
   btnIcon: {height: 16, width: 16, resizeMode: 'contain', tintColor: '#FF00B7'},
   buttonText: {
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.white,
     marginLeft: 9,
     fontFamily: FONTS.RobotoRegular,
     letterSpacing: 0.3,

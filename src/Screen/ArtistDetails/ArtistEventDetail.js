@@ -315,38 +315,90 @@ const ArtistEventDetail = props => {
           </View> */}
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
+            {item?.artists?.length ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: 10,
+                  alignItems: 'center',
+                  marginBottom: 10,
+                }}>
+                {item?.artists[0]?.images?.length &&
+                item?.artists[0]?.images[0] ? (
+                  <Image
+                    style={{
+                      height: 40,
+                      width: 40,
+                      borderRadius: 20,
+                      resizeMode: 'contain',
+                    }}
+                    source={{uri: item?.artists[0]?.images[0]}}
+                  />
+                ) : null}
+                <Text style={[styles.singerName]}>By </Text>
+                <View style={{width: '70%'}}>
+                  {item?.artists?.length
+                    ? item?.artists?.map(e => {
+                        return (
+                          <Text
+                            style={[
+                              styles.singerName,
+                              {
+                                textDecorationLine: 'underline',
+                                marginLeft: 0,
+                              },
+                            ]}
+                            onPress={() =>
+                              props.navigation.navigate('ArtistEventDetail', {
+                                artistListDetail: e,
+                              })
+                            }>
+                            {e?.name}
+                          </Text>
+                        );
+                      })
+                    : null}
+                </View>
+              </View>
+            ) : null}
+
             <View
               style={{
                 flexDirection: 'row',
-                marginTop: 10,
+                marginTop: 14,
                 alignItems: 'center',
               }}>
               <Image
                 style={{
-                  height: 20,
-                  width: 20,
-                  borderRadius: 10,
+                  height: 17,
+                  tintColor: COLORS.black,
+                  width: 17,
                   resizeMode: 'contain',
                 }}
-                source={{uri: item?.artists[0]?.images[0]}}
+                source={ImagePath.location}
               />
-              <Text style={[styles.singerName]}>By </Text>
-              {item?.artists?.length
-                ? item?.artists?.map(e => {
-                    return (
-                      <Text
-                        style={[
-                          styles.singerName,
-                          {
-                            width: '70%',
-                            marginLeft: 0,
-                          },
-                        ]}>
-                        {e?.name}
-                      </Text>
-                    );
-                  })
-                : null}
+              <View style={{flex: 0.6}}>
+                <Text style={styles.singerName}>
+                  <Text
+                    style={[
+                      styles.singerName,
+                      {
+                        textDecorationLine: 'underline',
+                      },
+                    ]}
+                    onPress={() =>
+                      props.navigation.navigate('ClubDetails', {
+                        listDetail: item?.club,
+                      })
+                    }>
+                    {item?.club?.name}
+                  </Text>
+                  ,{' '}
+                  {[item?.club?.locality || '', item?.address?.city || '']
+                    .filter(e => e)
+                    .join(', ')}
+                </Text>
+              </View>
             </View>
 
             <View
@@ -609,14 +661,14 @@ const ArtistEventDetail = props => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={styles.titleText1}>No Events Found</Text>
+                  <Text style={styles.titleText1}>No Upcoming Events. Please check back later.</Text>
                 </View>
               }
             /> */}
             <Text style={styles.aboutText}>
               {haveTodaysEvent()?.length
                 ? 'Whats Happening Today'
-                : 'Upcoming Event'}
+                : 'Upcoming Events'}
             </Text>
             <View style={{marginTop: 10}}>
               <FlatList
@@ -635,34 +687,49 @@ const ArtistEventDetail = props => {
                       alignItems: 'center',
                       marginBottom: hp(4),
                     }}>
-                    <Text style={styles.titleText1}>No Events Found</Text>
+                    <Text style={[styles.titleText1, {textAlign: 'center'}]}>
+                      No Upcoming Events.{'\n'}Please check back later.
+                    </Text>
                   </View>
                 }
               />
             </View>
-            <TouchableOpacity
-              style={{alignSelf: 'center', marginBottom: 40}}
-              onPress={() => setIsEventModalVisible(true)}>
-              <LinearGradient
-                style={{
-                  height: 43,
-                  width: 176,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 40,
-                }}
-                start={{x: 0.4, y: 0}}
-                colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
-                <Text
+            {upcomingEvents?.length ? (
+              <TouchableOpacity
+                style={{alignSelf: 'center', marginBottom: 40}}
+                onPress={() => setIsEventModalVisible(true)}>
+                <LinearGradient
                   style={{
-                    fontFamily: FONTS.AxiformaBlack,
-                    color: '#FFFFFF',
-                    fontSize: 14,
-                  }}>
-                  Events for the month
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
+                    height: 43,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 40,
+                    flexDirection: 'row',
+                    paddingHorizontal: 10,
+                  }}
+                  start={{x: 0.4, y: 0}}
+                  colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
+                  <Image
+                    source={ImagePath.calendarIcon}
+                    style={{
+                      height: 20,
+                      width: 20,
+                      tintColor: COLORS.white,
+                      marginRight: 5,
+                      resizeMode: 'contain',
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONTS.AxiformaBlack,
+                      color: '#FFFFFF',
+                      fontSize: 14,
+                    }}>
+                    Upcoming Events
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            ) : null}
           </View>
         </ImageBackground>
         <UpcomingEventModal

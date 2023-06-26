@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -23,7 +23,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-simple-toast';
 import Swiper from 'react-native-swiper';
 import MenuCard from '../../Components/MenuCard';
-import { COLORS, FONTS } from '../../Components/constants';
+import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import ImageView from 'react-native-image-viewing';
 import Header from '../../Components/Header';
@@ -31,7 +31,7 @@ import {
   getBottomSpace,
   getStatusBarHeight,
 } from 'react-native-iphone-screen-helper';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
@@ -53,7 +53,7 @@ const ClubDetails = props => {
   const scrollRef = useRef(null);
   const detailData = props?.route?.params?.listDetail;
   const scrollToEnd = () => {
-    scrollRef?.current?.scrollToEnd({ animation: true });
+    scrollRef?.current?.scrollToEnd({animation: true});
   };
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
@@ -74,7 +74,7 @@ const ClubDetails = props => {
   }, []);
 
   function handleBackButtonClick() {
-    props.navigation.navigate('ClubListing', { screenName: 'ClubListing' });
+    props.navigation.navigate('ClubListing', {screenName: 'ClubListing'});
     return true;
   }
   const ENTRIES1 = [
@@ -183,11 +183,11 @@ const ClubDetails = props => {
     }
   };
 
-  const ClubNarDatarenderItem = ({ item, index }) => {
+  const ClubNarDatarenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          props.navigation.push('ClubDetails', { listDetail: item });
+          props.navigation.push('ClubDetails', {listDetail: item});
         }}
         style={{
           marginLeft: index == 0 ? 20 : 0,
@@ -201,7 +201,7 @@ const ClubDetails = props => {
               resizeMode: 'cover',
               borderRadius: 10,
             }}
-            source={{ uri: item?.media?.ambienceImages[0] }}
+            source={{uri: item?.media?.ambienceImages[0]}}
           />
         ) : (
           <View
@@ -213,16 +213,38 @@ const ClubDetails = props => {
             }}
           />
         )}
-        <Text
-          style={[
-            styles.titleText,
-            { width: wp(50), fontFamily: FONTS.AxiformaSemiBold },
-          ]}>
-          {item?.name}
-        </Text>
-        <Text style={styles.LoctionText}>
-          {item?.locality}, {item?.city}
-        </Text>
+        <View style={{position: 'absolute', left: 15, bottom: 15}}>
+          <Text
+            style={{
+              fontSize: 16,
+              color: COLORS.white,
+              fontFamily: FONTS.AxiformaSemiBold,
+              width: wp(48),
+            }}>
+            {item.name}
+          </Text>
+          <Text
+            style={[
+              {
+                color: COLORS.white,
+                fontSize: 12,
+                fontFamily: FONTS.AxiformaMedium,
+              },
+            ]}>
+            {/* {item.musicGenre} */}
+            Restrobar
+          </Text>
+          <Text
+            style={[
+              {
+                fontSize: 10,
+                color: COLORS.white,
+                fontFamily: FONTS.AxiformaRegular,
+              },
+            ]}>
+            {item.locality}, {item.city}
+          </Text>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -242,9 +264,9 @@ const ClubDetails = props => {
     return events.filter(e => isTodaysEvent(e.eventDate));
   };
 
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
-      <View style={{ flex: 1, width: '100%', marginBottom: hp(3) }}>
+      <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
             props.navigation.navigate('ArtistPlayingDetail', {
@@ -258,8 +280,8 @@ const ClubDetails = props => {
             elevation: 4,
           }}>
           {item?.images?.length &&
-            item?.images[0] &&
-            typeof item?.images[0]?.path == 'string' ? (
+          item?.images[0] &&
+          typeof item?.images[0]?.path == 'string' ? (
             <FastImage
               style={{
                 height: hp(29),
@@ -267,7 +289,7 @@ const ClubDetails = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{ uri: item?.images[0]?.path }}
+              source={{uri: item?.images[0]?.path}}
             />
           ) : (
             <View
@@ -311,51 +333,54 @@ const ClubDetails = props => {
               {moment(item?.eventDate).format('MMM')}
             </Text>
           </View> */}
-          <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 10,
-                alignItems: 'center',
-              }}>
-              {item?.artists?.length &&
-                item?.artists[0]?.images?.length &&
+            {item?.artists?.length ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: 10,
+                  alignItems: 'center',
+                  marginBottom: 10
+                }}>
+                {item?.artists[0]?.images?.length &&
                 item?.artists[0]?.images[0] ? (
-                <Image
-                  style={{
-                    height: 20,
-                    width: 20,
-                    borderRadius: 10,
-                    resizeMode: 'contain',
-                  }}
-                  source={{ uri: item?.artists[0]?.images[0] }}
-                />
-              ): null}
-              <Text style={[styles.singerName]}>By </Text>
-              {item?.artists?.length
-                ? item?.artists?.map(e => {
-                  return (
-                    <Text
-                      style={[
-                        styles.singerName,
-                        {
-                          width: '70%',
-                          textDecorationLine: 'underline',
-                          marginLeft: 0,
-                        },
-                      ]}
-                      onPress={() =>
-                        props.navigation.navigate('ArtistEventDetail', {
-                          artistListDetail: e,
-                        })
-                      }>
-                      {e?.name}
-                    </Text>
-                  );
-                })
-                : null}
-            </View>
+                  <Image
+                    style={{
+                      height: 40,
+                      width: 40,
+                      borderRadius: 20,
+                      resizeMode: 'contain',
+                    }}
+                    source={{uri: item?.artists[0]?.images[0]}}
+                  />
+                ) : null}
+                <Text style={[styles.singerName]}>By </Text>
+                <View style={{width: '70%'}}>
+                  {item?.artists?.length
+                    ? item?.artists?.map(e => {
+                        return (
+                          <Text
+                            style={[
+                              styles.singerName,
+                              {
+                                textDecorationLine: 'underline',
+                                marginLeft: 0,
+                              },
+                            ]}
+                            onPress={() =>
+                              props.navigation.navigate('ArtistEventDetail', {
+                                artistListDetail: e,
+                              })
+                            }>
+                            {e?.name}
+                          </Text>
+                        );
+                      })
+                    : null}
+                </View>
+              </View>
+            ) : null}
 
             <View
               style={{
@@ -363,7 +388,7 @@ const ClubDetails = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{ flexDirection: 'row', marginTop: 10 }}>
+              <View style={{flexDirection: 'row', marginTop: 10}}>
                 <Image
                   style={{
                     height: 17,
@@ -376,18 +401,18 @@ const ClubDetails = props => {
                 />
                 {item?.artists?.length
                   ? item?.artists?.map(e => {
-                    return (
-                      <Text
-                        style={[styles.singerName]}
-                        onPress={() =>
-                          props.navigation.navigate('ArtistEventDetail', {
-                            artistListDetail: e,
-                          })
-                        }>
-                        {e?.musicGenre}
-                      </Text>
-                    );
-                  })
+                      return (
+                        <Text
+                          style={[styles.singerName]}
+                          onPress={() =>
+                            props.navigation.navigate('ArtistEventDetail', {
+                              artistListDetail: e,
+                            })
+                          }>
+                          {e?.musicGenre}
+                        </Text>
+                      );
+                    })
                   : null}
               </View>
               {/* <View style={{marginTop: -10, alignItems: 'center'}}>
@@ -410,11 +435,11 @@ const ClubDetails = props => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{ height: '100%' }}>
+        style={{height: '100%'}}>
         <View
           style={{
             backgroundColor: '#fff',
@@ -452,7 +477,7 @@ const ClubDetails = props => {
           </TouchableOpacity>
         </View> */}
 
-        <ScrollView ref={scrollRef} contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView ref={scrollRef} contentContainerStyle={{flexGrow: 1}}>
           <StatusBar
             barStyle="dark-content"
             hidden={false}
@@ -470,7 +495,7 @@ const ClubDetails = props => {
             visible={modalVisibleone}
             onRequestClose={() => setModalVisibleone(false)}
             swipeToCloseEnabled={true}
-            FooterComponent={({ imageIndex }) => {
+            FooterComponent={({imageIndex}) => {
               return (
                 <Text style={styles.imageView}>
                   ({imageIndex + 1} /{detailData?.media?.ambienceImages?.length}
@@ -537,7 +562,7 @@ const ClubDetails = props => {
               {detailData?.media?.ambienceImages?.length ? (
                 detailData?.media?.ambienceImages?.slice(0, 6)?.map(item => (
                   <View style={styles.slide}>
-                    <Image style={styles.slideImg} source={{ uri: item }} />
+                    <Image style={styles.slideImg} source={{uri: item}} />
                   </View>
                 ))
               ) : (
@@ -553,7 +578,7 @@ const ClubDetails = props => {
               marginTop: 5,
               marginHorizontal: 20,
             }}>
-            <View style={{ width: '80%' }}>
+            <View style={{width: '80%'}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -616,10 +641,10 @@ const ClubDetails = props => {
                 backgroundColor: 'red',
                 alignItems: 'center',
               }}
-              start={{ x: 0.3, y: 0.5 }}
+              start={{x: 0.3, y: 0.5}}
               colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
               <Image
-                style={{ height: 10, width: 10, tintColor: '#FFFFFF' }}
+                style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
                 source={ImagePath.star}
               />
               <Text
@@ -649,7 +674,7 @@ const ClubDetails = props => {
           <Text style={styles.aboutText}>
             {haveTodaysEvent()?.length
               ? 'Whats Happening Today'
-              : 'Upcoming Event'}
+              : 'Upcoming Events'}
           </Text>
           <FlatList
             data={
@@ -666,35 +691,50 @@ const ClubDetails = props => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={styles.titleText}>No Events Found</Text>
+                <Text style={[styles.titleText, {textAlign: 'center'}]}>
+                  No Upcoming Events.{'\n'}Please check back later.
+                </Text>
               </View>
             }
           />
-          <TouchableOpacity
-            style={{ alignSelf: 'center', marginTop: 20 }}
-            onPress={() => setIsEventModalVisible(true)}>
-            <LinearGradient
-              style={{
-                height: 43,
-                width: 176,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 40,
-              }}
-              start={{ x: 0.4, y: 0 }}
-              colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
-              <Text
+          {events?.length ? (
+            <TouchableOpacity
+              style={{alignSelf: 'center', marginTop: 20}}
+              onPress={() => setIsEventModalVisible(true)}>
+              <LinearGradient
                 style={{
-                  fontFamily: FONTS.AxiformaBlack,
-                  color: '#FFFFFF',
-                  fontSize: 14,
-                }}>
-                Events for the month
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <Text style={[styles.aboutText, { marginTop: 25 }]}>Menu</Text>
-          <ScrollView style={{ flexDirection: 'row' }} horizontal>
+                  height: 43,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 40,
+                  flexDirection: 'row',
+                  paddingHorizontal: 10,
+                }}
+                start={{x: 0.4, y: 0}}
+                colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
+                <Image
+                  source={ImagePath.calendarIcon}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    tintColor: COLORS.white,
+                    marginRight: 5,
+                    resizeMode: 'contain',
+                  }}
+                />
+                <Text
+                  style={{
+                    fontFamily: FONTS.AxiformaBlack,
+                    color: '#FFFFFF',
+                    fontSize: 14,
+                  }}>
+                  Upcoming Events
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          ) : null}
+          <Text style={[styles.aboutText, {marginTop: 25}]}>Menu</Text>
+          <ScrollView style={{flexDirection: 'row'}} horizontal>
             <ImageView
               images={
                 detailData?.media?.drinkMenuImages?.map(e => ({
@@ -705,7 +745,7 @@ const ClubDetails = props => {
               visible={modalVisible}
               onRequestClose={() => setModalVisible(false)}
               swipeToCloseEnabled={true}
-              FooterComponent={({ imageIndex }) => {
+              FooterComponent={({imageIndex}) => {
                 return (
                   <Text style={styles.imageView}>
                     ({imageIndex + 1} /
@@ -754,7 +794,7 @@ const ClubDetails = props => {
               imageIndex={0}
               visible={modalVisibletwo}
               onRequestClose={() => setModalVisibletwo(false)}
-              FooterComponent={({ imageIndex }) => {
+              FooterComponent={({imageIndex}) => {
                 return (
                   <Text style={styles.imageView}>
                     ({imageIndex + 1} /
@@ -763,7 +803,7 @@ const ClubDetails = props => {
                 );
               }}
             />
-            <View style={{ marginRight: 20 }}>
+            <View style={{marginRight: 20}}>
               {detailData?.media?.foodMenuImages?.length ? (
                 <>
                   <TouchableOpacity
@@ -794,10 +834,10 @@ const ClubDetails = props => {
             horizontal={true}
             data={clubsNearby}
             renderItem={ClubNarDatarenderItem}
-            ItemSeparatorComponent={<View style={{ width: 20 }} />}
+            ItemSeparatorComponent={<View style={{width: 20}} />}
             contentContainerStyle={{
               paddingEnd: 20,
-              paddingBottom: getBottomSpace(),
+              paddingBottom: getBottomSpace() + 20,
             }}
             ListEmptyComponent={
               <View
@@ -839,7 +879,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontFamily: FONTS.AxiformaBold,
   },
-  wrapper: { height: 223 },
+  wrapper: {height: 223},
   slide: {
     height: 200,
     justifyContent: 'center',

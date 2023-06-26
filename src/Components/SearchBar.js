@@ -340,28 +340,29 @@ const SearchBar = props => {
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
             <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 6,
+              }}>
+              {item?.artists?.length &&
+              item?.artists[0]?.images?.length &&
+              item?.artists[0]?.images[0] ? (
+                <Image
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginVertical: 6,
-                  }}>
-                  {item?.artists?.length &&
-                  item?.artists[0]?.images?.length &&
-                  item?.artists[0]?.images[0] ? (
-                    <Image
-                      style={{
-                        height: 20,
-                        width: 20,
-                        borderRadius: 20,
-                        resizeMode: 'contain',
-                        marginRight: 6,
-                      }}
-                      source={{uri: item?.artists[0]?.images[0]}}
-                    />
-                  ) : null}
-            <Text style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
-              By {item?.artists?.map(e => e?.name)?.join(', ')}
-            </Text>
+                    height: 30,
+                    width: 30,
+                    borderRadius: 20,
+                    resizeMode: 'contain',
+                    marginRight: 6,
+                  }}
+                  source={{uri: item?.artists[0]?.images[0]}}
+                />
+              ) : null}
+              <Text
+                style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
+                By {item?.artists?.map(e => e?.name)?.join(', ')}
+              </Text>
             </View>
             <Text
               style={[
@@ -378,8 +379,18 @@ const SearchBar = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={styles.listingText}>
-                {[item?.address?.locality || '', item?.address?.city || '']
+              <Text style={[styles.listingText, {width: '70%'}]}>
+                <Text
+                  style={[styles.listingText]}
+                  onPress={() =>
+                    props.navigation.navigate('ClubDetails', {
+                      listDetail: item?.club,
+                    })
+                  }>
+                  {item?.club?.name}
+                </Text>
+                ,{' '}
+                {[item?.club?.locality || '', item?.address?.city || '']
                   .filter(e => e)
                   .join(', ')}
               </Text>

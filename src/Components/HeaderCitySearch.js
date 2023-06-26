@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: wp(4),
     height: hp(6),
-    width: wp(55),
+    flexBasis: '50%'
   },
   textInput: {
     fontFamily: FONTS.RobotoRegular,
