@@ -29,6 +29,7 @@ import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useRoute} from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -55,7 +56,14 @@ const ClubListing = ({navigation, route}) => {
   const [loader, setLoader] = useState(false);
   const [status, setStatus] = useState('');
   const [isCall, setIsCall] = useState(true);
-
+  const [filterComponent, setFilterComponent] = useState(false);
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      if (route?.params?.isFilterOpen) {
+        setFilterComponent(true);
+      }
+    });
+  }, []);
   useEffect(() => {
     setLoader(true);
     setPage(0);
@@ -233,101 +241,101 @@ const ClubListing = ({navigation, route}) => {
   const _renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('ClubDetails', {listDetail: item});
-            }}
-            activeOpacity={0.7}
-            style={{
-              flex: 1,
-              marginHorizontal: 15,
-              borderRadius: 10,
-              backgroundColor: '#FFFFFF',
-              marginBottom: hp(3), elevation:4
-            }}>
-          <View>
-            {item?.media?.ambienceImages &&
-            item?.media?.ambienceImages?.length ? (
-              <FastImage
-                style={{
-                  height: hp(29),
-                  width: '100%',
-                  borderTopRightRadius: 10,
-                  borderTopLeftRadius: 10,
-                  resizeMode: 'cover',
-                }}
-                source={{
-                  uri: item?.media?.ambienceImages[0],
-                }}
-              />
-            ) : (
-              <View
-                style={{
-                  height: hp(29),
-                  width: '100%',
-                  borderTopRightRadius: 10,
-                  borderTopLeftRadius: 10,
-                }}
-              />
-            )}
-          </View>
-          <Image
-            style={{
-              height: 20,
-              width: 20,
-              resizeMode: 'contain',
-              position: 'absolute',
-              top: 10,
-              right: 10,
-            }}
-            source={item.heartIcon}
-          />
-          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.listinhHeading}>{item?.name}</Text>
-              <LinearGradient
-                style={{
-                  flexDirection: 'row',
-                  height: 24,
-                  width: 40,
-                  borderRadius: 5,
-                  justifyContent: 'center',
-                  backgroundColor: 'red',
-                  alignItems: 'center',
-                }}
-                start={{x: 0.3, y: 0.4}}
-                colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
-                <Image
-                  style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
-                  source={ImagePath.star}
-                />
-                <Text
-                  style={{
-                    fontFamily: FONTS.RobotoBold,
-                    color: '#FFFFFF',
-                    fontSize: 12,
-                  }}>
-                  {item?.zomatoRating || '-'}
-                </Text>
-              </LinearGradient>
-            </View>
-            <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-              Restrobar
-            </Text>
+        onPress={() => {
+          navigation.navigate('ClubDetails', {listDetail: item});
+        }}
+        activeOpacity={0.7}
+        style={{
+          flex: 1,
+          marginHorizontal: 15,
+          borderRadius: 10,
+          backgroundColor: '#FFFFFF',
+          marginBottom: hp(3),
+          elevation: 4,
+        }}>
+        <View>
+          {item?.media?.ambienceImages &&
+          item?.media?.ambienceImages?.length ? (
+            <FastImage
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+                resizeMode: 'cover',
+              }}
+              source={{
+                uri: item?.media?.ambienceImages[0],
+              }}
+            />
+          ) : (
             <View
               style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+            />
+          )}
+        </View>
+        <Image
+          style={{
+            height: 20,
+            width: 20,
+            resizeMode: 'contain',
+            position: 'absolute',
+            top: 10,
+            right: 10,
+          }}
+          source={item.heartIcon}
+        />
+        <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.listinhHeading}>{item?.name}</Text>
+            <LinearGradient
+              style={{
                 flexDirection: 'row',
+                height: 24,
+                width: 40,
+                borderRadius: 5,
+                justifyContent: 'center',
+                backgroundColor: 'red',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <Text style={styles.listingText}>
-                {`${item?.locality}, ${item?.city}`}
+              }}
+              start={{x: 0.3, y: 0.4}}
+              colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
+              <Image
+                style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
+                source={ImagePath.star}
+              />
+              <Text
+                style={{
+                  fontFamily: FONTS.RobotoBold,
+                  color: '#FFFFFF',
+                  fontSize: 12,
+                }}>
+                {item?.zomatoRating || '-'}
               </Text>
-              <Text style={styles.listingText} numberOfLines={1}>
-                ₹{item?.cost}
-              </Text>
-            </View>
+            </LinearGradient>
           </View>
+          <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+            Restrobar
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styles.listingText}>
+              {`${item?.locality}, ${item?.city}`}
+            </Text>
+            <Text style={styles.listingText} numberOfLines={1}>
+              ₹{item?.cost}
+            </Text>
+          </View>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -335,7 +343,7 @@ const ClubListing = ({navigation, route}) => {
   const EmptyListMessage = () => {
     return <Text style={styles.noDataText}>No Clubs Found</Text>;
   };
-  const [filterComponent, setFilterComponent] = useState(false);
+
   const onPressApply = async data => {
     // console.log('-------filterApi', data);
     setFilteredData(data);

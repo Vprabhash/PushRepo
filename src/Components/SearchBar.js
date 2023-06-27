@@ -34,11 +34,13 @@ import ApiCall from '../redux/CommanApi';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
+import {useNavigation} from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const SearchBar = props => {
+  const navigation = useNavigation();
   const [clubs, setClubs] = useState();
 
   const [valuekey, setValuekey] = useState('');
@@ -494,7 +496,7 @@ const SearchBar = props => {
               alignItems: 'center',
               marginBottom: 10,
 
-              //   justifyContent: 'center',
+              // justifyContent: 'center',
             }}>
             <TouchableOpacity
               onPress={() => {
@@ -544,6 +546,18 @@ const SearchBar = props => {
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
             </View>
+            <TouchableOpacity
+              style={[styles.fllter]}
+              activeOpacity={0.5}
+              onPress={() => {
+                navigation.navigate('BottomTab', {
+                  screen: 'ClubListing',
+                  params: {isFilterOpen: true},
+                });
+              }}>
+              <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
+              <Text style={styles.filtersText}>Filters</Text>
+            </TouchableOpacity>
           </View>
           <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
             {recommendation && !valuekey ? (
@@ -753,5 +767,25 @@ const styles = StyleSheet.create({
     marginVertical: hp(0.5),
     fontFamily: FONTS.AxiformaBold,
     color: '#575757',
+  },
+  fllter: {
+    backgroundColor: COLORS.white,
+    flexDirection: 'row',
+    alignItems: 'center',
+    // justifyContent: 'space-between',
+    elevation: 9,
+    width: wp(25),
+    // marginBottom: 20,
+    marginRight: 15,
+    borderRadius: 99,
+    paddingHorizontal: wp(4),
+    paddingVertical: 15,
+    zIndex: 9,
+  },
+  filtersText: {
+    marginLeft: 8,
+    fontSize: 12,
+    color: COLORS.black,
+    fontFamily: FONTS.RobotoMedium,
   },
 });
