@@ -913,7 +913,7 @@ const Home = props => {
               onEndReached={fetchMoreData}
             /> */}
           {/* </SafeAreaView> */}
-          <View style={styles.hedingTextMain}>
+          <View style={[styles.hedingTextMain, {marginTop: hp(4)}]}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <Text style={styles.cardText}>ARTISTS IN SPOTLIGHT</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />

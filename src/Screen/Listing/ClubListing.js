@@ -60,7 +60,9 @@ const ClubListing = ({navigation, route}) => {
 
   useEffect(() => {
     navigation.addListener('blur', () => {
-      global.isFilterOpen = false;
+      if (global.isFilterOpen) {
+        global.isFilterOpen = false;
+      }
     });
     navigation.addListener('focus', () => {
       if (global.isFilterOpen) {
