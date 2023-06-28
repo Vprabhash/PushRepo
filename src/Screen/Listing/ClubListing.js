@@ -57,42 +57,38 @@ const ClubListing = ({navigation, route}) => {
   const [status, setStatus] = useState('');
   const [isCall, setIsCall] = useState(true);
   const [filterComponent, setFilterComponent] = useState(false);
+
   useEffect(() => {
+    navigation.addListener('blur', () => {
+      global.isFilterOpen = false;
+    });
     navigation.addListener('focus', () => {
-      if (route?.params?.isFilterOpen) {
+      if (global.isFilterOpen) {
         setFilterComponent(true);
+      } else {
+        global.isFilterOpen = false;
+        setFilterComponent(false);
       }
+      setDontCall(false);
     });
   }, []);
+
   useEffect(() => {
     setLoader(true);
     setPage(0);
     list(0);
     toTop();
+    global.isFilterOpen = false;
     forceUpdate();
   }, [selectedCity, userBaseCity]);
 
   useEffect(() => {
     setLoader(true);
     list(page);
+    global.isFilterOpen = false;
     forceUpdate();
   }, [page, filteredData]);
 
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      // console.log('this is params', route?.params);
-      // const routes = navigation.getState().routes;
-      // const prevRoute = routes[routes.length - 2];
-      // // console.log('this is params prevRoute', routes);
-      // if (route?.params?.screenName !== 'ClubListing') {
-      //   console.log('this is params', route?.params);
-      //   setPage(0);
-      //   setFilteredData({});
-      // }
-      setDontCall(false);
-      setFilterComponent(false);
-    });
-  }, []);
   const toTop = () => {
     // use current
     flatListRef?.current?.scrollToOffset({
@@ -346,12 +342,14 @@ const ClubListing = ({navigation, route}) => {
 
   const onPressApply = async data => {
     // console.log('-------filterApi', data);
+    global.isFilterOpen = false;
     setFilteredData(data);
     setFilterComponent(false);
     setPage(0);
   };
 
   const onPressCancel = () => {
+    global.isFilterOpen = false;
     setFilterComponent(false);
   };
 

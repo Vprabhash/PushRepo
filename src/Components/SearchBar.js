@@ -554,6 +554,7 @@ const SearchBar = props => {
                   screen: 'ClubListing',
                   params: {isFilterOpen: true},
                 });
+                global.isFilterOpen = true;
               }}>
               <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
               <Text style={styles.filtersText}>Filters</Text>
