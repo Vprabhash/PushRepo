@@ -27,6 +27,7 @@ import ApiCall from '../../redux/CommanApi';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
+import {logEvent} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -249,6 +250,7 @@ const ArtistEventDetail = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
+            logEvent('event_detail', item?.title);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -348,11 +350,12 @@ const ArtistEventDetail = props => {
                                 marginLeft: 0,
                               },
                             ]}
-                            onPress={() =>
+                            onPress={() => {
+                              logEvent('artist_detail', e?.name);
                               props.navigation.navigate('ArtistEventDetail', {
                                 artistListDetail: e,
-                              })
-                            }>
+                              });
+                            }}>
                             {e?.name}
                           </Text>
                         );
@@ -386,11 +389,12 @@ const ArtistEventDetail = props => {
                         textDecorationLine: 'underline',
                       },
                     ]}
-                    onPress={() =>
+                    onPress={() => {
+                      logEvent('club_detail', item?.club?.name);
                       props.navigation.navigate('ClubDetails', {
                         listDetail: item?.club,
-                      })
-                    }>
+                      });
+                    }}>
                     {item?.club?.name}
                   </Text>
                   ,{' '}
@@ -423,11 +427,12 @@ const ArtistEventDetail = props => {
                       return (
                         <Text
                           style={[styles.singerName]}
-                          onPress={() =>
+                          onPress={() => {
+                            logEvent('artist_detail', e?.name);
                             props.navigation.navigate('ArtistEventDetail', {
                               artistListDetail: e,
-                            })
-                          }>
+                            });
+                          }}>
                           {e?.musicGenre}
                         </Text>
                       );
@@ -545,6 +550,7 @@ const ArtistEventDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
+                      logEvent('instagram_pressed');
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
                       } else {
@@ -569,6 +575,7 @@ const ArtistEventDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
+                      logEvent('instagram_pressed');
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
                       } else {
@@ -595,6 +602,7 @@ const ArtistEventDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
+                      logEvent('youtube_pressed');
                       if (detailData?.youtubeChannelLink) {
                         Linking.openURL(detailData?.youtubeChannelLink);
                       } else {
@@ -613,6 +621,7 @@ const ArtistEventDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
+                      logEvent('youtube_pressed');
                       if (detailData?.youtubeChannelLink) {
                         Linking.openURL(detailData?.youtubeChannelLink);
                       } else {
@@ -737,6 +746,7 @@ const ArtistEventDetail = props => {
           data={upcomingEvents}
           onPress={e => {
             setIsEventModalVisible(false);
+            logEvent('event_detail', e?.title);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: e,
             });

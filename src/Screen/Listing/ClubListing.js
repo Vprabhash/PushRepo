@@ -31,6 +31,7 @@ import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useRoute} from '@react-navigation/native';
 import {showFilter} from '../../redux/reducers/isFilterOpenSlice';
+import {logEvent} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -243,6 +244,7 @@ const ClubListing = ({navigation, route}) => {
     return (
       <TouchableOpacity
         onPress={() => {
+          logEvent('club_detail', item?.name);
           navigation.navigate('ClubDetails', {listDetail: item});
         }}
         activeOpacity={0.7}

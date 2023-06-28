@@ -28,6 +28,7 @@ import Swiper from 'react-native-swiper';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import moment from 'moment';
 import ImageView from 'react-native-image-viewing';
+import {logEvent} from '../../utils/AddFirebaseEvent';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistPlayingDetail = props => {
@@ -160,6 +161,7 @@ const ArtistPlayingDetail = props => {
                   <Text
                     style={[styles.listinhHeading]}
                     onPress={() => {
+                      logEvent('club_detail', artistData?.club?.name);
                       props.navigation.navigate('ClubDetails', {
                         listDetail: artistData?.club,
                       });
@@ -221,7 +223,7 @@ const ArtistPlayingDetail = props => {
                         source={{uri: artistData?.artists[0]?.images[0]}}
                       />
                     ) : null}
-                    <Text style={[styles.singerName]}>By </Text>
+                    <Text style={[styles.singerName, {marginTop: 0}]}>By </Text>
                     <View style={{width: '70%'}}>
                       {artistData?.artists?.length
                         ? artistData?.artists?.map(e => {
@@ -232,6 +234,7 @@ const ArtistPlayingDetail = props => {
                                   {
                                     textDecorationLine: 'underline',
                                     marginLeft: 0,
+                                    marginTop: 0,
                                   },
                                 ]}
                                 onPress={() =>
@@ -337,11 +340,12 @@ const ArtistPlayingDetail = props => {
                             textDecorationLine: 'underline',
                           },
                         ]}
-                        onPress={() =>
+                        onPress={() => {
+                          logEvent('club_detail', artistData?.club?.name);
                           props.navigation.navigate('ClubDetails', {
                             listDetail: artistData?.club,
-                          })
-                        }>
+                          });
+                        }}>
                         {artistData?.club?.name}
                       </Text>
                       ,{' '}
@@ -419,6 +423,7 @@ const ArtistPlayingDetail = props => {
                   borderBottomLeftRadius: 10,
                 }}
                 onPress={() => {
+                  logEvent('event_direction_press', artistData?.club?.name);
                   const scheme = Platform.select({
                     ios: 'maps://0,0?q=',
                     android: 'geo:0,0?q=',
@@ -431,7 +436,7 @@ const ArtistPlayingDetail = props => {
                     android: `${scheme}${latLng}(${label})`,
                   });
 
-                  Linking.openURL(url);
+                  Linking.openURL(artistData?.club?.googleMapLink);
                 }}>
                 <Image
                   style={[styles.btnIcon, {tintColor: null}]}

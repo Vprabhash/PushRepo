@@ -19,6 +19,7 @@ import {
 } from 'react-native-responsive-screen';
 import {COLORS, FONTS} from './constants';
 import Toast from 'react-native-simple-toast';
+import {logEvent} from '../utils/AddFirebaseEvent';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
@@ -190,6 +191,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
+            logEvent('club_direction_press', itemdata?.name);
             Linking.openURL(itemdata?.googleMapLink);
           }}
           style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
@@ -203,6 +205,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
+              logEvent('whatsapp_pressed');
               if (itemdata?.whatsappNumber) {
                 Linking.openURL(
                   'http://api.whatsapp.com/send?phone=91' +
@@ -224,6 +227,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
+              logEvent('whatsapp_pressed');
               if (itemdata?.whatsappNumber) {
                 Linking.openURL(
                   'http://api.whatsapp.com/send?phone=91' +
@@ -249,7 +253,16 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              Linking.openURL('tel:' + itemdata?.phoneNumber);
+              logEvent('call_pressed');
+              if (itemdata?.phoneNumber) {
+                Linking.openURL('tel:' + itemdata?.phoneNumber);
+              } else {
+                Toast.showWithGravity(
+                  'Sorry! Phone number is not available',
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                );
+              }
             }}
             style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
             <Image style={styles.btnIcon} source={ImagePath.callIcon} />
@@ -259,7 +272,16 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              Linking.openURL('tel:' + itemdata?.phoneNumber);
+              logEvent('call_pressed');
+              if (itemdata?.phoneNumber) {
+                Linking.openURL('tel:' + itemdata?.phoneNumber);
+              } else {
+                Toast.showWithGravity(
+                  'Sorry! Phone number is not available',
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                );
+              }
             }}
             style={[styles.btnmainDisabled, {borderBottomRightRadius: 10}]}>
             <Image

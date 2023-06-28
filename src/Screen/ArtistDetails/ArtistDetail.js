@@ -26,6 +26,7 @@ import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
+import {logEvent} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -185,6 +186,7 @@ const ArtistDetail = props => {
           }}>
           <TouchableOpacity
             onPress={() => {
+              logEvent('artist_detail', item?.name);
               props.navigation.navigate('ArtistEventDetail', {
                 artistListDetail: item,
               });

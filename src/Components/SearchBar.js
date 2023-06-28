@@ -36,6 +36,7 @@ import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {showFilter} from '../redux/reducers/isFilterOpenSlice';
+import {logEvent} from '../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -128,10 +129,12 @@ const SearchBar = props => {
           <TouchableOpacity
             onPress={() => {
               if (item.type) {
+                logEvent('artist_detail', item?.name);
                 props.navigation.navigate('ArtistEventDetail', {
                   artistListDetail: item,
                 });
               } else {
+                logEvent('club_detail', item?.name);
                 props.navigation.navigate('ClubDetails', {listDetail: item});
               }
             }}
@@ -277,6 +280,7 @@ const SearchBar = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
+            logEvent('event_detail', item?.title);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -386,11 +390,12 @@ const SearchBar = props => {
               <Text style={[styles.listingText, {width: '70%'}]}>
                 <Text
                   style={[styles.listingText]}
-                  onPress={() =>
+                  onPress={() => {
+                    logEvent('club_detail', item?.club?.name);
                     props.navigation.navigate('ClubDetails', {
                       listDetail: item?.club,
-                    })
-                  }>
+                    });
+                  }}>
                   {item?.club?.name}
                 </Text>
                 ,{' '}
@@ -562,7 +567,10 @@ const SearchBar = props => {
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>
           </TouchableOpacity>
-          <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            nestedScrollEnabled
+            style={{marginBottom: 100}}>
             {recommendation && !valuekey ? (
               <>
                 <View style={styles.hedingTextMain}>

@@ -29,6 +29,7 @@ import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import moment from 'moment';
 import {useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
+import {logEvent} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -161,6 +162,7 @@ const EventListing = props => {
       <View style={{width: wp(100), marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
+            logEvent('event_detail', item?.title);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -266,11 +268,12 @@ const EventListing = props => {
               <Text style={[styles.listingText, {width: '70%'}]}>
                 <Text
                   style={[styles.listingText]}
-                  onPress={() =>
+                  onPress={() => {
+                    logEvent('club_detail', item?.club?.name);
                     props.navigation.navigate('ClubDetails', {
                       listDetail: item?.club,
-                    })
-                  }>
+                    });
+                  }}>
                   {item?.club?.name}
                 </Text>
                 ,{' '}

@@ -49,6 +49,7 @@ import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import {showLoader} from '../../redux/reducers/loaderSlice';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
+import {logEvent} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -302,6 +303,7 @@ const Home = props => {
   const artistRenderItem = ({item, index}) => (
     <TouchableOpacity
       onPress={() => {
+        logEvent('artist_detail', item?.name);
         props.navigation.navigate('ArtistEventDetail', {
           artistListDetail: item,
         });
@@ -380,6 +382,7 @@ const Home = props => {
     return (
       <TouchableOpacity
         onPress={() => {
+          logEvent('event_detail', item?.title);
           props.navigation.navigate('ArtistPlayingDetail', {
             artistData: item,
           });

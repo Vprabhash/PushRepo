@@ -35,6 +35,7 @@ import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
+import {logEvent} from '../../utils/AddFirebaseEvent';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
@@ -269,6 +270,7 @@ const ClubDetails = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
+            logEvent('event_detail', item?.title);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -302,7 +304,7 @@ const ClubDetails = props => {
               }}
             />
           )}
-          {/* <View
+          <View
             style={{
               height: 39,
               minWidth: 32,
@@ -332,7 +334,7 @@ const ClubDetails = props => {
               }}>
               {moment(item?.eventDate).format('MMM')}
             </Text>
-          </View> */}
+          </View>
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
             {item?.artists?.length ? (
@@ -341,7 +343,7 @@ const ClubDetails = props => {
                   flexDirection: 'row',
                   marginTop: 10,
                   alignItems: 'center',
-                  marginBottom: 10
+                  marginBottom: 10,
                 }}>
                 {item?.artists[0]?.images?.length &&
                 item?.artists[0]?.images[0] ? (
@@ -368,11 +370,12 @@ const ClubDetails = props => {
                                 marginLeft: 0,
                               },
                             ]}
-                            onPress={() =>
+                            onPress={() => {
+                              logEvent('artist_detail', e?.name);
                               props.navigation.navigate('ArtistEventDetail', {
                                 artistListDetail: e,
-                              })
-                            }>
+                              });
+                            }}>
                             {e?.name}
                           </Text>
                         );
@@ -381,7 +384,11 @@ const ClubDetails = props => {
                 </View>
               </View>
             ) : null}
-
+            <Text style={styles.listinhText}>
+              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+                item?.eventEndTime,
+              ).format('hh:mm A')}`}
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -404,18 +411,19 @@ const ClubDetails = props => {
                       return (
                         <Text
                           style={[styles.singerName]}
-                          onPress={() =>
+                          onPress={() => {
+                            logEvent('artist_detail', e?.name);
                             props.navigation.navigate('ArtistEventDetail', {
                               artistListDetail: e,
-                            })
-                          }>
+                            });
+                          }}>
                           {e?.musicGenre}
                         </Text>
                       );
                     })
                   : null}
               </View>
-              {/* <View style={{marginTop: -10, alignItems: 'center'}}>
+              <View style={{marginTop: -10, alignItems: 'center'}}>
                 <Text style={[styles.listingText, {color: COLORS.black}]}>
                   {'₹' + item?.price?.amount}
                 </Text>
@@ -426,7 +434,7 @@ const ClubDetails = props => {
                   ]}>
                   onwards
                 </Text>
-              </View> */}
+              </View>
             </View>
           </View>
         </TouchableOpacity>
@@ -856,6 +864,7 @@ const ClubDetails = props => {
             data={events}
             onPress={e => {
               setIsEventModalVisible(false);
+              logEvent('event_detail', e?.title);
               props.navigation.navigate('ArtistPlayingDetail', {
                 artistData: e,
               });
