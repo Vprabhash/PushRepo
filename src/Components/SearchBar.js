@@ -546,20 +546,20 @@ const SearchBar = props => {
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={[styles.fllter]}
-              activeOpacity={0.5}
-              onPress={() => {
-                navigation.navigate('BottomTab', {
-                  screen: 'ClubListing',
-                  params: {isFilterOpen: true},
-                });
-                global.isFilterOpen = true;
-              }}>
-              <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
-              <Text style={styles.filtersText}>Filters</Text>
-            </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            style={[styles.fllter]}
+            activeOpacity={0.5}
+            onPress={() => {
+              navigation.navigate('BottomTab', {
+                screen: 'ClubListing',
+                params: {isFilterOpen: true},
+              });
+              global.isFilterOpen = true;
+            }}>
+            <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
+            <Text style={styles.filtersText}>Filters</Text>
+          </TouchableOpacity>
           <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
             {recommendation && !valuekey ? (
               <>
@@ -776,11 +776,11 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-between',
     elevation: 9,
     width: wp(25),
-    // marginBottom: 20,
-    marginRight: 15,
-    borderRadius: 99,
+    marginBottom: 10,
+    marginHorizontal: 15,
+    borderRadius: 8,
     paddingHorizontal: wp(4),
-    paddingVertical: 15,
+    paddingVertical: 7,
     zIndex: 9,
   },
   filtersText: {
