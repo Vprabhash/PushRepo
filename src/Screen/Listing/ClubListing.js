@@ -26,17 +26,19 @@ import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useRoute} from '@react-navigation/native';
+import {showFilter} from '../../redux/reducers/isFilterOpenSlice';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubListing = ({navigation, route}) => {
+  const dispatch = useDispatch();
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
-
+  const isFilterOpen = useSelector(state => state.isFilterOpen.isFilterOpen);
   const flatListRef = useRef(null);
 
   const [, forceUpdate] = useReducer(x => x + 1, 0);
@@ -60,34 +62,35 @@ const ClubListing = ({navigation, route}) => {
 
   useEffect(() => {
     navigation.addListener('blur', () => {
-      if (global.isFilterOpen) {
-        global.isFilterOpen = false;
+      if (isFilterOpen) {
+        dispatch(showFilter(false));
+        setFilterComponent(false);
       }
     });
     navigation.addListener('focus', () => {
-      if (global.isFilterOpen) {
+      if (isFilterOpen) {
         setFilterComponent(true);
       } else {
-        global.isFilterOpen = false;
+        dispatch(showFilter(false));
         setFilterComponent(false);
       }
       setDontCall(false);
     });
-  }, []);
+  }, [isFilterOpen]);
 
   useEffect(() => {
     setLoader(true);
     setPage(0);
     list(0);
     toTop();
-    global.isFilterOpen = false;
+    dispatch(showFilter(false));
     forceUpdate();
   }, [selectedCity, userBaseCity]);
 
   useEffect(() => {
     setLoader(true);
     list(page);
-    global.isFilterOpen = false;
+    dispatch(showFilter(false));
     forceUpdate();
   }, [page, filteredData]);
 

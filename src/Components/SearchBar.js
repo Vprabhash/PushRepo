@@ -26,7 +26,7 @@ import {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import ImagePath from '../assets/ImagePath';
 import {COLORS, FONTS} from './constants';
@@ -35,12 +35,14 @@ import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
+import {showFilter} from '../redux/reducers/isFilterOpenSlice';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const SearchBar = props => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [clubs, setClubs] = useState();
 
   const [valuekey, setValuekey] = useState('');
@@ -551,11 +553,11 @@ const SearchBar = props => {
             style={[styles.fllter]}
             activeOpacity={0.5}
             onPress={() => {
+              dispatch(showFilter(true));
               navigation.navigate('BottomTab', {
                 screen: 'ClubListing',
                 params: {isFilterOpen: true},
               });
-              global.isFilterOpen = true;
             }}>
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>

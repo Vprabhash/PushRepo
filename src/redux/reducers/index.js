@@ -7,6 +7,7 @@ import clubLocationReducer from './clubLocationSlice';
 import upComingEventSlice from './upComingEventSlice';
 import citySelectorSlice from './citySelectorSlice';
 import loaderSlice from './loaderSlice';
+import isFilterOpenSlice from './isFilterOpenSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   upComingEvent: upComingEventSlice,
   citySelector: citySelectorSlice,
   loader: loaderSlice,
+  isFilterOpen: isFilterOpenSlice,
 });
 
 export default rootReducer;
