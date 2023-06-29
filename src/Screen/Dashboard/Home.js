@@ -50,6 +50,7 @@ import {showLoader} from '../../redux/reducers/loaderSlice';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
 import {logEvent} from '../../utils/AddFirebaseEvent';
+import {currentCity} from '../../redux/reducers/citySelectorSlice';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -145,13 +146,44 @@ const Home = props => {
       </View>
     );
   };
-  // const location = async () => {
-  //   let data = {
-  //     page: page + 1,
-  //   };
-  //   const res = await ApiCall(ARTIST, 'GET', data);
-  //   console.log('---res----', res);
-  // };
+
+  const getCurrentPosition = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        if (position.coords) {
+          console.log('location data:', position.coords);
+          let obj = {};
+          obj.latitude = position.coords.latitude;
+          obj.longitude = position.coords.longitude;
+
+          // Reverse geocoding to get the current city
+          fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${obj.latitude},${obj.longitude}&key=YOUR_API_KEY`,
+          )
+            .then(response => response.json())
+            .then(data => {
+              dispatch(addCoordinates(obj));
+              if (data.results && data.results.length > 0) {
+                const addressComponents = data.results[0].address_components;
+                for (const component of addressComponents) {
+                  if (component.types.includes('locality')) {
+                    dispatch(currentCity(component.long_name));
+                    break;
+                  }
+                }
+              }
+            })
+            .catch(error => {
+              console.log('geocoding error:', error);
+            });
+        }
+      },
+      error => {
+        console.log('location error', error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 500000},
+    );
+  };
 
   async function checkLocation() {
     await check(
@@ -163,23 +195,7 @@ const Home = props => {
       if (result === 'granted') {
         setGetPermission(true);
         // setModalVisible(false);
-        Geolocation.getCurrentPosition(
-          position => {
-            console.log(position, 'position===');
-            if (position.coords) {
-              console.log('location data:', position.coords);
-              let obj = {};
-              obj.latitude = position.coords.latitude;
-              obj.longitude = position.coords.longitude;
-              dispatch(addCoordinates(obj));
-            }
-          },
-          error => {
-            console.log('location error', error.code, error.message);
-          },
-          // {enableHighAccuracy: true, timeout: 15000},
-          {enableHighAccuracy: false, timeout: 500000},
-        );
+        getCurrentPosition();
       } else {
         let obj = {};
         obj.latitude = '';
@@ -207,7 +223,6 @@ const Home = props => {
 
   const fetchMoreData = () => {
     if (!onEndReachedCalledDuringMomentum) {
-      location();
       setLoading(true);
       setonEndReachedCalledDuringMomentum(true);
     } else {

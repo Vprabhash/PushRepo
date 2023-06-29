@@ -13,6 +13,7 @@ import {useDispatch} from 'react-redux';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 
 import Disclamer from '../../Components/Disclamer';
+import {currentCity} from '../../redux/reducers/citySelectorSlice';
 
 const Splash_Screen = props => {
   const dispatch = useDispatch();
@@ -38,7 +39,45 @@ const Splash_Screen = props => {
     checkLocation();
   }, []);
 
-  async function checkLocation() {
+  const getCurrentPosition = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        if (position.coords) {
+          console.log('location data:', position.coords);
+          let obj = {};
+          obj.latitude = position.coords.latitude;
+          obj.longitude = position.coords.longitude;
+
+          // Reverse geocoding to get the current city
+          fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${obj.latitude},${obj.longitude}&key=YOUR_API_KEY`,
+          )
+            .then(response => response.json())
+            .then(data => {
+              dispatch(addCoordinates(obj));
+              if (data.results && data.results.length > 0) {
+                const addressComponents = data.results[0].address_components;
+                for (const component of addressComponents) {
+                  if (component.types.includes('locality')) {
+                    dispatch(currentCity(component.long_name));
+                    break;
+                  }
+                }
+              }
+            })
+            .catch(error => {
+              console.log('geocoding error:', error);
+            });
+        }
+      },
+      error => {
+        console.log('location error', error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000},
+    );
+  };
+
+  const checkLocation = async () => {
     await check(
       Platform.select({
         android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -46,21 +85,7 @@ const Splash_Screen = props => {
       }),
     ).then(result => {
       if (result === 'granted') {
-        Geolocation.getCurrentPosition(
-          position => {
-            if (position.coords) {
-              console.log('location data:', position.coords);
-              let obj = {};
-              obj.latitude = position.coords.latitude;
-              obj.longitude = position.coords.longitude;
-              dispatch(addCoordinates(obj));
-            }
-          },
-          error => {
-            console.log('location error', error.code, error.message);
-          },
-          {enableHighAccuracy: true, timeout: 15000},
-        );
+        getCurrentPosition();
       } else {
         request(
           Platform.select({
@@ -69,20 +94,7 @@ const Splash_Screen = props => {
           }),
         ).then(status => {
           if (status === 'granted') {
-            Geolocation.getCurrentPosition(
-              position => {
-                let obj = {};
-                if (position.coords) {
-                  obj.latitude = position.coords.latitude;
-                  obj.longitude = position.coords.longitude;
-                  dispatch(addCoordinates(obj));
-                }
-              },
-              error => {
-                console.log(error.code, error.message);
-              },
-              {enableHighAccuracy: true, timeout: 15000},
-            );
+            getCurrentPosition();
           } else {
             console.log('-----error2:');
             Alert.alert(
@@ -102,7 +114,7 @@ const Splash_Screen = props => {
         });
       }
     });
-  }
+  };
 
   return (
     <View style={{flex: 1}}>
