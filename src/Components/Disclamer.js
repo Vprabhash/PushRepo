@@ -9,15 +9,15 @@ const Disclamer = ({onPress, isVisible, setVisible}) => {
     <Modal visible={isVisible} transparent={true} statusBarTranslucent={true}>
       <View style={styles.modalWrapper}>
         <View style={styles.modalContainer}>
-          <Text style={styles.icon_text}>Welcome to Geniefie!</Text>
+          <Text style={styles.icon_text}>Welcome to Azzir!</Text>
           <Text style={styles.small_text}>
             {
-              'Geniefie collects location data for the following \n - To detect your current location while creating a \n    new itinerary. \n - Recommending places near your location.'
+              'Azzir collects location data for the following \n - To detect your current location while creating a \n    new itinerary. \n - Recommending places near your location.'
             }
           </Text>
           <Text style={styles.small_text}>
             {
-              'Geniefie collects background location information to provide realtime information for the following \n - Time to reach a point of interest.\n - Time to leave a point of interest. \n - Travel time with traffic considerations. \n - When the user reaches or leaves a point of interest.'
+              'Azzir collects background location information to provide realtime information for the following \n - Time to reach a point of interest.\n - Time to leave a point of interest. \n - Travel time with traffic considerations. \n - When the user reaches or leaves a point of interest.'
             }
           </Text>
           <View

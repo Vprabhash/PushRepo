@@ -60,6 +60,7 @@ const Home = props => {
 
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
+  const isSelected = useSelector(state => state.citySelector.isSelected);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [getPermission, setGetPermission] = useState(false);
@@ -102,6 +103,10 @@ const Home = props => {
     AppState.addEventListener('change', handleAppStateChange);
   }, [selectedCity, userBaseCity]);
 
+  useEffect(() => {
+    isCheckLocation();
+  }, [isSelected]);
+
   const handleAppStateChange = nextAppState => {
     if (
       appState.current.match(/inactive|background/) &&
@@ -124,6 +129,24 @@ const Home = props => {
   // useEffect(() => {
   //   UpcomingDataList(eventPage);
   // }, [eventPage]);
+
+  const isCheckLocation = () => {
+    ApiCall('api/cities', 'GET')
+      .then(res => {
+        console.log('Current city:', res);
+        if (res?.data?.length) {
+          if (
+            res?.data?.some(e => e?.name === selectedCity) == false &&
+            !isSelected
+          ) {
+            props.navigation.navigate('CitySelect');
+          }
+        }
+      })
+      .catch(err => {
+        console.error(err, 'this is an error');
+      });
+  };
 
   const modalref = createRef(null);
   const [
@@ -149,16 +172,15 @@ const Home = props => {
 
   const getCurrentPosition = () => {
     Geolocation.getCurrentPosition(
-      position => {
+      async position => {
         if (position.coords) {
-          console.log('location data:', position.coords);
+          console.log('location data: ==', position.coords);
           let obj = {};
           obj.latitude = position.coords.latitude;
           obj.longitude = position.coords.longitude;
 
-          // Reverse geocoding to get the current city
-          fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${obj.latitude},${obj.longitude}&key=YOUR_API_KEY`,
+          await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${obj.latitude},${obj.longitude}&key=AIzaSyBn_zzWboMdWJrkM4qamsjKfdX418xDNRA`,
           )
             .then(response => response.json())
             .then(data => {
@@ -167,6 +189,7 @@ const Home = props => {
                 const addressComponents = data.results[0].address_components;
                 for (const component of addressComponents) {
                   if (component.types.includes('locality')) {
+                    console.log('Current city:', component.long_name);
                     dispatch(currentCity(component.long_name));
                     break;
                   }
@@ -185,7 +208,7 @@ const Home = props => {
     );
   };
 
-  async function checkLocation() {
+  const checkLocation = async () => {
     await check(
       Platform.select({
         android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
@@ -219,7 +242,7 @@ const Home = props => {
         // );
       }
     });
-  }
+  };
 
   const fetchMoreData = () => {
     if (!onEndReachedCalledDuringMomentum) {
@@ -365,7 +388,7 @@ const Home = props => {
     queryParams.append('page', eventPage);
     queryParams.append('city', selectedCity);
     const res = await ApiCall(`api/events?${queryParams}`, 'GET');
-    console.log('---res--logIn--artist---', res?.data);
+    // console.log('---res--logIn--artist---', res?.data?.length);
     if (Array.isArray(res?.data)) {
       if (page === 0) {
         setUpcomingEvents(res?.data);

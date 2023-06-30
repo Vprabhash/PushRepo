@@ -22,6 +22,7 @@ import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 import Profile from '../Components/Profile/Profile';
 import EditProfile from '../Components/Profile/EditProfile';
 import SearchBar from '../Components/SearchBar';
+import CitySelect from '../Screen/CitySelect';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +37,8 @@ function Routes() {
       }}
       onStateChange={async () => {
         const previousRouteName = routeNameRef?.current;
-        const currentRouteName = navigationRef?.current?.getCurrentRoute()?.name;
+        const currentRouteName =
+          navigationRef?.current?.getCurrentRoute()?.name;
 
         if (previousRouteName !== currentRouteName) {
           await analytics().logScreenView({
@@ -131,6 +133,11 @@ function Routes() {
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CitySelect"
+          component={CitySelect}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

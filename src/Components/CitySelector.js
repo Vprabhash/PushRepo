@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import {COLORS, FONTS} from './constants';
 //import DropDownPicker from 'react-native-dropdown-picker';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
-import {currentCity} from '../redux/reducers/citySelectorSlice';
+import {currentCity, setSelected} from '../redux/reducers/citySelectorSlice';
 import Toast from 'react-native-simple-toast';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
@@ -18,7 +18,11 @@ import {
 } from 'react-native-responsive-screen';
 import ApiCall from '../redux/CommanApi';
 
-const CitySelector = () => {
+const CitySelector = ({
+  width = '50%',
+  height = hp(6),
+  isSelected = () => {},
+}) => {
   const dispatch = useDispatch();
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const [isFocus, setIsFocus] = useState(false);
@@ -37,6 +41,11 @@ const CitySelector = () => {
   useEffect(() => {
     fetchCities();
   }, []);
+  useEffect(() => {
+    let check = cities?.some(e => e?.label === selectedCity);
+    dispatch(setSelected(check));
+    isSelected(check);
+  }, [cities, selectedCity]);
 
   const fetchCities = () => {
     try {
@@ -56,10 +65,10 @@ const CitySelector = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {flexBasis: width}]}>
       {/* //{renderLabel()} */}
       <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+        style={[styles.dropdown, {flexBasis: width}]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
@@ -79,13 +88,16 @@ const CitySelector = () => {
           setIsFocus(false);
         }}
         itemTextStyle={styles.textItem}
-        containerStyle={{marginTop: 6,flexBasis: '50%', marginLeft: -5}}
+        containerStyle={{
+          marginTop: width != '50%' ? -5 : 6,
+          flexBasis: '50%',
+        }}
       />
     </View>
   );
 };
 
-export default CitySelector;
+export default memo(CitySelector);
 
 const styles = StyleSheet.create({
   container: {
@@ -111,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     color: '#000000',
-    width: wp(48)
+    width: wp(48),
     // marginTop:10
   },
   textItem: {
@@ -132,7 +144,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   placeholderStyle: {
-    fontSize:RFValue(14, Dimensions.get('window').height),
+    fontSize: RFValue(14, Dimensions.get('window').height),
     color: '#000000',
     fontFamily: FONTS.RobotoRegular,
   },
