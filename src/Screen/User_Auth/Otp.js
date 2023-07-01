@@ -27,6 +27,8 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Otp = props => {
+  const data=props?.route?.params.data?.response;
+  console.log(data,"data===")
   const forgetotp = props?.route?.params?.forgetmail;
   const forgetmail = props?.route?.params?.email;
   const [Otp, setOtp] = useState('');
@@ -125,6 +127,7 @@ const Otp = props => {
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
             justifyContent: 'center',
           }}> */}
+          {console.log(data?.messages[0]?.recipient,"=====")}
           <LinearGradient
             style={{
               paddingHorizontal: 20,
@@ -140,7 +143,8 @@ const Otp = props => {
               'rgba(255, 255, 255, 0.1)',
             ]}>
             <Text style={styles.signIn}>Enter OTP</Text>
-            <Text
+            {!data?.messages[0]?.recipient?
+            (<Text
               style={[
                 styles.signIn,
                 {
@@ -150,8 +154,21 @@ const Otp = props => {
                   lineHeight: 30,
                 },
               ]}>
-              Check your email, we’ve sent you the pin at {email}
-            </Text>
+             Check your email, we’ve sent you the pin at {email}
+            </Text>):
+            (<Text
+              style={[
+                styles.signIn,
+                {
+                  fontSize: 22,
+                  fontFamily: FONTS.DMSansRegular,
+                  marginBottom: 20,
+                  lineHeight: 30,
+                },
+              ]}>
+             Check your phone, we’ve sent you the otp at +{data?.messages[0]?.recipient}
+            </Text>)
+            }
             <OTPTextInput
               textInputStyle={{width: 40}}
               inputCount={6}
