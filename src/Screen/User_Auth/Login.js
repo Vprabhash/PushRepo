@@ -304,7 +304,7 @@ const Login = props => {
                 : setEmail(text);
             }}
             value={isPhoneNumber.active ? isPhoneNumber.active : email}
-            keyboardType={'email-address'}
+            keyboardType={isPhoneNumber.active ? 'phone-pad' : 'email-address'}
             returnKeyType={'next'}
           />
           {!isPhoneNumber.active && (
@@ -346,7 +346,7 @@ const Login = props => {
               setIsPhoneNumber({...isPhoneNumber, active: true});
             }}>
             <Text style={[styles.withText, {color: '#797979'}]}>
-              Login with {isPhoneNumber?.active ? 'Email' : 'Mobile Number'}
+              Sign in with {isPhoneNumber?.active ? 'Email' : 'Mobile Number'}
             </Text>
           </TouchableOpacity>
           <Text style={[styles.withText, {color: '#797979', marginTop: hp(1)}]}>

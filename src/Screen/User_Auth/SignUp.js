@@ -39,8 +39,12 @@ const SignUp = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isLoading, setLoading] = useState(false);
   const [isLoadingGoogle, setLoadingGoogle] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPhoneNumber, setIsPhoneNumber] = useState({
+    active: false,
+    value: '',
+  });
   const dispatch = useDispatch();
   const authStatus = useSelector(state => state.auth.status);
   const handleSignUp = async () => {
@@ -64,7 +68,7 @@ const SignUp = props => {
       const data = {
         email: email,
       };
-      setLoading(true);
+      setIsLoading(true);
       try {
         const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
         console.log('---res--otp-----', res);
@@ -80,7 +84,7 @@ const SignUp = props => {
       } catch (error) {
         Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
       // dispatch(
       //   signUp({
@@ -103,6 +107,31 @@ const SignUp = props => {
         "Passwords don't match",
         'Please make sure the passwords match.',
       );
+    }
+  };
+
+  const loginWithMobile = async () => {
+    Keyboard.dismiss();
+    var data = JSON.stringify({
+      phoneNumber: isPhoneNumber.value,
+    });
+    setIsLoading(true);
+    try {
+      const res = await ApiCall('api/send-otp', 'POST', data);
+      console.log('---res--Login-----', res);
+      if (res.ok == true) {
+        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        props.navigation.navigate('Otp', {
+          phone: isPhoneNumber?.value,
+          isPhoneNumber: true,
+        });
+      } else {
+        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+      }
+    } catch (error) {
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -276,42 +305,53 @@ const SignUp = props => {
         <View style={{marginHorizontal: 20, marginTop: -55}}>
           <Text style={styles.signIn}>Sign Up</Text>
           <CustomTextInput
-            title="Enter your email"
-            iconPath={ImagePath.msgIcon}
+            title={
+              isPhoneNumber.active
+                ? 'Enter your mobile number'
+                : 'Enter your email'
+            }
+            iconPath={isPhoneNumber.active ? null : ImagePath.msgIcon}
             onChangeText={text => {
-              setEmail(text);
+              isPhoneNumber.active
+                ? setIsPhoneNumber({...isPhoneNumber, value: text})
+                : setEmail(text);
             }}
-            value={email}
+            value={isPhoneNumber.active ? isPhoneNumber.active : email}
+            keyboardType={isPhoneNumber.active ? 'phone-pad' : 'email-address'}
           />
-          <CustomTextInput
-            marginTop={20}
-            title="Create password"
-            onChangeText={text => {
-              setPassword(text);
-            }}
-            value={password}
-            iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
-            secureTextEntry={!eyeShow}
-            onClickEye={() => {
-              onClickEye('password');
-            }}
-          />
-          <CustomTextInput
-            marginTop={20}
-            title=" Enter password again"
-            onChangeText={text => {
-              setConfirmPassword(text);
-            }}
-            value={confirmPassword}
-            iconPath={eyeShow2 ? ImagePath.eyeIcon : ImagePath.closeEye}
-            secureTextEntry={!eyeShow2}
-            onClickEye={() => {
-              onClickEye('confirmPassword');
-            }}
-          />
+          {!isPhoneNumber.active && (
+            <>
+              <CustomTextInput
+                marginTop={20}
+                title="Create password"
+                onChangeText={text => {
+                  setPassword(text);
+                }}
+                value={password}
+                iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
+                secureTextEntry={!eyeShow}
+                onClickEye={() => {
+                  onClickEye('password');
+                }}
+              />
+              <CustomTextInput
+                marginTop={20}
+                title=" Enter password again"
+                onChangeText={text => {
+                  setConfirmPassword(text);
+                }}
+                value={confirmPassword}
+                iconPath={eyeShow2 ? ImagePath.eyeIcon : ImagePath.closeEye}
+                secureTextEntry={!eyeShow2}
+                onClickEye={() => {
+                  onClickEye('confirmPassword');
+                }}
+              />
+            </>
+          )}
           <CustomButton
             onclick={() => {
-              handleSignUp();
+              isPhoneNumber?.active ? loginWithMobile() : handleSignUp();
             }}
             top={30}
             title="Sign up"
@@ -319,7 +359,19 @@ const SignUp = props => {
             textColor="#fff"
           />
         </View>
-        <Text style={[styles.withText, {color: '#797979', marginTop: hp(4)}]}>
+        {/* <TouchableOpacity
+          onPress={() => {
+            if (isPhoneNumber?.active) {
+              setIsPhoneNumber({...isPhoneNumber, active: false});
+              return;
+            }
+            setIsPhoneNumber({...isPhoneNumber, active: true});
+          }}>
+          <Text style={[styles.withText, {color: '#797979', marginTop: hp(4)}]}>
+            Sign up with {isPhoneNumber?.active ? 'Email' : 'Mobile Number'}
+          </Text>
+        </TouchableOpacity> */}
+        <Text style={[styles.withText, {color: '#797979', marginTop: hp(1)}]}>
           Or Sign up with
         </Text>
 
