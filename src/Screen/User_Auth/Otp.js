@@ -27,13 +27,12 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Otp = props => {
-  const data=props?.route?.params.data?.response;
-  console.log(data,"data===")
   const forgetotp = props?.route?.params?.forgetmail;
   const forgetmail = props?.route?.params?.email;
   const [Otp, setOtp] = useState('');
   const [isLoading, setLoading] = useState(false);
   const email = props.route?.params?.email;
+  const phone = props?.route?.params;
   const password = props.route?.params?.password;
   console.log('props signOtp--------', props.route.params);
   const OtpApi = async () => {
@@ -78,11 +77,59 @@ const Otp = props => {
       }
     }
   };
+  const phoneOTPVerify = async () => {
+    if (Otp.length < 6) {
+      Toast.showWithGravity('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
+    } else {
+      const data = {
+        otp: Otp,
+        username_type: 'phoneNumber',
+        username: phone?.phone,
+      };
+      setLoading(true);
+      try {
+        console.log('calling api for otp verify');
+        const res = await ApiCall(
+          'api/login/verify-otp',
+          'POST',
+          JSON.stringify(data),
+        );
+        console.log('---res--registerotp-----', res);
+        if (res.ok == true) {
+          await setData('userData', res?.data);
+          await setData('userToken', res?.meta?.token);
+          if (forgetmail == 'otp') {
+            props.navigation.navigate('ResetPassword', {
+              otp: Otp,
+              email: forgetmail,
+            });
+          } else {
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'BottomTab'}],
+            });
+          }
+        } else {
+          Toast.showWithGravity(
+            'Something went wrong',
+            Toast.LONG,
+            Toast.BOTTOM,
+          );
+        }
+      } catch (error) {
+        Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
   const resendOtp = async () => {
-    console.log('email=================', email);
-    const data = {
-      email: email,
-    };
+    let data = {};
+    if (phone?.isPhoneNumber) {
+      data.phoneNumber = phone?.phone;
+    } else {
+      data.email = email;
+    }
     try {
       const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
       console.log('---send-------', res);
@@ -127,7 +174,6 @@ const Otp = props => {
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
             justifyContent: 'center',
           }}> */}
-          {console.log(data?.messages[0]?.recipient,"=====")}
           <LinearGradient
             style={{
               paddingHorizontal: 20,
@@ -143,8 +189,7 @@ const Otp = props => {
               'rgba(255, 255, 255, 0.1)',
             ]}>
             <Text style={styles.signIn}>Enter OTP</Text>
-            {!data?.messages[0]?.recipient?
-            (<Text
+            <Text
               style={[
                 styles.signIn,
                 {
@@ -154,21 +199,10 @@ const Otp = props => {
                   lineHeight: 30,
                 },
               ]}>
-             Check your email, we’ve sent you the pin at {email}
-            </Text>):
-            (<Text
-              style={[
-                styles.signIn,
-                {
-                  fontSize: 22,
-                  fontFamily: FONTS.DMSansRegular,
-                  marginBottom: 20,
-                  lineHeight: 30,
-                },
-              ]}>
-             Check your phone, we’ve sent you the otp at +{data?.messages[0]?.recipient}
-            </Text>)
-            }
+              {phone?.isPhoneNumber
+                ? `Check your phone, we’ve sent you the OTP at +${phone?.phone}`
+                : `Check your email, we’ve sent you the OTP at ${email}`}
+            </Text>
             <OTPTextInput
               textInputStyle={{width: 40}}
               inputCount={6}
@@ -193,6 +227,8 @@ const Otp = props => {
                       Toast.BOTTOM,
                     );
                   }
+                } else if (phone?.isPhoneNumber) {
+                  phoneOTPVerify();
                 } else {
                   OtpApi();
                 }
@@ -210,17 +246,14 @@ const Otp = props => {
                 justifyContent: 'center',
                 marginTop: hp(4.2),
               }}>
-              <Text style={[styles.withText]}>Didn’t receive pin </Text>
+              <Text style={[styles.withText]}>Didn’t receive OTP? </Text>
               <TouchableOpacity
                 onPress={() => {
                   if (forgetotp == 'otp') {
-                    // Alert.alert('ok');
                     resendforgetmailOtp();
                   } else {
-                    // Alert.alert('orrrk');
                     resendOtp();
                   }
-                  // resendOtp();
                 }}>
                 <Text
                   style={[

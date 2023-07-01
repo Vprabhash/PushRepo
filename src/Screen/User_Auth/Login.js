@@ -46,10 +46,10 @@ const Login = props => {
   const [eyeShow, setEyeShow] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
-  const [isPhoneNumber, setIsPhoneNumber]=useState({
-    active:false,
-    value:""
-  })
+  const [isPhoneNumber, setIsPhoneNumber] = useState({
+    active: false,
+    value: '',
+  });
   const onClickEye = () => {
     setEyeShow(!eyeShow);
   };
@@ -97,8 +97,7 @@ const Login = props => {
     }
   };
 
-  const loginWithMobile=async()=>{
-
+  const loginWithMobile = async () => {
     var data = JSON.stringify({
       phoneNumber: isPhoneNumber.value,
     });
@@ -107,9 +106,11 @@ const Login = props => {
       const res = await ApiCall('api/send-otp', 'POST', data);
       console.log('---res--Login-----', res);
       if (res.ok == true) {
-        await setData('userData', res?.data);
-        props.navigation.navigate('Otp',{data: res})
         Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        props.navigation.navigate('Otp', {
+          phone: isPhoneNumber?.value,
+          isPhoneNumber: true,
+        });
       } else {
         Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
       }
@@ -118,7 +119,7 @@ const Login = props => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
@@ -291,30 +292,38 @@ const Login = props => {
         <View style={{marginHorizontal: 20, marginTop: -55}}>
           <Text style={[styles.signIn, {marginBottom: hp(4)}]}>Sign In</Text>
           <CustomTextInput
-            title={isPhoneNumber.active?"Enter your mobile number":"Enter your email"}
-            iconPath={ImagePath.msgIcon}
+            title={
+              isPhoneNumber.active
+                ? 'Enter your mobile number'
+                : 'Enter your email'
+            }
+            iconPath={isPhoneNumber.active ? null : ImagePath.msgIcon}
             onChangeText={text => {
-              isPhoneNumber.active?setIsPhoneNumber({...isPhoneNumber,value:text}): setEmail(text);
+              isPhoneNumber.active
+                ? setIsPhoneNumber({...isPhoneNumber, value: text})
+                : setEmail(text);
             }}
-            value={ isPhoneNumber.active?isPhoneNumber.active:email}
+            value={isPhoneNumber.active ? isPhoneNumber.active : email}
             keyboardType={'email-address'}
             returnKeyType={'next'}
           />
-          {!isPhoneNumber.active && <CustomTextInput
-            marginTop={20}
-            title="Enter password"
-            onChangeText={text => {
-              setPassword(text);
-            }}
-            value={password}
-            iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
-            secureTextEntry={eyeShow ? false : true}
-            onClickEye={() => {
-              onClickEye();
-            }}
-          />}
+          {!isPhoneNumber.active && (
+            <CustomTextInput
+              marginTop={20}
+              title="Enter password"
+              onChangeText={text => {
+                setPassword(text);
+              }}
+              value={password}
+              iconPath={eyeShow ? ImagePath.eyeIcon : ImagePath.closeEye}
+              secureTextEntry={eyeShow ? false : true}
+              onClickEye={() => {
+                onClickEye();
+              }}
+            />
+          )}
           <CustomButton
-            onclick={isPhoneNumber.active?loginWithMobile:signin}
+            onclick={isPhoneNumber.active ? loginWithMobile : signin}
             top={30}
             title="Sign in"
             bgColor="#000"
@@ -326,12 +335,21 @@ const Login = props => {
             onPress={() => {
               props.navigation.navigate('ForgetPassword');
             }}>
-            <Text style={styles.forgetText}>Forgot password</Text>
+            <Text style={styles.forgetText}>Forgot password?</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>{setIsPhoneNumber({...isPhoneNumber,active:true})}}>
-        <Text style={{textAlign:'center'}}>Login with Mobile Number</Text>
-        </TouchableOpacity>
-          <Text style={[styles.withText, {color: '#797979', marginTop: hp(3)}]}>
+          <TouchableOpacity
+            onPress={() => {
+              if (isPhoneNumber?.active) {
+                setIsPhoneNumber({...isPhoneNumber, active: false});
+                return;
+              }
+              setIsPhoneNumber({...isPhoneNumber, active: true});
+            }}>
+            <Text style={[styles.withText, {color: '#797979'}]}>
+              Login with {isPhoneNumber?.active ? 'Email' : 'Mobile Number'}
+            </Text>
+          </TouchableOpacity>
+          <Text style={[styles.withText, {color: '#797979', marginTop: hp(1)}]}>
             Or Sign in with
           </Text>
         </View>
@@ -344,7 +362,7 @@ const Login = props => {
           }}
           // disabled={this.state.isSigninInProgress}
         /> */}
-        
+
         <View
           style={{
             flexDirection: 'row',
@@ -368,9 +386,8 @@ const Login = props => {
               <Image source={ImagePath.apple} style={styles.googleLogo} />
             </TouchableOpacity>
           )}
-          
         </View>
-       
+
         <View
           style={{
             flexDirection: 'row',
