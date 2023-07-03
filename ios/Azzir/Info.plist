@@ -30,7 +30,17 @@
 				<string>com.googleusercontent.apps.234696942853-q8fesu2g6lloq07g2t9f9qkkdtdqfjc6</string>
 			</array>
 		</dict>
+		<dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>152339711194724</string>
+    </array>
+  </dict>
 	</array>
+	<key>FacebookAppID</key>
+	<string>152339711194724</string>
+	<key>FacebookDisplayName</key>
+	<string>Azzir</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationCategoryType</key>

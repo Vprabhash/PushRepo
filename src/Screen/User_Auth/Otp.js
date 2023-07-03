@@ -200,7 +200,7 @@ const Otp = props => {
                 },
               ]}>
               {phone?.isPhoneNumber
-                ? `Check your phone, we’ve sent you the OTP at +${phone?.phone}`
+                ? `Check your phone, we’ve sent you the OTP at ${phone?.phone}`
                 : `Check your email, we’ve sent you the OTP at ${email}`}
             </Text>
             <OTPTextInput

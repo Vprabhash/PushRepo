@@ -17,6 +17,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import ApiCall from '../redux/CommanApi';
+import {setData} from './Helper';
 
 const CitySelector = ({
   width = '50%',
@@ -84,6 +85,8 @@ const CitySelector = ({
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={item => {
+          // setData('currentCity', item.value);
+          global.currentCity = item.value;
           dispatch(currentCity(item.value));
           setIsFocus(false);
         }}

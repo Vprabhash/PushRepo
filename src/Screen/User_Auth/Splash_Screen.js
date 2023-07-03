@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Image, ImageBackground, View, StatusBar, Alert} from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import Geolocation from '@react-native-community/geolocation';
-import {getData} from '../../Components/Helper';
+import {getData, setData} from '../../Components/Helper';
 import {
   check,
   PERMISSIONS,
@@ -19,7 +19,9 @@ const Splash_Screen = props => {
   const dispatch = useDispatch();
   useEffect(() => {
     getData('userData').then(userdata => {
-      console.log('userdata: ===', userdata);
+      // console.log('userdata: ===', userdata);
+      // setData('currentCity', null);
+      global.currentCity = null;
       if (!userdata) {
         setTimeout(() => {
           props.navigation.reset({

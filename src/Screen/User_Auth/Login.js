@@ -14,6 +14,12 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
+import {
+  AccessToken,
+  AuthenticationToken,
+  LoginManager,
+  Profile,
+} from 'react-native-fbsdk-next';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {showLoader} from '../../redux/reducers/loaderSlice';
 import {useDispatch, useSelector} from 'react-redux';
@@ -38,6 +44,7 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+
 const Login = props => {
   const dispatch = useDispatch();
   const loader = useSelector(state => state.loader.isLoading);
@@ -50,6 +57,30 @@ const Login = props => {
     active: false,
     value: '',
   });
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        Platform.OS == 'ios'
+          ? ''
+          : '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
+      androidClientId:
+        '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
+      offlineAccess: false,
+    });
+    props.navigation.addListener('focus', () => {
+      dispatch(showLoader(false));
+    });
+    return (
+      appleAuth.isSupported &&
+      appleAuth.onCredentialRevoked(async () => {
+        console.log(
+          'If this function executes, User Credentials have been Revoked',
+        );
+      })
+    );
+  }, []);
+
   const onClickEye = () => {
     setEyeShow(!eyeShow);
   };
@@ -120,29 +151,8 @@ const Login = props => {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        Platform.OS == 'ios'
-          ? ''
-          : '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
-      androidClientId:
-        '234696942853-oqdts52ivfubr77cava8ah6095r74595.apps.googleusercontent.com',
-      offlineAccess: false,
-    });
-    props.navigation.addListener('focus', () => {
-      dispatch(showLoader(false));
-    });
-    return (
-      appleAuth.isSupported &&
-      appleAuth.onCredentialRevoked(async () => {
-        console.log(
-          'If this function executes, User Credentials have been Revoked',
-        );
-      })
-    );
-  }, []);
-  const signInFunction = async () => {
+
+  const onGoogleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signOut();
@@ -200,6 +210,94 @@ const Login = props => {
         console.log('Something went wrong', error.toString());
       }
     }
+  };
+
+  const initUser = async (token, userdetails) => {
+    await fetch(
+      'https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' +
+        token,
+    )
+      .then(response => response.json())
+      .then(res => {
+        console.log(JSON.stringify(res));
+        if (res.email != undefined) {
+          let data = {
+            email: res?.email,
+            accessToken: token,
+            accessTokenExpiresAt: null,
+            profilePhotoUrl: userdetails?.imageURL,
+            username: res?.email,
+            name: res?.name,
+          };
+          social_login_function(data);
+
+          try {
+            const data = {
+              name: res?.name,
+              firstName: res?.name?.split(' ')[0] || '',
+              lastName: res?.name?.split(' ')[1] || '',
+              email: res?.email,
+              username: res?.email,
+              profilePhotoUrl: userdetails?.imageURL,
+              phoneNumber: '',
+              accessToken: token,
+              accessTokenExpiresAt: null,
+              pushNotificationToken: '',
+            };
+            ApiCall('api/oauth/facebook', 'POST', JSON.stringify(data))
+              .then(async res => {
+                console.log('facebook sign data ----', res.data);
+                if (res?.ok == true) {
+                  await setData('userToken', res?.meta?.token);
+                  await setData('userData', res?.data);
+                  props.navigation.reset({
+                    index: 0,
+                    routes: [{name: 'BottomTab'}],
+                  });
+                }
+              })
+              .catch(error => {
+                dispatch(showLoader(false));
+                Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
+              });
+          } catch (error) {
+            dispatch(showLoader(false));
+          }
+        } else {
+          Alert.alert(
+            'Email is not registered with FB account. Please process manual registration',
+          );
+        }
+      })
+      .catch(() => {
+        reject('ERROR GETTING DATA FROM FACEBOOK');
+      });
+  };
+
+  const onFacebookSignIn = async () => {
+    if (Platform.OS === 'android') {
+      LoginManager.setLoginBehavior('web_only');
+    }
+    await LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+      async result => {
+        if (result.isCancelled) {
+          console.log('Login cancelled');
+        } else {
+          console.log(JSON.stringify(result), '====result');
+          const data = await AccessToken.getCurrentAccessToken();
+
+          console.log(JSON.stringify(data), '=====data');
+          Profile.getCurrentProfile().then(function (currentProfile) {
+            if (currentProfile) {
+              initUser(data.accessToken, currentProfile);
+            }
+          });
+        }
+      },
+      function (error) {
+        console.log('Login fail with error: ' + error);
+      },
+    );
   };
 
   const onAppleSignIn = async () => {
@@ -369,14 +467,15 @@ const Login = props => {
             justifyContent: 'space-between',
             width: Platform.OS === 'ios' ? '65%' : null,
             alignSelf: 'center',
+            alignItems: 'center',
             marginHorizontal: wp(7),
             marginTop: 10,
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              signInFunction();
-            }}>
+          <TouchableOpacity onPress={onGoogleSignIn}>
             <Image source={ImagePath.google} style={styles.googleLogo} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onFacebookSignIn}>
+            <Image source={ImagePath.facebook} style={styles.googleLogo} />
           </TouchableOpacity>
           {Platform.OS === 'ios' && (
             <TouchableOpacity

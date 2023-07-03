@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Azzir</string>
+    <string name="facebook_app_id">152339711194724</string>
+    <string name="facebook_client_token">b497689033622440d52fed6cea424140</string>
 </resources>

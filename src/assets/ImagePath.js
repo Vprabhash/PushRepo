@@ -8,6 +8,7 @@ export default {
   closeEye: require('./Image/closeEye.png'),
   google: require('./Image/google.png'),
   apple: require('./Image/apple.png'),
+  facebook: require('./Image/facebook1.png'),
   doneIcon: require('./Image/done.png'),
   manueIcon: require('./Image/manueIcon.png'),
   profilePic: require('./Image/profilePic.png'),

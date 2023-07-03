@@ -51,6 +51,7 @@ import Toast from 'react-native-simple-toast';
 import moment from 'moment';
 import {logEvent} from '../../utils/AddFirebaseEvent';
 import {currentCity} from '../../redux/reducers/citySelectorSlice';
+import {getData} from '../../Components/Helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -134,10 +135,12 @@ const Home = props => {
     ApiCall('api/cities', 'GET')
       .then(res => {
         console.log('Current city:', res);
+        // const currentCity = getData('currentCity');
         if (res?.data?.length) {
           if (
             res?.data?.some(e => e?.name === selectedCity) == false &&
-            !isSelected
+            !isSelected &&
+            !global.currentCity
           ) {
             props.navigation.navigate('CitySelect');
           }
@@ -187,10 +190,13 @@ const Home = props => {
               dispatch(addCoordinates(obj));
               if (data.results && data.results.length > 0) {
                 const addressComponents = data.results[0].address_components;
+                // const city = getData('currentCity');
                 for (const component of addressComponents) {
                   if (component.types.includes('locality')) {
                     console.log('Current city:', component.long_name);
-                    dispatch(currentCity(component.long_name));
+                    if (!global.currentCity) {
+                      dispatch(currentCity(component.long_name));
+                    }
                     break;
                   }
                 }
