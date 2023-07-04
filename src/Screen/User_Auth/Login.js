@@ -221,16 +221,6 @@ const Login = props => {
       .then(res => {
         console.log(JSON.stringify(res));
         if (res.email != undefined) {
-          let data = {
-            email: res?.email,
-            accessToken: token,
-            accessTokenExpiresAt: null,
-            profilePhotoUrl: userdetails?.imageURL,
-            username: res?.email,
-            name: res?.name,
-          };
-          social_login_function(data);
-
           try {
             const data = {
               name: res?.name,
@@ -238,7 +228,7 @@ const Login = props => {
               lastName: res?.name?.split(' ')[1] || '',
               email: res?.email,
               username: res?.email,
-              profilePhotoUrl: userdetails?.imageURL,
+              profilePhotoUrl: userdetails?.imageURL || '',
               phoneNumber: '',
               accessToken: token,
               accessTokenExpiresAt: null,
@@ -287,11 +277,17 @@ const Login = props => {
           const data = await AccessToken.getCurrentAccessToken();
 
           console.log(JSON.stringify(data), '=====data');
-          Profile.getCurrentProfile().then(function (currentProfile) {
-            if (currentProfile) {
-              initUser(data.accessToken, currentProfile);
+          AccessToken.getCurrentAccessToken().then(
+            async (data) => {
+              const token = data?.accessToken;
+              const response = await fetch(`https://graph.facebook.com/me?fields=id,first_name,last_name,email&access_token=${token}`);
+              const currentProfile = await response.json();
+              console.log(currentProfile, "current Profile")
+              if (currentProfile) {
+                initUser(token, currentProfile);
+              }
             }
-          });
+          );
         }
       },
       function (error) {
@@ -447,7 +443,7 @@ const Login = props => {
               Sign in with {isPhoneNumber?.active ? 'Email' : 'Mobile Number'}
             </Text>
           </TouchableOpacity>
-          <Text style={[styles.withText, {color: '#797979', marginTop: hp(1)}]}>
+          <Text style={[styles.withText, {color: '#797979', marginTop: hp(3)}]}>
             Or Sign in with
           </Text>
         </View>
@@ -469,7 +465,7 @@ const Login = props => {
             alignSelf: 'center',
             alignItems: 'center',
             marginHorizontal: wp(7),
-            marginTop: 10,
+            // marginTop: 10,
           }}>
           <TouchableOpacity onPress={onGoogleSignIn}>
             <Image source={ImagePath.google} style={styles.googleLogo} />
