@@ -54,7 +54,7 @@ const Login = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
   const [isPhoneNumber, setIsPhoneNumber] = useState({
-    active: false,
+    active: true,
     value: '',
   });
 

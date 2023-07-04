@@ -48,7 +48,7 @@ const SignUp = props => {
   const [isLoadingGoogle, setLoadingGoogle] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPhoneNumber, setIsPhoneNumber] = useState({
-    active: false,
+    active: true,
     value: '',
   });
   const dispatch = useDispatch();

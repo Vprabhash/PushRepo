@@ -31,16 +31,18 @@
 			</array>
 		</dict>
 		<dict>
-    <key>CFBundleURLSchemes</key>
-    <array>
-      <string>152339711194724</string>
-    </array>
-  </dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb152339711194724</string>
+			</array>
+		</dict>
 	</array>
 	<key>FacebookAppID</key>
 	<string>152339711194724</string>
 	<key>FacebookDisplayName</key>
 	<string>Azzir</string>
+	<key>FacebookClientToken</key>
+	<string>b497689033622440d52fed6cea424140</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationCategoryType</key>

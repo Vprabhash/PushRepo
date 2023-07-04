@@ -13,6 +13,7 @@ import Profile from '../Components/Profile/Profile';
 import {FONTS} from '../Components/constants';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
+import { getBottomSpace } from 'react-native-iphone-screen-helper';
 
 const Tab = createBottomTabNavigator();
 
@@ -72,7 +73,7 @@ function BottomTab() {
           marginBottom:2,
           // position: 'absolute',
           // bottom: 5,
-          height: Platform.OS === 'ios' ? 100 : 65,
+          height: Platform.OS === 'ios' ? 65 + getBottomSpace() : 65,
           borderRadius: 100,
           backgroundColor: '#fff',
           overflow: 'hidden',
