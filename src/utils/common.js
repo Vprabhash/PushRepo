@@ -1,4 +1,4 @@
-import {PixelRatio} from 'react-native';
+import { PixelRatio } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 
@@ -7,7 +7,6 @@ export const responsiveFontSize = f => {
 };
 
 export async function requestUserPermission() {
-  console.log('Request permission is working');
   const authStatus = await messaging().requestPermission();
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -15,15 +14,16 @@ export async function requestUserPermission() {
 
   if (enabled) {
     console.log('Authorization status:', authStatus);
-    getFcmToken();
   }
-}
+  const fcmToken = await messaging().getToken();
+  global.fcmToken = fcmToken;
+};
 
 const getFcmToken = async () => {
   let checkToken = await AsyncStorage.getItem('fcmToken');
   console.log('old token', checkToken);
 
-  if (!checkToken || checkToken == null) {
+  if (checkToken == null || checkToken == "" || !checkToken) {
     try {
       await messaging().deleteToken();
       const fcmToken = await messaging().getToken();
