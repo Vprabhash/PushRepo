@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -20,9 +20,9 @@ import {
   LoginManager,
   Profile,
 } from 'react-native-fbsdk-next';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { showLoader } from '../../redux/reducers/loaderSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {showLoader} from '../../redux/reducers/loaderSlice';
+import {useDispatch, useSelector} from 'react-redux';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
@@ -30,13 +30,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { COLORS, FONTS } from '../../Components/constants';
+import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
-import { ARTIST, SIGN_IN } from '../../services/Apis';
+import {ARTIST, SIGN_IN} from '../../services/Apis';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setData } from '../../Components/Helper';
-import { appleAuth } from '@invertase/react-native-apple-authentication';
+import {setData} from '../../Components/Helper';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 import {
@@ -115,7 +115,7 @@ const Login = props => {
         await setData('userToken', res?.meta?.token);
         props.navigation.reset({
           index: 0,
-          routes: [{ name: 'BottomTab' }],
+          routes: [{name: 'BottomTab'}],
         });
         Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
       } else {
@@ -183,7 +183,7 @@ const Login = props => {
             await setData('userData', res?.data);
             props.navigation.reset({
               index: 0,
-              routes: [{ name: 'BottomTab' }],
+              routes: [{name: 'BottomTab'}],
             });
           }
         })
@@ -215,7 +215,7 @@ const Login = props => {
   const initUser = async (token, userdetails) => {
     await fetch(
       'https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' +
-      token,
+        token,
     )
       .then(response => response.json())
       .then(res => {
@@ -242,7 +242,7 @@ const Login = props => {
                   await setData('userData', res?.data);
                   props.navigation.reset({
                     index: 0,
-                    routes: [{ name: 'BottomTab' }],
+                    routes: [{name: 'BottomTab'}],
                   });
                 }
               })
@@ -277,17 +277,17 @@ const Login = props => {
           const data = await AccessToken.getCurrentAccessToken();
 
           console.log(JSON.stringify(data), '=====data');
-          AccessToken.getCurrentAccessToken().then(
-            async (data) => {
-              const token = data?.accessToken;
-              const response = await fetch(`https://graph.facebook.com/me?fields=id,first_name,last_name,email&access_token=${token}`);
-              const currentProfile = await response.json();
-              console.log(currentProfile, "current Profile")
-              if (currentProfile) {
-                initUser(token, currentProfile);
-              }
+          AccessToken.getCurrentAccessToken().then(async data => {
+            const token = data?.accessToken;
+            const response = await fetch(
+              `https://graph.facebook.com/me?fields=id,first_name,last_name,email&access_token=${token}`,
+            );
+            const currentProfile = await response.json();
+            console.log(currentProfile, 'current Profile');
+            if (currentProfile) {
+              initUser(token, currentProfile);
             }
-          );
+          });
         }
       },
       function (error) {
@@ -331,7 +331,7 @@ const Login = props => {
             await setData('userData', res?.data);
             props.navigation.reset({
               index: 0,
-              routes: [{ name: 'BottomTab' }],
+              routes: [{name: 'BottomTab'}],
             });
           }
         })
@@ -351,11 +351,11 @@ const Login = props => {
   };
 
   return (
-    <KeyboardAwareScrollView bounces={false} style={{ flex: 1 }}>
+    <KeyboardAwareScrollView bounces={false} style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{ height: height + StatusBar.currentHeight, width: width }}>
+        style={{height: height + StatusBar.currentHeight, width: width}}>
         <StatusBar
           barStyle="light-content"
           hidden={false}
@@ -383,8 +383,8 @@ const Login = props => {
             }}
           />
         </View>
-        <View style={{ marginHorizontal: 20, marginTop: -55 }}>
-          <Text style={[styles.signIn, { marginBottom: hp(4) }]}>Sign In</Text>
+        <View style={{marginHorizontal: 20, marginTop: -55}}>
+          <Text style={[styles.signIn, {marginBottom: hp(4)}]}>Sign In</Text>
           <CustomTextInput
             title={
               isPhoneNumber.active
@@ -394,7 +394,7 @@ const Login = props => {
             iconPath={isPhoneNumber.active ? null : ImagePath.msgIcon}
             onChangeText={text => {
               isPhoneNumber.active
-                ? setIsPhoneNumber({ ...isPhoneNumber, value: text })
+                ? setIsPhoneNumber({...isPhoneNumber, value: text})
                 : setEmail(text);
             }}
             value={isPhoneNumber.active ? isPhoneNumber.active : email}
@@ -425,7 +425,7 @@ const Login = props => {
             isLoading={isLoading}
           />
           <TouchableOpacity
-            style={{ alignSelf: 'flex-end' }}
+            style={{alignSelf: 'flex-end'}}
             onPress={() => {
               props.navigation.navigate('ForgetPassword');
             }}>
@@ -434,16 +434,16 @@ const Login = props => {
           <TouchableOpacity
             onPress={() => {
               if (isPhoneNumber?.active) {
-                setIsPhoneNumber({ ...isPhoneNumber, active: false });
+                setIsPhoneNumber({...isPhoneNumber, active: false});
                 return;
               }
-              setIsPhoneNumber({ ...isPhoneNumber, active: true });
+              setIsPhoneNumber({...isPhoneNumber, active: true});
             }}>
-            <Text style={[styles.withText, { color: '#797979' }]}>
+            <Text style={[styles.withText, {color: '#797979', fontSize: 16}]}>
               Sign in with {isPhoneNumber?.active ? 'Email' : 'Mobile Number'}
             </Text>
           </TouchableOpacity>
-          <Text style={[styles.withText, { color: '#797979', marginTop: hp(3) }]}>
+          <Text style={[styles.withText, {color: '#797979', marginTop: hp(3),fontSize: 16}]}>
             Or Sign in with
           </Text>
         </View>
@@ -470,9 +470,11 @@ const Login = props => {
           <TouchableOpacity onPress={onGoogleSignIn}>
             <Image source={ImagePath.google} style={styles.googleLogo} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onFacebookSignIn}>
-            <Image source={ImagePath.facebook} style={styles.googleLogo} />
-          </TouchableOpacity>
+          {Platform.OS === 'ios' && (
+            <TouchableOpacity onPress={onFacebookSignIn}>
+              <Image source={ImagePath.facebook} style={styles.googleLogo} />
+            </TouchableOpacity>
+          )}
           {Platform.OS === 'ios' && (
             <TouchableOpacity
               onPress={() => {
@@ -494,7 +496,7 @@ const Login = props => {
             onPress={() => {
               props.navigation.navigate('SignUp');
             }}>
-            <Text style={[styles.withText, { textDecorationLine: 'underline' }]}>
+            <Text style={[styles.withText, {textDecorationLine: 'underline'}]}>
               Sign Up
             </Text>
           </TouchableOpacity>
@@ -502,7 +504,7 @@ const Login = props => {
         <Modal
           visible={loader}
           transparent={true}
-          style={{ flex: 1 }}
+          style={{flex: 1}}
           statusBarTranslucent={true}>
           <View
             style={{
@@ -549,7 +551,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
-  googleLogo: { height: 90, width: 90, resizeMode: 'contain' },
+  googleLogo: {height: 90, width: 90, resizeMode: 'contain'},
   forgetText: {
     fontFamily: FONTS.RobotoMedium,
     fontSize: 14,

@@ -457,11 +457,19 @@ const SignUp = props => {
             }
             setIsPhoneNumber({...isPhoneNumber, active: true});
           }}>
-          <Text style={[styles.withText, {color: '#797979', marginTop: hp(4)}]}>
+          <Text
+            style={[
+              styles.withText,
+              {color: '#797979', marginTop: hp(4), fontSize: 16},
+            ]}>
             Sign up with {isPhoneNumber?.active ? 'Email' : 'Mobile Number'}
           </Text>
         </TouchableOpacity>
-        <Text style={[styles.withText, {color: '#797979', marginTop: hp(3)}]}>
+        <Text
+          style={[
+            styles.withText,
+            {color: '#797979', marginTop: hp(3), fontSize: 16},
+          ]}>
           Or Sign up with
         </Text>
 
