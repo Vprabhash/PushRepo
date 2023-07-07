@@ -484,9 +484,11 @@ const SignUp = props => {
           <TouchableOpacity onPress={signInFunction}>
             <Image source={ImagePath.google} style={styles.googleLogo} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onFacebookSignIn}>
-            <Image source={ImagePath.facebook} style={styles.googleLogo} />
-          </TouchableOpacity>
+          {Platform.OS === 'ios' && (
+            <TouchableOpacity onPress={onFacebookSignIn}>
+              <Image source={ImagePath.facebook} style={styles.googleLogo} />
+            </TouchableOpacity>
+          )}
           {Platform.OS === 'ios' && (
             <TouchableOpacity onPress={onAppleSignIn}>
               <Image source={ImagePath.apple} style={styles.googleLogo} />
