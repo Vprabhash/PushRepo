@@ -1048,7 +1048,7 @@ const Home = props => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.titleText1, { textAlign: 'center' }]}>
+              <Text style={[styles.titleText1, { textAlign: 'center', lineHeight: 20 }]}>
                 No Upcoming Events.{'\n'}Please check back later.
               </Text>
             </View>
