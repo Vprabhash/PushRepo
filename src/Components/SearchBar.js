@@ -48,12 +48,14 @@ const SearchBar = props => {
 
   const [valuekey, setValuekey] = useState('');
   const [recommendation, setRecommendation] = useState(null);
+  const [autoSuggestData, setAutoSuggestData] = useState([]);
   const animation = useSharedValue(0);
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
   useEffect(() => {
     searchRecommendation();
     setValuekey('');
+    setAutoSuggestData([])
     searchApi();
   }, []);
 
@@ -81,6 +83,7 @@ const SearchBar = props => {
   ];
 
   const searchApi = async text => {
+    setAutoSuggestData([]);
     if (valuekey || text) {
       const res = await ApiCall(
         `api/search?q=${text || valuekey}&city=${selectedCity}`,
@@ -107,6 +110,18 @@ const SearchBar = props => {
         console.log('----recommendation: ', res);
         if (res?.ok) {
           setRecommendation(res?.data?.data);
+        }
+      })
+      .catch(err => {
+        console.log('----recommendation erorr: ', err);
+      });
+  };
+  const searchAutoSuggest = async (text) => {
+    ApiCall(`api/search-v2?q=${text}`, 'GET')
+      .then(res => {
+        console.log('----recommendation: ', res);
+        if (res?.data?.length) {
+          setAutoSuggestData(res?.data);
         }
       })
       .catch(err => {
@@ -527,6 +542,7 @@ const SearchBar = props => {
                 onChangeText={text => {
                   // searchApi(text)
                   setValuekey(text);
+                  searchAutoSuggest(text);
                 }}
                 value={valuekey}
                 onSubmitEditing={() => searchApi(valuekey)}
@@ -538,6 +554,7 @@ const SearchBar = props => {
                   onPress={() => {
                     setValuekey('');
                     setClubs([]);
+                    setAutoSuggestData([]);
                   }}>
                   <Image
                     source={ImagePath.closeIcon}
@@ -549,11 +566,46 @@ const SearchBar = props => {
                 activeOpacity={0.5}
                 onPress={() => {
                   searchApi(valuekey);
+                  setAutoSuggestData([]);
                 }}>
                 <Image source={ImagePath.searchIcon} style={styles.iconStyle} />
               </TouchableOpacity>
             </View>
           </View>
+          {autoSuggestData?.length ? <FlatList
+            data={autoSuggestData}
+            style={{
+              marginLeft: '10%',
+              marginRight: '5%',
+              borderRadius: 10,
+              marginBottom: 20,
+              position: 'absolute',
+              top: getStatusBarHeight() + hp(2),
+              maxHeight: '50%',
+              width: '85%',
+              zIndex: 99999,
+            }}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity style={{
+                  backgroundColor: COLORS.white,
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                }}
+                  onPress={() => {
+                    setValuekey(item?.title);
+                    searchApi(item?.title)
+                  }}
+                >
+                  <Text style={{
+                    color: 'rgba(0, 0, 0, 0.7)', fontFamily: FONTS.RobotoRegular,
+                    fontSize: 14,
+                  }}>{item?.title}</Text>
+                </TouchableOpacity>
+              )
+            }}
+            ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: COLORS.gray }} />}
+          /> : null}
           <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
@@ -569,8 +621,7 @@ const SearchBar = props => {
           </TouchableOpacity>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            nestedScrollEnabled
-            style={{ marginBottom: 100 }}>
+            nestedScrollEnabled>
             {recommendation && !valuekey ? (
               <>
                 <View style={styles.hedingTextMain}>
@@ -690,7 +741,7 @@ const SearchBar = props => {
             renderItem={_renderItem}
             keyExtractor={(_, i) => i.toString()}
             onEndReachedThreshold={0.3}
-            contentContainerStyle={{ paddingTop: 20, paddingBottom: 50 }}
+            contentContainerStyle={{ paddingTop: 20, paddingBottom: 100 }}
           // ListEmptyComponent={EmptyListMessage}
           />
         </View>
