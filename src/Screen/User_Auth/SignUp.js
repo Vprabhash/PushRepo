@@ -178,7 +178,7 @@ const SignUp = props => {
         phoneNumber: '',
         accessToken: userInfo?.idToken,
         accessTokenExpiresAt: '',
-        pushNotificationToken: '',
+        pushNotificationToken: global.fcmToken || '',
       };
       try {
         const res = await ApiCall(
@@ -236,8 +236,7 @@ const SignUp = props => {
               profilePhotoUrl: userdetails?.imageURL || '',
               phoneNumber: '',
               accessToken: token,
-              accessTokenExpiresAt: null,
-              pushNotificationToken: '',
+              pushNotificationToken: global.fcmToken || '',
             };
             ApiCall('api/oauth/facebook', 'POST', JSON.stringify(data))
               .then(async res => {

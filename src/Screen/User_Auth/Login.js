@@ -173,7 +173,7 @@ const Login = props => {
         phoneNumber: '',
         accessToken: userInfo?.idToken,
         accessTokenExpiresAt: '',
-        pushNotificationToken: '',
+        pushNotificationToken: global.fcmToken || '',
       };
       ApiCall('api/oauth/google', 'POST', JSON.stringify(data))
         .then(async res => {
@@ -232,7 +232,7 @@ const Login = props => {
               phoneNumber: '',
               accessToken: token,
               accessTokenExpiresAt: null,
-              pushNotificationToken: '',
+              pushNotificationToken: global.fcmToken || '',
             };
             ApiCall('api/oauth/facebook', 'POST', JSON.stringify(data))
               .then(async res => {

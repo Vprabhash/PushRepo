@@ -16,6 +16,7 @@ export async function requestUserPermission() {
     console.log('Authorization status:', authStatus);
   }
   const fcmToken = await messaging().getToken();
+  console.log("fcmToken", fcmToken)
   global.fcmToken = fcmToken;
 };
 
