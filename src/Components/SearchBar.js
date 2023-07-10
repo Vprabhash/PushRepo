@@ -572,22 +572,23 @@ const SearchBar = props => {
               </TouchableOpacity>
             </View>
           </View>
-          {autoSuggestData?.length ? <FlatList
+          {autoSuggestData?.length && valuekey ? <FlatList
             data={autoSuggestData}
+            bounces={false}
             style={{
               marginLeft: '10%',
               marginRight: '5%',
               borderRadius: 10,
               marginBottom: 20,
               position: 'absolute',
-              top: getStatusBarHeight() + hp(2),
+              top: 45,
               maxHeight: '50%',
               width: '85%',
               zIndex: 99999,
             }}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity style={{
+                <TouchableOpacity activeOpacity={0.8} style={{
                   backgroundColor: COLORS.white,
                   paddingHorizontal: 10,
                   paddingVertical: 5,
