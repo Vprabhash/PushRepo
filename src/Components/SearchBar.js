@@ -475,6 +475,8 @@ const SearchBar = props => {
         return ImagePath.artistIcon
       case 'club':
         return ImagePath.clubActive
+      case 'dj':
+        return ImagePath.liveDjIcon
       default:
         return null;
     }
@@ -616,14 +618,14 @@ const SearchBar = props => {
                       searchApi(item?.title);
                     }}>
                     <Image
-                      style={[styles.iconStyle, {marginRight: 5}]}
+                      style={[styles.iconStyle, {marginRight: 8, width: 20, height:20}]}
                       source={imageType(item?.type)}
                     />
                     <Text
                       style={{
                         color: 'rgba(0, 0, 0, 0.7)',
                         fontFamily: FONTS.RobotoRegular,
-                        fontSize: 14,
+                        fontSize: 16,
                       }}>
                       {item?.title}
                     </Text>
