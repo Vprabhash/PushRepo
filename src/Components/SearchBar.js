@@ -53,10 +53,12 @@ const SearchBar = props => {
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
   useEffect(() => {
+    searchApi();
     searchRecommendation();
     setValuekey('');
-    setAutoSuggestData([]);
-    searchApi();
+    navigation.addListener('focus', () => {
+      setAutoSuggestData([]);
+    })
   }, []);
 
   const searchTypeImages = [
@@ -467,7 +469,7 @@ const SearchBar = props => {
   };
   const imageType = type => {
     switch (type) {
-      case 'area':
+      case 'locality':
         return ImagePath.direction
       case 'genre':
         return ImagePath.menuUser3
@@ -591,6 +593,7 @@ const SearchBar = props => {
           {autoSuggestData?.length && valuekey ? (
             <FlatList
               data={autoSuggestData}
+              keyExtractor={(_, index) => index.toString()}
               bounces={false}
               style={{
                 marginLeft: '10%',
@@ -599,9 +602,9 @@ const SearchBar = props => {
                 marginBottom: 20,
                 position: 'absolute',
                 top: 45,
-                maxHeight: '50%',
                 width: '85%',
                 zIndex: 99999,
+                maxHeight: hp(50),
               }}
               renderItem={({item}) => {
                 return (
