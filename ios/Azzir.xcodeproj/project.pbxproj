@@ -794,6 +794,7 @@
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = Azzir/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Azzir;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -829,6 +830,7 @@
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = Azzir/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Azzir;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
