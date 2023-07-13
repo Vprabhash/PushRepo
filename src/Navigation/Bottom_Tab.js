@@ -13,9 +13,11 @@ import Profile from '../Components/Profile/Profile';
 import {FONTS} from '../Components/constants';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
-import { getBottomSpace } from 'react-native-iphone-screen-helper';
+import {getBottomSpace} from 'react-native-iphone-screen-helper';
+import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
 
 const Tab = createBottomTabNavigator();
+// const Tab = AnimatedTabBarNavigator();
 
 const Club = createNativeStackNavigator();
 const ClubStack = () => {
@@ -63,6 +65,7 @@ const HomeStack = () => {
 function BottomTab() {
   return (
     <Tab.Navigator
+      safeAreaInsets={{bottom: 0}}
       screenOptions={({focused}) => ({
         tabBarActiveTintColor: '#9700AF',
         tabBarInactiveTintColor: '#000',
@@ -70,13 +73,14 @@ function BottomTab() {
           elevation: 3,
           borderTopWidth: 1,
           marginTop: 0.5,
-          marginBottom:2,
-          // position: 'absolute',
-          // bottom: 5,
-          height: Platform.OS === 'ios' ? 65 + getBottomSpace() : 65,
+          // marginBottom:2,
+          position: 'absolute',
+          bottom: 20,
+          height: Platform.OS === 'ios' ? 65 : 65,
           borderRadius: 100,
           backgroundColor: '#fff',
           overflow: 'hidden',
+          marginHorizontal: 10,
         },
         tabBarLabelStyle: {
           paddingBottom: 10,
