@@ -13,7 +13,7 @@ import Profile from '../Components/Profile/Profile';
 import {FONTS} from '../Components/constants';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
-import {getBottomSpace} from 'react-native-iphone-screen-helper';
+import {getBottomSpace, isIphoneX} from 'react-native-iphone-screen-helper';
 import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
 
 const Tab = createBottomTabNavigator();
@@ -75,7 +75,7 @@ function BottomTab() {
           marginTop: 0.5,
           // marginBottom:2,
           position: 'absolute',
-          bottom: 20,
+          bottom: isIphoneX() ? 20 : 15,
           height: Platform.OS === 'ios' ? 65 : 65,
           borderRadius: 100,
           backgroundColor: '#fff',
