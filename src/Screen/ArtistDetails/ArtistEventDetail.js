@@ -478,17 +478,17 @@ const ArtistEventDetail = props => {
           }}
         />
       </View>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <ImageBackground
+          source={ImagePath.Azzir_Bg}
+          resizeMode="cover"
+          style={{height: '100%'}}>
+      <ScrollView contentContainerStyle={{flex: 1}}>
         <StatusBar
           barStyle="dark-content"
           hidden={false}
           backgroundColor="transparent"
           translucent={true}
         />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%'}}>
           <View style={{flex: 1, width: '100%', marginTop: hp(3)}}>
             <View
               style={{
@@ -740,7 +740,6 @@ const ArtistEventDetail = props => {
               </TouchableOpacity>
             ) : null}
           </View>
-        </ImageBackground>
         <UpcomingEventModal
           visible={isEventModalVisible}
           data={upcomingEvents}
@@ -754,8 +753,9 @@ const ArtistEventDetail = props => {
           onPressCancel={() => {
             setIsEventModalVisible(false);
           }}
-        />
+          />
       </ScrollView>
+          </ImageBackground>
     </View>
   );
 };

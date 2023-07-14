@@ -25,7 +25,7 @@ import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import {useSelector} from 'react-redux';
-import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
+import {getBottomSpace, getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import {logEvent} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
@@ -474,6 +474,9 @@ const ArtistDetail = props => {
               }}
               onEndReached={dontCall ? null : fetchMoreData}
               ListEmptyComponent={EmptyListMessage}
+              contentContainerStyle={{
+                paddingBottom: getBottomSpace() + 50
+              }}
             />
           )}
         </View>

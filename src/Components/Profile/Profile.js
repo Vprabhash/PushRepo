@@ -25,7 +25,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import { LoginManager } from 'react-native-fbsdk-next';
+import {LoginManager} from 'react-native-fbsdk-next';
+import {getBottomSpace} from 'react-native-iphone-screen-helper';
 const Profile = ({navigation}) => {
   // const dispatch = useDispatch();
   const [userProfileData, setUserProfileData] = useState({});
@@ -429,18 +430,18 @@ const Profile = ({navigation}) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}>
-                  <Text
-                    style={{
-                      color: COLORS.black,
-                      fontFamily: FONTS.AxiformaMedium,
-                      fontSize: 20,
-                    }}>
-                    {userProfileData?.firstName || userProfileData?.lastName
-                      ? `${userProfileData?.firstName || ''} ${
-                          userProfileData?.lastName || ''
-                        }`
-                      : 'Anonymous'}
-                  </Text>
+                  {userProfileData?.firstName || userProfileData?.lastName ? (
+                    <Text
+                      style={{
+                        color: COLORS.black,
+                        fontFamily: FONTS.AxiformaMedium,
+                        fontSize: 20,
+                      }}>
+                      {`${userProfileData?.firstName || ''} ${
+                            userProfileData?.lastName || ''
+                          }`}
+                    </Text>
+                  ) : null}
                   {/* <Image
                     style={{
                       height: 16,
@@ -479,7 +480,11 @@ const Profile = ({navigation}) => {
               Account Settings
             </Text>
             <View style={styles.ProfileList}>
-              <FlatList data={accountList} renderItem={accountListRenderItem} />
+              <FlatList
+                bounces={false}
+                data={accountList}
+                renderItem={accountListRenderItem}
+              />
             </View>
             {/* <Text style={styles.settingText}>Notification Settings</Text>
           <View style={styles.ProfileList}>

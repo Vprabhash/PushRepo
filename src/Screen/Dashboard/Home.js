@@ -45,7 +45,7 @@ import Geolocation from '@react-native-community/geolocation';
 // import Geolocation from 'react-native-geolocation-service';
 import CitySelector from '../../Components/CitySelector';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
-import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-screen-helper';
 import { showLoader } from '../../redux/reducers/loaderSlice';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
@@ -829,7 +829,7 @@ const Home = props => {
           />
         </View> */}
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: getBottomSpace() + 50 }}
           showsVerticalScrollIndicator={false}>
           <StatusBar
             barStyle="dark-content"
@@ -959,7 +959,7 @@ const Home = props => {
               onEndReached={fetchMoreData}
             /> */}
           {/* </SafeAreaView> */}
-          <View style={[styles.hedingTextMain, { marginTop: hp(4) }]}>
+          <View style={styles.hedingTextMain}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <Text style={styles.cardText}>ARTISTS IN SPOTLIGHT</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
@@ -968,7 +968,7 @@ const Home = props => {
             horizontal={true}
             data={artistsSpotlight}
             renderItem={artistRenderItem}
-            contentContainerStyle={{ paddingStart: 5 }}
+            contentContainerStyle={{ paddingStart: 5, paddingEnd: 10 }}
             showsHorizontalScrollIndicator={false}
           // ListFooterComponent={artistRenderFooter}
           // onEndReachedThreshold={0.7}
@@ -1022,6 +1022,7 @@ const Home = props => {
             <FlatList
               horizontal
               data={upcomingEvents}
+              showsHorizontalScrollIndicator={false}
               renderItem={UpcomingData_RenderItem}
               contentContainerStyle={{
                 marginVertical: 20,
@@ -1089,7 +1090,7 @@ const Home = props => {
 export default Home;
 const styles = StyleSheet.create({
   hedingTextMain: {
-    marginTop: hp(3),
+    marginTop: 40,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -1098,7 +1099,7 @@ const styles = StyleSheet.create({
   hedingImg: { width: '30%', resizeMode: 'contain' },
   cardText: {
     fontFamily: FONTS.AxiformaBold,
-    fontSize: 12,
+    fontSize: 16,
     marginHorizontal: 5,
     textAlign: 'center',
     color: COLORS.black,

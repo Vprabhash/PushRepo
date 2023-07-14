@@ -24,7 +24,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { COLORS, FONTS } from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FastImage from 'react-native-fast-image';
-import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-screen-helper';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
@@ -472,6 +472,9 @@ const EventListing = props => {
             onEndReached={dontCall ? null : fetchMoreData}
             ListEmptyComponent={EmptyListMessage}
             maxToRenderPerBatch={15}
+            contentContainerStyle={{
+              paddingBottom: getBottomSpace() + 50
+            }}
           />
         </ScrollView>
       </ImageBackground>
@@ -488,7 +491,8 @@ const styles = StyleSheet.create({
     color: '#575757',
   },
   hedingTextMain: {
-    marginVertical: hp(2),
+    marginTop: 40,
+    marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
@@ -497,7 +501,7 @@ const styles = StyleSheet.create({
   hedingImg: { width: wp(30), resizeMode: 'contain' },
   cardText: {
     fontFamily: FONTS.AxiformaBold,
-    fontSize: 12,
+    fontSize: 16,
     marginHorizontal: 5,
     textAlign: 'center',
     color: COLORS.black,

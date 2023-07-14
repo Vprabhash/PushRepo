@@ -27,7 +27,7 @@ import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-screen-helper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute } from '@react-navigation/native';
 import { showFilter } from '../../redux/reducers/isFilterOpenSlice';
@@ -463,6 +463,9 @@ const ClubListing = ({ navigation, route }) => {
               onEndReached={dontCall ? null : fetchMoreData}
               ListEmptyComponent={EmptyListMessage}
               maxToRenderPerBatch={15}
+              contentContainerStyle={{
+                paddingBottom: getBottomSpace() + 50
+              }}
             />
           )}
         </View>

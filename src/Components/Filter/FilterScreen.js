@@ -21,9 +21,12 @@ import {COLORS, FONTS} from '../constants';
 import GradientText from '../GradientText';
 import ApiCall from '../../redux/CommanApi';
 import {useSelector} from 'react-redux';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-screen-helper';
 
 function FilterData({label, onClick, image, bgColor}) {
-  
   return (
     <TouchableOpacity
       onPress={() => {
@@ -45,8 +48,8 @@ const FilterScreen = ({
   isArtistFilter,
   selectedFilter,
 }) => {
-  const selectedCity = useSelector(state=>state.citySelector.selectedCity);
-  const userBaseCity = useSelector(state=>state.citySelector.userBaseCity);
+  const selectedCity = useSelector(state => state.citySelector.selectedCity);
+  const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
 
   const [searchLocality, setSearchLocality] = useState('');
   const [searchGenre, setSearchGenre] = useState('');
@@ -86,7 +89,7 @@ const FilterScreen = ({
   // }
   useEffect(() => {
     filterApi();
-  }, [isArtistFilter,selectedCity,userBaseCity]);
+  }, [isArtistFilter, selectedCity, userBaseCity]);
 
   // select all localities
   useEffect(() => {
@@ -106,7 +109,7 @@ const FilterScreen = ({
 
   const filterApi = async () => {
     try {
-      const res = await ApiCall('api/filters?city='+selectedCity, 'GET');
+      const res = await ApiCall('api/filters?city=' + selectedCity, 'GET');
       console.log('Filters:', res?.data);
       const uniqueArray = res?.data?.localities?.map(item => {
         const foundLocality = savedLocalities.find(
@@ -357,13 +360,17 @@ const FilterScreen = ({
         backgroundColor="transparent"
         translucent={true}
       />
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView
+        bounces={false}
+        contentContainerStyle={{
+          height: hp(100) - (getBottomSpace() + 50),
+        }}>
         <View
           style={{
             backgroundColor: '#FFFFFF',
             elevation: 5,
             paddingVertical: 10,
-            paddingTop: hp(7),
+            paddingTop: getStatusBarHeight() + 5,
           }}>
           <View
             style={{
@@ -1319,8 +1326,8 @@ const FilterScreen = ({
             flexDirection: 'row',
             justifyContent: 'space-between',
             zIndex: 99,
-            position:'absolute',
-            bottom:0
+            // position: 'absolute',
+            // bottom: getBottomSpace() + 50,
           }}>
           <TouchableOpacity
             activeOpacity={0.7}
