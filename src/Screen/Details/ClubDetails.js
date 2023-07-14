@@ -846,7 +846,7 @@ const ClubDetails = props => {
               ) : null}
             </View>
           </ScrollView>
-          <Text style={[styles.aboutText]}>Clubs Nearby </Text>
+          <Text style={[styles.aboutText]}>Clubs Nearby</Text>
           <FlatList
             horizontal={true}
             data={clubsNearby}
@@ -854,7 +854,7 @@ const ClubDetails = props => {
             ItemSeparatorComponent={<View style={{width: 20}} />}
             contentContainerStyle={{
               paddingEnd: 20,
-              paddingBottom: getBottomSpace() + 20,
+              paddingBottom: getBottomSpace() + 75,
             }}
             ListEmptyComponent={
               <View

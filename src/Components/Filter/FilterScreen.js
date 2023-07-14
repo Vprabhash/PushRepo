@@ -574,7 +574,7 @@ const FilterScreen = ({
                   />
                   <Text style={styles.selectAllText}>Select All</Text>
                 </TouchableOpacity>
-                <View style={{maxHeight: hp(62)}}>
+                <View style={{maxHeight: hp(65)}}>
                   <FlatList
                     data={localities?.filter(e =>
                       e.label.includes(searchLocality),
@@ -582,6 +582,7 @@ const FilterScreen = ({
                     nestedScrollEnabled={true}
                     renderItem={rendarItemLocality}
                     showsVerticalScrollIndicator={false}
+                    ListFooterComponent={<View style={{height: hp(3)}} />}
                   />
                 </View>
               </>
@@ -1327,7 +1328,7 @@ const FilterScreen = ({
             justifyContent: 'space-between',
             zIndex: 99,
             // position: 'absolute',
-            // bottom: getBottomSpace() + 50,
+            // bottom: getBottomSpace() + 60,
           }}>
           <TouchableOpacity
             activeOpacity={0.7}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -19,17 +19,20 @@ import {
 } from 'react-native-responsive-screen';
 import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import { COLORS, FONTS } from '../../Components/constants';
+import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FastImage from 'react-native-fast-image';
-import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-screen-helper';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
-import { logEvent } from '../../utils/AddFirebaseEvent';
+import {logEvent} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -79,7 +82,7 @@ const EventListing = props => {
           <ActivityIndicator
             color={'#fff'}
             size={'large'}
-            style={{ marginLeft: 8 }}
+            style={{marginLeft: 8}}
           />
         ) : null}
       </View>
@@ -117,7 +120,8 @@ const EventListing = props => {
   const eventsNearbyDataApi = () => {
     try {
       ApiCall(
-        `api/events?upcoming=1&coordinates=${locationLatLong?.latitude || ''}${locationLatLong?.latitude ? ',' : ''
+        `api/events?upcoming=1&coordinates=${locationLatLong?.latitude || ''}${
+          locationLatLong?.latitude ? ',' : ''
         }${locationLatLong?.longitude || ''}&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
       ).then(res => {
@@ -156,9 +160,9 @@ const EventListing = props => {
     }
   };
 
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
-      <View style={{ width: wp(100), marginBottom: hp(3) }}>
+      <View style={{width: wp(100), marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
             logEvent('event_detail', item?.title);
@@ -173,8 +177,8 @@ const EventListing = props => {
             elevation: 4,
           }}>
           {item?.images?.length &&
-            item?.images[0] &&
-            typeof item?.images[0]?.path == 'string' ? (
+          item?.images[0] &&
+          typeof item?.images[0]?.path == 'string' ? (
             <FastImage
               style={{
                 height: hp(29),
@@ -182,7 +186,7 @@ const EventListing = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{ uri: item?.images[0]?.path }}
+              source={{uri: item?.images[0]?.path}}
             />
           ) : (
             <View
@@ -226,7 +230,7 @@ const EventListing = props => {
               {moment(item?.eventDate).format('MMM')}
             </Text>
           </View>
-          <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
             <View
               style={{
@@ -235,8 +239,8 @@ const EventListing = props => {
                 alignItems: 'center',
               }}>
               {item?.artists?.length &&
-                item?.artists[0]?.images?.length &&
-                item?.artists[0]?.images[0] ? (
+              item?.artists[0]?.images?.length &&
+              item?.artists[0]?.images[0] ? (
                 <Image
                   style={{
                     height: 30,
@@ -245,11 +249,11 @@ const EventListing = props => {
                     resizeMode: 'contain',
                     marginRight: 6,
                   }}
-                  source={{ uri: item?.artists[0]?.images[0] }}
+                  source={{uri: item?.artists[0]?.images[0]}}
                 />
               ) : null}
               <Text
-                style={[styles.singerName, { width: '70%', marginVertical: 0 }]}>
+                style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
                 By {item?.artists?.map(e => e?.name)?.join(', ')}
               </Text>
             </View>
@@ -264,7 +268,7 @@ const EventListing = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={[styles.listingText, { width: '70%' }]}>
+              <Text style={[styles.listingText, {width: '70%'}]}>
                 <Text
                   style={[styles.listingText]}
                   onPress={() => {
@@ -280,14 +284,14 @@ const EventListing = props => {
                   .filter(e => e)
                   .join(', ')}
               </Text>
-              <View style={{ marginTop: -10, alignItems: 'center' }}>
+              <View style={{marginTop: -10, alignItems: 'center'}}>
                 <Text style={[styles.listingText]}>
                   {'₹' + item?.price?.amount}
                 </Text>
                 <Text
                   style={[
                     styles.listinhText,
-                    { marginTop: 0, fontFamily: FONTS.AxiformaRegular },
+                    {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
                   ]}>
                   onwards
                 </Text>
@@ -299,9 +303,9 @@ const EventListing = props => {
     );
   };
 
-  const eventRenderItem = ({ item, index }) => {
+  const eventRenderItem = ({item, index}) => {
     return (
-      <View style={{ flex: 1, width: '50%', marginBottom: hp(3) }}>
+      <View style={{flex: 1, width: '50%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
             props.navigation.navigate('ArtistPlayingDetail', {
@@ -316,8 +320,8 @@ const EventListing = props => {
             elevation: 4,
           }}>
           {item?.artists?.length &&
-            item?.images[0] &&
-            typeof item?.images[0]?.path == 'string' ? (
+          item?.images[0] &&
+          typeof item?.images[0]?.path == 'string' ? (
             <Image
               style={{
                 height: hp(18),
@@ -326,7 +330,7 @@ const EventListing = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{ uri: item?.images[0]?.path }}
+              source={{uri: item?.images[0]?.path}}
             />
           ) : (
             <View
@@ -339,11 +343,11 @@ const EventListing = props => {
               }}
             />
           )}
-          <View style={{ padding: wp(3), width: wp(38) }}>
+          <View style={{padding: wp(3), width: wp(38)}}>
             <Text
               style={[
                 styles.listinhHeading1,
-                { marginBottom: hp(0.5), width: wp(38) },
+                {marginBottom: hp(0.5), width: wp(38)},
               ]}>
               {item.title}
             </Text>
@@ -367,18 +371,18 @@ const EventListing = props => {
                 item?.eventEndTime,
               ).format('hh:mm A')}`}
             </Text>
-            <Text style={[styles.listinhText, { width: '98%' }]}>
+            <Text style={[styles.listinhText, {width: '98%'}]}>
               {[item?.address?.locality || '', item?.address?.city || '']
                 .filter(e => e)
                 .join(', ')}
             </Text>
-            <Text style={[styles.listingText, { marginTop: hp(2) }]}>
+            <Text style={[styles.listingText, {marginTop: hp(2)}]}>
               {'₹' + item?.price?.amount}
             </Text>
             <Text
               style={[
                 styles.listinhText,
-                { marginTop: 0, fontFamily: FONTS.AxiformaRegular },
+                {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
               ]}>
               onwards
             </Text>
@@ -398,11 +402,11 @@ const EventListing = props => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{ height: '100%' }}>
+        style={{height: '100%'}}>
         {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
@@ -442,11 +446,11 @@ const EventListing = props => {
           {nearByEvents?.length ? (
             <FlatList horizontal data={nearByEvents} renderItem={_renderItem} />
           ) : (
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <Text
                 style={[
                   styles.noDataText,
-                  { textAlign: 'center', marginTop: 0 },
+                  {textAlign: 'center', marginTop: 0},
                 ]}>
                 No Events Found.
               </Text>
@@ -473,7 +477,7 @@ const EventListing = props => {
             ListEmptyComponent={EmptyListMessage}
             maxToRenderPerBatch={15}
             contentContainerStyle={{
-              paddingBottom: getBottomSpace() + 50
+              paddingBottom: getBottomSpace() + 60,
             }}
           />
         </ScrollView>
@@ -498,7 +502,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'space-between',
   },
-  hedingImg: { width: wp(30), resizeMode: 'contain' },
+  hedingImg: {width: wp(30), resizeMode: 'contain'},
   cardText: {
     fontFamily: FONTS.AxiformaBold,
     fontSize: 16,
@@ -537,7 +541,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginTop: hp(1),
-    lineHeight: 20
+    lineHeight: 20,
   },
   listingText: {
     fontSize: 14,

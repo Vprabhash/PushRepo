@@ -58,7 +58,7 @@ const SearchBar = props => {
     setValuekey('');
     navigation.addListener('focus', () => {
       setAutoSuggestData([]);
-    })
+    });
   }, []);
 
   const searchTypeImages = [
@@ -470,15 +470,15 @@ const SearchBar = props => {
   const imageType = type => {
     switch (type) {
       case 'locality':
-        return ImagePath.direction
+        return ImagePath.direction;
       case 'genre':
-        return ImagePath.menuUser3
+        return ImagePath.menuUser3;
       case 'artist':
-        return ImagePath.artistIcon
+        return ImagePath.artistIcon;
       case 'club':
-        return ImagePath.clubActive
+        return ImagePath.clubActive;
       case 'dj':
-        return ImagePath.liveDjIcon
+        return ImagePath.liveDjIcon;
       default:
         return null;
     }
@@ -621,7 +621,10 @@ const SearchBar = props => {
                       searchApi(item?.title);
                     }}>
                     <Image
-                      style={[styles.iconStyle, {marginRight: 8, width: 20, height:20}]}
+                      style={[
+                        styles.iconStyle,
+                        {marginRight: 8, width: 20, height: 20},
+                      ]}
                       source={imageType(item?.type)}
                     />
                     <Text
@@ -653,127 +656,132 @@ const SearchBar = props => {
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>
           </TouchableOpacity>
-          <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
-            {recommendation && !valuekey ? (
-              <>
-                <View style={styles.hedingTextMain}>
-                  <Image
-                    style={styles.hedingImg}
-                    source={ImagePath.rightLine1}
-                  />
-                  <Text style={styles.cardText}>TRENDING IN YOUR CITY</Text>
-                  <Image
-                    style={styles.hedingImg}
-                    source={ImagePath.rightLine}
-                  />
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start',
-                    marginBottom: 20,
-                  }}>
-                  {recommendation?.map(item => {
-                    let data = [].concat(
-                      item.localities,
-                      item.generes,
-                      item.clubs,
-                      item.artists,
-                    );
-                    return (
-                      <>
-                        {data?.map(term => {
-                          return (
-                            <TouchableOpacity
-                              onPress={() => {
-                                setValuekey(term);
-                                searchApi(term);
-                              }}
-                              style={{
-                                paddingHorizontal: 8,
-                                paddingVertical: 5,
-                                borderRadius: 40,
-                                borderWidth: 1,
-                                borderColor: COLORS.primary,
-                                marginLeft: 10,
-                                marginBottom: 10,
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                              }}>
-                              <Image
-                                source={ImagePath.trendIcon}
-                                style={{height: 15, width: 15, marginRight: 8}}
-                              />
-                              <Text
-                                style={{
-                                  color: COLORS.black,
-                                  fontFamily: FONTS.AxiformaRegular,
-                                }}>
-                                {term}
-                              </Text>
-                            </TouchableOpacity>
-                          );
-                        })}
-                      </>
-                    );
-                  })}
-                </View>
-                {/* <View style={styles.hedingTextMain}>
-                  <Image
-                    style={styles.hedingImg}
-                    source={ImagePath.rightLine1}
-                  />
-                  <Text style={styles.cardText}>
-                    SEARCH BY AREA, GENRE, ARTIST OR CLUB
-                  </Text>
-                  <Image
-                    style={styles.hedingImg}
-                    source={ImagePath.rightLine}
-                  />
-                </View> */}
-
-                {/* location type list */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    width: wp(90),
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    alignSelf: 'center',
-                    marginTop: 10,
-                  }}>
-                  {searchTypeImages?.map((item, index) =>
-                    renderSearchImages({item}),
-                  )}
-                </View>
-                {/* <FlatList
-                  data={searchTypeImages}
-                  numColumns={2}
-                  keyExtractor={(_, i) => i.toString()}
-                  renderItem={renderSearchImages}
-                  ItemSeparatorComponent={<View style={{width: wp(3)}} />}
-                  style={{
-                    alignSelf: 'center',
-                    marginTop: 10,
-                  }}
-                  contentContainerStyle={{
-                    justifyContent: 'space-between',
-                    backgroundColor: 'red',
-                  }}
-                /> */}
-              </>
-            ) : null}
-          </ScrollView>
-
           <FlatList
             data={clubs}
             renderItem={_renderItem}
             keyExtractor={(_, i) => i.toString()}
             onEndReachedThreshold={0.3}
             contentContainerStyle={{paddingTop: 20, paddingBottom: 100}}
+            ListHeaderComponent={
+              recommendation && !valuekey ? (
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  nestedScrollEnabled>
+                  <View style={styles.hedingTextMain}>
+                    <Image
+                      style={styles.hedingImg}
+                      source={ImagePath.rightLine1}
+                    />
+                    <Text style={styles.cardText}>TRENDING IN YOUR CITY</Text>
+                    <Image
+                      style={styles.hedingImg}
+                      source={ImagePath.rightLine}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'flex-start',
+                      marginBottom: 20,
+                    }}>
+                    {recommendation?.map(item => {
+                      let data = [].concat(
+                        item.localities,
+                        item.generes,
+                        item.clubs,
+                        item.artists,
+                      );
+                      return (
+                        <>
+                          {data?.map(term => {
+                            return (
+                              <TouchableOpacity
+                                onPress={() => {
+                                  setValuekey(term);
+                                  searchApi(term);
+                                }}
+                                style={{
+                                  paddingHorizontal: 8,
+                                  paddingVertical: 5,
+                                  borderRadius: 40,
+                                  borderWidth: 1,
+                                  borderColor: COLORS.primary,
+                                  marginLeft: 10,
+                                  marginBottom: 10,
+                                  flexDirection: 'row',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}>
+                                <Image
+                                  source={ImagePath.trendIcon}
+                                  style={{
+                                    height: 15,
+                                    width: 15,
+                                    marginRight: 8,
+                                  }}
+                                />
+                                <Text
+                                  style={{
+                                    color: COLORS.black,
+                                    fontFamily: FONTS.AxiformaRegular,
+                                  }}>
+                                  {term}
+                                </Text>
+                              </TouchableOpacity>
+                            );
+                          })}
+                        </>
+                      );
+                    })}
+                  </View>
+                  {/* <View style={styles.hedingTextMain}>
+                    <Image
+                      style={styles.hedingImg}
+                      source={ImagePath.rightLine1}
+                    />
+                    <Text style={styles.cardText}>
+                      SEARCH BY AREA, GENRE, ARTIST OR CLUB
+                    </Text>
+                    <Image
+                      style={styles.hedingImg}
+                      source={ImagePath.rightLine}
+                    />
+                  </View> */}
+
+                  {/* location type list */}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: wp(90),
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between',
+                      alignSelf: 'center',
+                      marginTop: 10,
+                    }}>
+                    {searchTypeImages?.map((item, index) =>
+                      renderSearchImages({item}),
+                    )}
+                  </View>
+                  {/* <FlatList
+                    data={searchTypeImages}
+                    numColumns={2}
+                    keyExtractor={(_, i) => i.toString()}
+                    renderItem={renderSearchImages}
+                    ItemSeparatorComponent={<View style={{width: wp(3)}} />}
+                    style={{
+                      alignSelf: 'center',
+                      marginTop: 10,
+                    }}
+                    contentContainerStyle={{
+                      justifyContent: 'space-between',
+                      backgroundColor: 'red',
+                    }}
+                  /> */}
+                </ScrollView>
+              ) : null
+            }
             // ListEmptyComponent={EmptyListMessage}
           />
         </View>

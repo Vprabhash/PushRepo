@@ -478,17 +478,17 @@ const ArtistEventDetail = props => {
           }}
         />
       </View>
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
-          resizeMode="cover"
-          style={{height: '100%'}}>
-      <ScrollView contentContainerStyle={{flex: 1}}>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
-        />
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        resizeMode="cover"
+        style={{height: '100%'}}>
+        <ScrollView contentContainerStyle={{flex: 1}}>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={false}
+            backgroundColor="transparent"
+            translucent={true}
+          />
           <View style={{flex: 1, width: '100%', marginTop: hp(3)}}>
             <View
               style={{
@@ -740,22 +740,22 @@ const ArtistEventDetail = props => {
               </TouchableOpacity>
             ) : null}
           </View>
-        <UpcomingEventModal
-          visible={isEventModalVisible}
-          data={upcomingEvents}
-          onPress={e => {
-            setIsEventModalVisible(false);
-            logEvent('event_detail', e?.title);
-            props.navigation.navigate('ArtistPlayingDetail', {
-              artistData: e,
-            });
-          }}
-          onPressCancel={() => {
-            setIsEventModalVisible(false);
-          }}
-          />
-      </ScrollView>
-          </ImageBackground>
+        </ScrollView>
+      </ImageBackground>
+      <UpcomingEventModal
+        visible={isEventModalVisible}
+        data={upcomingEvents}
+        onPress={e => {
+          setIsEventModalVisible(false);
+          logEvent('event_detail', e?.title);
+          props.navigation.navigate('ArtistPlayingDetail', {
+            artistData: e,
+          });
+        }}
+        onPressCancel={() => {
+          setIsEventModalVisible(false);
+        }}
+      />
     </View>
   );
 };
