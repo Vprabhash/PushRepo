@@ -5,12 +5,14 @@ import store from './src/redux/store';
 import { LogBox } from 'react-native';
 import { Settings } from 'react-native-fbsdk-next';
 import { requestUserPermission } from './src/utils/common';
+import InAppUpdate from './inAppUpdate';
 
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 
 const App = () => {
   useEffect(() => {
+    InAppUpdate?.checkUpdate();
     Settings.initializeSDK()
     requestUserPermission()
   }, [])
