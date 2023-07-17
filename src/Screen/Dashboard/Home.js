@@ -356,31 +356,45 @@ const Home = props => {
           artistListDetail: item,
         });
       }}
-      style={{ marginTop: 20, height: wp(28) }}>
+      style={{
+        marginTop: 20,
+        height: wp(28),
+        width: wp(28),
+        marginLeft: 15,
+        borderRadius: 10,
+        overflow: 'hidden',
+      }}>
       <FastImage
         style={{
           height: wp(28),
           width: wp(28),
           borderRadius: 10,
-          marginLeft: 15,
           resizeMode: 'cover',
         }}
         source={{ uri: item?.images[0] ?? '' }}
       />
-      <Text
-        style={[
-          {
-            color: COLORS.white,
-            fontSize: 12,
-            fontFamily: FONTS.AxiformaMedium,
-            // position: 'absolute',
-            bottom: 28,
-            left: 30,
-            width: '70%',
-          },
-        ]}>
-        {item.name}
-      </Text>
+      <LinearGradient
+        colors={['transparent', '#0d0d0d']}
+        style={{
+          width: '100%',
+          position: 'absolute',
+          bottom: 0,
+          paddingBottom: 10,
+          paddingLeft: 10,
+        }}>
+        <Text
+          style={[
+            {
+              color: COLORS.white,
+              fontSize: 12,
+              fontFamily: FONTS.AxiformaMedium,
+              width: '90%',
+
+            },
+          ]}>
+          {item.name}
+        </Text>
+      </LinearGradient>
     </TouchableOpacity>
   );
 
@@ -429,6 +443,7 @@ const Home = props => {
   const UpcomingData_RenderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
+        style={{ borderRadius: 10, overflow: 'hidden' }}
         onPress={() => {
           logEvent('event_detail', item?.title);
           props.navigation.navigate('ArtistPlayingDetail', {
@@ -458,6 +473,7 @@ const Home = props => {
             }}
           />
         )}
+
         <View
           style={{
             height: 39,
@@ -489,7 +505,15 @@ const Home = props => {
             {moment(item?.eventDate).format('MMM')}
           </Text>
         </View>
-        <View style={{ position: 'absolute', left: 9, bottom: 9 }}>
+        <LinearGradient
+          colors={['transparent', '#0d0d0d']}
+          style={{
+            width: '100%',
+            position: 'absolute',
+            bottom: 0,
+            paddingBottom: 10,
+            paddingLeft: 10,
+          }}>
           {/* <TouchableOpacity
             style={{
               borderRadius: 10,
@@ -587,7 +611,8 @@ const Home = props => {
                 .join(', ')}
             </Text>
           </View>
-        </View>
+        </LinearGradient>
+
       </TouchableOpacity>
     );
   };
@@ -767,6 +792,8 @@ const Home = props => {
           marginLeft: index == 0 ? 15 : 0,
           marginRight: index == 2 ? 15 : 15,
           marginBottom: 10,
+          borderRadius: 10,
+          overflow: 'hidden',
         }}>
         {item?.media?.ambienceImages?.length ? (
           <FastImage
@@ -788,7 +815,16 @@ const Home = props => {
             }}
           />
         )}
-        <View style={{ position: 'absolute', left: 15, bottom: 15 }}>
+        <LinearGradient
+          colors={['transparent', '#0d0d0d']}
+          style={{
+            width: '100%',
+            position: 'absolute',
+            paddingLeft: 15,
+            paddingBottom: 15,
+            bottom: 0,
+            overflow: 'hidden',
+          }}>
           <Text
             style={{
               fontSize: 16,
@@ -819,7 +855,7 @@ const Home = props => {
             ]}>
             {item.locality}, {item.city}
           </Text>
-        </View>
+        </LinearGradient>
       </TouchableOpacity>
     );
   };

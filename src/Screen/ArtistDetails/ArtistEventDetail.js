@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Image,
   ImageBackground,
@@ -19,7 +19,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import ImagePath from '../../assets/ImagePath';
-import {COLORS, FONTS} from '../../Components/constants';
+import { COLORS, FONTS } from '../../Components/constants';
 import Header from '../../Components/Header';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
@@ -27,7 +27,7 @@ import ApiCall from '../../redux/CommanApi';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
-import {logEvent} from '../../utils/AddFirebaseEvent';
+import { logEvent } from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -97,19 +97,19 @@ const ArtistEventDetail = props => {
     }
   };
 
-  const UpcomingData_RenderItem = ({item, index}) => {
+  const UpcomingData_RenderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
-        style={{height: hp(20)}}
+        style={{ height: hp(20) }}
         onPress={() => {
           props.navigation.navigate('ArtistPlayingDetail', {
             artistData: item,
           });
         }}>
         {item?.artists?.length &&
-        item?.artists[0]?.images?.length &&
-        item?.artists[0]?.images[0] &&
-        typeof item?.artists[0]?.images[0] == 'string' ? (
+          item?.artists[0]?.images?.length &&
+          item?.artists[0]?.images[0] &&
+          typeof item?.artists[0]?.images[0] == 'string' ? (
           <FastImage
             style={{
               marginLeft: 15,
@@ -119,7 +119,7 @@ const ArtistEventDetail = props => {
               resizeMode: 'cover',
               borderRadius: 10,
             }}
-            source={{uri: item?.artists[0]?.images[0]}}
+            source={{ uri: item?.artists[0]?.images[0] }}
           />
         ) : (
           <View
@@ -165,7 +165,7 @@ const ArtistEventDetail = props => {
             {moment(item?.eventDate).format('MMM')}
           </Text>
         </View>
-        <View style={{position: 'absolute', left: 27, bottom: 9}}>
+        <View style={{ position: 'absolute', left: 27, bottom: 9 }}>
           {/* <TouchableOpacity
             style={{
               borderRadius: 10,
@@ -202,7 +202,7 @@ const ArtistEventDetail = props => {
             }}>
             By {item?.artists?.map(e => e?.name)?.join(', ')}
           </Text>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <Image
               style={{
                 height: 10,
@@ -238,16 +238,16 @@ const ArtistEventDetail = props => {
           <ActivityIndicator
             color={COLORS.black}
             size={'large'}
-            style={{marginLeft: 8}}
+            style={{ marginLeft: 8 }}
           />
         ) : null}
       </View>
     );
   };
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     return (
-      <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
+      <View style={{ flex: 1, width: '100%', marginBottom: hp(3) }}>
         <TouchableOpacity
           onPress={() => {
             logEvent('event_detail', item?.title);
@@ -262,8 +262,8 @@ const ArtistEventDetail = props => {
             elevation: 4,
           }}>
           {item?.images?.length &&
-          item?.images[0] &&
-          typeof item?.images[0]?.path == 'string' ? (
+            item?.images[0] &&
+            typeof item?.images[0]?.path == 'string' ? (
             <FastImage
               style={{
                 height: hp(29),
@@ -271,7 +271,7 @@ const ArtistEventDetail = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{uri: item.images[0]?.path}}
+              source={{ uri: item.images[0]?.path }}
             />
           ) : (
             <View
@@ -315,7 +315,7 @@ const ArtistEventDetail = props => {
               {moment(item?.eventDate).format('MMM')}
             </Text>
           </View> */}
-          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+          <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
             {item?.artists?.length ? (
               <View
@@ -326,7 +326,7 @@ const ArtistEventDetail = props => {
                   marginBottom: 10,
                 }}>
                 {item?.artists[0]?.images?.length &&
-                item?.artists[0]?.images[0] ? (
+                  item?.artists[0]?.images[0] ? (
                   <Image
                     style={{
                       height: 40,
@@ -334,32 +334,32 @@ const ArtistEventDetail = props => {
                       borderRadius: 20,
                       resizeMode: 'contain',
                     }}
-                    source={{uri: item?.artists[0]?.images[0]}}
+                    source={{ uri: item?.artists[0]?.images[0] }}
                   />
                 ) : null}
                 <Text style={[styles.singerName]}>By </Text>
-                <View style={{width: '70%'}}>
+                <View style={{ width: '70%' }}>
                   {item?.artists?.length
                     ? item?.artists?.map(e => {
-                        return (
-                          <Text
-                            style={[
-                              styles.singerName,
-                              {
-                                textDecorationLine: 'underline',
-                                marginLeft: 0,
-                              },
-                            ]}
-                            onPress={() => {
-                              logEvent('artist_detail', e?.name);
-                              props.navigation.navigate('ArtistEventDetail', {
-                                artistListDetail: e,
-                              });
-                            }}>
-                            {e?.name}
-                          </Text>
-                        );
-                      })
+                      return (
+                        <Text
+                          style={[
+                            styles.singerName,
+                            {
+                              textDecorationLine: 'underline',
+                              marginLeft: 0,
+                            },
+                          ]}
+                          onPress={() => {
+                            logEvent('artist_detail', e?.name);
+                            props.navigation.navigate('ArtistEventDetail', {
+                              artistListDetail: e,
+                            });
+                          }}>
+                          {e?.name}
+                        </Text>
+                      );
+                    })
                     : null}
                 </View>
               </View>
@@ -380,7 +380,7 @@ const ArtistEventDetail = props => {
                 }}
                 source={ImagePath.location}
               />
-              <View style={{flex: 0.6}}>
+              <View style={{ flex: 0.6 }}>
                 <Text style={styles.singerName}>
                   <Text
                     style={[
@@ -411,7 +411,7 @@ const ArtistEventDetail = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row', marginTop: 10}}>
+              <View style={{ flexDirection: 'row', marginTop: 10 }}>
                 <Image
                   style={{
                     height: 17,
@@ -424,19 +424,19 @@ const ArtistEventDetail = props => {
                 />
                 {item?.artists?.length
                   ? item?.artists?.map(e => {
-                      return (
-                        <Text
-                          style={[styles.singerName]}
-                          onPress={() => {
-                            logEvent('artist_detail', e?.name);
-                            props.navigation.navigate('ArtistEventDetail', {
-                              artistListDetail: e,
-                            });
-                          }}>
-                          {e?.musicGenre}
-                        </Text>
-                      );
-                    })
+                    return (
+                      <Text
+                        style={[styles.singerName]}
+                        onPress={() => {
+                          logEvent('artist_detail', e?.name);
+                          props.navigation.navigate('ArtistEventDetail', {
+                            artistListDetail: e,
+                          });
+                        }}>
+                        {e?.musicGenre}
+                      </Text>
+                    );
+                  })
                   : null}
               </View>
               {/* <View style={{marginTop: -10, alignItems: 'center'}}>
@@ -458,38 +458,40 @@ const ArtistEventDetail = props => {
     );
   };
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       {/* <View style={{marginTop: 50, marginBottom: 10}}></View> */}
-      <View
-        style={{
-          backgroundColor: '#fff',
-          elevation: 10,
-          paddingTop: 46,
-          paddingBottom: 14,
-          paddingHorizontal: 15,
-        }}>
-        <Header
-          Back_Arrow={ImagePath.goBack}
-          titalTwo="Artist Details"
-          iconHeight={13}
-          iconWidth={30}
-          onclick={() => {
-            props.navigation.goBack();
-          }}
-        />
-      </View>
+      <StatusBar
+        barStyle="dark-content"
+        hidden={false}
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{height: '100%'}}>
-        <ScrollView contentContainerStyle={{flex: 1}}>
-          <StatusBar
-            barStyle="dark-content"
-            hidden={false}
-            backgroundColor="transparent"
-            translucent={true}
+        style={{ height: '100%' }}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            elevation: 10,
+            paddingTop: 46,
+            paddingBottom: 14,
+            paddingHorizontal: 15,
+          }}>
+          <Header
+            Back_Arrow={ImagePath.goBack}
+            titalTwo="Artist Details"
+            iconHeight={13}
+            iconWidth={30}
+            onclick={() => {
+              props.navigation.goBack();
+            }}
           />
-          <View style={{flex: 1, width: '100%', marginTop: hp(3)}}>
+        </View>
+
+
+        <ScrollView >
+          <View style={{ flex: 1, width: '100%', marginTop: hp(3), paddingBottom: 60 }}>
             <View
               style={{
                 marginHorizontal: 15,
@@ -523,20 +525,20 @@ const ArtistEventDetail = props => {
                 )}
               </TouchableOpacity>
 
-              <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+              <View style={{ paddingHorizontal: wp(2), paddingVertical: hp(1) }}>
                 <View>
                   <Text style={styles.listinhHeading}>{detailData?.name}</Text>
                 </View>
                 <Text
                   style={[
                     styles.listingText,
-                    {marginVertical: hp(0.3), textTransform: 'uppercase'},
+                    { marginVertical: hp(0.3), textTransform: 'uppercase' },
                   ]}>
                   {detailData?.type?.toLowerCase() === 'artist'
                     ? 'SINGER'
                     : detailData?.type}
                 </Text>
-                <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+                <Text style={[styles.listingText, { marginVertical: hp(0.3) }]}>
                   {detailData?.musicGenre}
                 </Text>
               </View>
@@ -563,7 +565,7 @@ const ArtistEventDetail = props => {
                     }}
                     style={[
                       styles.btnmain,
-                      {borderBottomLeftRadius: 10, marginRight: 1},
+                      { borderBottomLeftRadius: 10, marginRight: 1 },
                     ]}>
                     <Image
                       style={styles.btnIcon}
@@ -588,7 +590,7 @@ const ArtistEventDetail = props => {
                     }}
                     style={[
                       styles.btnmainDisabled,
-                      {borderBottomLeftRadius: 10, marginRight: 1},
+                      { borderBottomLeftRadius: 10, marginRight: 1 },
                     ]}>
                     <Image
                       style={styles.btnIconDisabled}
@@ -613,7 +615,7 @@ const ArtistEventDetail = props => {
                         );
                       }
                     }}
-                    style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
+                    style={[styles.btnmain, { borderBottomRightRadius: 10 }]}>
                     <Image style={styles.btnIcon} source={ImagePath.youtube} />
                     <Text style={styles.buttonText}>YouTube</Text>
                   </TouchableOpacity>
@@ -634,7 +636,7 @@ const ArtistEventDetail = props => {
                     }}
                     style={[
                       styles.btnmainDisabled,
-                      {borderBottomRightRadius: 10},
+                      { borderBottomRightRadius: 10 },
                     ]}>
                     <Image
                       style={styles.btnIconDisabled}
@@ -679,7 +681,7 @@ const ArtistEventDetail = props => {
                 ? 'Whats Happening Today'
                 : 'Upcoming Events'}
             </Text>
-            <View style={{marginTop: 10}}>
+            <View style={{ marginTop: 10 }}>
               <FlatList
                 data={
                   haveTodaysEvent()?.length
@@ -696,7 +698,7 @@ const ArtistEventDetail = props => {
                       alignItems: 'center',
                       marginBottom: hp(4),
                     }}>
-                    <Text style={[styles.titleText1, {textAlign: 'center'}]}>
+                    <Text style={[styles.titleText1, { textAlign: 'center' }]}>
                       No Upcoming Events.{'\n'}Please check back later.
                     </Text>
                   </View>
@@ -705,7 +707,7 @@ const ArtistEventDetail = props => {
             </View>
             {upcomingEvents?.length ? (
               <TouchableOpacity
-                style={{alignSelf: 'center', marginBottom: 40}}
+                style={{ alignSelf: 'center', marginBottom: 40 }}
                 onPress={() => setIsEventModalVisible(true)}>
                 <LinearGradient
                   style={{
@@ -716,7 +718,7 @@ const ArtistEventDetail = props => {
                     flexDirection: 'row',
                     paddingHorizontal: 10,
                   }}
-                  start={{x: 0.4, y: 0}}
+                  start={{ x: 0.4, y: 0 }}
                   colors={['rgba(189, 12, 189, 1)', 'rgba(21, 154, 201, 1)']}>
                   <Image
                     source={ImagePath.calendarIcon}
@@ -815,7 +817,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  hedingImg: {width: '30%', resizeMode: 'contain'},
+  hedingImg: { width: '30%', resizeMode: 'contain' },
   cardText: {
     fontFamily: FONTS.AxiformaBold,
     fontSize: 12,
