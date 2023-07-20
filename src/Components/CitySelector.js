@@ -32,7 +32,7 @@ const CitySelector = ({
   const renderLabel = () => {
     if (isFocus) {
       return (
-        <Text style={[styles.label, isFocus && {color: '#000000'}]}>
+        <Text style={[styles.label, isFocus && {color: COLORS.black}]}>
           Select City
         </Text>
       );
@@ -125,14 +125,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    color: '#000000',
+    color: COLORS.black,
     width: wp(48),
     // marginTop:10
   },
   textItem: {
     fontFamily: FONTS.RobotoRegular,
     fontSize: RFValue(14, Dimensions.get('window').height),
-    color: '#000000',
+    color: COLORS.black,
     flex: 1,
   },
   icon: {
@@ -144,21 +144,21 @@ const styles = StyleSheet.create({
   itemTextStyle: {
     paddingVertical: 5,
     fontFamily: FONTS.RobotoRegular,
-    color: '#000000',
+    color: COLORS.black,
   },
   placeholderStyle: {
     fontSize: RFValue(14, Dimensions.get('window').height),
-    color: '#000000',
+    color: COLORS.black,
     fontFamily: FONTS.RobotoRegular,
   },
   selectedTextStyle: {
     fontSize: RFValue(14, Dimensions.get('window').height),
-    color: '#000000',
+    color: COLORS.black,
     fontFamily: FONTS.RobotoRegular,
   },
   inputSearchStyle: {
     fontSize: 16,
-    color: '#000000',
+    color: COLORS.black,
     fontFamily: FONTS.RobotoRegular,
   },
 });
