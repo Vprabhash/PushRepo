@@ -1,6 +1,7 @@
 export default {
   Azzir_Bg: require('./Image/Azzir_Bg.png'),
   star_logo: require('./Image/star_logo.png'),
+  Azzir_AppIcon: require('./Image/Azzir_AppIcon.png'),
   Explore: require('./Image/Stage_Light.png'),
   dancePic: require('./Image/dancePic.png'),
   msgIcon: require('./Image/msgIcon.png'),

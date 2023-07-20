@@ -15,6 +15,7 @@ import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 import Disclamer from '../../Components/Disclamer';
 import {currentCity} from '../../redux/reducers/citySelectorSlice';
 import ApiCall from '../../redux/CommanApi';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 const Splash_Screen = props => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -22,21 +23,21 @@ const Splash_Screen = props => {
       // console.log('userdata: ===', userdata);
       // setData('currentCity', null);
       global.currentCity = null;
-      if (!userdata) {
-        setTimeout(() => {
-          props.navigation.reset({
-            index: 0,
-            routes: [{name: 'Explore'}],
-          });
-        }, 2000);
-      } else {
-        setTimeout(() => {
-          props.navigation.reset({
-            index: 0,
-            routes: [{name: 'BottomTab'}],
-          });
-        }, 1000);
-      }
+      // if (!userdata) {
+      //   setTimeout(() => {
+      //     props.navigation.reset({
+      //       index: 0,
+      //       routes: [{name: 'Explore'}],
+      //     });
+      //   }, 2000);
+      // } else {
+      //   setTimeout(() => {
+      //     props.navigation.reset({
+      //       index: 0,
+      //       routes: [{name: 'BottomTab'}],
+      //     });
+      //   }, 1000);
+      // }
     });
     checkLocation();
   }, []);
@@ -151,8 +152,12 @@ const Splash_Screen = props => {
           alignItems: 'center',
         }}>
         <Image
-          source={ImagePath.star_logo}
-          style={{width: 228, resizeMode: 'contain'}}
+          source={ImagePath.Azzir_AppIcon}
+          style={{
+            width: widthPercentageToDP(80),
+            height: widthPercentageToDP(80),
+            resizeMode: 'contain',
+          }}
         />
       </ImageBackground>
     </View>
