@@ -23,21 +23,21 @@ const Splash_Screen = props => {
       // console.log('userdata: ===', userdata);
       // setData('currentCity', null);
       global.currentCity = null;
-      // if (!userdata) {
-      //   setTimeout(() => {
-      //     props.navigation.reset({
-      //       index: 0,
-      //       routes: [{name: 'Explore'}],
-      //     });
-      //   }, 2000);
-      // } else {
-      //   setTimeout(() => {
-      //     props.navigation.reset({
-      //       index: 0,
-      //       routes: [{name: 'BottomTab'}],
-      //     });
-      //   }, 1000);
-      // }
+      if (!userdata) {
+        setTimeout(() => {
+          props.navigation.reset({
+            index: 0,
+            routes: [{name: 'Explore'}],
+          });
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          props.navigation.reset({
+            index: 0,
+            routes: [{name: 'BottomTab'}],
+          });
+        }, 1000);
+      }
     });
     checkLocation();
   }, []);
