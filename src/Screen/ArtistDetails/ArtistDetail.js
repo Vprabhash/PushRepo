@@ -91,8 +91,6 @@ const ArtistDetail = props => {
   }
 
   const fetchArtistsData = async page => {
-    // console.log('------page :', page);
-
     let tempdataGenres = [];
     for (let i = 0; i < selectedFilter?.musicGenre?.length; i++) {
       if (selectedFilter?.musicGenre[i].checked == true) {
@@ -102,12 +100,6 @@ const ArtistDetail = props => {
       }
     }
     try {
-      // console.log(
-      //   'artist filter URL===',
-      //   `api/artists?page=${page}&type=${
-      //     selectedFilter?.artist || ''
-      //   }&musicGenre=${tempdataGenres?.join('|') || ''}`,
-      // );
       const queryParams = new URLSearchParams();
       queryParams.append('page', page);
       if (tempdataGenres?.length) {
