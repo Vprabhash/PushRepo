@@ -452,7 +452,7 @@ const EventListing = props => {
                   styles.noDataText,
                   {textAlign: 'center', marginTop: 0},
                 ]}>
-                No Events Found.
+                No Events Found
               </Text>
             </View>
           )}

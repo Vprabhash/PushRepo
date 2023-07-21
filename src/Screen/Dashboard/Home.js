@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer, createRef, useRef } from 'react';
+import React, {useEffect, useState, useReducer, createRef, useRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -29,18 +29,18 @@ import {
 } from 'react-native-responsive-screen';
 import Header from '../../Components/Header';
 import ImagePath from '../../assets/ImagePath';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { COLORS, FONTS } from '../../Components/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { spotLightApi } from '../../redux/reducers/spotLightSlice';
-import { artistApi } from '../../redux/reducers/artistSlice';
-import { LocationApi } from '../../redux/reducers/clubLocationSlice';
-import { upComingEventApi } from '../../redux/reducers/upComingEventSlice';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {COLORS, FONTS} from '../../Components/constants';
+import {useDispatch, useSelector} from 'react-redux';
+import {spotLightApi} from '../../redux/reducers/spotLightSlice';
+import {artistApi} from '../../redux/reducers/artistSlice';
+import {LocationApi} from '../../redux/reducers/clubLocationSlice';
+import {upComingEventApi} from '../../redux/reducers/upComingEventSlice';
 import ApiCall from '../../redux/CommanApi';
-import { ARTIST } from '../../services/Apis';
+import {ARTIST} from '../../services/Apis';
 import Disclamer from '../../Components/Disclamer';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
-import { addCoordinates } from '../../redux/reducers/clubLocationSlice';
+import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 import Geolocation from '@react-native-community/geolocation';
 // import Geolocation from 'react-native-geolocation-service';
 import CitySelector from '../../Components/CitySelector';
@@ -49,12 +49,15 @@ import {
   getBottomSpace,
   getStatusBarHeight,
 } from 'react-native-iphone-screen-helper';
-import { showLoader } from '../../redux/reducers/loaderSlice';
+import {showLoader} from '../../redux/reducers/loaderSlice';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
-import { logEvent } from '../../utils/AddFirebaseEvent';
-import { currentCity } from '../../redux/reducers/citySelectorSlice';
-import { getData } from '../../Components/Helper';
+import {logEvent} from '../../utils/AddFirebaseEvent';
+import {
+  currentCity,
+  userCurrentCity,
+} from '../../redux/reducers/citySelectorSlice';
+import {getData} from '../../Components/Helper';
 import LinearGradient from 'react-native-linear-gradient';
 
 const width = Dimensions.get('window').width;
@@ -170,7 +173,7 @@ const Home = props => {
           <ActivityIndicator
             color={'#fff'}
             size={'large'}
-            style={{ marginLeft: 8 }}
+            style={{marginLeft: 8}}
           />
         ) : null}
       </View>
@@ -200,6 +203,7 @@ const Home = props => {
                     console.log('Current city:', component.long_name);
                     if (!global.currentCity) {
                       dispatch(currentCity(component.long_name));
+                      dispatch(userCurrentCity(component.long_name));
                     }
                     break;
                   }
@@ -214,7 +218,7 @@ const Home = props => {
       error => {
         console.log('location error', error.code, error.message);
       },
-      { enableHighAccuracy: true, timeout: 500000 },
+      {enableHighAccuracy: true, timeout: 500000},
     );
   };
 
@@ -263,11 +267,11 @@ const Home = props => {
     }
   };
   const Tabs = [
-    { mapIcon: ImagePath.listTwoImg, title: 'Cocktail Bar' },
-    { mapIcon: ImagePath.clubLocation, title: 'Nightclub' },
-    { mapIcon: ImagePath.listTwoImg, title: 'Cocktail' },
-    { mapIcon: ImagePath.clubLocation, title: 'Nightclub' },
-    { mapIcon: ImagePath.listTwoImg, title: 'Cocktail' },
+    {mapIcon: ImagePath.listTwoImg, title: 'Cocktail Bar'},
+    {mapIcon: ImagePath.clubLocation, title: 'Nightclub'},
+    {mapIcon: ImagePath.listTwoImg, title: 'Cocktail'},
+    {mapIcon: ImagePath.clubLocation, title: 'Nightclub'},
+    {mapIcon: ImagePath.listTwoImg, title: 'Cocktail'},
   ];
   const [clubsSpotlight, setClubsSpotlight] = useState([]);
   const [artistsSpotlight, setArtistsSpotlight] = useState([]);
@@ -318,7 +322,7 @@ const Home = props => {
           <ActivityIndicator
             color={'#fff'}
             size={'large'}
-            style={{ marginLeft: 8 }}
+            style={{marginLeft: 8}}
           />
         ) : null}
       </View>
@@ -342,13 +346,13 @@ const Home = props => {
     }
   };
   const [artistData, setArtistData] = useState([
-    { Bar_Icon: ImagePath.listImg },
-    { Bar_Icon: ImagePath.artistImg },
-    { Bar_Icon: ImagePath.artistImg1 },
-    { Bar_Icon: ImagePath.listImg },
-    { Bar_Icon: ImagePath.artistImg },
+    {Bar_Icon: ImagePath.listImg},
+    {Bar_Icon: ImagePath.artistImg},
+    {Bar_Icon: ImagePath.artistImg1},
+    {Bar_Icon: ImagePath.listImg},
+    {Bar_Icon: ImagePath.artistImg},
   ]);
-  const artistRenderItem = ({ item, index }) => (
+  const artistRenderItem = ({item, index}) => (
     <TouchableOpacity
       onPress={() => {
         logEvent('artist_detail', item?.name);
@@ -371,7 +375,7 @@ const Home = props => {
           borderRadius: 10,
           resizeMode: 'cover',
         }}
-        source={{ uri: item?.images[0] ?? '' }}
+        source={{uri: item?.images[0] ?? ''}}
       />
       <LinearGradient
         colors={['transparent', '#0d0d0d']}
@@ -389,7 +393,6 @@ const Home = props => {
               fontSize: 12,
               fontFamily: FONTS.AxiformaMedium,
               width: '90%',
-
             },
           ]}>
           {item.name}
@@ -440,10 +443,10 @@ const Home = props => {
     }
   };
 
-  const UpcomingData_RenderItem = ({ item, index }) => {
+  const UpcomingData_RenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
-        style={{ borderRadius: 10, overflow: 'hidden' }}
+        style={{borderRadius: 10, overflow: 'hidden'}}
         onPress={() => {
           logEvent('event_detail', item?.title);
           props.navigation.navigate('ArtistPlayingDetail', {
@@ -451,8 +454,8 @@ const Home = props => {
           });
         }}>
         {item?.images?.length &&
-          item?.images[0] &&
-          typeof item?.images[0]?.path == 'string' ? (
+        item?.images[0] &&
+        typeof item?.images[0]?.path == 'string' ? (
           <FastImage
             style={{
               height: hp(20),
@@ -460,7 +463,7 @@ const Home = props => {
               resizeMode: 'cover',
               borderRadius: 10,
             }}
-            source={{ uri: item?.images[0]?.path }}
+            source={{uri: item?.images[0]?.path}}
           />
         ) : (
           <View
@@ -548,8 +551,8 @@ const Home = props => {
               marginVertical: 5,
             }}>
             {item?.artists?.length &&
-              item?.artists[0]?.images?.length &&
-              item?.artists[0]?.images[0] ? (
+            item?.artists[0]?.images?.length &&
+            item?.artists[0]?.images[0] ? (
               <Image
                 style={{
                   height: 20,
@@ -558,7 +561,7 @@ const Home = props => {
                   resizeMode: 'contain',
                   marginRight: 6,
                 }}
-                source={{ uri: item?.artists[0]?.images[0] }}
+                source={{uri: item?.artists[0]?.images[0]}}
               />
             ) : null}
             <Text
@@ -582,7 +585,7 @@ const Home = props => {
               item?.eventEndTime,
             ).format('hh:mm A')}`}
           </Text>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{flexDirection: 'row'}}>
             <Image
               style={{
                 height: 10,
@@ -612,7 +615,6 @@ const Home = props => {
             </Text>
           </View>
         </LinearGradient>
-
       </TouchableOpacity>
     );
   };
@@ -624,7 +626,7 @@ const Home = props => {
           <ActivityIndicator
             color={'#fff'}
             size={'large'}
-            style={{ marginLeft: 8 }}
+            style={{marginLeft: 8}}
           />
         ) : null}
       </View>
@@ -644,7 +646,7 @@ const Home = props => {
           <ActivityIndicator
             color={'#fff'}
             size={'large'}
-            style={{ marginLeft: 8 }}
+            style={{marginLeft: 8}}
           />
         ) : null}
       </View>
@@ -687,11 +689,11 @@ const Home = props => {
       Location: 'Sector 52, Near Ahuja Tower',
     },
   ]);
-  const SpotlightData_RenderItem = ({ item, index }) => {
+  const SpotlightData_RenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          props.navigation.push('ClubDetails', { listDetail: item });
+          props.navigation.push('ClubDetails', {listDetail: item});
         }}
         style={{
           marginLeft: wp(2.5),
@@ -708,7 +710,7 @@ const Home = props => {
               resizeMode: 'cover',
               borderRadius: 10,
             }}
-            source={{ uri: item?.media?.ambienceImages[0] || '' }}
+            source={{uri: item?.media?.ambienceImages[0] || ''}}
           />
         ) : (
           <View
@@ -768,7 +770,8 @@ const Home = props => {
     console.log('locationdata ---', locationLatLong);
     try {
       ApiCall(
-        `api/nearby-clubs?coordinates=${locationLatLong?.latitude || ''}${locationLatLong?.latitude ? ',' : ''
+        `api/nearby-clubs?coordinates=${locationLatLong?.latitude || ''}${
+          locationLatLong?.latitude ? ',' : ''
         }${locationLatLong?.longitude || ''}&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
         'GET',
       ).then(res => {
@@ -782,11 +785,11 @@ const Home = props => {
     }
   };
   const [clubsNearby, setClubNearby] = useState([]);
-  const ClubNarDatarenderItem = ({ item, index }) => {
+  const ClubNarDatarenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          props.navigation.push('ClubDetails', { listDetail: item });
+          props.navigation.push('ClubDetails', {listDetail: item});
         }}
         style={{
           marginLeft: index == 0 ? 15 : 0,
@@ -803,7 +806,7 @@ const Home = props => {
               resizeMode: 'cover',
               borderRadius: 10,
             }}
-            source={{ uri: item?.media?.ambienceImages[0] }}
+            source={{uri: item?.media?.ambienceImages[0]}}
           />
         ) : (
           <View
@@ -861,11 +864,11 @@ const Home = props => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
-        style={{ height: '100%' }}>
+        style={{height: '100%'}}>
         {/* <View style={{marginHorizontal: 15, marginTop: 46, marginBottom: 14}}>
           <Header
             Back_Arrow={ImagePath.manueIcon}
@@ -922,7 +925,7 @@ const Home = props => {
             showsHorizontalScrollIndicator={false}
             // ListFooterComponent={spotLightrenderFooter}
             // onEndReachedThreshold={0.7}
-            contentContainerStyle={{ marginTop: 20, zIndex: 99, paddingStart: 5 }}
+            contentContainerStyle={{marginTop: 20, zIndex: 99, paddingStart: 5}}
             // onMomentumScrollBegin={() => {
             //   setonEndReachedCalledDuringspotLight(false);
             // }}
@@ -950,7 +953,7 @@ const Home = props => {
             renderItem={ClubNarDatarenderItem}
             showsHorizontalScrollIndicator={false}
             // ListFooterComponent={renderFooter}
-            style={{ marginTop: 20, marginBottom: -hp(2), paddingStart: 5 }}
+            style={{marginTop: 20, marginBottom: -hp(2), paddingStart: 5}}
             // onEndReachedThreshold={0.7}
             // onMomentumScrollBegin={() => {
             //   setonEndReachedCalledDuringMomentum(false);
@@ -973,7 +976,7 @@ const Home = props => {
                       <Text
                         style={[
                           styles.titleText1,
-                          { marginHorizontal: 30, textAlign: 'center' },
+                          {marginHorizontal: 30, textAlign: 'center'},
                         ]}>
                         AZZIR needs to detect you location to show the clubs
                         near you.
@@ -1022,14 +1025,31 @@ const Home = props => {
             horizontal={true}
             data={artistsSpotlight}
             renderItem={artistRenderItem}
-            contentContainerStyle={{ paddingStart: 5, paddingEnd: 10 }}
+            contentContainerStyle={{paddingStart: 5, paddingEnd: 10}}
             showsHorizontalScrollIndicator={false}
-          // ListFooterComponent={artistRenderFooter}
-          // onEndReachedThreshold={0.7}
-          // onMomentumScrollBegin={() => {
-          //   setonEndReachedCalledDuringArtist(false);
-          // }}
-          // onEndReached={fetchArtistData}
+            ListEmptyComponent={
+              <View
+                style={{
+                  height: 50,
+                  width: width,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={[
+                    styles.titleText1,
+                    {textAlign: 'center', lineHeight: 20},
+                  ]}>
+                  No Artists Found
+                </Text>
+              </View>
+            }
+            // ListFooterComponent={artistRenderFooter}
+            // onEndReachedThreshold={0.7}
+            // onMomentumScrollBegin={() => {
+            //   setonEndReachedCalledDuringArtist(false);
+            // }}
+            // onEndReached={fetchArtistData}
           />
           {/* <TouchableOpacity
             style={[
@@ -1090,9 +1110,9 @@ const Home = props => {
                 setonEndReachedCalledDuringUpcoming(false);
               }}
               ItemSeparatorComponent={() => {
-                return <View style={{ width: 15 }} />;
+                return <View style={{width: 15}} />;
               }}
-            // onEndReached={fetchUpcomingData}
+              // onEndReached={fetchUpcomingData}
             />
           ) : (
             <View
@@ -1106,7 +1126,7 @@ const Home = props => {
               <Text
                 style={[
                   styles.titleText1,
-                  { textAlign: 'center', lineHeight: 20 },
+                  {textAlign: 'center', lineHeight: 20},
                 ]}>
                 No Upcoming Events.{'\n'}Please check back later.
               </Text>
@@ -1154,7 +1174,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  hedingImg: { width: '30%', resizeMode: 'contain' },
+  hedingImg: {width: '30%', resizeMode: 'contain'},
   cardText: {
     fontFamily: FONTS.AxiformaBold,
     fontSize: 16,
@@ -1190,13 +1210,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  redioText: { color: COLORS.black },
+  redioText: {color: COLORS.black},
   textModal: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: hp(2),
   },
-  redioImg: { height: 15, width: 15, tintColor: COLORS.black },
+  redioImg: {height: 15, width: 15, tintColor: COLORS.black},
 
   button: {
     height: 60,

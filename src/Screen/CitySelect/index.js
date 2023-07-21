@@ -21,7 +21,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 
 import Disclamer from '../../Components/Disclamer';
-import {currentCity} from '../../redux/reducers/citySelectorSlice';
+import {
+  currentCity,
+  userCurrentCity,
+} from '../../redux/reducers/citySelectorSlice';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -70,6 +73,7 @@ const CitySelect = props => {
                   if (component.types.includes('locality')) {
                     console.log('Current city:', component.long_name);
                     dispatch(currentCity(component.long_name));
+                    dispatch(userCurrentCity(component.long_name));
                     break;
                   }
                 }

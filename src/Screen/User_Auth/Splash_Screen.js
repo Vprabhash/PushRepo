@@ -13,7 +13,10 @@ import {useDispatch} from 'react-redux';
 import {addCoordinates} from '../../redux/reducers/clubLocationSlice';
 
 import Disclamer from '../../Components/Disclamer';
-import {currentCity} from '../../redux/reducers/citySelectorSlice';
+import {
+  currentCity,
+  userCurrentCity,
+} from '../../redux/reducers/citySelectorSlice';
 import ApiCall from '../../redux/CommanApi';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
 const Splash_Screen = props => {
@@ -63,6 +66,7 @@ const Splash_Screen = props => {
                   if (component.types.includes('locality')) {
                     console.log('Current city:', component.long_name);
                     dispatch(currentCity(component.long_name));
+                    dispatch(userCurrentCity(component.long_name));
                     // ApiCall('api/cities', 'GET')
                     //   .then(res => {
                     //     console.log('Current city:', res);
