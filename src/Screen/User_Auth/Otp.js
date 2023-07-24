@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,9 @@ import {
   StyleSheet,
   ImageBackground,
   Alert,
+  StatusBar,
 } from 'react-native';
-import OTPTextInput from 'react-native-otp-textinput';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import {
   widthPercentageToDP as wp,
@@ -16,6 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-simple-toast';
+import {getHash, startOtpListener, useOtpVerify} from 'react-native-otp-verify';
 
 import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
@@ -27,14 +29,24 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const Otp = props => {
-  const forgetotp = props?.route?.params?.forgetmail;
-  const forgetmail = props?.route?.params?.email;
+  const forgetotp = props?.route?.params?.forgetmail || '';
+  const forgetmail = props?.route?.params?.email || '';
   const [Otp, setOtp] = useState('');
   const [isLoading, setLoading] = useState(false);
-  const email = props.route?.params?.email;
-  const phone = props?.route?.params;
-  const password = props.route?.params?.password;
-  console.log('props signOtp--------', props.route.params);
+  const email = props.route?.params?.email || '';
+  const phone = props?.route?.params || '';
+  const password = props.route?.params?.password || '';
+  // console.log('props signOtp--------', props.route.params);
+
+  // useEffect(() => {
+  //   startOtpListener(message => {
+  //     // extract the otp using regex e.g. the below regex extracts 4 digit otp from message
+  //     const otp = /(\d{6})/g.exec(message)[1];
+  //     setOtp(otp);
+  //   });
+  //   return () => removeListener();
+  // }, []);
+
   const OtpApi = async () => {
     if (Otp.length < 6) {
       Toast.showWithGravity('Enter valid OTP', Toast.LONG, Toast.BOTTOM);
@@ -162,6 +174,7 @@ const Otp = props => {
 
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
+      <StatusBar barStyle={'dark-content'} />
       <ImageBackground
         source={ImagePath.Azzir_Bg}
         resizeMode="cover"
@@ -203,14 +216,17 @@ const Otp = props => {
                 ? `Check your phone, we’ve sent you the OTP at ${phone?.phone}`
                 : `Check your email, we’ve sent you the OTP at ${email}`}
             </Text>
-            <OTPTextInput
-              textInputStyle={{width: 40}}
-              inputCount={6}
-              returnKeyType={'next'}
-              handleTextChange={text => setOtp(text)}
-              defaultValue={Otp}
-              tintColor={'gray'}
-              borderBottomWidth={1}
+            <OTPInputView
+              style={{width: '100%', height: 100, color: COLORS.black}}
+              pinCount={6}
+              code={Otp}
+              onCodeChanged={code => setOtp(code)}
+              autoFocusOnLoad
+              codeInputFieldStyle={styles.underlineStyleBase}
+              codeInputHighlightStyle={styles.underlineStyleHighLighted}
+              onCodeFilled={code => {
+                console.log(`Code is ${code}, you are good to go!`);
+              }}
             />
             <CustomButton
               onclick={() => {
@@ -285,6 +301,27 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     marginBottom: 15,
   },
+  borderStyleBase: {
+    width: 40,
+    height: 45,
+  },
 
-  // signIn: { fontFamily: "Metropolis-SemiBold", fontSize: 28, color: '#000000', marginBottom: 15 },
+  borderStyleHighLighted: {
+    borderColor: COLORS.black,
+  },
+
+  underlineStyleBase: {
+    width: 40,
+    height: 45,
+    borderWidth: 0,
+    borderBottomWidth: 2,
+    borderColor: 'gray',
+    color: COLORS.black,
+    fontFamily: FONTS.AxiformaMedium,
+    fontSize: 22,
+  },
+
+  underlineStyleHighLighted: {
+    borderColor: COLORS.black,
+  },
 });
