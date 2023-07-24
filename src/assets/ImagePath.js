@@ -72,6 +72,7 @@ export default {
   profile: require('./Image/profile.png'),
 
   direction: require('./Image/direction.png'),
+  email: require('./Image/email.png'),
   WhatsApp: require('./Image/WhatsApp.png'),
   WhatsAppDisabled: require('./Image/WhatsApp-disabled.png'),
   food: require('./Image/food.png'),

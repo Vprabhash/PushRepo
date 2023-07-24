@@ -284,18 +284,20 @@ const EventListing = props => {
                   .filter(e => e)
                   .join(', ')}
               </Text>
-              <View style={{marginTop: -10, alignItems: 'center'}}>
-                <Text style={[styles.listingText]}>
-                  {'₹' + item?.price?.amount}
-                </Text>
-                <Text
-                  style={[
-                    styles.listinhText,
-                    {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
-                  ]}>
-                  onwards
-                </Text>
-              </View>
+              {item?.price?.amount && (
+                <View style={{marginTop: -10, alignItems: 'center'}}>
+                  <Text style={[styles.listingText]}>
+                    {'₹' + item?.price?.amount}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.listinhText,
+                      {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+                    ]}>
+                    onwards
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
         </TouchableOpacity>

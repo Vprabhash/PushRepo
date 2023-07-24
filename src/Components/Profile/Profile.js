@@ -27,11 +27,13 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {LoginManager} from 'react-native-fbsdk-next';
 import {getBottomSpace} from 'react-native-iphone-screen-helper';
+import SupportModal from '../SupportModel';
 const Profile = ({navigation}) => {
   // const dispatch = useDispatch();
   const [userProfileData, setUserProfileData] = useState({});
   const [img, setimg] = useState('');
   const [forgetEmail, setForgetEmail] = useState('');
+  const [isSupportModalVisible, setIsSupportModalVisible] = useState(false);
 
   const accountList = [
     {
@@ -74,6 +76,13 @@ const Profile = ({navigation}) => {
       Icon: ImagePath.rightIcon,
       onPress: () =>
         Linking.openURL('https://www.azzirevents.com/privacy_policy.html'),
+    },
+    {
+      Title: 'Support',
+      Icon: ImagePath.rightIcon,
+      onPress: () => {
+        setIsSupportModalVisible(true);
+      },
     },
     {
       Title: 'Log out',
@@ -438,8 +447,8 @@ const Profile = ({navigation}) => {
                         fontSize: 20,
                       }}>
                       {`${userProfileData?.firstName || ''} ${
-                            userProfileData?.lastName || ''
-                          }`}
+                        userProfileData?.lastName || ''
+                      }`}
                     </Text>
                   ) : null}
                   {/* <Image
@@ -509,6 +518,10 @@ const Profile = ({navigation}) => {
             </View> */}
           </SafeAreaView>
         </ImageBackground>
+        <SupportModal
+          isVisible={isSupportModalVisible}
+          onClose={() => setIsSupportModalVisible(false)}
+        />
       </ScrollView>
     </View>
   );
