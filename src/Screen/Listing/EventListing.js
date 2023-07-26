@@ -252,15 +252,21 @@ const EventListing = props => {
                   source={{uri: item?.artists[0]?.images[0]}}
                 />
               ) : null}
-              <Text
-                style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
-                By {item?.artists?.map(e => e?.name)?.join(', ')}
-              </Text>
+              {item?.artists?.length ? (
+                <Text
+                  style={[
+                    styles.singerName,
+                    {width: '70%', marginVertical: 0},
+                  ]}>
+                  By {item?.artists?.map(e => e?.name)?.join(', ')}
+                </Text>
+              ) : null}
             </View>
             <Text style={styles.listinhText}>
-              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+              {/* {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
                 item?.eventEndTime,
-              ).format('hh:mm A')}`}
+              ).format('hh:mm A')}`} */}
+              {`8pm onwards`}
             </Text>
             <View
               style={{
@@ -353,16 +359,18 @@ const EventListing = props => {
               ]}>
               {item.title}
             </Text>
-            <Text
-              style={[
-                styles.singerName,
-                {
-                  width: '100%',
-                  marginTop: 0,
-                },
-              ]}>
-              By {item?.artists?.map(e => e?.name)?.join(', ')}
-            </Text>
+            {item?.artists?.length ? (
+              <Text
+                style={[
+                  styles.singerName,
+                  {
+                    width: '100%',
+                    marginTop: 0,
+                  },
+                ]}>
+                By {item?.artists?.map(e => e?.name)?.join(', ')}
+              </Text>
+            ) : null}
             <Text style={styles.listinhText}>
               {item?.eventDate
                 ? moment(item?.eventDate).format('ddd, DD MMM')
