@@ -624,57 +624,63 @@ const SearchBar = props => {
             </View>
           </View>
           {autoSuggestData?.length && valuekey ? (
-            <FlatList
-              data={autoSuggestData}
-              keyExtractor={(_, index) => index.toString()}
-              bounces={false}
+            <View
               style={{
+                position: 'absolute',
+                top: 45,
+                zIndex: 99999,
                 marginLeft: '10%',
                 marginRight: '5%',
                 borderRadius: 10,
                 marginBottom: 20,
-                position: 'absolute',
-                top: 45,
                 width: '85%',
-                zIndex: 99999,
                 maxHeight: hp(50),
-              }}
-              renderItem={({item}) => {
-                return (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={{
-                      backgroundColor: COLORS.white,
-                      padding: 10,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                    onPress={() => {
-                      setValuekey(item?.title);
-                      searchApi(item?.title);
-                    }}>
-                    <Image
-                      style={[
-                        styles.iconStyle,
-                        {marginRight: 8, width: 20, height: 20},
-                      ]}
-                      source={imageType(item?.type)}
-                    />
-                    <Text
+              }}>
+              <FlatList
+                data={autoSuggestData}
+                keyExtractor={(_, index) => index.toString()}
+                bounces={false}
+                nestedScrollEnabled={true}
+                renderItem={({item}) => {
+                  if (item?.type?.toLowerCase() === 'guest') {
+                    return;
+                  }
+                  return (
+                    <TouchableOpacity
+                      activeOpacity={0.8}
                       style={{
-                        color: 'rgba(0, 0, 0, 0.7)',
-                        fontFamily: FONTS.RobotoRegular,
-                        fontSize: 16,
+                        backgroundColor: COLORS.white,
+                        padding: 10,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                      onPress={() => {
+                        setValuekey(item?.title);
+                        searchApi(item?.title);
                       }}>
-                      {item?.title}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              }}
-              ItemSeparatorComponent={() => (
-                <View style={{height: 1, backgroundColor: COLORS.gray}} />
-              )}
-            />
+                      <Image
+                        style={[
+                          styles.iconStyle,
+                          {marginRight: 8, width: 20, height: 20},
+                        ]}
+                        source={imageType(item?.type)}
+                      />
+                      <Text
+                        style={{
+                          color: 'rgba(0, 0, 0, 0.7)',
+                          fontFamily: FONTS.RobotoRegular,
+                          fontSize: 16,
+                        }}>
+                        {item?.title}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                }}
+                ItemSeparatorComponent={() => (
+                  <View style={{height: 1, backgroundColor: COLORS.gray}} />
+                )}
+              />
+            </View>
           ) : null}
           <TouchableOpacity
             style={[styles.fllter]}
