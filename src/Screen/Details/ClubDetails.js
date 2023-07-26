@@ -36,6 +36,7 @@ import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
 import {logEvent} from '../../utils/AddFirebaseEvent';
+import ArtistsList from '../../Components/ArtistsList';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
@@ -369,9 +370,9 @@ const ClubDetails = props => {
                     source={{uri: item?.artists[0]?.images[0]}}
                   />
                 ) : null}
-                <Text style={[styles.singerName, {marginLeft: 0}]}>By </Text>
-                <View style={{width: '70%'}}>
-                  {item?.artists?.length
+                <Text style={[styles.singerName, {marginLeft: 0}]}> By </Text>
+                <View style={{width: '70%', flexDirection: 'row'}}>
+                  {/* {item?.artists?.length
                     ? item?.artists?.map(e => {
                         return (
                           <Text
@@ -392,15 +393,20 @@ const ClubDetails = props => {
                           </Text>
                         );
                       })
-                    : null}
+                    : null} */}
+                  <ArtistsList
+                    artistData={item}
+                    navigation={props.navigation}
+                  />
                 </View>
               </View>
             ) : null}
             <Text style={styles.listinhText}>
-              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
-                item?.eventEndTime,
-              ).format('hh:mm A')}`}
-              {/* {`8pm onwards`} */}
+              {item?.eventStartTime
+                ? `${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+                    item?.eventEndTime,
+                  ).format('hh:mm A')}`
+                : `8pm onwards`}
             </Text>
             <View
               style={{
@@ -408,34 +414,43 @@ const ClubDetails = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row', marginTop: 10, width: '70%'}}>
-                <Image
+              {item?.artists?.length &&
+              item?.artists?.filter(e => e?.musicGenre)?.length ? (
+                <View
                   style={{
-                    height: 17,
-                    width: 17,
-                    tintColor: '#D200FD',
-                    resizeMode: 'contain',
-                    marginRight: 2,
-                  }}
-                  source={ImagePath.menuUser3}
-                />
-                {item?.artists?.length
-                  ? item?.artists?.map(e => {
-                      return (
-                        <Text
-                          style={[styles.singerName]}
-                          onPress={() => {
-                            logEvent('artist_detail', e?.name);
-                            props.navigation.navigate('ArtistEventDetail', {
-                              artistListDetail: e,
-                            });
-                          }}>
-                          {e?.musicGenre}
-                        </Text>
-                      );
-                    })
-                  : null}
-              </View>
+                    flexDirection: 'row',
+                    marginTop: 10,
+                    width: '70%',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{
+                      height: 17,
+                      width: 17,
+                      tintColor: '#D200FD',
+                      resizeMode: 'contain',
+                      marginRight: 2,
+                    }}
+                    source={ImagePath.menuUser3}
+                  />
+                  {item?.artists?.length
+                    ? item?.artists?.map(e => {
+                        return (
+                          <Text
+                            style={[styles.singerName]}
+                            onPress={() => {
+                              logEvent('artist_detail', e?.name);
+                              props.navigation.navigate('ArtistEventDetail', {
+                                artistListDetail: e,
+                              });
+                            }}>
+                            {e?.musicGenre}
+                          </Text>
+                        );
+                      })
+                    : null}
+                </View>
+              ) : null}
               {item?.price?.amount && (
                 <View style={{marginTop: -10, alignItems: 'center'}}>
                   <Text style={[styles.listingText, {color: COLORS.black}]}>
@@ -944,7 +959,7 @@ const styles = StyleSheet.create({
   },
   //
   singerName: {
-    fontSize: 14,
+    fontSize: 16,
     marginLeft: 8,
     fontFamily: FONTS.RobotoRegular,
     color: '#5B5959',

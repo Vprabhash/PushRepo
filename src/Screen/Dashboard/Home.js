@@ -582,10 +582,11 @@ const Home = props => {
               fontFamily: FONTS.AxiformaRegular,
               marginBottom: 3,
             }}>
-            {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
-              item?.eventEndTime,
-            ).format('hh:mm A')}`}
-            {/* {`8pm onwards`} */}
+            {item?.eventStartTime
+              ? `${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+                  item?.eventEndTime,
+                ).format('hh:mm A')}`
+              : `8pm onwards`}
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image

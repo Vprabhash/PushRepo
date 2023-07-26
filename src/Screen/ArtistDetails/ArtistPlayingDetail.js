@@ -29,6 +29,7 @@ import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import moment from 'moment';
 import ImageView from 'react-native-image-viewing';
 import {logEvent} from '../../utils/AddFirebaseEvent';
+import ArtistsList from '../../Components/ArtistsList';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistPlayingDetail = props => {
@@ -224,32 +225,11 @@ const ArtistPlayingDetail = props => {
                       />
                     ) : null}
                     <Text style={[styles.singerName, {marginTop: 0}]}>By </Text>
-                    <View style={{width: '70%'}}>
-                      {artistData?.artists?.length
-                        ? artistData?.artists?.map(e => {
-                            return (
-                              <Text
-                                style={[
-                                  styles.singerName,
-                                  {
-                                    textDecorationLine: 'underline',
-                                    marginLeft: 0,
-                                    marginTop: 0,
-                                  },
-                                ]}
-                                onPress={() =>
-                                  props.navigation.navigate(
-                                    'ArtistEventDetail',
-                                    {
-                                      artistListDetail: e,
-                                    },
-                                  )
-                                }>
-                                {e?.name}
-                              </Text>
-                            );
-                          })
-                        : null}
+                    <View style={{width: '70%', flexDirection: 'row'}}>
+                      <ArtistsList
+                        artistData={artistData}
+                        navigation={props.navigation}
+                      />
                     </View>
                   </View>
                 ) : null}
