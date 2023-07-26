@@ -544,36 +544,37 @@ const Home = props => {
             }}>
             {item?.title}
           </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginVertical: 5,
-            }}>
-            {item?.artists?.length &&
-            item?.artists[0]?.images?.length &&
-            item?.artists[0]?.images[0] ? (
-              <Image
-                style={{
-                  height: 20,
-                  width: 20,
-                  borderRadius: 10,
-                  resizeMode: 'contain',
-                  marginRight: 6,
-                }}
-                source={{uri: item?.artists[0]?.images[0]}}
-              />
-            ) : null}
-            <Text
+          {item?.artists?.length ? (
+            <View
               style={{
-                fontSize: 10,
-                color: COLORS.white,
-                fontFamily: FONTS.AxiformaBold,
-                width: '80%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 5,
               }}>
-              By {item?.artists?.map(e => e?.name)?.join(', ')}
-            </Text>
-          </View>
+              {item?.artists[0]?.images?.length &&
+              item?.artists[0]?.images[0] ? (
+                <Image
+                  style={{
+                    height: 20,
+                    width: 20,
+                    borderRadius: 10,
+                    resizeMode: 'contain',
+                    marginRight: 6,
+                  }}
+                  source={{uri: item?.artists[0]?.images[0]}}
+                />
+              ) : null}
+              <Text
+                style={{
+                  fontSize: 10,
+                  color: COLORS.white,
+                  fontFamily: FONTS.AxiformaBold,
+                  width: '80%',
+                }}>
+                By {item?.artists?.map(e => e?.name)?.join(', ')}
+              </Text>
+            </View>
+          ) : null}
           <Text
             style={{
               fontSize: 10,
@@ -585,7 +586,7 @@ const Home = props => {
               item?.eventEndTime,
             ).format('hh:mm A')}`}
           </Text>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
               style={{
                 height: 10,
@@ -605,11 +606,9 @@ const Home = props => {
                   width: '90%',
                 },
               ]}>
-              {[
-                item?.club?.name || '',
-                item?.club?.locality || '',
-                item?.address?.city || '',
-              ]
+              {item?.club?.name}
+              {'\n'}
+              {[item?.club?.locality || '', item?.address?.city || '']
                 .filter(e => e)
                 .join(', ')}
             </Text>

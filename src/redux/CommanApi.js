@@ -6,16 +6,16 @@ const ApiCall = async (Url, Method, Data) => {
   let CompleteUrl = BASE_URL + Url;
   var headers = new Headers();
   headers.append('Accept', 'application/json');
-  Data instanceof FormData?
-  headers.append('Content-Type', 'multipart/form-data'):
-  headers.append('Content-Type', 'application/json');
+  Data instanceof FormData
+    ? headers.append('Content-Type', 'multipart/form-data')
+    : headers.append('Content-Type', 'application/json');
 
   headers.append('Authorization', 'Bearer ' + authToken);
 
-  console.log('HeaderToken  : ----- ', headers);
-  console.log('Url  : ---- ', CompleteUrl);
-  console.log('Method  : ----- ', Method);
-  console.log('apiData  : ------', Data);
+  console.log('HeaderToken: ----- ', headers);
+  console.log('Url: ---- ', CompleteUrl);
+  console.log('Method: ----- ', Method);
+  console.log('apiData: ------', Data);
   let body = {
     method: Method,
     headers: headers,
@@ -28,11 +28,11 @@ const ApiCall = async (Url, Method, Data) => {
       return response.json();
     })
     .then(responseJson => {
-      // console.log('responseJson  : ----- ', responseJson);
+      console.log('responseJson:---' + Url, responseJson);
       return responseJson;
     })
     .catch(error => {
-      console.log('---------------Api error---: ' + error);
+      console.log('Api error:---' + error);
       return {message: error, status: 'false'};
     });
 };

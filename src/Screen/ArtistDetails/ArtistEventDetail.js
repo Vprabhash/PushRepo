@@ -398,7 +398,7 @@ const ArtistEventDetail = props => {
                     }}>
                     {item?.club?.name}
                   </Text>
-                  ,{' '}
+                  {'\n'}
                   {[item?.club?.locality || '', item?.address?.city || '']
                     .filter(e => e)
                     .join(', ')}

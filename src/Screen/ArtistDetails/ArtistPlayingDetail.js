@@ -348,7 +348,7 @@ const ArtistPlayingDetail = props => {
                         }}>
                         {artistData?.club?.name}
                       </Text>
-                      ,{' '}
+                      {'\n'}
                       {[
                         artistData?.club?.locality || '',
                         artistData?.address?.city || '',

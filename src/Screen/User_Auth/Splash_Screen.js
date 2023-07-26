@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {Image, ImageBackground, View, StatusBar, Alert} from 'react-native';
-import ImagePath from '../../assets/ImagePath';
+import {Alert} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import {getData, setData} from '../../Components/Helper';
 import {
@@ -19,6 +18,7 @@ import {
 } from '../../redux/reducers/citySelectorSlice';
 import ApiCall from '../../redux/CommanApi';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
+import SplashScreen from '../../Components/SplashScreen';
 const Splash_Screen = props => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -139,32 +139,6 @@ const Splash_Screen = props => {
     });
   };
 
-  return (
-    <View style={{flex: 1}}>
-      <StatusBar
-        barStyle="dark-content"
-        hidden={false}
-        backgroundColor="transparent"
-        translucent={true}
-      />
-      <ImageBackground
-        source={ImagePath.Azzir_Bg}
-        style={{
-          height: '100%',
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Image
-          source={ImagePath.Azzir_AppIcon}
-          style={{
-            width: widthPercentageToDP(80),
-            height: widthPercentageToDP(80),
-            resizeMode: 'contain',
-          }}
-        />
-      </ImageBackground>
-    </View>
-  );
+  return <SplashScreen />;
 };
 export default Splash_Screen;

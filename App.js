@@ -1,23 +1,50 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Routes from './src/Navigation/Routes';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import store from './src/redux/store';
-import { LogBox } from 'react-native';
-import { Settings } from 'react-native-fbsdk-next';
-import { requestUserPermission } from './src/utils/common';
+import {AppState, LogBox} from 'react-native';
+import {Settings} from 'react-native-fbsdk-next';
+import {requestUserPermission} from './src/utils/common';
 import InAppUpdate from './inAppUpdate';
+import SplashScreen from './src/Components/SplashScreen';
 
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 
 const App = () => {
+  const appState = useRef(AppState.currentState);
+  const [isShow, setShow] = useState(false);
   useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);
     InAppUpdate?.checkUpdate();
-    Settings.initializeSDK()
-    requestUserPermission()
-  }, [])
+    Settings.initializeSDK();
+    requestUserPermission();
+  }, []);
+
+  const handleAppStateChange = nextAppState => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('App has come to the foreground!', appState.current);
+      return;
+    }
+
+    handleShow();
+    appState.current = nextAppState;
+    console.log('AppState', appState.current);
+  };
+
+  const handleShow = () => {
+    setShow(true);
+    setTimeout(() => {
+      setShow(false);
+    }, 1000);
+  };
+
   return (
     <Provider store={store}>
+      <SplashScreen isVisible={isShow} />
       <Routes />
     </Provider>
   );

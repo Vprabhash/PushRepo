@@ -384,10 +384,15 @@ const SearchBar = props => {
                   source={{uri: item?.artists[0]?.images[0]}}
                 />
               ) : null}
-              <Text
-                style={[styles.singerName, {width: '70%', marginVertical: 0}]}>
-                By {item?.artists?.map(e => e?.name)?.join(', ')}
-              </Text>
+              {item?.artists?.length ? (
+                <Text
+                  style={[
+                    styles.singerName,
+                    {width: '70%', marginVertical: 0},
+                  ]}>
+                  By {item?.artists?.map(e => e?.name)?.join(', ')}
+                </Text>
+              ) : null}
             </View>
             <Text
               style={[
@@ -415,23 +420,25 @@ const SearchBar = props => {
                   }}>
                   {item?.club?.name}
                 </Text>
-                ,{' '}
+                {'\n'}
                 {[item?.club?.locality || '', item?.address?.city || '']
                   .filter(e => e)
                   .join(', ')}
               </Text>
-              <View style={{alignItems: 'flex-end'}}>
-                <Text style={[styles.listingText, {color: COLORS.black}]}>
-                  {'₹' + item?.price?.amount}
-                </Text>
-                {/* <Text
+              {item?.price?.amount && (
+                <View style={{alignItems: 'flex-end'}}>
+                  <Text style={[styles.listingText, {color: COLORS.black}]}>
+                    {'₹' + item?.price?.amount}
+                  </Text>
+                  {/* <Text
                   style={[
                     styles.listingText,
                     {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
                   ]}>
                   onwards
                 </Text> */}
-              </View>
+                </View>
+              )}
             </View>
           </View>
         </TouchableOpacity>
