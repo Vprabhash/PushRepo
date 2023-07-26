@@ -12,6 +12,7 @@ import {
   ActivityIndicator,
   TextInput,
   Platform,
+  Pressable,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -172,78 +173,81 @@ const ArtistDetail = props => {
     // console.log(item,"item===")
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
-        <View
+        <TouchableOpacity
+          activeOpacity={0.85}
           style={{
             marginHorizontal: 15,
             borderRadius: 10,
             backgroundColor: '#FFFFFF',
             elevation: 4,
+          }}
+          onPress={() => {
+            logEvent('artist_detail', item?.name);
+            props.navigation.navigate('ArtistEventDetail', {
+              artistListDetail: item,
+            });
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              logEvent('artist_detail', item?.name);
-              props.navigation.navigate('ArtistEventDetail', {
-                artistListDetail: item,
-              });
-            }}
-            activeOpacity={0.8}>
+          {item?.images?.length ? (
+            <FastImage
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+              source={{
+                uri: item?.images[0],
+              }}
+            />
+          ) : (
             <View
               style={{
                 height: hp(29),
                 width: '100%',
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
-                justifyContent: 'flex-start',
-                position: 'relative',
-                flex: 1,
+                justifyContent: 'center',
+                backgroundColor: COLORS.gray,
+                overflow: 'hidden',
               }}>
-              {item?.images ? (
-                <FastImage
-                  style={{
-                    height: '100%',
-                    width: '100%',
-                    borderTopRightRadius: 10,
-                    borderTopLeftRadius: 10,
-                    position: 'absolute',
-                    top: 0,
-                  }}
-                  source={{
-                    uri: item?.images[0],
-                  }}
-                />
-              ) : (
-                <View
-                  style={{
-                    height: hp(29),
-                    width: '100%',
-                    borderTopRightRadius: 10,
-                    borderTopLeftRadius: 10,
-                  }}
-                />
-              )}
+              <Image
+                source={
+                  item?.type?.toLowerCase() === 'artist'
+                    ? ImagePath.placeholderSinger
+                    : item?.type?.toLowerCase() === 'dj'
+                    ? ImagePath.placeholderDj
+                    : item?.type?.toLowerCase() === 'guest'
+                    ? ImagePath.profile
+                    : ImagePath.clubActive
+                }
+                style={{
+                  height: '50%',
+                  width: '50%',
+                  resizeMode: 'contain',
+                  alignSelf: 'center',
+                  opacity: 0.5,
+                }}
+              />
             </View>
-
-            <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
-              <View>
-                <Text style={styles.listinhHeading}>{item?.name}</Text>
-              </View>
-              {item?.type && (
-                <Text
-                  style={[
-                    styles.listingText,
-                    {marginVertical: hp(0.3), textTransform: 'uppercase'},
-                  ]}>
-                  {item?.type?.toLowerCase() === 'artist'
-                    ? 'SINGER'
-                    : item?.type}
-                </Text>
-              )}
-              <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-                {item?.musicGenre}
+          )}
+          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+            <View>
+              <Text style={styles.listinhHeading}>{item?.name}</Text>
+            </View>
+            {item?.type && (
+              <Text
+                style={[
+                  styles.listingText,
+                  {marginVertical: hp(0.3), textTransform: 'uppercase'},
+                ]}>
+                {item?.type?.toLowerCase() === 'artist' ? 'SINGER' : item?.type}
               </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+            )}
+            <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+              {item?.musicGenre}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };

@@ -334,11 +334,12 @@ const ArtistEventDetail = props => {
                       width: 40,
                       borderRadius: 20,
                       resizeMode: 'contain',
+                      marginRight: 8,
                     }}
                     source={{uri: item?.artists[0]?.images[0]}}
                   />
                 ) : null}
-                <Text style={[styles.singerName]}>By </Text>
+                <Text style={[styles.singerName, {marginLeft: 0}]}>By </Text>
                 <View style={{width: '70%'}}>
                   {item?.artists?.length
                     ? item?.artists?.map(e => {
@@ -347,16 +348,17 @@ const ArtistEventDetail = props => {
                             style={[
                               styles.singerName,
                               {
-                                textDecorationLine: 'underline',
+                                // textDecorationLine: 'underline',
                                 marginLeft: 0,
                               },
                             ]}
-                            onPress={() => {
-                              logEvent('artist_detail', e?.name);
-                              props.navigation.navigate('ArtistEventDetail', {
-                                artistListDetail: e,
-                              });
-                            }}>
+                            // onPress={() => {
+                            //   logEvent('artist_detail', e?.name);
+                            //   props.navigation.navigate('ArtistEventDetail', {
+                            //     artistListDetail: e,
+                            //   });
+                            // }}
+                          >
                             {e?.name}
                           </Text>
                         );
@@ -506,7 +508,7 @@ const ArtistEventDetail = props => {
                 elevation: 4,
               }}>
               <TouchableOpacity activeOpacity={0.7}>
-                {detailData?.images ? (
+                {detailData?.images?.length ? (
                   <Image
                     style={{
                       height: hp(29),
@@ -526,8 +528,30 @@ const ArtistEventDetail = props => {
                       width: '100%',
                       borderTopRightRadius: 10,
                       borderTopLeftRadius: 10,
-                    }}
-                  />
+                      resizeMode: 'cover',
+                      justifyContent: 'center',
+                      backgroundColor: COLORS.gray,
+                      overflow: 'hidden',
+                    }}>
+                    <Image
+                      source={
+                        detailData?.type?.toLowerCase() === 'artist'
+                          ? ImagePath.placeholderSinger
+                          : detailData?.type?.toLowerCase() === 'dj'
+                          ? ImagePath.placeholderDj
+                          : detailData?.type?.toLowerCase() === 'guest'
+                          ? ImagePath.profile
+                          : ImagePath.clubActive
+                      }
+                      style={{
+                        height: '50%',
+                        width: '50%',
+                        resizeMode: 'contain',
+                        alignSelf: 'center',
+                        opacity: 0.5,
+                      }}
+                    />
+                  </View>
                 )}
               </TouchableOpacity>
 
@@ -712,7 +736,7 @@ const ArtistEventDetail = props => {
             </View>
             {upcomingEvents?.length ? (
               <TouchableOpacity
-                style={{alignSelf: 'center', marginBottom: 40}}
+                style={{alignSelf: 'center', marginBottom: 40, marginTop: 20}}
                 onPress={() => setIsEventModalVisible(true)}>
                 <LinearGradient
                   style={{

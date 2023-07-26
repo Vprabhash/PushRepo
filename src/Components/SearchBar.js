@@ -131,6 +131,9 @@ const SearchBar = props => {
       });
   };
   const _renderItem = ({item, index}) => {
+    if (item?.type === 'guest') {
+      return null;
+    }
     if (item?.type === 'event') {
       return <RenderEvent item={item} index={index} />;
     }
@@ -184,7 +187,7 @@ const SearchBar = props => {
               </>
             ) : (
               <>
-                {item?.images ? (
+                {item?.images?.length ? (
                   <Image
                     style={{
                       height: hp(29),
@@ -204,8 +207,29 @@ const SearchBar = props => {
                       width: '100%',
                       borderTopRightRadius: 10,
                       borderTopLeftRadius: 10,
-                    }}
-                  />
+                      justifyContent: 'center',
+                      backgroundColor: COLORS.gray,
+                      overflow: 'hidden',
+                    }}>
+                    <Image
+                      source={
+                        item?.type?.toLowerCase() === 'artist'
+                          ? ImagePath.placeholderSinger
+                          : item?.type?.toLowerCase() === 'dj'
+                          ? ImagePath.placeholderDj
+                          : item?.type?.toLowerCase() === 'guest'
+                          ? ImagePath.profile
+                          : ImagePath.clubActive
+                      }
+                      style={{
+                        height: '50%',
+                        width: '50%',
+                        resizeMode: 'contain',
+                        alignSelf: 'center',
+                        opacity: 0.5,
+                      }}
+                    />
+                  </View>
                 )}
               </>
             )}
@@ -399,10 +423,10 @@ const SearchBar = props => {
                 styles.singerName,
                 {fontFamily: FONTS.AxiformaRegular, marginTop: 0},
               ]}>
-              {/* {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
                 item?.eventEndTime,
-              ).format('hh:mm A')}`} */}
-              {`8pm onwards`}
+              ).format('hh:mm A')}`}
+              {/* {`8pm onwards`} */}
             </Text>
             <View
               style={{

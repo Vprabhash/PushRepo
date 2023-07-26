@@ -355,6 +355,7 @@ const ClubDetails = props => {
                   marginTop: 10,
                   alignItems: 'center',
                   marginBottom: 10,
+                  marginRight: 8,
                 }}>
                 {item?.artists[0]?.images?.length &&
                 item?.artists[0]?.images[0] ? (
@@ -368,7 +369,7 @@ const ClubDetails = props => {
                     source={{uri: item?.artists[0]?.images[0]}}
                   />
                 ) : null}
-                <Text style={[styles.singerName]}>By </Text>
+                <Text style={[styles.singerName, {marginLeft: 0}]}>By </Text>
                 <View style={{width: '70%'}}>
                   {item?.artists?.length
                     ? item?.artists?.map(e => {
@@ -396,10 +397,10 @@ const ClubDetails = props => {
               </View>
             ) : null}
             <Text style={styles.listinhText}>
-              {/* {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
+              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
                 item?.eventEndTime,
-              ).format('hh:mm A')}`} */}
-              {`8pm onwards`}
+              ).format('hh:mm A')}`}
+              {/* {`8pm onwards`} */}
             </Text>
             <View
               style={{
@@ -435,18 +436,20 @@ const ClubDetails = props => {
                     })
                   : null}
               </View>
-              <View style={{marginTop: -10, alignItems: 'center'}}>
-                <Text style={[styles.listingText, {color: COLORS.black}]}>
-                  {'₹' + item?.price?.amount}
-                </Text>
-                <Text
-                  style={[
-                    styles.listinhText,
-                    {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
-                  ]}>
-                  onwards
-                </Text>
-              </View>
+              {item?.price?.amount && (
+                <View style={{marginTop: -10, alignItems: 'center'}}>
+                  <Text style={[styles.listingText, {color: COLORS.black}]}>
+                    {'₹' + item?.price?.amount}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.listinhText,
+                      {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+                    ]}>
+                    onwards
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
         </TouchableOpacity>

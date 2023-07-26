@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Image, ImageBackground, View, StatusBar, Modal} from 'react-native';
 import ImagePath from '../assets/ImagePath';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
@@ -39,4 +39,4 @@ const SplashScreen = ({isVisible}) => {
   );
 };
 
-export default SplashScreen;
+export default memo(SplashScreen);
