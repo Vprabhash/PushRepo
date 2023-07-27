@@ -374,9 +374,9 @@ const ArtistDetail = props => {
                 setPage(0);
                 setDontCall(false);
                 if (selectedFilter?.artist?.toLowerCase() !== 'dj') {
-                  setSelectedFilter({artist: 'dj'});
+                  setSelectedFilter({...selectedFilter, artist: 'dj'});
                 } else {
-                  setSelectedFilter({artist: ''});
+                  setSelectedFilter({...selectedFilter, artist: ''});
                 }
               }}>
               <Image
@@ -424,9 +424,9 @@ const ArtistDetail = props => {
                 setPage(0);
                 setDontCall(false);
                 if (selectedFilter?.artist?.toLowerCase() !== 'artist') {
-                  setSelectedFilter({artist: 'artist'});
+                  setSelectedFilter({...selectedFilter, artist: 'artist'});
                 } else {
-                  setSelectedFilter({artist: ''});
+                  setSelectedFilter({...selectedFilter, artist: ''});
                 }
               }}>
               <Image

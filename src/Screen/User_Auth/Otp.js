@@ -100,13 +100,11 @@ const Otp = props => {
       };
       setLoading(true);
       try {
-        console.log('calling api for otp verify');
         const res = await ApiCall(
           'api/login/verify-otp',
           'POST',
           JSON.stringify(data),
         );
-        console.log('---res--registerotp-----', res);
         if (res.ok == true) {
           await setData('userData', res?.data);
           await setData('userToken', res?.meta?.token);
@@ -123,7 +121,9 @@ const Otp = props => {
           }
         } else {
           Toast.showWithGravity(
-            'Something went wrong',
+            res?.errors?.length && res?.errors[0]?.msg
+              ? res?.errors[0]?.msg
+              : 'Something went wrong',
             Toast.LONG,
             Toast.BOTTOM,
           );
@@ -220,8 +220,8 @@ const Otp = props => {
               style={{width: '100%', height: 100, color: COLORS.black}}
               pinCount={6}
               code={Otp}
+              autoFocusOnLoad={false}
               onCodeChanged={code => setOtp(code)}
-              autoFocusOnLoad
               codeInputFieldStyle={styles.underlineStyleBase}
               codeInputHighlightStyle={styles.underlineStyleHighLighted}
               onCodeFilled={code => {
