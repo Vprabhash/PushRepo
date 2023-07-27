@@ -35,7 +35,7 @@ const App = () => {
   };
 
   const handleShow = () => {
-    if (global.isUserFirstTime) {
+    if (global.isUserFirstTime == true) {
       setShow(true);
     }
     setTimeout(() => {
@@ -45,7 +45,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <SplashScreen isVisible={isShow} />
+      <SplashScreen isVisible={isShow}animationType={'fade'} />
       <Routes />
     </Provider>
   );

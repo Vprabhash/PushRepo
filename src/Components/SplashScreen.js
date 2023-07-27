@@ -4,11 +4,11 @@ import ImagePath from '../assets/ImagePath';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
 import {COLORS} from './constants';
 
-const SplashScreen = ({isVisible}) => {
+const SplashScreen = ({isVisible,animationType}) => {
   return (
     <Modal
       visible={isVisible}
-      animationType="fade"
+      animationType={animationType}
       style={{flex: 1, backgroundColor: COLORS.white}}>
       <View style={{flex: 1, backgroundColor: COLORS.white}}>
         <StatusBar

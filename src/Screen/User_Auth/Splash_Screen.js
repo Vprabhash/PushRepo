@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Image, ImageBackground, StatusBar, View} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import {getData, setData} from '../../Components/Helper';
 import {
@@ -19,11 +19,12 @@ import {
 import ApiCall from '../../redux/CommanApi';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
 import SplashScreen from '../../Components/SplashScreen';
+import ImagePath from '../../assets/ImagePath';
+import { COLORS } from '../../Components/constants';
 const Splash_Screen = props => {
   const dispatch = useDispatch();
   useEffect(() => {
     getData('userData').then(userdata => {
-      global.isUserFirstTime = true;
       global.currentCity = null;
       if (!userdata) {
         setTimeout(() => {
@@ -31,6 +32,7 @@ const Splash_Screen = props => {
             index: 0,
             routes: [{name: 'Explore'}],
           });
+          global.isUserFirstTime = true;
         }, 2000);
       } else {
         setTimeout(() => {
@@ -38,6 +40,7 @@ const Splash_Screen = props => {
             index: 0,
             routes: [{name: 'BottomTab'}],
           });
+          global.isUserFirstTime = true;
         }, 1000);
       }
     });
@@ -138,6 +141,32 @@ const Splash_Screen = props => {
     });
   };
 
-  return <SplashScreen isVisible={true} />;
+  return (
+    <View style={{flex: 1, backgroundColor: COLORS.white}}>
+        <StatusBar
+          barStyle="dark-content"
+          hidden={false}
+          backgroundColor="transparent"
+          translucent={true}
+        />
+        <ImageBackground
+          source={ImagePath.Azzir_Bg}
+          style={{
+            height: '100%',
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Image
+            source={ImagePath.Azzir_AppIcon}
+            style={{
+              width: widthPercentageToDP(80),
+              height: widthPercentageToDP(80),
+              resizeMode: 'contain',
+            }}
+          />
+        </ImageBackground>
+      </View>
+  )
 };
 export default Splash_Screen;
