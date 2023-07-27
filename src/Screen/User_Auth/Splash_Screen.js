@@ -22,9 +22,8 @@ import SplashScreen from '../../Components/SplashScreen';
 const Splash_Screen = props => {
   const dispatch = useDispatch();
   useEffect(() => {
-    global.isUserFirstTime = true;
     getData('userData').then(userdata => {
-      global.isUserFirstTime = false;
+      global.isUserFirstTime = true;
       global.currentCity = null;
       if (!userdata) {
         setTimeout(() => {

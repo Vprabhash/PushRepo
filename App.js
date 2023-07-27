@@ -34,7 +34,7 @@ const App = () => {
   };
 
   const handleShow = () => {
-    if (global.isUserFirstTime == false) {
+    if (global.isUserFirstTime) {
       setShow(true);
     }
     setTimeout(() => {
