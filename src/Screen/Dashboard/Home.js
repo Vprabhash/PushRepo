@@ -834,7 +834,7 @@ const Home = props => {
               fontSize: 16,
               color: COLORS.white,
               fontFamily: FONTS.AxiformaSemiBold,
-              width: wp(48),
+              width: '95%',
             }}>
             {item.name}
           </Text>

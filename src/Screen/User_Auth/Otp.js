@@ -8,6 +8,7 @@ import {
   ImageBackground,
   Alert,
   StatusBar,
+  Image,
 } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
@@ -24,6 +25,7 @@ import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import {setData} from '../../Components/Helper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -175,22 +177,38 @@ const Otp = props => {
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
       <StatusBar barStyle={'dark-content'} />
-      <ImageBackground
-        source={ImagePath.Azzir_Bg}
-        resizeMode="cover"
-        style={{height: '100%', justifyContent: 'center'}}>
-        <KeyboardAwareScrollView style={{}}>
+      <KeyboardAwareScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}>
+        <ImageBackground
+          source={ImagePath.Azzir_Bg}
+          resizeMode="cover"
+          style={{height: height}}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.goBack();
+            }}
+            style={{marginLeft: 10, marginTop: getStatusBarHeight() + 10}}>
+            <Image
+              style={{
+                height: 20,
+                width: 20,
+                resizeMode: 'contain',
+              }}
+              source={ImagePath.goBack}
+            />
+          </TouchableOpacity>
           {/* <View
           style={{
-            paddingHorizontal: 20,
-            height: '100%',
-            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            // paddingHorizontal: 20,
+            // height: '100%',
+            // backgroundColor: 'rgba(255, 255, 255, 0.5)',
             justifyContent: 'center',
           }}> */}
           <LinearGradient
             style={{
               paddingHorizontal: 20,
-              height: height,
+              height: '80%',
               justifyContent: 'center',
             }}
             start={{x: 0, y: 0}}
@@ -282,8 +300,8 @@ const Otp = props => {
             </View>
           </LinearGradient>
           {/* </View> */}
-        </KeyboardAwareScrollView>
-      </ImageBackground>
+        </ImageBackground>
+      </KeyboardAwareScrollView>
     </View>
   );
 };

@@ -8,6 +8,8 @@ import {
   Text,
   Alert,
   View,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 import ImagePath from '../../assets/ImagePath';
 import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
@@ -20,6 +22,8 @@ import {COLORS, FONTS} from '../../Components/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import ApiCall from '../../redux/CommanApi';
 import Toast from 'react-native-simple-toast';
+import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -62,7 +66,9 @@ const ForgetPassword = ({route, navigation}) => {
   };
   return (
     <View style={{flex: 1}}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <KeyboardAwareScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}>
         <StatusBar
           barStyle="dark-content"
           hidden={false}
@@ -72,14 +78,26 @@ const ForgetPassword = ({route, navigation}) => {
         <ImageBackground
           source={ImagePath.Azzir_Bg}
           resizeMode="cover"
-          style={{height: '100%', justifyContent: 'center'}}>
-          {/* <View
+          style={{height: height}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+              style={{marginLeft: 10, marginTop: getStatusBarHeight() + 10}}>
+              <Image
+                style={{
+                  height: 20,
+                  width: 20,
+                  resizeMode: 'contain',
+                }}
+                source={ImagePath.goBack}
+              />
+            </TouchableOpacity>
+          <View
             style={{
-              paddingHorizontal: 20,
-              height: '100%',
-              // backgroundColor: 'rgba(255, 255, 255, 0.7)',
-              justifyContent: 'center',
-            }}> */}
+              // justifyContent: 'center',
+              height: '100%'
+            }}>
           <LinearGradient
             style={{
               paddingHorizontal: 20,
@@ -134,9 +152,9 @@ const ForgetPassword = ({route, navigation}) => {
               />
             </View>
           </LinearGradient>
-          {/* </View> */}
+          </View>
         </ImageBackground>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 };

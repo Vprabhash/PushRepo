@@ -224,6 +224,40 @@ const ArtistPlayingDetail = props => {
                         }}
                         source={{uri: artistData?.artists[0]?.images[0]}}
                       />
+                    ) : artistData?.artists?.length ? (
+                      <View
+                        style={{
+                          height: 40,
+                          width: 40,
+                          borderRadius: 20,
+                          resizeMode: 'contain',
+                          marginRight: 10,
+                          justifyContent: 'center',
+                          backgroundColor: COLORS.gray,
+                          overflow: 'hidden',
+                        }}>
+                        <Image
+                          source={
+                            artistData?.artists[0]?.type?.toLowerCase() ===
+                            'artist'
+                              ? ImagePath.placeholderSinger
+                              : artistData?.artists[0]?.type?.toLowerCase() ===
+                                'dj'
+                              ? ImagePath.placeholderDj
+                              : artistData?.artists[0]?.type?.toLowerCase() ===
+                                'guest'
+                              ? ImagePath.profile
+                              : null
+                          }
+                          style={{
+                            height: 15,
+                            width: 15,
+                            resizeMode: 'contain',
+                            alignSelf: 'center',
+                            opacity: 0.5,
+                          }}
+                        />
+                      </View>
                     ) : null}
                     <Text style={[styles.singerName, {marginTop: 0}]}>By </Text>
                     <View style={{width: '70%', flexDirection: 'row'}}>

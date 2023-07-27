@@ -232,7 +232,7 @@ const ClubDetails = props => {
               fontSize: 16,
               color: COLORS.white,
               fontFamily: FONTS.AxiformaSemiBold,
-              width: wp(48),
+              width: '95%',
             }}>
             {item.name}
           </Text>
@@ -366,10 +366,45 @@ const ClubDetails = props => {
                       width: 40,
                       borderRadius: 20,
                       resizeMode: 'contain',
+                      marginRight: 5,
                     }}
                     source={{uri: item?.artists[0]?.images[0]}}
                   />
-                ) : null}
+                ) : item?.artists?.length ? (
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      borderRadius: 20,
+                      resizeMode: 'contain',
+                      marginRight: 5,
+                      justifyContent: 'center',
+                      backgroundColor: COLORS.gray,
+                      overflow: 'hidden',
+                    }}>
+                    <Image
+                      source={
+                        item?.artists[0]?.type?.toLowerCase() ===
+                        'artist'
+                          ? ImagePath.placeholderSinger
+                          : item?.artists[0]?.type?.toLowerCase() ===
+                            'dj'
+                          ? ImagePath.placeholderDj
+                          : item?.artists[0]?.type?.toLowerCase() ===
+                            'guest'
+                          ? ImagePath.profile
+                          : null
+                      }
+                      style={{
+                        height: 15,
+                        width: 15,
+                        resizeMode: 'contain',
+                        alignSelf: 'center',
+                        opacity: 0.5,
+                      }}
+                    />
+                  </View>
+                ) : null}   
                 <Text style={[styles.singerName, {marginLeft: 0}]}> By </Text>
                 <View style={{width: '70%', flexDirection: 'row'}}>
                   {/* {item?.artists?.length

@@ -27,12 +27,14 @@ const UpcomingEventModal = ({
   onPressCancel,
 }) => {
   return (
-    <View style={styles.centeredView}>
+    // <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
         visible={visible}
-        onRequestClose={onPressCancel}>
+        onRequestClose={onPressCancel}
+        style={{flex:1, backgroundColor: 'rgba(0,0,0,0.8)'}}
+        >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View
@@ -149,7 +151,7 @@ const UpcomingEventModal = ({
           </View>
         </View>
       </Modal>
-    </View>
+    // </View>
   );
 };
 export default UpcomingEventModal;
@@ -182,8 +184,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    opacity: 0.9,
-    backgroundColor: '#000',
+    backgroundColor: 'rgba(0,0,0,0.8)',
   },
   modalView: {
     // margin: 20,

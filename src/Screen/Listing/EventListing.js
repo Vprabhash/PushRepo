@@ -162,7 +162,7 @@ const EventListing = props => {
 
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{width: wp(100), marginBottom: hp(3)}}>
+      <View style={{width: wp(100)}}>
         <TouchableOpacity
           onPress={() => {
             logEvent('event_detail', item?.title);
@@ -251,7 +251,38 @@ const EventListing = props => {
                   }}
                   source={{uri: item?.artists[0]?.images[0]}}
                 />
-              ) : null}
+              ) : (
+                item?.artists?.length ? <View
+                 style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 20,
+                  resizeMode: 'contain',
+                  marginRight: 6,
+                  justifyContent: 'center',
+                  backgroundColor: COLORS.gray,
+                  overflow: 'hidden',
+                }}>
+                <Image
+                  source={
+                    item?.artists[0]?.type?.toLowerCase() === 'artist'
+                      ? ImagePath.placeholderSinger
+                      : item?.artists[0]?.type?.toLowerCase() === 'dj'
+                      ? ImagePath.placeholderDj
+                      : item?.artists[0]?.type?.toLowerCase() === 'guest'
+                      ? ImagePath.profile
+                      : null
+                  }
+                  style={{
+                    height: 10,
+                    width: 10,
+                    resizeMode: 'contain',
+                    alignSelf: 'center',
+                    opacity: 0.5,
+                  }}
+                />
+              </View> : null
+              )}
               {item?.artists?.length ? (
                 <Text
                   style={[
@@ -467,6 +498,8 @@ const EventListing = props => {
                   horizontal
                   data={nearByEvents}
                   renderItem={_renderItem}
+                  keyExtractor={(_, i) => i.toString()}
+                  showsHorizontalScrollIndicator={false}
                 />
               ) : (
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -494,6 +527,7 @@ const EventListing = props => {
           onEndReached={eventData?.cursor == null ? null : fetchMoreData}
           ListEmptyComponent={EmptyListMessage}
           maxToRenderPerBatch={15}
+          ItemSeparatorComponent={() => <View style={{height: 20}} />}
           contentContainerStyle={{
             paddingBottom: getBottomSpace() + 60,
           }}
