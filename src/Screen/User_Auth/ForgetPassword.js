@@ -119,7 +119,7 @@ const ForgetPassword = ({route, navigation}) => {
               style={[
                 styles.signIn,
                 {
-                  fontSize: 24,
+                  fontSize: 22,
                   fontFamily: FONTS.RobotoRegular,
                   marginBottom: 56,
                 },
