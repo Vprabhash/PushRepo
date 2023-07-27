@@ -883,28 +883,28 @@ const Home = props => {
             profileIcon={ImagePath.profilePic}
           />
         </View> */}
+        <StatusBar
+          barStyle="dark-content"
+          hidden={false}
+          backgroundColor="transparent"
+          translucent={true}
+        />
+        <View
+          style={{
+            paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
+          }}>
+          <HeaderCitySearch
+            onPress={() => {
+              props.navigation.navigate('SearchBar');
+            }}
+          />
+        </View>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
             paddingBottom: getBottomSpace() + 60,
           }}
           showsVerticalScrollIndicator={false}>
-          <StatusBar
-            barStyle="dark-content"
-            hidden={false}
-            backgroundColor="transparent"
-            translucent={true}
-          />
-          <View
-            style={{
-              paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
-            }}>
-            <HeaderCitySearch
-              onPress={() => {
-                props.navigation.navigate('SearchBar');
-              }}
-            />
-          </View>
           {/* <TouchableOpacity
             style={[styles.fllter]}
             activeOpacity={0.5}
@@ -914,7 +914,7 @@ const Home = props => {
             <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
             <Text style={styles.filtersText}>Filters</Text>
           </TouchableOpacity> */}
-          <View style={styles.hedingTextMain}>
+          <View style={[styles.hedingTextMain, {marginTop: 10}]}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <Text style={styles.cardText}>CLUBS IN SPOTLIGHT</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />

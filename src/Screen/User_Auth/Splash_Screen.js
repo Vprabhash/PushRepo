@@ -22,9 +22,9 @@ import SplashScreen from '../../Components/SplashScreen';
 const Splash_Screen = props => {
   const dispatch = useDispatch();
   useEffect(() => {
+    global.isUserFirstTime = true;
     getData('userData').then(userdata => {
-      // console.log('userdata: ===', userdata);
-      // setData('currentCity', null);
+      global.isUserFirstTime = false;
       global.currentCity = null;
       if (!userdata) {
         setTimeout(() => {
@@ -139,6 +139,6 @@ const Splash_Screen = props => {
     });
   };
 
-  return <SplashScreen />;
+  return <SplashScreen isVisible={true} />;
 };
 export default Splash_Screen;

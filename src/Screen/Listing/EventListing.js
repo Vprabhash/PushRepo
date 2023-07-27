@@ -96,7 +96,6 @@ const EventListing = props => {
     queryParams.append('city', selectedCity);
     queryParams.append('userBaseCity', userBaseCity);
     const res = await ApiCall(`api/events?${queryParams}`, 'GET');
-    console.log('---res--logIn--artist---', res?.data);
     if (Array.isArray(res?.data)) {
       setEvents(res?.data);
     }
@@ -449,7 +448,7 @@ const EventListing = props => {
             translucent={true}
           />
 
-          <View style={styles.hedingTextMain}>
+          <View style={[styles.hedingTextMain, {marginTop: 10}]}>
             <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
             <Text style={styles.cardText}>Events near me</Text>
             <Image style={styles.hedingImg} source={ImagePath.rightLine} />
