@@ -123,6 +123,7 @@ const Home = props => {
       console.log('App has come to the foreground!');
       checkLocation();
     }
+    checkLocation();
 
     appState.current = nextAppState;
     console.log('AppState', appState.current);
