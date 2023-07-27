@@ -52,6 +52,7 @@ const EventListing = props => {
   const [events, setEvents] = useState([]);
   const [nearByEvents, setNearByEvents] = useState([]);
   const [dontCall, setDontCall] = useState(false);
+  const [eventData, setEventData] = useState(null);
 
   useEffect(() => {
     setPage(0);
@@ -80,9 +81,9 @@ const EventListing = props => {
       <View>
         {loading ? (
           <ActivityIndicator
-            color={'#fff'}
+            color={'#000000'}
             size={'large'}
-            style={{marginLeft: 8}}
+            style={{marginLeft: 8, marginBottom: 20}}
           />
         ) : null}
       </View>
@@ -96,9 +97,8 @@ const EventListing = props => {
     queryParams.append('city', selectedCity);
     queryParams.append('userBaseCity', userBaseCity);
     const res = await ApiCall(`api/events?${queryParams}`, 'GET');
-    if (Array.isArray(res?.data)) {
-      setEvents(res?.data);
-    }
+    setLoading(false);
+    setEventData(res);
     if (Array.isArray(res?.data)) {
       if (page === 0) {
         setEvents(res?.data);
@@ -152,6 +152,7 @@ const EventListing = props => {
   };
 
   const fetchMoreData = () => {
+    console.log('Fetching more data');
     if (!onEndReachedCalledDuringMomentum && !loading) {
       setLoading(true);
       setPage(page + 1);
@@ -437,7 +438,7 @@ const EventListing = props => {
             }}
           />
         </View>
-        <ScrollView
+        {/* <ScrollView
           style={{
             flex: 1,
           }}>
@@ -448,49 +449,56 @@ const EventListing = props => {
             translucent={true}
           />
 
-          <View style={[styles.hedingTextMain, {marginTop: 10}]}>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
-            <Text style={styles.cardText}>Events near me</Text>
-            <Image style={styles.hedingImg} source={ImagePath.rightLine} />
-          </View>
-          {nearByEvents?.length ? (
-            <FlatList horizontal data={nearByEvents} renderItem={_renderItem} />
-          ) : (
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text
-                style={[
-                  styles.noDataText,
-                  {textAlign: 'center', marginTop: 0},
-                ]}>
-                No Events Found
-              </Text>
-            </View>
-          )}
-
-          <FlatList
-            ref={flatListRef}
-            data={events}
-            renderItem={_renderItem}
-            ListHeaderComponent={
+           */}
+        <FlatList
+          ref={flatListRef}
+          data={events}
+          renderItem={_renderItem}
+          nestedScrollEnabled
+          ListHeaderComponent={
+            <>
+              <View style={[styles.hedingTextMain, {marginTop: 10}]}>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
+                <Text style={styles.cardText}>Events near me</Text>
+                <Image style={styles.hedingImg} source={ImagePath.rightLine} />
+              </View>
+              {nearByEvents?.length ? (
+                <FlatList
+                  horizontal
+                  data={nearByEvents}
+                  renderItem={_renderItem}
+                />
+              ) : (
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                  <Text
+                    style={[
+                      styles.noDataText,
+                      {textAlign: 'center', marginTop: 0},
+                    ]}>
+                    No Events Found
+                  </Text>
+                </View>
+              )}
               <View style={styles.hedingTextMain}>
                 <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
                 <Text style={styles.cardText}>UPCOMING EVENTS IN TOWN</Text>
                 <Image style={styles.hedingImg} source={ImagePath.rightLine} />
               </View>
-            }
-            ListFooterComponent={renderFooter}
-            onEndReachedThreshold={0.3}
-            onMomentumScrollBegin={() => {
-              setonEndReachedCalledDuringMomentum(false);
-            }}
-            onEndReached={dontCall ? null : fetchMoreData}
-            ListEmptyComponent={EmptyListMessage}
-            maxToRenderPerBatch={15}
-            contentContainerStyle={{
-              paddingBottom: getBottomSpace() + 60,
-            }}
-          />
-        </ScrollView>
+            </>
+          }
+          ListFooterComponent={renderFooter}
+          // onEndReachedThreshold={0.1}
+          onMomentumScrollBegin={() => {
+            setonEndReachedCalledDuringMomentum(false);
+          }}
+          onEndReached={eventData?.cursor == null ? null : fetchMoreData}
+          ListEmptyComponent={EmptyListMessage}
+          maxToRenderPerBatch={15}
+          contentContainerStyle={{
+            paddingBottom: getBottomSpace() + 60,
+          }}
+        />
+        {/* </ScrollView> */}
       </ImageBackground>
     </View>
   );
