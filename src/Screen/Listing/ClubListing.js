@@ -247,7 +247,7 @@ const ClubListing = ({navigation, route}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          logEvent('club_detail', item?.name);
+          logEvent(`club_detail ${item?.name}`);
           navigation.navigate('ClubDetails', {listDetail: item});
         }}
         activeOpacity={0.7}

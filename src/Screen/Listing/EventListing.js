@@ -165,7 +165,7 @@ const EventListing = props => {
       <View style={{width: wp(100)}}>
         <TouchableOpacity
           onPress={() => {
-            logEvent('event_detail', item?.title);
+            logEvent(`event_detail ${item?.title}`);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -310,7 +310,7 @@ const EventListing = props => {
                 <Text
                   style={[styles.listingText]}
                   onPress={() => {
-                    logEvent('club_detail', item?.club?.name);
+                    logEvent(`club_detail ${item?.club?.name}`);
                     props.navigation.navigate('ClubDetails', {
                       listDetail: item?.club,
                     });

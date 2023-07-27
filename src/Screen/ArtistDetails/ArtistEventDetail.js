@@ -251,7 +251,7 @@ const ArtistEventDetail = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
-            logEvent('event_detail', item?.title);
+            logEvent(`event_detail ${item?.title}`);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -393,7 +393,7 @@ const ArtistEventDetail = props => {
                       },
                     ]}
                     onPress={() => {
-                      logEvent('club_detail', item?.club?.name);
+                      logEvent(`club_detail ${item?.club?.name}`);
                       props.navigation.navigate('ClubDetails', {
                         listDetail: item?.club,
                       });
@@ -431,7 +431,7 @@ const ArtistEventDetail = props => {
                         <Text
                           style={[styles.singerName]}
                           onPress={() => {
-                            logEvent('artist_detail', e?.name);
+                            logEvent(`artist_detail ${e?.name}`);
                             props.navigation.navigate('ArtistEventDetail', {
                               artistListDetail: e,
                             });
@@ -582,7 +582,7 @@ const ArtistEventDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                      logEvent('instagram_pressed');
+                      logEvent(`instagram_pressed ${detailData?.name}`);
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
                       } else {
@@ -607,7 +607,7 @@ const ArtistEventDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                      logEvent('instagram_pressed');
+                      logEvent(`instagram_pressed ${detailData?.name}`);
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
                       } else {
@@ -634,7 +634,7 @@ const ArtistEventDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                      logEvent('youtube_pressed');
+                      logEvent(`youtube_pressed ${detailData?.name}`);
                       if (parseYouTubeLink(detailData?.youtubeChannelLink)) {
                         Linking.openURL(
                           parseYouTubeLink(detailData?.youtubeChannelLink),
@@ -655,7 +655,7 @@ const ArtistEventDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                      logEvent('youtube_pressed');
+                      logEvent(`youtube_pressed ${detailData?.name}`);
                       console.log(detailData?.youtubeChannelLink);
                       Toast.showWithGravity(
                         'Youtube link is not available',
@@ -778,7 +778,7 @@ const ArtistEventDetail = props => {
         data={upcomingEvents}
         onPress={e => {
           setIsEventModalVisible(false);
-          logEvent('event_detail', e?.title);
+          logEvent(`event_detail ${e?.title}`);
           props.navigation.navigate('ArtistPlayingDetail', {
             artistData: e,
           });
