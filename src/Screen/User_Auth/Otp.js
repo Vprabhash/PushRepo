@@ -176,14 +176,19 @@ const Otp = props => {
 
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar
+        barStyle="dark-content"
+        hidden={false}
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <KeyboardAwareScrollView
         bounces={false}
         showsVerticalScrollIndicator={false}>
         <ImageBackground
           source={ImagePath.Azzir_Bg}
           resizeMode="cover"
-          style={{height: height}}>
+          style={{height: '100%'}}>
           <TouchableOpacity
             onPress={() => {
               props.navigation.goBack();
@@ -208,7 +213,7 @@ const Otp = props => {
           <LinearGradient
             style={{
               paddingHorizontal: 20,
-              height: '80%',
+              height: height - getStatusBarHeight() + 10,
               justifyContent: 'center',
             }}
             start={{x: 0, y: 0}}
