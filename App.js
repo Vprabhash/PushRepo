@@ -26,10 +26,11 @@ const App = () => {
       appState.current.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
+      handleShow();
       return;
     }
 
-    handleShow();
+    // handleShow();
     appState.current = nextAppState;
   };
 
