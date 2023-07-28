@@ -356,7 +356,7 @@ const Home = props => {
   const artistRenderItem = ({item, index}) => (
     <TouchableOpacity
       onPress={() => {
-        logEvent(`artist_detail ${item?.name}`);
+        logEvent(`artist_detail ${item?.name}`, item);
         props.navigation.navigate('ArtistEventDetail', {
           artistListDetail: item,
         });
@@ -449,7 +449,7 @@ const Home = props => {
       <TouchableOpacity
         style={{borderRadius: 10, overflow: 'hidden'}}
         onPress={() => {
-          logEvent(`event_detail ${item?.title}`);
+          logEvent(`event_detail ${item?.title}`, item);
           props.navigation.navigate('ArtistPlayingDetail', {
             artistData: item,
           });

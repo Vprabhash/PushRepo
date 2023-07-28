@@ -149,12 +149,12 @@ const SearchBar = props => {
           <TouchableOpacity
             onPress={() => {
               if (item.type) {
-                logEvent(`artist_detail ${item?.name}`);
+                logEvent(`artist_detail ${item?.name}`, item);
                 props.navigation.navigate('ArtistEventDetail', {
                   artistListDetail: item,
                 });
               } else {
-                logEvent(`club_detail ${item?.name}`);
+                logEvent(`club_detail ${item?.name}`, item);
                 props.navigation.navigate('ClubDetails', {listDetail: item});
               }
             }}
@@ -321,7 +321,7 @@ const SearchBar = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
-            logEvent(`event_detail ${item?.title}`);
+            logEvent(`event_detail ${item?.title}`, item);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -439,7 +439,7 @@ const SearchBar = props => {
                 <Text
                   style={[styles.listingText]}
                   onPress={() => {
-                    logEvent(`club_detail ${item?.club?.name}`);
+                    logEvent(`club_detail ${item?.club?.name}`, item?.club);
                     props.navigation.navigate('ClubDetails', {
                       listDetail: item?.club,
                     });

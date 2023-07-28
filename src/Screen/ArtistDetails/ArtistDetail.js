@@ -182,7 +182,7 @@ const ArtistDetail = props => {
             elevation: 4,
           }}
           onPress={() => {
-            logEvent(`artist_detail ${item?.name}`);
+            logEvent(`artist_detail ${item?.name}`, item);
             props.navigation.navigate('ArtistEventDetail', {
               artistListDetail: item,
             });

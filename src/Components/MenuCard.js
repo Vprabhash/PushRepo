@@ -191,7 +191,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            logEvent(`club_direction_press ${itemdata?.name}`);
+            logEvent(`club_direction_press ${itemdata?.name}`, itemdata);
             Linking.openURL(itemdata?.googleMapLink);
           }}
           style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
@@ -205,7 +205,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              logEvent(`whatsapp_pressed  ${itemdata?.name}`);
+              logEvent(`whatsapp_pressed  ${itemdata?.name}`, itemdata);
               if (itemdata?.whatsappNumber) {
                 Linking.openURL(
                   'http://api.whatsapp.com/send?phone=91' +
@@ -227,7 +227,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              logEvent(`whatsapp_pressed ${itemdata?.name}`);
+              logEvent(`whatsapp_pressed ${itemdata?.name}`, itemdata);
               if (itemdata?.whatsappNumber) {
                 Linking.openURL(
                   'http://api.whatsapp.com/send?phone=91' +
@@ -253,7 +253,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              logEvent(`call_pressed ${itemdata?.name}`);
+              logEvent(`call_pressed ${itemdata?.name}`, itemdata);
               if (itemdata?.phoneNumber) {
                 Linking.openURL('tel:' + itemdata?.phoneNumber);
               } else {
@@ -272,7 +272,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              logEvent(`call_pressed ${itemdata?.name}`);
+              logEvent(`call_pressed ${itemdata?.name}`, itemdata);
               if (itemdata?.phoneNumber) {
                 Linking.openURL('tel:' + itemdata?.phoneNumber);
               } else {

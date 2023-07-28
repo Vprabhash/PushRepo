@@ -165,7 +165,7 @@ const EventListing = props => {
       <View style={{width: wp(100)}}>
         <TouchableOpacity
           onPress={() => {
-            logEvent(`event_detail ${item?.title}`);
+            logEvent(`event_detail ${item?.title}`, item);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -251,38 +251,38 @@ const EventListing = props => {
                   }}
                   source={{uri: item?.artists[0]?.images[0]}}
                 />
-              ) : (
-                item?.artists?.length ? <View
-                 style={{
-                  height: 30,
-                  width: 30,
-                  borderRadius: 20,
-                  resizeMode: 'contain',
-                  marginRight: 6,
-                  justifyContent: 'center',
-                  backgroundColor: COLORS.gray,
-                  overflow: 'hidden',
-                }}>
-                <Image
-                  source={
-                    item?.artists[0]?.type?.toLowerCase() === 'artist'
-                      ? ImagePath.placeholderSinger
-                      : item?.artists[0]?.type?.toLowerCase() === 'dj'
-                      ? ImagePath.placeholderDj
-                      : item?.artists[0]?.type?.toLowerCase() === 'guest'
-                      ? ImagePath.profile
-                      : null
-                  }
+              ) : item?.artists?.length ? (
+                <View
                   style={{
-                    height: 10,
-                    width: 10,
+                    height: 30,
+                    width: 30,
+                    borderRadius: 20,
                     resizeMode: 'contain',
-                    alignSelf: 'center',
-                    opacity: 0.5,
-                  }}
-                />
-              </View> : null
-              )}
+                    marginRight: 6,
+                    justifyContent: 'center',
+                    backgroundColor: COLORS.gray,
+                    overflow: 'hidden',
+                  }}>
+                  <Image
+                    source={
+                      item?.artists[0]?.type?.toLowerCase() === 'artist'
+                        ? ImagePath.placeholderSinger
+                        : item?.artists[0]?.type?.toLowerCase() === 'dj'
+                        ? ImagePath.placeholderDj
+                        : item?.artists[0]?.type?.toLowerCase() === 'guest'
+                        ? ImagePath.profile
+                        : null
+                    }
+                    style={{
+                      height: 10,
+                      width: 10,
+                      resizeMode: 'contain',
+                      alignSelf: 'center',
+                      opacity: 0.5,
+                    }}
+                  />
+                </View>
+              ) : null}
               {item?.artists?.length ? (
                 <Text
                   style={[
@@ -310,7 +310,7 @@ const EventListing = props => {
                 <Text
                   style={[styles.listingText]}
                   onPress={() => {
-                    logEvent(`club_detail ${item?.club?.name}`);
+                    logEvent(`club_detail ${item?.club?.name}`, item?.club);
                     props.navigation.navigate('ClubDetails', {
                       listDetail: item?.club,
                     });

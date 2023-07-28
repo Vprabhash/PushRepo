@@ -163,7 +163,10 @@ const ArtistPlayingDetail = props => {
                   <Text
                     style={[styles.listinhHeading]}
                     onPress={() => {
-                      logEvent(`club_detail ${artistData?.club?.name}`);
+                      logEvent(
+                        `club_detail ${artistData?.club?.name}`,
+                        artistData?.club,
+                      );
                       props.navigation.navigate('ClubDetails', {
                         listDetail: artistData?.club,
                       });
@@ -356,7 +359,10 @@ const ArtistPlayingDetail = props => {
                           },
                         ]}
                         onPress={() => {
-                          logEvent(`club_detail ${artistData?.club?.name}`);
+                          logEvent(
+                            `club_detail ${artistData?.club?.name}`,
+                            artistData?.club,
+                          );
                           props.navigation.navigate('ClubDetails', {
                             listDetail: artistData?.club,
                           });
@@ -463,7 +469,10 @@ const ArtistPlayingDetail = props => {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
-                    logEvent(`event_direction_press ${artistData?.club?.name}`);
+                    logEvent(
+                      `event_direction_press ${artistData?.club?.name}`,
+                      artistData?.club,
+                    );
                     Linking.openURL(artistData?.club?.googleMapLink);
                   }}
                   style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
@@ -477,7 +486,10 @@ const ArtistPlayingDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                      logEvent(`whatsapp_pressed ${artistData?.club?.name}`);
+                      logEvent(
+                        `whatsapp_pressed ${artistData?.club?.name}`,
+                        artistData?.club,
+                      );
                       if (artistData?.club?.whatsappNumber) {
                         Linking.openURL(
                           'http://api.whatsapp.com/send?phone=91' +
@@ -499,7 +511,10 @@ const ArtistPlayingDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                      logEvent(`whatsapp_pressed ${artistData?.club?.name}`);
+                      logEvent(
+                        `whatsapp_pressed ${artistData?.club?.name}`,
+                        artistData?.club,
+                      );
                       if (artistData?.club?.whatsappNumber) {
                         Linking.openURL(
                           'http://api.whatsapp.com/send?phone=91' +
@@ -525,7 +540,10 @@ const ArtistPlayingDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                      logEvent(`call_pressed ${artistData?.club?.name}`);
+                      logEvent(
+                        `call_pressed ${artistData?.club?.name}`,
+                        artistData?.club,
+                      );
                       if (artistData?.club?.phoneNumber) {
                         Linking.openURL('tel:' + artistData?.club?.phoneNumber);
                       } else {
@@ -544,7 +562,10 @@ const ArtistPlayingDetail = props => {
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => {
-                      logEvent(`call_pressed ${artistData?.club?.name}`);
+                      logEvent(
+                        `call_pressed ${artistData?.club?.name}`,
+                        artistData?.club,
+                      );
                       if (artistData?.club?.phoneNumber) {
                         Linking.openURL('tel:' + artistData?.club?.phoneNumber);
                       } else {

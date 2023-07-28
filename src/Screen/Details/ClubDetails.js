@@ -282,7 +282,7 @@ const ClubDetails = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
-            logEvent(`event_detail ${item?.title}`);
+            logEvent(`event_detail ${item?.title}`, item);
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -384,14 +384,11 @@ const ClubDetails = props => {
                     }}>
                     <Image
                       source={
-                        item?.artists[0]?.type?.toLowerCase() ===
-                        'artist'
+                        item?.artists[0]?.type?.toLowerCase() === 'artist'
                           ? ImagePath.placeholderSinger
-                          : item?.artists[0]?.type?.toLowerCase() ===
-                            'dj'
+                          : item?.artists[0]?.type?.toLowerCase() === 'dj'
                           ? ImagePath.placeholderDj
-                          : item?.artists[0]?.type?.toLowerCase() ===
-                            'guest'
+                          : item?.artists[0]?.type?.toLowerCase() === 'guest'
                           ? ImagePath.profile
                           : null
                       }
@@ -404,7 +401,7 @@ const ClubDetails = props => {
                       }}
                     />
                   </View>
-                ) : null}   
+                ) : null}
                 <Text style={[styles.singerName, {marginLeft: 0}]}> By </Text>
                 <View style={{width: '70%', flexDirection: 'row'}}>
                   {/* {item?.artists?.length
@@ -474,7 +471,7 @@ const ClubDetails = props => {
                           <Text
                             style={[styles.singerName]}
                             onPress={() => {
-                              logEvent(`artist_detail ${e?.name}`);
+                              logEvent(`artist_detail ${e?.name}`, e);
                               props.navigation.navigate('ArtistEventDetail', {
                                 artistListDetail: e,
                               });
@@ -938,7 +935,7 @@ const ClubDetails = props => {
             data={events}
             onPress={e => {
               setIsEventModalVisible(false);
-              logEvent(`event_detail ${e?.title}`);
+              logEvent(`event_detail ${e?.title}`, e);
               props.navigation.navigate('ArtistPlayingDetail', {
                 artistData: e,
               });
