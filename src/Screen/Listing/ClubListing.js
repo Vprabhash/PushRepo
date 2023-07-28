@@ -211,7 +211,6 @@ const ClubListing = ({navigation, route}) => {
   };
 
   const fetchMoreData = () => {
-    console.log('calling');
     if (!onEndReachedCalledDuringMomentum && !loading) {
       // if (status !== 'fallback-data') {
       setLoading(true);
@@ -222,10 +221,10 @@ const ClubListing = ({navigation, route}) => {
   };
   const renderFooter = () => {
     return loading ? (
-      <View style={{paddingTop: 50, paddingBottom: 80}}>
+      <View style={{marginTop: 50, marginBottom: 80}}>
         <ActivityIndicator
-          color={COLORS.primary}
-          size={'small'}
+          color={'#000000'}
+          size={'large'}
           style={{marginLeft: 8}}
         />
       </View>
@@ -467,7 +466,7 @@ const ClubListing = ({navigation, route}) => {
               ListEmptyComponent={EmptyListMessage}
               maxToRenderPerBatch={15}
               contentContainerStyle={{
-                paddingBottom: getBottomSpace() + 60,
+                paddingBottom: getBottomSpace() + hp(15),
               }}
             />
           )}

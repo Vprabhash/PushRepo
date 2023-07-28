@@ -83,7 +83,7 @@ const EventListing = props => {
           <ActivityIndicator
             color={'#000000'}
             size={'large'}
-            style={{marginLeft: 8, marginBottom: 20}}
+            style={{marginLeft: 8, marginVertical: 20}}
           />
         ) : null}
       </View>
@@ -529,7 +529,7 @@ const EventListing = props => {
           maxToRenderPerBatch={15}
           ItemSeparatorComponent={() => <View style={{height: 20}} />}
           contentContainerStyle={{
-            paddingBottom: getBottomSpace() + 60,
+            paddingBottom: getBottomSpace() + hp(15),
           }}
         />
         {/* </ScrollView> */}

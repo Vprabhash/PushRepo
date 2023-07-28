@@ -219,7 +219,7 @@ const Home = props => {
       error => {
         console.log('location error', error.code, error.message);
       },
-      {enableHighAccuracy: true, timeout: 500000},
+      {enableHighAccuracy: false, timeout: 500000},
     );
   };
 

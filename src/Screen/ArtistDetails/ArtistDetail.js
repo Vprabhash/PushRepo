@@ -158,15 +158,17 @@ const ArtistDetail = props => {
     }
   };
   const renderFooter = () => {
-    return loading ? (
-      <View style={{paddingTop: 50, paddingBottom: 10}}>
-        <ActivityIndicator
-          color={COLORS.primary}
-          size={'small'}
-          style={{marginLeft: 8}}
-        />
+    return (
+      <View>
+        {loading ? (
+          <ActivityIndicator
+            color={'#000000'}
+            size={'large'}
+            style={{marginLeft: 8, marginVertical: 20}}
+          />
+        ) : null}
       </View>
-    ) : null;
+    );
   };
 
   const artistListRenderItem = ({item, index}) => {
@@ -474,7 +476,7 @@ const ArtistDetail = props => {
               onEndReached={dontCall ? null : fetchMoreData}
               ListEmptyComponent={EmptyListMessage}
               contentContainerStyle={{
-                paddingBottom: getBottomSpace() + 60,
+                paddingBottom: getBottomSpace() + hp(15),
               }}
             />
           )}

@@ -87,7 +87,7 @@ const CitySelect = props => {
       error => {
         console.log('location error', error.code, error.message);
       },
-      {enableHighAccuracy: true, timeout: 15000},
+      {enableHighAccuracy: false, timeout: 15000},
     );
   };
 

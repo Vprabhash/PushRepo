@@ -20,7 +20,7 @@ import ApiCall from '../../redux/CommanApi';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
 import SplashScreen from '../../Components/SplashScreen';
 import ImagePath from '../../assets/ImagePath';
-import { COLORS } from '../../Components/constants';
+import {COLORS} from '../../Components/constants';
 const Splash_Screen = props => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -98,7 +98,7 @@ const Splash_Screen = props => {
       error => {
         console.log('location error', error.code, error.message);
       },
-      {enableHighAccuracy: true, timeout: 15000},
+      {enableHighAccuracy: false, timeout: 15000},
     );
   };
 
@@ -143,30 +143,30 @@ const Splash_Screen = props => {
 
   return (
     <View style={{flex: 1, backgroundColor: COLORS.white}}>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={false}
-          backgroundColor="transparent"
-          translucent={true}
-        />
-        <ImageBackground
-          source={ImagePath.Azzir_Bg}
+      <StatusBar
+        barStyle="dark-content"
+        hidden={false}
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <ImageBackground
+        source={ImagePath.Azzir_Bg}
+        style={{
+          height: '100%',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Image
+          source={ImagePath.Azzir_AppIcon}
           style={{
-            height: '100%',
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Image
-            source={ImagePath.Azzir_AppIcon}
-            style={{
-              width: widthPercentageToDP(80),
-              height: widthPercentageToDP(80),
-              resizeMode: 'contain',
-            }}
-          />
-        </ImageBackground>
-      </View>
-  )
+            width: widthPercentageToDP(80),
+            height: widthPercentageToDP(80),
+            resizeMode: 'contain',
+          }}
+        />
+      </ImageBackground>
+    </View>
+  );
 };
 export default Splash_Screen;
