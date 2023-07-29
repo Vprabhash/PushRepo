@@ -35,7 +35,7 @@ import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
-import {logEvent} from '../../utils/AddFirebaseEvent';
+import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import ArtistsList from '../../Components/ArtistsList';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -73,6 +73,12 @@ const ClubDetails = props => {
     //     handleBackButtonClick,
     //   );
     // };
+    props.navigation.addListener('focus', () => {
+      sendUXActivity('clubs.view', {
+        screen: 'ClubDetailScreen',
+        clubId: props?.route?.params?.listDetail?._id,
+      });
+    });
   }, []);
 
   function handleBackButtonClick() {
@@ -283,6 +289,10 @@ const ClubDetails = props => {
         <TouchableOpacity
           onPress={() => {
             logEvent(`event_detail ${item?.title}`, item);
+            sendUXActivity('events.view', {
+              screen: 'EventDetailScreen',
+              eventId: item?._id,
+            });
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -473,6 +483,10 @@ const ClubDetails = props => {
                             style={[styles.singerName]}
                             onPress={() => {
                               logEvent(`artist_detail ${e?.name}`, e);
+                              sendUXActivity('Artists.view', {
+                                screen: 'ArtistDetailScreen',
+                                artistId: e?._id,
+                              });
                               props.navigation.navigate('ArtistEventDetail', {
                                 artistListDetail: e,
                               });
@@ -937,6 +951,10 @@ const ClubDetails = props => {
             onPress={e => {
               setIsEventModalVisible(false);
               logEvent(`event_detail ${e?.title}`, e);
+              sendUXActivity('events.view', {
+                screen: 'EventDetailScreen',
+                eventId: e?._id,
+              });
               props.navigation.navigate('ArtistPlayingDetail', {
                 artistData: e,
               });

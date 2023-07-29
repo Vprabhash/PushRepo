@@ -28,7 +28,7 @@ import Swiper from 'react-native-swiper';
 import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 import moment from 'moment';
 import ImageView from 'react-native-image-viewing';
-import {logEvent} from '../../utils/AddFirebaseEvent';
+import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import ArtistsList from '../../Components/ArtistsList';
 import Toast from 'react-native-simple-toast';
 const width = Dimensions.get('window').width;
@@ -167,6 +167,10 @@ const ArtistPlayingDetail = props => {
                         `club_detail ${artistData?.club?.name}`,
                         artistData?.club,
                       );
+                      sendUXActivity('clubs.view', {
+                        screen: 'ClubDetailScreen',
+                        clubId: artistData?.club?._id,
+                      });
                       props.navigation.navigate('ClubDetails', {
                         listDetail: artistData?.club,
                       });
@@ -363,6 +367,10 @@ const ArtistPlayingDetail = props => {
                             `club_detail ${artistData?.club?.name}`,
                             artistData?.club,
                           );
+                          sendUXActivity('clubs.view', {
+                            screen: 'ClubDetailScreen',
+                            clubId: artistData?.club?._id,
+                          });
                           props.navigation.navigate('ClubDetails', {
                             listDetail: artistData?.club,
                           });
@@ -470,9 +478,13 @@ const ArtistPlayingDetail = props => {
                   activeOpacity={0.7}
                   onPress={() => {
                     logEvent(
-                      `event_direction_press ${artistData?.club?.name}`,
+                      `direction_press ${artistData?.club?.name}`,
                       artistData?.club,
                     );
+                    sendUXActivity('clubs.direction_press', {
+                      screen: 'EventDetailScreen',
+                      clubId: artistData?.club?._id,
+                    });
                     Linking.openURL(artistData?.club?.googleMapLink);
                   }}
                   style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
@@ -490,6 +502,10 @@ const ArtistPlayingDetail = props => {
                         `whatsapp_pressed ${artistData?.club?.name}`,
                         artistData?.club,
                       );
+                      sendUXActivity('clubs.whatsapp_pressed', {
+                        screen: 'EventDetailScreen',
+                        clubId: artistData?.club?._id,
+                      });
                       if (artistData?.club?.whatsappNumber) {
                         Linking.openURL(
                           'http://api.whatsapp.com/send?phone=91' +
@@ -515,6 +531,10 @@ const ArtistPlayingDetail = props => {
                         `whatsapp_pressed ${artistData?.club?.name}`,
                         artistData?.club,
                       );
+                      sendUXActivity('clubs.whatsapp_pressed', {
+                        screen: 'EventDetailScreen',
+                        clubId: artistData?.club?._id,
+                      });
                       if (artistData?.club?.whatsappNumber) {
                         Linking.openURL(
                           'http://api.whatsapp.com/send?phone=91' +
@@ -544,6 +564,10 @@ const ArtistPlayingDetail = props => {
                         `call_pressed ${artistData?.club?.name}`,
                         artistData?.club,
                       );
+                      sendUXActivity('clubs.call_pressed', {
+                        screen: 'EventDetailScreen',
+                        clubId: item?._id,
+                      });
                       if (artistData?.club?.phoneNumber) {
                         Linking.openURL('tel:' + artistData?.club?.phoneNumber);
                       } else {
@@ -566,6 +590,10 @@ const ArtistPlayingDetail = props => {
                         `call_pressed ${artistData?.club?.name}`,
                         artistData?.club,
                       );
+                      sendUXActivity('clubs.call_pressed', {
+                        screen: 'EventDetailScreen',
+                        clubId: item?._id,
+                      });
                       if (artistData?.club?.phoneNumber) {
                         Linking.openURL('tel:' + artistData?.club?.phoneNumber);
                       } else {

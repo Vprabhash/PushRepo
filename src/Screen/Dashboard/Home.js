@@ -52,7 +52,7 @@ import {
 import {showLoader} from '../../redux/reducers/loaderSlice';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
-import {logEvent} from '../../utils/AddFirebaseEvent';
+import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {
   currentCity,
   userCurrentCity,
@@ -123,7 +123,7 @@ const Home = props => {
       console.log('App has come to the foreground!');
       checkLocation();
     }
-    checkLocation();
+    // checkLocation();
 
     appState.current = nextAppState;
     console.log('AppState', appState.current);
@@ -357,6 +357,10 @@ const Home = props => {
     <TouchableOpacity
       onPress={() => {
         logEvent(`artist_detail ${item?.name}`, item);
+        sendUXActivity('Artists.view', {
+          screen: 'ArtistDetailScreen',
+          artistId: item?._id,
+        });
         props.navigation.navigate('ArtistEventDetail', {
           artistListDetail: item,
         });
@@ -450,6 +454,10 @@ const Home = props => {
         style={{borderRadius: 10, overflow: 'hidden'}}
         onPress={() => {
           logEvent(`event_detail ${item?.title}`, item);
+          sendUXActivity('events.view', {
+            screen: 'EventDetailScreen',
+            eventId: item?._id,
+          });
           props.navigation.navigate('ArtistPlayingDetail', {
             artistData: item,
           });

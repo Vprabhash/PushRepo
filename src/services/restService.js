@@ -4,11 +4,10 @@ import {getData} from '../Components/Helper';
 
 const getAuthToken = async () => {
   let token = await getData('userToken');
-  console.log('======', token);
   return token;
 };
 const api = axios.create({
-  baseURL: BASE_URL, // Replace with your actual API base URL
+  baseURL: BASE_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

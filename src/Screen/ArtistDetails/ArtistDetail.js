@@ -30,7 +30,7 @@ import {
   getBottomSpace,
   getStatusBarHeight,
 } from 'react-native-iphone-screen-helper';
-import {logEvent} from '../../utils/AddFirebaseEvent';
+import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -185,6 +185,10 @@ const ArtistDetail = props => {
           }}
           onPress={() => {
             logEvent(`artist_detail ${item?.name}`, item);
+            sendUXActivity('Artists.view', {
+              screen: 'ArtistDetailScreen',
+              artistId: item?._id,
+            });
             props.navigation.navigate('ArtistEventDetail', {
               artistListDetail: item,
             });

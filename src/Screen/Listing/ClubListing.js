@@ -34,7 +34,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useRoute} from '@react-navigation/native';
 import {showFilter} from '../../redux/reducers/isFilterOpenSlice';
-import {logEvent} from '../../utils/AddFirebaseEvent';
+import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -247,6 +247,10 @@ const ClubListing = ({navigation, route}) => {
       <TouchableOpacity
         onPress={() => {
           logEvent(`club_detail ${item?.name}`, item);
+          sendUXActivity('clubs.view', {
+            screen: 'ClubDetailScreen',
+            clubId: item?._id,
+          });
           navigation.navigate('ClubDetails', {listDetail: item});
         }}
         activeOpacity={0.7}

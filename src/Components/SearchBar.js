@@ -36,7 +36,7 @@ import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {showFilter} from '../redux/reducers/isFilterOpenSlice';
-import {logEvent} from '../utils/AddFirebaseEvent';
+import {logEvent, sendUXActivity} from '../utils/AddFirebaseEvent';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -150,11 +150,19 @@ const SearchBar = props => {
             onPress={() => {
               if (item.type) {
                 logEvent(`artist_detail ${item?.name}`, item);
+                sendUXActivity('Artists.view', {
+                  screen: 'ArtistDetailScreen',
+                  artistId: item?._id,
+                });
                 props.navigation.navigate('ArtistEventDetail', {
                   artistListDetail: item,
                 });
               } else {
                 logEvent(`club_detail ${item?.name}`, item);
+                sendUXActivity('clubs.view', {
+                  screen: 'ClubDetailScreen',
+                  clubId: item?._id,
+                });
                 props.navigation.navigate('ClubDetails', {listDetail: item});
               }
             }}
@@ -322,6 +330,10 @@ const SearchBar = props => {
         <TouchableOpacity
           onPress={() => {
             logEvent(`event_detail ${item?.title}`, item);
+            sendUXActivity('events.view', {
+              screen: 'EventDetailScreen',
+              eventId: item?._id,
+            });
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -441,6 +453,10 @@ const SearchBar = props => {
                   style={[styles.listingText]}
                   onPress={() => {
                     logEvent(`club_detail ${item?.club?.name}`, item?.club);
+                    sendUXActivity('clubs.view', {
+                      screen: 'ClubDetailScreen',
+                      clubId: item?.club?._id,
+                    });
                     props.navigation.navigate('ClubDetails', {
                       listDetail: item?.club,
                     });

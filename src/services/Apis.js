@@ -13,7 +13,9 @@ export const LIST = 'users/';
 export const LOGOUT = 'users/';
 export const LetLong = '';
 
-export const ARTIST = 'clubs'; // demo andpoint Url
-export const CLUBLOCATION = 'movies.json'; // demo andpoint Url
-export const SPOTLIGHT = 'movies.json'; // demo andpoint Url
-export const UPCOMINGEVENT = 'movies.json'; // demo andpoint Url
+export const ARTIST = 'clubs';
+export const CLUBLOCATION = 'movies.json';
+export const SPOTLIGHT = 'movies.json';
+export const UPCOMINGEVENT = 'movies.json';
+
+export const UXACTIVITY = 'ux-activity';

@@ -27,7 +27,7 @@ import ApiCall from '../../redux/CommanApi';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
-import {logEvent} from '../../utils/AddFirebaseEvent';
+import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {parseYouTubeLink} from '../../utils/common';
 
 const width = Dimensions.get('window').width;
@@ -49,6 +49,15 @@ const ArtistEventDetail = props => {
   useEffect(() => {
     UpcomingDataList(eventPage);
   }, [eventPage]);
+
+  useEffect(() => {
+    props.navigation.addListener('focus', () => {
+      sendUXActivity('Artists.view', {
+        screen: 'ArtistDetailScreen',
+        clubId: props?.route?.params?.listDetail?._id,
+      });
+    });
+  }, []);
   const UpcomingDataList = async page => {
     const queryParams = new URLSearchParams();
     queryParams.append('upcoming', 1);
@@ -252,6 +261,10 @@ const ArtistEventDetail = props => {
         <TouchableOpacity
           onPress={() => {
             logEvent(`event_detail ${item?.title}`, item);
+            sendUXActivity('events.view', {
+              screen: 'EventDetailScreen',
+              eventId: item?._id,
+            });
             props.navigation.navigate('ArtistPlayingDetail', {
               artistData: item,
             });
@@ -394,6 +407,10 @@ const ArtistEventDetail = props => {
                     ]}
                     onPress={() => {
                       logEvent(`club_detail ${item?.club?.name}`, item?.club);
+                      sendUXActivity('clubs.view', {
+                        screen: 'ClubDetailScreen',
+                        clubId: item?.club?._id,
+                      });
                       props.navigation.navigate('ClubDetails', {
                         listDetail: item?.club,
                       });
@@ -432,6 +449,10 @@ const ArtistEventDetail = props => {
                           style={[styles.singerName]}
                           onPress={() => {
                             logEvent(`artist_detail ${e?.name}`, e);
+                            sendUXActivity('Artists.view', {
+                              screen: 'ArtistDetailScreen',
+                              artistId: item?._id,
+                            });
                             props.navigation.navigate('ArtistEventDetail', {
                               artistListDetail: e,
                             });
@@ -586,6 +607,10 @@ const ArtistEventDetail = props => {
                         `instagram_pressed ${detailData?.name}`,
                         detailData,
                       );
+                      sendUXActivity('Artists.instagram_pressed', {
+                        screen: 'ArtistDetailScreen',
+                        artistId: detailData?._id,
+                      });
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
                       } else {
@@ -614,6 +639,10 @@ const ArtistEventDetail = props => {
                         `instagram_pressed ${detailData?.name}`,
                         detailData,
                       );
+                      sendUXActivity('Artists.instagram_pressed', {
+                        screen: 'ArtistDetailScreen',
+                        artistId: detailData?._id,
+                      });
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
                       } else {
@@ -644,6 +673,10 @@ const ArtistEventDetail = props => {
                         `youtube_pressed ${detailData?.name}`,
                         detailData,
                       );
+                      sendUXActivity('Artists.youtube_pressed', {
+                        screen: 'ArtistDetailScreen',
+                        artistId: detailData?._id,
+                      });
                       if (parseYouTubeLink(detailData?.youtubeChannelLink)) {
                         Linking.openURL(
                           parseYouTubeLink(detailData?.youtubeChannelLink),
@@ -668,6 +701,10 @@ const ArtistEventDetail = props => {
                         `youtube_pressed ${detailData?.name}`,
                         detailData,
                       );
+                      sendUXActivity('Artists.youtube_pressed', {
+                        screen: 'ArtistDetailScreen',
+                        artistId: detailData?._id,
+                      });
                       console.log(detailData?.youtubeChannelLink);
                       Toast.showWithGravity(
                         'Youtube link is not available',
@@ -791,6 +828,10 @@ const ArtistEventDetail = props => {
         onPress={e => {
           setIsEventModalVisible(false);
           logEvent(`event_detail ${e?.title}`, e);
+          sendUXActivity('events.view', {
+            screen: 'EventDetailScreen',
+            eventId: e?._id,
+          });
           props.navigation.navigate('ArtistPlayingDetail', {
             artistData: e,
           });

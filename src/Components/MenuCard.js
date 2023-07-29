@@ -19,7 +19,7 @@ import {
 } from 'react-native-responsive-screen';
 import {COLORS, FONTS} from './constants';
 import Toast from 'react-native-simple-toast';
-import {logEvent} from '../utils/AddFirebaseEvent';
+import {logEvent, sendUXActivity} from '../utils/AddFirebaseEvent';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
@@ -191,7 +191,11 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            logEvent(`club_direction_press ${itemdata?.name}`, itemdata);
+            logEvent(`direction_pressed ${itemdata?.name}`, itemdata);
+            sendUXActivity('clubs.direction_pressed', {
+              screen: 'ClubDetailScreen',
+              clubId: itemdata?._id,
+            });
             Linking.openURL(itemdata?.googleMapLink);
           }}
           style={[styles.btnmain, {borderBottomLeftRadius: 10}]}>
@@ -206,6 +210,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             activeOpacity={0.7}
             onPress={() => {
               logEvent(`whatsapp_pressed  ${itemdata?.name}`, itemdata);
+              sendUXActivity('clubs.whatsapp_pressed', {
+                screen: 'ClubDetailScreen',
+                clubId: itemdata?._id,
+              });
               if (itemdata?.whatsappNumber) {
                 Linking.openURL(
                   'http://api.whatsapp.com/send?phone=91' +
@@ -228,6 +236,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             activeOpacity={0.7}
             onPress={() => {
               logEvent(`whatsapp_pressed ${itemdata?.name}`, itemdata);
+              sendUXActivity('clubs.whatsapp_pressed', {
+                screen: 'ClubDetailScreen',
+                clubId: itemdata?._id,
+              });
               if (itemdata?.whatsappNumber) {
                 Linking.openURL(
                   'http://api.whatsapp.com/send?phone=91' +
@@ -254,6 +266,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             activeOpacity={0.7}
             onPress={() => {
               logEvent(`call_pressed ${itemdata?.name}`, itemdata);
+              sendUXActivity('clubs.call_pressed', {
+                screen: 'ClubDetailScreen',
+                clubId: itemdata?._id,
+              });
               if (itemdata?.phoneNumber) {
                 Linking.openURL('tel:' + itemdata?.phoneNumber);
               } else {
@@ -273,6 +289,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             activeOpacity={0.7}
             onPress={() => {
               logEvent(`call_pressed ${itemdata?.name}`, itemdata);
+              sendUXActivity('clubs.call_pressed', {
+                screen: 'ClubDetailScreen',
+                clubId: itemdata?._id,
+              });
               if (itemdata?.phoneNumber) {
                 Linking.openURL('tel:' + itemdata?.phoneNumber);
               } else {
