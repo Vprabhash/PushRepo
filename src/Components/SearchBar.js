@@ -513,6 +513,8 @@ const SearchBar = props => {
         return ImagePath.clubActive;
       case 'dj':
         return ImagePath.liveDjIcon;
+      case 'event':
+        return ImagePath.calendarIcon;
       default:
         return null;
     }
@@ -555,6 +557,7 @@ const SearchBar = props => {
         style={{height: '100%'}}>
         <View
           style={{
+            flex: 1,
             marginHorizontal: 10,
             marginTop: Platform.OS == 'ios' ? getStatusBarHeight() : 50,
           }}>
@@ -631,56 +634,61 @@ const SearchBar = props => {
                 top: 45,
                 zIndex: 99999,
                 marginLeft: '10%',
-                marginRight: '5%',
                 borderRadius: 10,
                 marginBottom: 20,
-                width: '85%',
+                width: '95%',
                 maxHeight: hp(50),
               }}>
-              <FlatList
-                data={autoSuggestData}
-                keyExtractor={(_, index) => index.toString()}
-                bounces={false}
-                nestedScrollEnabled={true}
-                renderItem={({item}) => {
-                  if (item?.type?.toLowerCase() === 'guest') {
-                    return;
-                  }
-                  return (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      style={{
-                        backgroundColor: COLORS.white,
-                        padding: 10,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}
-                      onPress={() => {
-                        setValuekey(item?.title);
-                        searchApi(item?.title);
-                      }}>
-                      <Image
-                        style={[
-                          styles.iconStyle,
-                          {marginRight: 8, width: 20, height: 20},
-                        ]}
-                        source={imageType(item?.type)}
-                      />
-                      <Text
+              <View style={{height: hp(50)}}>
+                <FlatList
+                  data={autoSuggestData}
+                  keyExtractor={(_, index) => index.toString()}
+                  bounces={false}
+                  style={{flex: 1, maxHeight: hp(50)}}
+                  nestedScrollEnabled={true}
+                  keyboardShouldPersistTaps="handled"
+                  renderItem={({item}) => {
+                    if (item?.type?.toLowerCase() === 'guest') {
+                      return;
+                    }
+                    return (
+                      <TouchableOpacity
+                        activeOpacity={0.8}
                         style={{
-                          color: 'rgba(0, 0, 0, 0.7)',
-                          fontFamily: FONTS.RobotoRegular,
-                          fontSize: 16,
+                          backgroundColor: COLORS.white,
+                          padding: 10,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}
+                        onPress={() => {
+                          setValuekey(item?.title);
+                          searchApi(item?.title);
                         }}>
-                        {item?.title}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                }}
-                ItemSeparatorComponent={() => (
-                  <View style={{height: 1, backgroundColor: COLORS.gray}} />
-                )}
-              />
+                        <Image
+                          style={[
+                            styles.iconStyle,
+                            {marginRight: 8, width: 20, height: 20},
+                          ]}
+                          source={imageType(item?.type)}
+                        />
+                        <Text
+                          style={{
+                            color: 'rgba(0, 0, 0, 0.7)',
+                            fontFamily: FONTS.RobotoRegular,
+                            fontSize: 16,
+                            marginRight: 20,
+                          }}>
+                          {item?.title}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  }}
+                  contentContainerStyle={{paddingEnd: 30}}
+                  ItemSeparatorComponent={() => (
+                    <View style={{height: 1, backgroundColor: COLORS.gray}} />
+                  )}
+                />
+              </View>
             </View>
           ) : null}
           <TouchableOpacity
@@ -837,8 +845,7 @@ export default SearchBar;
 // };
 const styles = StyleSheet.create({
   hedingTextMain: {
-    marginTop: 10,
-    marginBottom: hp(2),
+    marginVertical: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
