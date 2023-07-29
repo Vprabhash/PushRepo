@@ -423,11 +423,12 @@ const SearchBar = props => {
                 styles.singerName,
                 {fontFamily: FONTS.AxiformaRegular, marginTop: 0},
               ]}>
-              {item?.eventStartTime
+              {`8pm onwards`}
+              {/* {item?.eventStartTime
                 ? `${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
                     item?.eventEndTime,
                   ).format('hh:mm A')}`
-                : `8pm onwards`}
+                : `8pm onwards`} */}
             </Text>
             <View
               style={{
