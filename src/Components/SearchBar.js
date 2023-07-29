@@ -725,7 +725,7 @@ const SearchBar = props => {
             renderItem={_renderItem}
             keyExtractor={(_, i) => i.toString()}
             onEndReachedThreshold={0.3}
-            contentContainerStyle={{paddingTop: 20, paddingBottom: 100}}
+            contentContainerStyle={{paddingBottom: 100}}
             ListHeaderComponent={
               recommendation && !valuekey ? (
                 <ScrollView
@@ -869,7 +869,7 @@ const styles = StyleSheet.create({
   hedingImg: {width: '30%', resizeMode: 'contain'},
   cardText: {
     fontFamily: FONTS.AxiformaBold,
-    fontSize: 12,
+    fontSize: 16,
     marginHorizontal: 5,
     textAlign: 'center',
     color: COLORS.black,
