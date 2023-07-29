@@ -443,7 +443,7 @@ const ClubDetails = props => {
                 </View>
               </View>
             ) : null}
-            <Text style={styles.listinhText}>
+            <Text style={[styles.listinhText, {fontSize: 14}]}>
               {`8pm onwards`}
               {/* {item?.eventStartTime
                 ? `${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(

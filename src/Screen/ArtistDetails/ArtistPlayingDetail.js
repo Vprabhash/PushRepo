@@ -295,11 +295,12 @@ const ArtistPlayingDetail = props => {
                     <Text style={styles.listinhHeading1}>
                       {`${moment(artistData?.eventStartTime).format(
                         'ddd MMM DD',
-                      )} at ${moment(artistData?.eventStartTime).format(
+                      )} at 8pm onwards`}
+                      {/* ${moment(artistData?.eventStartTime).format(
                         'hh:mm A',
                       )} to ${moment(artistData?.eventEndTime).format(
                         'hh:mm A',
-                      )}`}
+                      ) */}
                     </Text>
                   </View>
                 </View>
