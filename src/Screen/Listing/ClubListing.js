@@ -35,6 +35,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useRoute} from '@react-navigation/native';
 import {showFilter} from '../../redux/reducers/isFilterOpenSlice';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
+import {createEventName} from '../../utils/common';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -246,7 +247,7 @@ const ClubListing = ({navigation, route}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          logEvent(`club_detail ${item?.name}`, item);
+          logEvent(`club_detail_${createEventName(item?.name)}`, item);
           sendUXActivity('clubs.view', {
             screen: 'ClubDetailScreen',
             clubId: item?._id,
@@ -340,9 +341,11 @@ const ClubListing = ({navigation, route}) => {
             <Text style={styles.listingText}>
               {`${item?.locality}, ${item?.city}`}
             </Text>
-            <Text style={styles.listingText} numberOfLines={1}>
-              ₹{item?.cost}
-            </Text>
+            {item?.cost ? (
+              <Text style={styles.listingText} numberOfLines={1}>
+                ₹{item?.cost}
+              </Text>
+            ) : null}
           </View>
         </View>
       </TouchableOpacity>

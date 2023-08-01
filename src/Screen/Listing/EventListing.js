@@ -33,6 +33,7 @@ import moment from 'moment';
 import {useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
+import {createEventName} from '../../utils/common';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -165,7 +166,7 @@ const EventListing = props => {
       <View style={{width: wp(100)}}>
         <TouchableOpacity
           onPress={() => {
-            logEvent(`event_detail ${item?.title}`, item);
+            logEvent(`event_detail_${createEventName(item?.title)}`, item);
             sendUXActivity('events.view', {
               screen: 'EventDetailScreen',
               eventId: item?._id,
@@ -315,7 +316,10 @@ const EventListing = props => {
                 <Text
                   style={[styles.listingText]}
                   onPress={() => {
-                    logEvent(`club_detail ${item?.club?.name}`, item?.club);
+                    logEvent(
+                      `club_detail_${createEventName(item?.club?.name)}`,
+                      item?.club,
+                    );
                     sendUXActivity('clubs.view', {
                       screen: 'ClubDetailScreen',
                       clubId: item?.club?._id,

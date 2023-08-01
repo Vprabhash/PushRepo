@@ -28,7 +28,7 @@ import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
-import {parseYouTubeLink} from '../../utils/common';
+import {createEventName, parseYouTubeLink} from '../../utils/common';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -260,7 +260,7 @@ const ArtistEventDetail = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
-            logEvent(`event_detail ${item?.title}`, item);
+            logEvent(`event_detail_${createEventName(item?.title)}`, item);
             sendUXActivity('events.view', {
               screen: 'EventDetailScreen',
               eventId: item?._id,
@@ -406,7 +406,10 @@ const ArtistEventDetail = props => {
                       },
                     ]}
                     onPress={() => {
-                      logEvent(`club_detail ${item?.club?.name}`, item?.club);
+                      logEvent(
+                        `club_detail_${createEventName(item?.club?.name)}`,
+                        item?.club,
+                      );
                       sendUXActivity('clubs.view', {
                         screen: 'ClubDetailScreen',
                         clubId: item?.club?._id,
@@ -448,7 +451,10 @@ const ArtistEventDetail = props => {
                         <Text
                           style={[styles.singerName]}
                           onPress={() => {
-                            logEvent(`artist_detail ${e?.name}`, e);
+                            logEvent(
+                              `artist_detail_${createEventName(e?.name)}`,
+                              e,
+                            );
                             sendUXActivity('Artists.view', {
                               screen: 'ArtistDetailScreen',
                               artistId: item?._id,
@@ -604,7 +610,9 @@ const ArtistEventDetail = props => {
                     activeOpacity={0.7}
                     onPress={() => {
                       logEvent(
-                        `instagram_pressed ${detailData?.name}`,
+                        `instagram_pressed_${createEventName(
+                          detailData?.name,
+                        )}`,
                         detailData,
                       );
                       sendUXActivity('Artists.instagram_pressed', {
@@ -636,7 +644,9 @@ const ArtistEventDetail = props => {
                     activeOpacity={0.7}
                     onPress={() => {
                       logEvent(
-                        `instagram_pressed ${detailData?.name}`,
+                        `instagram_pressed_${createEventName(
+                          detailData?.name,
+                        )}`,
                         detailData,
                       );
                       sendUXActivity('Artists.instagram_pressed', {
@@ -670,7 +680,7 @@ const ArtistEventDetail = props => {
                     activeOpacity={0.7}
                     onPress={() => {
                       logEvent(
-                        `youtube_pressed ${detailData?.name}`,
+                        `youtube_pressed_${createEventName(detailData?.name)}`,
                         detailData,
                       );
                       sendUXActivity('Artists.youtube_pressed', {
@@ -698,7 +708,7 @@ const ArtistEventDetail = props => {
                     activeOpacity={0.7}
                     onPress={() => {
                       logEvent(
-                        `youtube_pressed ${detailData?.name}`,
+                        `youtube_pressed_${createEventName(detailData?.name)}`,
                         detailData,
                       );
                       sendUXActivity('Artists.youtube_pressed', {
@@ -827,7 +837,7 @@ const ArtistEventDetail = props => {
         data={upcomingEvents}
         onPress={e => {
           setIsEventModalVisible(false);
-          logEvent(`event_detail ${e?.title}`, e);
+          logEvent(`event_detail_${createEventName(e?.title)}`, e);
           sendUXActivity('events.view', {
             screen: 'EventDetailScreen',
             eventId: e?._id,

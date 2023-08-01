@@ -59,6 +59,7 @@ import {
 } from '../../redux/reducers/citySelectorSlice';
 import {getData} from '../../Components/Helper';
 import LinearGradient from 'react-native-linear-gradient';
+import {createEventName} from '../../utils/common';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -356,7 +357,7 @@ const Home = props => {
   const artistRenderItem = ({item, index}) => (
     <TouchableOpacity
       onPress={() => {
-        logEvent(`artist_detail ${item?.name}`, item);
+        logEvent(`artist_detail_${createEventName(item?.name)}`, item);
         sendUXActivity('Artists.view', {
           screen: 'ArtistDetailScreen',
           artistId: item?._id,
@@ -453,7 +454,7 @@ const Home = props => {
       <TouchableOpacity
         style={{borderRadius: 10, overflow: 'hidden'}}
         onPress={() => {
-          logEvent(`event_detail ${item?.title}`, item);
+          logEvent(`event_detail_${createEventName(item?.title)}`, item);
           sendUXActivity('events.view', {
             screen: 'EventDetailScreen',
             eventId: item?._id,

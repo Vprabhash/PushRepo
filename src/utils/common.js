@@ -93,3 +93,7 @@ export function parseYouTubeLink(youtubeLink) {
   // Invalid or unsupported YouTube link
   return null;
 }
+
+export function createEventName(eventName) {
+  return eventName.toLowerCase().split(' ').join('_');
+}

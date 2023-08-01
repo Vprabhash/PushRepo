@@ -20,10 +20,10 @@ import {
 import {COLORS, FONTS} from './constants';
 import Toast from 'react-native-simple-toast';
 import {logEvent, sendUXActivity} from '../utils/AddFirebaseEvent';
+import {createEventName} from '../utils/common';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
-  console.log('==itemdatamenu----', itemdata);
   const MenuData = [
     {
       menuIcon: ImagePath.watchIcon,
@@ -191,7 +191,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
-            logEvent(`direction_pressed ${itemdata?.name}`, itemdata);
+            logEvent(
+              `direction_pressed_${createEventName(itemdata?.name)}`,
+              itemdata,
+            );
             sendUXActivity('clubs.direction_pressed', {
               screen: 'ClubDetailScreen',
               clubId: itemdata?._id,
@@ -209,7 +212,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              logEvent(`whatsapp_pressed  ${itemdata?.name}`, itemdata);
+              logEvent(
+                `whatsapp_pressed_${createEventName(itemdata?.name)}`,
+                itemdata,
+              );
               sendUXActivity('clubs.whatsapp_pressed', {
                 screen: 'ClubDetailScreen',
                 clubId: itemdata?._id,
@@ -235,7 +241,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              logEvent(`whatsapp_pressed ${itemdata?.name}`, itemdata);
+              logEvent(
+                `whatsapp_pressed_${createEventName(itemdata?.name)}`,
+                itemdata,
+              );
               sendUXActivity('clubs.whatsapp_pressed', {
                 screen: 'ClubDetailScreen',
                 clubId: itemdata?._id,
@@ -265,7 +274,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              logEvent(`call_pressed ${itemdata?.name}`, itemdata);
+              logEvent(
+                `call_pressed_${createEventName(itemdata?.name)}`,
+                itemdata,
+              );
               sendUXActivity('clubs.call_pressed', {
                 screen: 'ClubDetailScreen',
                 clubId: itemdata?._id,
@@ -288,7 +300,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              logEvent(`call_pressed ${itemdata?.name}`, itemdata);
+              logEvent(
+                `call_pressed_${createEventName(itemdata?.name)}`,
+                itemdata,
+              );
               sendUXActivity('clubs.call_pressed', {
                 screen: 'ClubDetailScreen',
                 clubId: itemdata?._id,

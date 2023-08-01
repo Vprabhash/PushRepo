@@ -31,6 +31,7 @@ import {
   getStatusBarHeight,
 } from 'react-native-iphone-screen-helper';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
+import {createEventName} from '../../utils/common';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -184,7 +185,7 @@ const ArtistDetail = props => {
             elevation: 4,
           }}
           onPress={() => {
-            logEvent(`artist_detail ${item?.name}`, item);
+            logEvent(`artist_detail_${createEventName(item?.name)}`, item);
             sendUXActivity('Artists.view', {
               screen: 'ArtistDetailScreen',
               artistId: item?._id,
