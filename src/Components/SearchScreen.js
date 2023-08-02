@@ -434,6 +434,37 @@ const SearchScreen = props => {
                   }}
                   source={{uri: item?.artists[0]?.images[0]}}
                 />
+              ) : item?.artists?.length ? (
+                <View
+                  style={{
+                    height: 30,
+                    width: 30,
+                    borderRadius: 20,
+                    resizeMode: 'contain',
+                    marginRight: 6,
+                    justifyContent: 'center',
+                    backgroundColor: COLORS.gray,
+                    overflow: 'hidden',
+                  }}>
+                  <Image
+                    source={
+                      item?.artists[0]?.type?.toLowerCase() === 'artist'
+                        ? ImagePath.placeholderSinger
+                        : item?.artists[0]?.type?.toLowerCase() === 'dj'
+                        ? ImagePath.placeholderDj
+                        : item?.artists[0]?.type?.toLowerCase() === 'guest'
+                        ? ImagePath.profile
+                        : null
+                    }
+                    style={{
+                      height: 10,
+                      width: 10,
+                      resizeMode: 'contain',
+                      alignSelf: 'center',
+                      opacity: 0.5,
+                    }}
+                  />
+                </View>
               ) : null}
               {item?.artists?.length ? (
                 <Text
