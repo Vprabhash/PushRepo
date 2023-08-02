@@ -247,12 +247,16 @@ const ClubListing = ({navigation, route}) => {
     return (
       <TouchableOpacity
         onPress={() => {
+          navigation.navigate('ClubDetails', {listDetail: item});
           logEvent(`club_detail_${createEventName(item?.name)}`, item);
           sendUXActivity('clubs.view', {
             screen: 'ClubDetailScreen',
             clubId: item?._id,
+            name: item?.name,
+            locality: item?.locality,
+            city: item?.city,
+            referer: 'ClubList',
           });
-          navigation.navigate('ClubDetails', {listDetail: item});
         }}
         activeOpacity={0.7}
         style={{
@@ -399,7 +403,7 @@ const ClubListing = ({navigation, route}) => {
           }}>
           <HeaderCitySearch
             onPress={() => {
-              navigation.navigate('SearchBar');
+              navigation.navigate('SearchScreen');
             }}
           />
         </View>
@@ -407,7 +411,7 @@ const ClubListing = ({navigation, route}) => {
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-              navigation.navigate('SearchBar');
+              navigation.navigate('SearchScreen');
             }}>
             <View style={[styles.inputMain, {marginTop: 50, marginBottom: 20}]}>
               <TextInput

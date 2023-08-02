@@ -48,7 +48,6 @@ const Profile = ({navigation}) => {
       Icon: ImagePath.rightIcon,
 
       onPress: () => {
-        console.log('userProfileData===', userProfileData?.email);
         navigation.navigate('ForgetPassword', {
           email: userProfileData?.email,
           isReset: true,

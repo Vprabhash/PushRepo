@@ -185,13 +185,16 @@ const ArtistDetail = props => {
             elevation: 4,
           }}
           onPress={() => {
+            props.navigation.navigate('ArtistEventDetail', {
+              artistListDetail: item,
+            });
             logEvent(`artist_detail_${createEventName(item?.name)}`, item);
             sendUXActivity('Artists.view', {
               screen: 'ArtistDetailScreen',
               artistId: item?._id,
-            });
-            props.navigation.navigate('ArtistEventDetail', {
-              artistListDetail: item,
+              name: item?.name,
+              city: item?.address?.city,
+              referer: 'ArtistsList',
             });
           }}>
           {item?.images?.length ? (
@@ -304,7 +307,7 @@ const ArtistDetail = props => {
           }}>
           <HeaderCitySearch
             onPress={() => {
-              props.navigation.navigate('SearchBar');
+              props.navigation.navigate('SearchScreen');
             }}
           />
         </View>
@@ -316,7 +319,7 @@ const ArtistDetail = props => {
           {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-              props.navigation.navigate('SearchBar');
+              props.navigation.navigate('SearchScreen');
             }}>
             <View
               style={[styles.inputMain, {marginTop: 50, marginVertical: 20}]}>

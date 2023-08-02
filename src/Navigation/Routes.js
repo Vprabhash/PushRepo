@@ -21,7 +21,7 @@ import ClubDetails from '../Screen/Details/ClubDetails';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 import Profile from '../Components/Profile/Profile';
 import EditProfile from '../Components/Profile/EditProfile';
-import SearchBar from '../Components/SearchBar';
+import SearchScreen from '../Components/SearchScreen';
 import CitySelect from '../Screen/CitySelect';
 
 const Stack = createNativeStackNavigator();
@@ -94,15 +94,14 @@ function Routes() {
           component={Profile}
           options={{headerShown: false}}
         />
-
         <Stack.Screen
           name="BottomTab"
           component={BottomTab}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="SearchBar"
-          component={SearchBar}
+          name="SearchScreen"
+          component={SearchScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen

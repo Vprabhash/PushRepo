@@ -50,14 +50,6 @@ const ArtistEventDetail = props => {
     UpcomingDataList(eventPage);
   }, [eventPage]);
 
-  useEffect(() => {
-    props.navigation.addListener('focus', () => {
-      sendUXActivity('Artists.view', {
-        screen: 'ArtistDetailScreen',
-        clubId: props?.route?.params?.listDetail?._id,
-      });
-    });
-  }, []);
   const UpcomingDataList = async page => {
     const queryParams = new URLSearchParams();
     queryParams.append('upcoming', 1);
@@ -260,13 +252,20 @@ const ArtistEventDetail = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
+            });
             logEvent(`event_detail_${createEventName(item?.title)}`, item);
             sendUXActivity('events.view', {
               screen: 'EventDetailScreen',
               eventId: item?._id,
-            });
-            props.navigation.navigate('ArtistPlayingDetail', {
-              artistData: item,
+              name: item?.title,
+              eventDate: item?.eventDate,
+              clubId: item?.club?._id,
+              clubName: item?.club?.name,
+              locality: item?.club?.locality,
+              city: item?.club?.city,
+              referer: 'ArtistDetailScreen',
             });
           }}
           style={{
@@ -406,6 +405,9 @@ const ArtistEventDetail = props => {
                       },
                     ]}
                     onPress={() => {
+                      props.navigation.navigate('ClubDetails', {
+                        listDetail: item?.club,
+                      });
                       logEvent(
                         `club_detail_${createEventName(item?.club?.name)}`,
                         item?.club,
@@ -413,9 +415,10 @@ const ArtistEventDetail = props => {
                       sendUXActivity('clubs.view', {
                         screen: 'ClubDetailScreen',
                         clubId: item?.club?._id,
-                      });
-                      props.navigation.navigate('ClubDetails', {
-                        listDetail: item?.club,
+                        name: item?.club?.name,
+                        locality: item?.club?.locality,
+                        city: item?.club?.city,
+                        referer: 'ArtistDetailScreen',
                       });
                     }}>
                     {item?.club?.name}
@@ -451,6 +454,9 @@ const ArtistEventDetail = props => {
                         <Text
                           style={[styles.singerName]}
                           onPress={() => {
+                            props.navigation.navigate('ArtistEventDetail', {
+                              artistListDetail: e,
+                            });
                             logEvent(
                               `artist_detail_${createEventName(e?.name)}`,
                               e,
@@ -458,9 +464,9 @@ const ArtistEventDetail = props => {
                             sendUXActivity('Artists.view', {
                               screen: 'ArtistDetailScreen',
                               artistId: item?._id,
-                            });
-                            props.navigation.navigate('ArtistEventDetail', {
-                              artistListDetail: e,
+                              name: item?.name,
+                              city: item?.address?.city,
+                              referer: 'ArtistDetailScreen',
                             });
                           }}>
                           {e?.musicGenre}
@@ -618,6 +624,9 @@ const ArtistEventDetail = props => {
                       sendUXActivity('Artists.instagram_pressed', {
                         screen: 'ArtistDetailScreen',
                         artistId: detailData?._id,
+                        name: detailData?.name,
+                        city: detailData?.address?.city,
+                        referer: 'ArtistDetailScreen',
                       });
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
@@ -652,6 +661,9 @@ const ArtistEventDetail = props => {
                       sendUXActivity('Artists.instagram_pressed', {
                         screen: 'ArtistDetailScreen',
                         artistId: detailData?._id,
+                        name: detailData?.name,
+                        city: detailData?.address?.city,
+                        referer: 'ArtistDetailScreen',
                       });
                       if (detailData?.instagramLink) {
                         Linking.openURL(detailData?.instagramLink);
@@ -686,6 +698,9 @@ const ArtistEventDetail = props => {
                       sendUXActivity('Artists.youtube_pressed', {
                         screen: 'ArtistDetailScreen',
                         artistId: detailData?._id,
+                        name: detailData?.name,
+                        city: detailData?.address?.city,
+                        referer: 'ArtistDetailScreen',
                       });
                       if (parseYouTubeLink(detailData?.youtubeChannelLink)) {
                         Linking.openURL(
@@ -714,6 +729,9 @@ const ArtistEventDetail = props => {
                       sendUXActivity('Artists.youtube_pressed', {
                         screen: 'ArtistDetailScreen',
                         artistId: detailData?._id,
+                        name: detailData?.name,
+                        city: detailData?.address?.city,
+                        referer: 'ArtistDetailScreen',
                       });
                       console.log(detailData?.youtubeChannelLink);
                       Toast.showWithGravity(
@@ -837,13 +855,20 @@ const ArtistEventDetail = props => {
         data={upcomingEvents}
         onPress={e => {
           setIsEventModalVisible(false);
+          props.navigation.navigate('ArtistPlayingDetail', {
+            artistData: e,
+          });
           logEvent(`event_detail_${createEventName(e?.title)}`, e);
           sendUXActivity('events.view', {
             screen: 'EventDetailScreen',
             eventId: e?._id,
-          });
-          props.navigation.navigate('ArtistPlayingDetail', {
-            artistData: e,
+            name: e?.title,
+            eventDate: e?.eventDate,
+            clubId: e?.club?._id,
+            clubName: e?.club?.name,
+            locality: e?.club?.locality,
+            city: e?.club?.city,
+            referer: 'ArtistDetailScreen',
           });
         }}
         onPressCancel={() => {

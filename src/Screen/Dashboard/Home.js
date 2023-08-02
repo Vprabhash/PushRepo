@@ -361,6 +361,9 @@ const Home = props => {
         sendUXActivity('Artists.view', {
           screen: 'ArtistDetailScreen',
           artistId: item?._id,
+          name: item?.name,
+          city: item?.address?.city,
+          referer: 'ArtistInSpotLight',
         });
         props.navigation.navigate('ArtistEventDetail', {
           artistListDetail: item,
@@ -458,6 +461,13 @@ const Home = props => {
           sendUXActivity('events.view', {
             screen: 'EventDetailScreen',
             eventId: item?._id,
+            name: item?.title,
+            eventDate: item?.eventDate,
+            clubId: item?.club?._id,
+            clubName: item?.club?.name,
+            locality: item?.club?.locality,
+            city: item?.club?.city,
+            referer: 'Home',
           });
           props.navigation.navigate('ArtistPlayingDetail', {
             artistData: item,
@@ -705,6 +715,15 @@ const Home = props => {
     return (
       <TouchableOpacity
         onPress={() => {
+          logEvent(`club_detail_${createEventName(item?.name)}`, item);
+          sendUXActivity('clubs.view', {
+            screen: 'ClubDetailScreen',
+            clubId: item?._id,
+            name: item?.name,
+            locality: item?.locality,
+            city: item?.city,
+            referer: 'ClubsInSpotLight',
+          });
           props.navigation.push('ClubDetails', {listDetail: item});
         }}
         style={{
@@ -906,7 +925,7 @@ const Home = props => {
           }}>
           <HeaderCitySearch
             onPress={() => {
-              props.navigation.navigate('SearchBar');
+              props.navigation.navigate('SearchScreen');
             }}
           />
         </View>

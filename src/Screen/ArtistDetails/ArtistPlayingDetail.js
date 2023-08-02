@@ -164,6 +164,9 @@ const ArtistPlayingDetail = props => {
                   <Text
                     style={[styles.listinhHeading]}
                     onPress={() => {
+                      props.navigation.navigate('ClubDetails', {
+                        listDetail: artistData?.club,
+                      });
                       logEvent(
                         `club_detail_${createEventName(
                           artistData?.club?.name,
@@ -173,9 +176,12 @@ const ArtistPlayingDetail = props => {
                       sendUXActivity('clubs.view', {
                         screen: 'ClubDetailScreen',
                         clubId: artistData?.club?._id,
-                      });
-                      props.navigation.navigate('ClubDetails', {
-                        listDetail: artistData?.club,
+                        eventId: artistData?._id,
+                        eventDate: item?.eventDate,
+                        name: artistData?.club?.name,
+                        locality: artistData?.club?.locality,
+                        city: artistData?.club?.city,
+                        referer: 'EventDetailScreen',
                       });
                     }}>
                     {' '}
@@ -367,6 +373,9 @@ const ArtistPlayingDetail = props => {
                           },
                         ]}
                         onPress={() => {
+                          props.navigation.navigate('ClubDetails', {
+                            listDetail: artistData?.club,
+                          });
                           logEvent(
                             `club_detail_${createEventName(
                               artistData?.club?.name,
@@ -376,9 +385,12 @@ const ArtistPlayingDetail = props => {
                           sendUXActivity('clubs.view', {
                             screen: 'ClubDetailScreen',
                             clubId: artistData?.club?._id,
-                          });
-                          props.navigation.navigate('ClubDetails', {
-                            listDetail: artistData?.club,
+                            eventId: artistData?._id,
+                            eventDate: item?.eventDate,
+                            name: artistData?.club?.name,
+                            locality: artistData?.club?.locality,
+                            city: artistData?.club?.city,
+                            referer: 'EventDetailScreen',
                           });
                         }}>
                         {artistData?.club?.name}
@@ -492,6 +504,12 @@ const ArtistPlayingDetail = props => {
                     sendUXActivity('clubs.direction_press', {
                       screen: 'EventDetailScreen',
                       clubId: artistData?.club?._id,
+                      eventId: artistData?._id,
+                      eventDate: item?.eventDate,
+                      name: artistData?.club?.name,
+                      locality: artistData?.club?.locality,
+                      city: artistData?.club?.city,
+                      referer: 'EventDetailScreen',
                     });
                     Linking.openURL(artistData?.club?.googleMapLink);
                   }}
@@ -515,6 +533,12 @@ const ArtistPlayingDetail = props => {
                       sendUXActivity('clubs.whatsapp_pressed', {
                         screen: 'EventDetailScreen',
                         clubId: artistData?.club?._id,
+                        eventId: artistData?._id,
+                        eventDate: item?.eventDate,
+                        name: artistData?.club?.name,
+                        locality: artistData?.club?.locality,
+                        city: artistData?.club?.city,
+                        referer: 'EventDetailScreen',
                       });
                       if (artistData?.club?.whatsappNumber) {
                         Linking.openURL(
@@ -546,6 +570,12 @@ const ArtistPlayingDetail = props => {
                       sendUXActivity('clubs.whatsapp_pressed', {
                         screen: 'EventDetailScreen',
                         clubId: artistData?.club?._id,
+                        eventId: artistData?._id,
+                        eventDate: item?.eventDate,
+                        name: artistData?.club?.name,
+                        locality: artistData?.club?.locality,
+                        city: artistData?.club?.city,
+                        referer: 'EventDetailScreen',
                       });
                       if (artistData?.club?.whatsappNumber) {
                         Linking.openURL(
@@ -581,6 +611,12 @@ const ArtistPlayingDetail = props => {
                       sendUXActivity('clubs.call_pressed', {
                         screen: 'EventDetailScreen',
                         clubId: artistData?.club?._id,
+                        eventId: artistData?._id,
+                        eventDate: item?.eventDate,
+                        name: artistData?.club?.name,
+                        locality: artistData?.club?.locality,
+                        city: artistData?.club?.city,
+                        referer: 'EventDetailScreen',
                       });
                       if (artistData?.club?.phoneNumber) {
                         Linking.openURL('tel:' + artistData?.club?.phoneNumber);
@@ -609,6 +645,12 @@ const ArtistPlayingDetail = props => {
                       sendUXActivity('clubs.call_pressed', {
                         screen: 'EventDetailScreen',
                         clubId: artistData?.club?._id,
+                        eventId: artistData?._id,
+                        eventDate: item?.eventDate,
+                        name: artistData?.club?.name,
+                        locality: artistData?.club?.locality,
+                        city: artistData?.club?.city,
+                        referer: 'EventDetailScreen',
                       });
                       if (artistData?.club?.phoneNumber) {
                         Linking.openURL('tel:' + artistData?.club?.phoneNumber);

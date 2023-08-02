@@ -198,6 +198,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             sendUXActivity('clubs.direction_pressed', {
               screen: 'ClubDetailScreen',
               clubId: itemdata?._id,
+              name: itemdata?.name,
             });
             Linking.openURL(itemdata?.googleMapLink);
           }}

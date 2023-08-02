@@ -42,7 +42,7 @@ import {createEventName} from '../utils/common';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const SearchBar = props => {
+const SearchScreen = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [clubs, setClubs] = useState();
@@ -150,21 +150,28 @@ const SearchBar = props => {
           <TouchableOpacity
             onPress={() => {
               if (item.type) {
+                props.navigation.navigate('ArtistEventDetail', {
+                  artistListDetail: item,
+                });
                 logEvent(`artist_detail_${createEventName(item?.name)})`, item);
                 sendUXActivity('Artists.view', {
                   screen: 'ArtistDetailScreen',
                   artistId: item?._id,
-                });
-                props.navigation.navigate('ArtistEventDetail', {
-                  artistListDetail: item,
+                  name: item?.name,
+                  city: item?.address?.city,
+                  referer: 'SearchScreen',
                 });
               } else {
+                props.navigation.navigate('ClubDetails', {listDetail: item});
                 logEvent(`club_detail_${createEventName(item?.name)}`, item);
                 sendUXActivity('clubs.view', {
                   screen: 'ClubDetailScreen',
                   clubId: item?._id,
+                  name: item?.name,
+                  locality: item?.locality,
+                  city: item?.city,
+                  referer: 'SearchScreen',
                 });
-                props.navigation.navigate('ClubDetails', {listDetail: item});
               }
             }}
             activeOpacity={0.7}>
@@ -330,13 +337,20 @@ const SearchBar = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
+            });
             logEvent(`event_detail_${createEventName(item?.title)}`, item);
             sendUXActivity('events.view', {
               screen: 'EventDetailScreen',
               eventId: item?._id,
-            });
-            props.navigation.navigate('ArtistPlayingDetail', {
-              artistData: item,
+              name: item?.title,
+              eventDate: item?.eventDate,
+              clubId: item?.club?._id,
+              clubName: item?.club?.name,
+              locality: item?.club?.locality,
+              city: item?.club?.city,
+              referer: 'SearchScreen',
             });
           }}
           style={{
@@ -453,6 +467,9 @@ const SearchBar = props => {
                 <Text
                   style={[styles.listingText]}
                   onPress={() => {
+                    props.navigation.navigate('ClubDetails', {
+                      listDetail: item?.club,
+                    });
                     logEvent(
                       `club_detail_${createEventName(item?.club?.name)}`,
                       item?.club,
@@ -460,9 +477,10 @@ const SearchBar = props => {
                     sendUXActivity('clubs.view', {
                       screen: 'ClubDetailScreen',
                       clubId: item?.club?._id,
-                    });
-                    props.navigation.navigate('ClubDetails', {
-                      listDetail: item?.club,
+                      name: item?.club?.name,
+                      locality: item?.club?.locality,
+                      city: item?.club?.city,
+                      referer: 'SearchScreen',
                     });
                   }}>
                   {item?.club?.name}
@@ -857,7 +875,7 @@ const SearchBar = props => {
     </View>
   );
 };
-export default SearchBar;
+export default SearchScreen;
 // const EmptyListMessage = () => {
 //   return (
 //     <Text style={styles.noDataText}>Search by Area, Genre, Artist or Club</Text>

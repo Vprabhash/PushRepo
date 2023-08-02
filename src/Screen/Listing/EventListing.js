@@ -166,13 +166,20 @@ const EventListing = props => {
       <View style={{width: wp(100)}}>
         <TouchableOpacity
           onPress={() => {
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
+            });
             logEvent(`event_detail_${createEventName(item?.title)}`, item);
             sendUXActivity('events.view', {
               screen: 'EventDetailScreen',
               eventId: item?._id,
-            });
-            props.navigation.navigate('ArtistPlayingDetail', {
-              artistData: item,
+              name: item?.title,
+              eventDate: item?.eventDate,
+              clubId: item?.club?._id,
+              clubName: item?.club?.name,
+              locality: item?.club?.locality,
+              city: item?.club?.city,
+              referer: 'EventsList',
             });
           }}
           style={{
@@ -316,6 +323,9 @@ const EventListing = props => {
                 <Text
                   style={[styles.listingText]}
                   onPress={() => {
+                    props.navigation.navigate('ClubDetails', {
+                      listDetail: item?.club,
+                    });
                     logEvent(
                       `club_detail_${createEventName(item?.club?.name)}`,
                       item?.club,
@@ -323,9 +333,12 @@ const EventListing = props => {
                     sendUXActivity('clubs.view', {
                       screen: 'ClubDetailScreen',
                       clubId: item?.club?._id,
-                    });
-                    props.navigation.navigate('ClubDetails', {
-                      listDetail: item?.club,
+                      name: item?.club?.name,
+                      eventId: item?._id,
+                      eventDate: item?.eventDate,
+                      locality: item?.club?.locality,
+                      city: item?.club?.city,
+                      referer: 'EventsList',
                     });
                   }}>
                   {item?.club?.name}
@@ -478,7 +491,7 @@ const EventListing = props => {
           }}>
           <HeaderCitySearch
             onPress={() => {
-              props.navigation.navigate('SearchBar');
+              props.navigation.navigate('SearchScreen');
             }}
           />
         </View>

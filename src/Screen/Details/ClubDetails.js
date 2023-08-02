@@ -74,12 +74,6 @@ const ClubDetails = props => {
     //     handleBackButtonClick,
     //   );
     // };
-    props.navigation.addListener('focus', () => {
-      sendUXActivity('clubs.view', {
-        screen: 'ClubDetailScreen',
-        clubId: props?.route?.params?.listDetail?._id,
-      });
-    });
   }, []);
 
   function handleBackButtonClick() {
@@ -289,13 +283,20 @@ const ClubDetails = props => {
       <View style={{flex: 1, width: '100%', marginBottom: hp(3)}}>
         <TouchableOpacity
           onPress={() => {
+            props.navigation.navigate('ArtistPlayingDetail', {
+              artistData: item,
+            });
             logEvent(`event_detail_${createEventName(item?.title)}`, item);
             sendUXActivity('events.view', {
               screen: 'EventDetailScreen',
               eventId: item?._id,
-            });
-            props.navigation.navigate('ArtistPlayingDetail', {
-              artistData: item,
+              name: item?.title,
+              eventDate: item?.eventDate,
+              clubId: item?.club?._id,
+              clubName: item?.club?.name,
+              locality: item?.club?.locality,
+              city: item?.club?.city,
+              referer: 'ClubDetails',
             });
           }}
           style={{
@@ -483,6 +484,9 @@ const ClubDetails = props => {
                           <Text
                             style={[styles.singerName]}
                             onPress={() => {
+                              props.navigation.navigate('ArtistEventDetail', {
+                                artistListDetail: e,
+                              });
                               logEvent(
                                 `artist_detail_${createEventName(e?.name)}`,
                                 e,
@@ -490,9 +494,9 @@ const ClubDetails = props => {
                               sendUXActivity('Artists.view', {
                                 screen: 'ArtistDetailScreen',
                                 artistId: e?._id,
-                              });
-                              props.navigation.navigate('ArtistEventDetail', {
-                                artistListDetail: e,
+                                name: e?.name,
+                                city: e?.address?.city,
+                                referer: 'ClubDetails',
                               });
                             }}>
                             {e?.musicGenre}
@@ -954,13 +958,20 @@ const ClubDetails = props => {
             data={events}
             onPress={e => {
               setIsEventModalVisible(false);
+              props.navigation.navigate('ArtistPlayingDetail', {
+                artistData: e,
+              });
               logEvent(`event_detail_${createEventName(e?.title)}`, e);
               sendUXActivity('events.view', {
                 screen: 'EventDetailScreen',
                 eventId: e?._id,
-              });
-              props.navigation.navigate('ArtistPlayingDetail', {
-                artistData: e,
+                name: e?.title,
+                eventDate: e?.eventDate,
+                clubId: e?.club?._id,
+                clubName: e?.club?.name,
+                locality: e?.club?.locality,
+                city: e?.club?.city,
+                referer: 'ClubDetails',
               });
             }}
             onPressCancel={() => {
