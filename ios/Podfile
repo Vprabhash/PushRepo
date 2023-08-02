@@ -23,7 +23,7 @@ if linkage != nil
 end
 
 # pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
-pod 'RNFBAnalytics', :path => '../node_modules/@react-native-firebase/analytics'
+# pod 'RNFBAnalytics', :path => '../node_modules/@react-native-firebase/analytics'
 
 target 'Azzir' do
   config = use_native_modules!
