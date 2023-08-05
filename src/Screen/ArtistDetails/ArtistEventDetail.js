@@ -29,6 +29,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import UpcomingEventModal from '../../Components/UpcomingEventModal';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName, parseYouTubeLink} from '../../utils/common';
+import ArtistsList from '../../Components/ArtistsList';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -194,7 +195,7 @@ const ArtistEventDetail = props => {
             }}>
             {item?.title}
           </Text>
-          <Text
+          {/* <Text
             style={{
               fontSize: 8,
               color: COLORS.white,
@@ -202,7 +203,11 @@ const ArtistEventDetail = props => {
               marginBottom: hp(1.5),
             }}>
             By {item?.artists?.map(e => e?.name)?.join(', ')}
-          </Text>
+          </Text> */}
+          <Text style={[styles.singerName, {marginTop: 0}]}>By </Text>
+          <View style={{width: '70%', flexDirection: 'row'}}>
+            <ArtistsList artistData={item} navigation={props.navigation} />
+          </View>
           <View style={{flexDirection: 'row'}}>
             <Image
               style={{
@@ -351,30 +356,15 @@ const ArtistEventDetail = props => {
                   />
                 ) : null}
                 <Text style={[styles.singerName, {marginLeft: 0}]}>By </Text>
-                <View style={{width: '70%'}}>
-                  {item?.artists?.length
-                    ? item?.artists?.map(e => {
-                        return (
-                          <Text
-                            style={[
-                              styles.singerName,
-                              {
-                                // textDecorationLine: 'underline',
-                                marginLeft: 0,
-                              },
-                            ]}
-                            // onPress={() => {
-                            //   logEvent('artist_detail', e?.name);
-                            //   props.navigation.navigate('ArtistEventDetail', {
-                            //     artistListDetail: e,
-                            //   });
-                            // }}
-                          >
-                            {e?.name}
-                          </Text>
-                        );
-                      })
-                    : null}
+                <View style={{width: '70%', flexDirection: 'row'}}>
+                  <ArtistsList
+                    artistData={item}
+                    navigation={props.navigation}
+                    style={[
+                      styles.singerName,
+                      {marginLeft: 0, textDecorationLine: 'none'},
+                    ]}
+                  />
                 </View>
               </View>
             ) : null}

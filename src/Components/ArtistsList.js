@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import {COLORS, FONTS} from './constants';
 
-const ArtistsList = ({artistData, navigation}) => {
+const ArtistsList = ({artistData, navigation, style}) => {
   if (!artistData || !artistData.artists || artistData.artists.length === 0) {
     return null;
   }
@@ -19,6 +19,7 @@ const ArtistsList = ({artistData, navigation}) => {
             marginLeft: 0,
             marginTop: 0,
           },
+          style,
         ]}
         onPress={() => {
           if (e?.type?.toLowerCase() === 'guest') {
