@@ -85,7 +85,7 @@ const Otp = props => {
           );
         }
       } catch (error) {
-        Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
       } finally {
         setLoading(false);
       }
@@ -131,7 +131,7 @@ const Otp = props => {
           );
         }
       } catch (error) {
-        Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
       } finally {
         setLoading(false);
       }
@@ -153,7 +153,7 @@ const Otp = props => {
         Toast.BOTTOM,
       );
     } catch (error) {
-      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 
@@ -170,7 +170,7 @@ const Otp = props => {
         Toast.BOTTOM,
       );
     } catch (error) {
-      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 

@@ -131,7 +131,7 @@ const ArtistDetail = props => {
       }
     } catch (error) {
       setDontCall(true);
-      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setIsLoading(false);
       setLoading(false);

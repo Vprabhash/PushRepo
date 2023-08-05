@@ -19,7 +19,7 @@ import ApiCall from '../../redux/CommanApi';
 import Header from '../Header';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getStatusBarHeight } from 'react-native-iphone-screen-helper';
+import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -76,7 +76,7 @@ const EditProfile = props => {
         setEmail(res?.data?.username);
       }
     } catch (error) {
-      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 

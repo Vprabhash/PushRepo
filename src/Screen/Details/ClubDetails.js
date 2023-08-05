@@ -158,7 +158,7 @@ const ClubDetails = props => {
       setClubNearby(res?.data);
       console.log('clubsnearbydata ----', res.data);
     } catch (error) {
-      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
 

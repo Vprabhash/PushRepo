@@ -96,7 +96,7 @@ const Splash_Screen = props => {
         }
       },
       error => {
-        console.log('location error', error.code, error.message);
+        console.log('location error', error?.code, error?.message);
       },
       {enableHighAccuracy: false, timeout: 15000},
     );

@@ -167,14 +167,10 @@ const ClubListing = ({navigation, route}) => {
         queryParams.append('liveMusicDj', filteredData?.liveMusicDj);
       }
       if ('city') {
-        console.log('-=-==-=-=-=-=-SC-=-=-=-=', selectedCity);
         queryParams.append('city', selectedCity);
       }
       queryParams.append('userBaseCity', userBaseCity);
-      console.log('=====********============', queryParams);
       ApiCall(`api/clubs?${queryParams}`, 'GET').then(res => {
-        console.log('---res--club listin---', res?.status);
-        // setStatus(res?.status);
         if (Array.isArray(res?.data)) {
           if (page === 0) {
             // if (res?.status !== 'fallback-data') {
@@ -204,7 +200,7 @@ const ClubListing = ({navigation, route}) => {
     } catch (error) {
       setDontCall(false);
       console.log(error);
-      Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+      Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
       setLoader(false);
