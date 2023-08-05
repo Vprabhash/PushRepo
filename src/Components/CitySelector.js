@@ -56,7 +56,6 @@ const CitySelector = ({
             label: e.name,
             value: e.name,
           }));
-          console.log('clubsnearbydata ----', res?.data, temp);
           setCities(temp);
         }
       });

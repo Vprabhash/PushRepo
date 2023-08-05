@@ -38,7 +38,6 @@ const Otp = props => {
   const email = props.route?.params?.email || '';
   const phone = props?.route?.params || '';
   const password = props.route?.params?.password || '';
-  // console.log('props signOtp--------', props.route.params);
 
   // useEffect(() => {
   //   startOtpListener(message => {
@@ -60,9 +59,7 @@ const Otp = props => {
       };
       setLoading(true);
       try {
-        console.log('calling api for otp verify');
         const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
-        console.log('---res--registerotp-----', res);
         if (res.ok == true) {
           await setData('userData', res?.data);
           await setData('userToken', res?.meta?.token);
@@ -146,7 +143,6 @@ const Otp = props => {
     }
     try {
       const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
-      console.log('---send-------', res);
       Toast.showWithGravity(
         res.message || 'Something went wrong',
         Toast.LONG,
@@ -163,7 +159,6 @@ const Otp = props => {
     });
     try {
       const res = await ApiCall('api/forgot-password', 'POST', data);
-      console.log('--resForgetpass-----', res);
       Toast.showWithGravity(
         res.message || 'Something went wrong',
         Toast.LONG,

@@ -117,7 +117,6 @@ const Profile = ({navigation}) => {
   const userProfile = async () => {
     try {
       const res = await ApiCall(`api/user`, 'GET');
-      console.log('---profile--user-----', res?.data);
       if (res?.data?.username) {
         setUserProfileData(res?.data);
         setimg(res?.data?.avatarUrl);
@@ -156,10 +155,8 @@ const Profile = ({navigation}) => {
         {
           text: 'Yes',
           onPress: async () => {
-            console.log('Deactivate pressed');
             try {
               const res = await ApiCall(`api/user/deactivate`, 'POST');
-              console.log('---deactivate--user-----', res);
               if (res.ok) {
                 Toast.showWithGravity(
                   'Account Deleted Successfully',
@@ -217,19 +214,7 @@ const Profile = ({navigation}) => {
             ? imageResponse.uri
             : imageResponse.uri.replace('file://', ''),
       });
-      // console.log('---profile--data-----', {
-      //   name: imageResponse.fileName || 'profileImage',
-      //   type: imageResponse.type || 'jpg',
-      //   uri:
-      //     Platform.OS === 'android'
-      //       ? imageResponse.uri
-      //       : imageResponse.uri.replace('file://', ''),
-      // });
-
-      console.log('---form--Data-----', typeof formData);
       const res = await ApiCall(`api/user/avatar`, 'POST', formData);
-      // console.log('---profile--user-----', res?.data);
-
       if (res?.data?.username) {
         setUserProfileData(res?.data);
       } else {

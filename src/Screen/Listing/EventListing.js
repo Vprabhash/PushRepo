@@ -126,7 +126,6 @@ const EventListing = props => {
         'GET',
       ).then(res => {
         if (Array.isArray(res?.data)) {
-          // console.log(res?.data, '=========');
           setNearByEvents(res?.data);
           // if (page === 0) {
           //   setNearByEvents(res?.data);
@@ -153,7 +152,6 @@ const EventListing = props => {
   };
 
   const fetchMoreData = () => {
-    console.log('Fetching more data');
     if (!onEndReachedCalledDuringMomentum && !loading) {
       setLoading(true);
       setPage(page + 1);

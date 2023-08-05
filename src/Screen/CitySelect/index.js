@@ -110,7 +110,6 @@ const CitySelect = props => {
           if (status === 'granted') {
             getCurrentPosition();
           } else {
-            console.log('-----error2:');
             Alert.alert(
               'Welcome to Azzir!',
               'Please give the location permission to continue. \nAzzir collects location data for the following. \n - To detect your current location. \n - Recommending clubs near your location.',

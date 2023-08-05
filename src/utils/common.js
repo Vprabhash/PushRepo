@@ -22,15 +22,12 @@ export async function requestUserPermission() {
 
 const getFcmToken = async () => {
   let checkToken = await AsyncStorage.getItem('fcmToken');
-  console.log('old token', checkToken);
 
   if (checkToken == null || checkToken == '' || !checkToken) {
     try {
       await messaging().deleteToken();
       const fcmToken = await messaging().getToken();
-      console.log('fcm token generated', fcmToken);
       if (!!fcmToken) {
-        console.log('fcm token generated', fcmToken);
         await AsyncStorage.setItem('fcmToken', fcmToken);
       }
     } catch (error) {

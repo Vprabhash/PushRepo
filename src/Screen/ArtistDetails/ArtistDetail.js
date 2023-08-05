@@ -56,7 +56,6 @@ const ArtistDetail = props => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       // const routes = props.navigation.getState()?.routes;
       // const prevRoute = routes[routes.length - 3];
-      // console.log(prevRoute, 'ROUTE===');
       // fetchArtistsData(1);
       // setValuekey('');
       // setSelectedFilter({});
@@ -114,7 +113,6 @@ const ArtistDetail = props => {
         queryParams.append('city', selectedCity);
       }
       const res = await ApiCall(`api/artists?${queryParams}`, 'GET');
-      console.log('---resartists--->', res?.data?.length);
       if (Array.isArray(res?.data)) {
         if (page === 0) {
           setArtistList(res?.data);
@@ -142,7 +140,6 @@ const ArtistDetail = props => {
   const searchApi = async text => {
     if (valuekey) {
       const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
-      console.log('---searchApi--->', JSON.stringify(res?.data?.artists));
       setArtistList(res?.data?.artists);
     } else {
       setPage(0);
@@ -173,7 +170,6 @@ const ArtistDetail = props => {
   };
 
   const artistListRenderItem = ({item, index}) => {
-    // console.log(item,"item===")
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
         <TouchableOpacity
@@ -263,7 +259,6 @@ const ArtistDetail = props => {
   };
 
   const onPressApply = data => {
-    console.log('ArtistData-------:', data);
     setPage(0);
     setFilterComponent(false);
     setDontCall(false);
@@ -271,7 +266,6 @@ const ArtistDetail = props => {
   };
 
   const onPressCancel = () => {
-    console.log('filterComponent---first');
     setFilterComponent(false);
   };
   const EmptyListMessage = () => {

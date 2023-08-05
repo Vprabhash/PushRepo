@@ -156,7 +156,6 @@ const ClubDetails = props => {
         'GET',
       );
       setClubNearby(res?.data);
-      console.log('clubsnearbydata ----', res.data);
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
@@ -168,7 +167,6 @@ const ClubDetails = props => {
     queryParams.append('page', page);
     queryParams.append('clubId', detailData?._id);
     const res = await ApiCall(`api/events?${queryParams}`, 'GET');
-    console.log('---res--logIn--artist---', res?.data);
     if (Array.isArray(res?.data)) {
       if (page === 0) {
         setEvents(res?.data);
@@ -482,6 +480,7 @@ const ClubDetails = props => {
                     ? item?.artists?.map(e => {
                         return (
                           <Text
+                            key={e?._id?.toString()}
                             style={[styles.singerName]}
                             onPress={() => {
                               props.navigation.navigate('ArtistEventDetail', {

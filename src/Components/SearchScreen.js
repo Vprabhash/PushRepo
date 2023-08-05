@@ -102,7 +102,6 @@ const SearchScreen = props => {
       let events = res?.data?.events?.map(e => ({...e, type: 'event'}));
       temArray = clubs.concat(artist, events);
       setClubs(temArray);
-      console.log('--------temArray: ', temArray);
     } else {
       //   setPage(1);
     }
@@ -110,7 +109,6 @@ const SearchScreen = props => {
   const searchRecommendation = async () => {
     ApiCall(`api/recommendations?city=${selectedCity}`, 'GET')
       .then(res => {
-        console.log('----recommendation: ', res);
         if (res?.ok) {
           setRecommendation(res?.data?.data);
         }
@@ -122,7 +120,6 @@ const SearchScreen = props => {
   const searchAutoSuggest = async text => {
     ApiCall(`api/search-v2?q=${text}`, 'GET')
       .then(res => {
-        console.log('----recommendation: ', res);
         if (res?.data?.length) {
           setAutoSuggestData(res?.data);
         }

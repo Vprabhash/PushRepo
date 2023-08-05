@@ -56,7 +56,6 @@ const ArtistEventDetail = props => {
     queryParams.append('page', eventPage);
     queryParams.append('artistId', detailData?._id);
     const res = await ApiCall(`api/events?${queryParams}`, 'GET');
-    console.log('---res--logIn--artist---', res?.data);
     if (Array.isArray(res?.data)) {
       if (page === 0) {
         setUpcomingEvents(res?.data);
@@ -733,7 +732,6 @@ const ArtistEventDetail = props => {
                         city: detailData?.address?.city,
                         referer: 'ArtistDetailScreen',
                       });
-                      console.log(detailData?.youtubeChannelLink);
                       Toast.showWithGravity(
                         'Youtube link is not available',
                         Toast.LONG,

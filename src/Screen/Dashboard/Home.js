@@ -121,13 +121,9 @@ const Home = props => {
       appState.current.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
-      console.log('App has come to the foreground!');
       checkLocation();
     }
-    // checkLocation();
-
     appState.current = nextAppState;
-    console.log('AppState', appState.current);
   };
 
   useEffect(() => {
@@ -282,7 +278,6 @@ const Home = props => {
       `api/clubs?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`,
       'GET',
     ).then(res => {
-      // console.log('+++++++++---spotlight--->', JSON.stringify(res?.data?.length));
       setClubsSpotlight(res?.data);
     });
   };
@@ -291,7 +286,6 @@ const Home = props => {
       `api/artists?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`,
       'GET',
     ).then(res => {
-      // console.log('(((((((---spotlight--->', JSON.stringify(res?.data));
       setArtistsSpotlight(res?.data);
     });
   };
@@ -335,7 +329,6 @@ const Home = props => {
       page: artistPage + 1,
     };
     const res = await ApiCall(ARTIST, 'GET', data);
-    console.log('---res--logIn--artist---', res);
   };
 
   const fetchArtistData = () => {
@@ -424,7 +417,6 @@ const Home = props => {
     queryParams.append('page', eventPage);
     queryParams.append('city', selectedCity);
     const res = await ApiCall(`api/events?${queryParams}`, 'GET');
-    // console.log('---res--logIn--artist---', res?.data?.length);
     if (Array.isArray(res?.data)) {
       if (page === 0) {
         setUpcomingEvents(res?.data);
@@ -710,7 +702,6 @@ const Home = props => {
       page: spotLightpage + 1,
     };
     const res = await ApiCall(ARTIST, 'GET', data);
-    console.log('---res--logIn--artist---', res);
   };
 
   const fetchSpotlightData = () => {
@@ -840,7 +831,6 @@ const Home = props => {
         if (res?.data?.length) {
           setClubNearby(res?.data);
         }
-        console.log('clubsnearbydata ----', res?.data);
       });
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);

@@ -110,7 +110,6 @@ const FilterScreen = ({
   const filterApi = async () => {
     try {
       const res = await ApiCall('api/filters?city=' + selectedCity, 'GET');
-      console.log('Filters:', res?.data);
       const uniqueArray = res?.data?.localities?.map(item => {
         const foundLocality = savedLocalities.find(
           locality => locality.value == item.value,
@@ -165,8 +164,6 @@ const FilterScreen = ({
     setSheesha('');
     setHappyHourTimings('');
   };
-
-  console.log('-----', kidsFriendly, vegNonVeg, stages, sheesha, artist);
 
   const [teamArray, setTeamArray] = useState([]);
   const searchLocalityFilter = text => {
@@ -239,7 +236,6 @@ const FilterScreen = ({
   };
 
   const checkGenreData = item => {
-    console.log(item);
     let temp = [...generes];
     const itemIndex = temp.findIndex(e => e.label === item?.label);
 

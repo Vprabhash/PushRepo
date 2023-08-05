@@ -51,7 +51,6 @@ const Splash_Screen = props => {
     Geolocation.getCurrentPosition(
       position => {
         if (position.coords) {
-          console.log('location data:', position.coords);
           let obj = {};
           obj.latitude = position.coords.latitude;
           obj.longitude = position.coords.longitude;
@@ -66,12 +65,10 @@ const Splash_Screen = props => {
                 const addressComponents = data.results[0].address_components;
                 for (const component of addressComponents) {
                   if (component.types.includes('locality')) {
-                    console.log('Current city:', component.long_name);
                     dispatch(currentCity(component.long_name));
                     dispatch(userCurrentCity(component.long_name));
                     // ApiCall('api/cities', 'GET')
                     //   .then(res => {
-                    //     console.log('Current city:', res);
                     //     if (res?.data?.length) {
                     //       if (
                     //         res?.data?.some(
@@ -121,7 +118,6 @@ const Splash_Screen = props => {
           if (status === 'granted') {
             getCurrentPosition();
           } else {
-            console.log('-----error2:');
             Alert.alert(
               'Welcome to Azzir!',
               'Please give the location permission to continue. \nAzzir collects location data for the following. \n - To detect your current location. \n - Recommending clubs near your location.',

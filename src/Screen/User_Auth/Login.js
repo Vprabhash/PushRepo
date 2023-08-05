@@ -109,7 +109,6 @@ const Login = props => {
     setIsLoading(true);
     try {
       const res = await ApiCall('api/login', 'POST', data);
-      console.log('---res--Login-----', res);
       if (res.ok == true) {
         await setData('userData', res?.data);
         await setData('userToken', res?.meta?.token);
@@ -119,7 +118,11 @@ const Login = props => {
         });
         Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
       } else {
-        Toast.showWithGravity((res?.errors?.length ? res?.errors[0]?.msg : res?.message), Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          res?.errors?.length ? res?.errors[0]?.msg : res?.message,
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       }
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
@@ -135,7 +138,6 @@ const Login = props => {
     setIsLoading(true);
     try {
       const res = await ApiCall('api/send-otp', 'POST', data);
-      console.log('---res--Login-----', res);
       if (res.ok == true) {
         Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
         props.navigation.navigate('Otp', {
@@ -161,7 +163,6 @@ const Login = props => {
         dispatch(showLoader(true));
       }
       // setIsLoadingGoogle(true);
-      console.log('lofuser data-------:', userInfo);
       // Alert.alert('success:' + JSON.stringify(userInfo));
       const data = {
         name: userInfo?.user?.name,
@@ -177,7 +178,6 @@ const Login = props => {
       };
       ApiCall('api/oauth/google', 'POST', JSON.stringify(data))
         .then(async res => {
-          console.log('google sign bydata ----', res.data);
           if (res?.ok == true) {
             await setData('userToken', res?.meta?.token);
             await setData('userData', res?.data);
@@ -219,7 +219,6 @@ const Login = props => {
     )
       .then(response => response.json())
       .then(res => {
-        console.log(JSON.stringify(res));
         if (res.email != undefined) {
           try {
             const data = {
@@ -236,7 +235,6 @@ const Login = props => {
             };
             ApiCall('api/oauth/facebook', 'POST', JSON.stringify(data))
               .then(async res => {
-                console.log('facebook sign data ----', res.data);
                 if (res?.ok == true) {
                   await setData('userToken', res?.meta?.token);
                   await setData('userData', res?.data);
@@ -273,17 +271,14 @@ const Login = props => {
         if (result.isCancelled) {
           console.log('Login cancelled');
         } else {
-          console.log(JSON.stringify(result), '====result');
           const data = await AccessToken.getCurrentAccessToken();
 
-          console.log(JSON.stringify(data), '=====data');
           AccessToken.getCurrentAccessToken().then(async data => {
             const token = data?.accessToken;
             const response = await fetch(
               `https://graph.facebook.com/me?fields=id,first_name,last_name,email&access_token=${token}`,
             );
             const currentProfile = await response.json();
-            console.log(currentProfile, 'current Profile');
             if (currentProfile) {
               initUser(token, currentProfile);
             }
@@ -302,7 +297,6 @@ const Login = props => {
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
-    console.log(appleAuthRequestResponse, '===');
     // get current authentication state for user
     // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
     const credentialState = await appleAuth.getCredentialStateForUser(
@@ -324,7 +318,6 @@ const Login = props => {
         .then(async res => {
           // setIsLoadingGoogle(false);
           // dispatch(showLoader(false));
-          console.log('apple sign bydata ----', res);
           if (res?.ok == true) {
             dispatch(showLoader(false));
             await setData('userToken', res?.meta?.token);

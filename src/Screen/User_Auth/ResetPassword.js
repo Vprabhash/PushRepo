@@ -70,7 +70,6 @@ const ResetPassword = ({route, navigation}) => {
           'POST',
           JSON.stringify(data),
         );
-        console.log('---res--Lohin-----', res);
         if (res.ok == true) {
           Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
           logOut();

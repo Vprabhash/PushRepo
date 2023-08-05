@@ -47,7 +47,6 @@ const ForgetPassword = ({route, navigation}) => {
         'POST',
         JSON.stringify(data),
       );
-      console.log('--resForgetpass-----', res);
       if (res.ok == true) {
         Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
 

@@ -47,7 +47,6 @@ const EditProfile = props => {
     try {
       setLoading(true);
       const res = await ApiCall('api/user', 'POST', JSON.stringify(data));
-      console.log('--EditProfile-----', res);
       if (res.ok == true) {
         Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
         props.route?.params?.refresh();
@@ -65,7 +64,6 @@ const EditProfile = props => {
   const getUserData = async () => {
     try {
       const res = await ApiCall('api/user', 'GET');
-      console.log('---user--data-----', res);
       if (res != null) {
         setName({
           ...name,

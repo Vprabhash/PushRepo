@@ -3,9 +3,7 @@ import api from '../../services/restService';
 import {BASE_URL, SIGN_UP} from '../../services/Apis';
 
 export const signUp = createAsyncThunk('auth/signUp', async userDetails => {
-  console.log('SIGN_UP-------', BASE_URL + SIGN_UP);
   const response = await api.post(BASE_URL + SIGN_UP, userDetails);
-  console.log(response);
   return response.data;
 });
 const authSlice = createSlice({

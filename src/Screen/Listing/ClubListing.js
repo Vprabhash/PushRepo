@@ -199,7 +199,6 @@ const ClubListing = ({navigation, route}) => {
       });
     } catch (error) {
       setDontCall(false);
-      console.log(error);
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     } finally {
       setLoading(false);
@@ -232,7 +231,6 @@ const ClubListing = ({navigation, route}) => {
     setFilteredData({});
     if (valuekey) {
       const res = await ApiCall(`api/search?q=${valuekey}`, 'GET');
-      console.log('---searchApi--->', res?.data?.clubs?.length);
       setClubs(res?.data?.clubs);
     } else {
       setPage(0);
@@ -357,7 +355,6 @@ const ClubListing = ({navigation, route}) => {
   };
 
   const onPressApply = async data => {
-    // console.log('-------filterApi', data);
     global.isFilterOpen = false;
     setFilteredData(data);
     setFilterComponent(false);
