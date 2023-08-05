@@ -21,3 +21,13 @@ buildscript {
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.5")
     }
 }
+
+
+allprojects {
+    repositories {
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
+    }
+}
