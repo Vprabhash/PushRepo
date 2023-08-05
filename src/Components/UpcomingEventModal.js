@@ -22,7 +22,7 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const UpcomingEventModal = ({
   visible = false,
-  data,
+  data = [],
   onPress,
   onPressCancel,
 }) => {

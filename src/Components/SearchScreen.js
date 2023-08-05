@@ -45,7 +45,7 @@ const height = Dimensions.get('window').height;
 const SearchScreen = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [clubs, setClubs] = useState();
+  const [clubs, setClubs] = useState([]);
 
   const [valuekey, setValuekey] = useState('');
   const [recommendation, setRecommendation] = useState(null);
