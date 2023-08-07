@@ -303,7 +303,8 @@ const ClubDetails = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {item?.images?.length &&
+          {Array.isArray(item?.images) &&
+          item?.images?.length &&
           item?.images[0] &&
           typeof item?.images[0]?.path == 'string' ? (
             <FastImage
@@ -368,7 +369,8 @@ const ClubDetails = props => {
                   marginBottom: 10,
                   marginRight: 8,
                 }}>
-                {item?.artists[0]?.images?.length &&
+                {Array.isArray(item?.artists[0]?.images) &&
+                item?.artists[0]?.images?.length &&
                 item?.artists[0]?.images[0] ? (
                   <Image
                     style={{
@@ -457,7 +459,8 @@ const ClubDetails = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              {item?.artists?.length &&
+              {Array.isArray(item?.artists) &&
+              item?.artists?.length &&
               item?.artists?.filter(e => e?.musicGenre)?.length ? (
                 <View
                   style={{

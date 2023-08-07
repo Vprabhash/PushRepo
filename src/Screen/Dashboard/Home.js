@@ -193,8 +193,8 @@ const Home = props => {
             .then(response => response.json())
             .then(data => {
               dispatch(addCoordinates(obj));
-              if (data.results && data.results.length > 0) {
-                const addressComponents = data.results[0].address_components;
+              if (data?.results && data?.results?.length > 0) {
+                const addressComponents = data?.results[0]?.address_components;
                 // const city = getData('currentCity');
                 for (const component of addressComponents) {
                   if (component.types.includes('locality')) {
@@ -563,7 +563,8 @@ const Home = props => {
                 alignItems: 'center',
                 marginVertical: 5,
               }}>
-              {item?.artists[0]?.images?.length &&
+              {Array.isArray(item?.artists[0]?.images) &&
+              item?.artists[0]?.images?.length &&
               item?.artists[0]?.images[0] ? (
                 <Image
                   style={{

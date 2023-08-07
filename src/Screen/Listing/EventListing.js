@@ -186,7 +186,8 @@ const EventListing = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {item?.images?.length &&
+          {Array.isArray(item?.images) &&
+          item?.images?.length &&
           item?.images[0] &&
           typeof item?.images[0]?.path == 'string' ? (
             <FastImage
@@ -248,7 +249,8 @@ const EventListing = props => {
                 marginVertical: 2,
                 alignItems: 'center',
               }}>
-              {item?.artists?.length &&
+              {Array.isArray(item?.artists) &&
+              item?.artists?.length &&
               item?.artists[0]?.images?.length &&
               item?.artists[0]?.images[0] ? (
                 <Image
@@ -383,7 +385,8 @@ const EventListing = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {item?.artists?.length &&
+          {Array.isArray(item?.artists) &&
+          item?.artists?.length &&
           item?.images[0] &&
           typeof item?.images[0]?.path == 'string' ? (
             <Image

@@ -72,7 +72,8 @@ const UpcomingEventModal = ({
                       alignItems: 'center',
                     }}>
                     <View style={styles.rectangle4}>
-                      {item?.images?.length &&
+                      {Array.isArray(item?.images) &&
+                      item?.images?.length &&
                       item?.images[0] &&
                       typeof item?.images[0]?.path == 'string' ? (
                         <FastImage

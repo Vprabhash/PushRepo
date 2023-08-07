@@ -3,7 +3,11 @@ import {Text} from 'react-native';
 import {COLORS, FONTS} from './constants';
 
 const ArtistsList = ({artistData, navigation, style}) => {
-  if (!artistData || !artistData.artists || artistData.artists.length === 0) {
+  if (
+    !artistData ||
+    !artistData?.artists ||
+    artistData?.artists?.length === 0
+  ) {
     return null;
   }
 

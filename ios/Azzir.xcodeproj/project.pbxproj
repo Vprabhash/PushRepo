@@ -789,7 +789,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q83G94327R;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = Azzir/Info.plist;
@@ -826,7 +826,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q83G94327R;
+				DEVELOPMENT_TEAM = "";
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = Azzir/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Azzir;

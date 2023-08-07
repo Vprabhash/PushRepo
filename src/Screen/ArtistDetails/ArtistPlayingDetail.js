@@ -143,7 +143,8 @@ const ArtistPlayingDetail = props => {
                         }}
                       />
                     }>
-                    {artistData?.images.length ? (
+                    {Array.isArray(artistData?.images) &&
+                    artistData?.images?.length ? (
                       artistData?.images?.slice(0, 5)?.map(item => (
                         <View style={styles.slide}>
                           <FastImage

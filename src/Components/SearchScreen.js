@@ -120,7 +120,7 @@ const SearchScreen = props => {
   const searchAutoSuggest = async text => {
     ApiCall(`api/search-v2?q=${text}`, 'GET')
       .then(res => {
-        if (res?.data?.length) {
+        if (Array.isArray(res?.data) && res?.data?.length) {
           setAutoSuggestData(res?.data);
         }
       })
@@ -356,7 +356,8 @@ const SearchScreen = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {item?.images?.length &&
+          {Array.isArray(item?.images) &&
+          item?.images?.length &&
           item?.images[0] &&
           typeof item?.images[0]?.path == 'string' ? (
             <FastImage
@@ -418,7 +419,8 @@ const SearchScreen = props => {
                 alignItems: 'center',
                 marginVertical: 6,
               }}>
-              {item?.artists?.length &&
+              {Array.isArray(item?.artists) &&
+              item?.artists?.length &&
               item?.artists[0]?.images?.length &&
               item?.artists[0]?.images[0] ? (
                 <Image
@@ -543,12 +545,16 @@ const SearchScreen = props => {
     switch (type) {
       case 'Area':
         setValuekey(
-          recommendation?.length && recommendation[0]?.localities?.length
+          Array.isArray(recommendation) &&
+            recommendation?.length &&
+            recommendation[0]?.localities?.length
             ? recommendation[0]?.localities[0]
             : '',
         );
         searchApi(
-          recommendation?.length && recommendation[0]?.localities?.length
+          Array.isArray(recommendation) &&
+            recommendation?.length &&
+            recommendation[0]?.localities?.length
             ? recommendation[0]?.localities[0]
             : '',
         );
@@ -693,7 +699,9 @@ const SearchScreen = props => {
               </TouchableOpacity>
             </View>
           </View>
-          {autoSuggestData?.length && valuekey ? (
+          {Array.isArray(autoSuggestData) &&
+          autoSuggestData?.length &&
+          valuekey ? (
             <View
               style={{
                 position: 'absolute',
