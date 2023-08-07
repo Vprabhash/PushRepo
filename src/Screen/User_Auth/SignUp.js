@@ -78,13 +78,25 @@ const SignUp = props => {
       try {
         const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
         if (res.ok == true) {
-          Toast.showWithGravity(res.message, Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(
+            typeof res?.message == 'string'
+              ? res?.message
+              : 'Something went wrong',
+            Toast.LONG,
+            Toast.BOTTOM,
+          );
           props.navigation.navigate('Otp', {
             email: email,
             password: password,
           });
         } else {
-          Toast.showWithGravity(res.message, Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(
+            typeof res?.message == 'string'
+              ? res?.message
+              : 'Something went wrong',
+            Toast.LONG,
+            Toast.BOTTOM,
+          );
         }
       } catch (error) {
         Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
@@ -124,13 +136,25 @@ const SignUp = props => {
     try {
       const res = await ApiCall('api/send-otp', 'POST', data);
       if (res.ok == true) {
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
         props.navigation.navigate('Otp', {
           phone: isPhoneNumber?.value,
           isPhoneNumber: true,
         });
       } else {
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       }
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);

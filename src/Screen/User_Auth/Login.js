@@ -116,10 +116,20 @@ const Login = props => {
           index: 0,
           routes: [{name: 'BottomTab'}],
         });
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       } else {
         Toast.showWithGravity(
-          res?.errors?.length ? res?.errors[0]?.msg : res?.message,
+          res?.errors?.length
+            ? res?.errors[0]?.msg
+            : typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
           Toast.LONG,
           Toast.BOTTOM,
         );
@@ -139,13 +149,25 @@ const Login = props => {
     try {
       const res = await ApiCall('api/send-otp', 'POST', data);
       if (res.ok == true) {
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
         props.navigation.navigate('Otp', {
           phone: isPhoneNumber?.value,
           isPhoneNumber: true,
         });
       } else {
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       }
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);

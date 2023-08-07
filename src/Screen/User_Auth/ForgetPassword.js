@@ -48,14 +48,26 @@ const ForgetPassword = ({route, navigation}) => {
         JSON.stringify(data),
       );
       if (res.ok == true) {
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
 
         navigation.navigate('Otp', {
           forgetmail: 'otp',
           email: email,
         });
       } else {
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       }
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);

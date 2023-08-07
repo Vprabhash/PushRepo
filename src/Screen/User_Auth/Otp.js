@@ -144,7 +144,9 @@ const Otp = props => {
     try {
       const res = await ApiCall('api/send-otp', 'POST', JSON.stringify(data));
       Toast.showWithGravity(
-        res.message || 'Something went wrong',
+        typeof res?.message == 'string'
+          ? res?.message
+          : 'Something went wrong' || 'Something went wrong',
         Toast.LONG,
         Toast.BOTTOM,
       );
@@ -160,7 +162,7 @@ const Otp = props => {
     try {
       const res = await ApiCall('api/forgot-password', 'POST', data);
       Toast.showWithGravity(
-        res.message || 'Something went wrong',
+        res?.message || 'Something went wrong',
         Toast.LONG,
         Toast.BOTTOM,
       );

@@ -48,11 +48,23 @@ const EditProfile = props => {
       setLoading(true);
       const res = await ApiCall('api/user', 'POST', JSON.stringify(data));
       if (res.ok == true) {
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
         props.route?.params?.refresh();
         navigation.goBack();
       } else {
-        Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+        Toast.showWithGravity(
+          typeof res?.message == 'string'
+            ? res?.message
+            : 'Something went wrong',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       }
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);

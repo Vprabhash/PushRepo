@@ -71,7 +71,13 @@ const ResetPassword = ({route, navigation}) => {
           JSON.stringify(data),
         );
         if (res.ok == true) {
-          Toast.showWithGravity(res?.message, Toast.LONG, Toast.BOTTOM);
+          Toast.showWithGravity(
+            typeof res?.message == 'string'
+              ? res?.message
+              : 'Something went wrong',
+            Toast.LONG,
+            Toast.BOTTOM,
+          );
           logOut();
         }
       } catch (error) {
