@@ -84,6 +84,25 @@ const Profile = ({navigation}) => {
       },
     },
     {
+      Title: 'Club Registration',
+      Icon: ImagePath.rightIcon,
+      onPress: () => {
+        Linking.openURL(
+          'http://api.whatsapp.com/send?phone=91' +
+          '9819955551',
+        );
+      },
+    },{
+      Title: 'Artist Registration',
+      Icon: ImagePath.rightIcon,
+      onPress: () => {
+        Linking.openURL(
+          'http://api.whatsapp.com/send?phone=91' +
+            '9819955551',
+        );
+      },
+    },
+    {
       Title: 'Log out',
       Icon: ImagePath.rightIcon,
       onPress: () => logOut(),

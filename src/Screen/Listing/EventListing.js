@@ -34,6 +34,7 @@ import {useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName} from '../../utils/common';
+import ArtistListModal from '../../Components/ArtistListModal';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -54,6 +55,8 @@ const EventListing = props => {
   const [nearByEvents, setNearByEvents] = useState([]);
   const [dontCall, setDontCall] = useState(false);
   const [eventData, setEventData] = useState(null);
+  const [artistListModal, setArtistListModal] = useState(false);
+  const [artistListModalData, setArtistListModalData] = useState([]);
 
   useEffect(() => {
     setPage(0);
@@ -161,7 +164,7 @@ const EventListing = props => {
 
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{width: wp(100)}}>
+      <View style={{width: wp(100), position: 'relative'}}>
         <TouchableOpacity
           onPress={() => {
             props.navigation.navigate('ArtistPlayingDetail', {
@@ -253,16 +256,17 @@ const EventListing = props => {
               item?.artists?.length &&
               item?.artists[0]?.images?.length &&
               item?.artists[0]?.images[0] ? (
-                <Image
-                  style={{
-                    height: 30,
-                    width: 30,
-                    borderRadius: 20,
-                    resizeMode: 'contain',
-                    marginRight: 6,
-                  }}
-                  source={{uri: item?.artists[0]?.images[0]}}
-                />
+                 
+                    <Image
+                      style={{
+                        height: 30,
+                        width: 30,
+                        borderRadius: 20,
+                        resizeMode: 'contain',
+                        marginRight: 6,
+                      }}
+                      source={{uri: item?.artists[0]?.images[0]}}
+                    />
               ) : item?.artists?.length ? (
                 <View
                   style={{
@@ -295,6 +299,7 @@ const EventListing = props => {
                   />
                 </View>
               ) : null}
+
               {item?.artists?.length ? (
                 <Text
                   style={[
@@ -365,6 +370,43 @@ const EventListing = props => {
             </View>
           </View>
         </TouchableOpacity>
+        {Array.isArray(item?.artists) && item?.artists?.length > 1 ? (
+           <TouchableOpacity
+           disabled={!item?.artists?.length > 1}
+           // style={{position:"relative"}}
+           onPress={() => {
+             setArtistListModal(true)
+              setArtistListModalData(item.artists);
+           }}>
+          <View
+            style={{
+              height: 30,
+              width: 30,
+              borderRadius: 20,
+              resizeMode: 'contain',
+              backgroundColor: '#00000060',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              flexDirection: 'row',
+              bottom: 66,
+              left: 22,
+            }}>
+            <Text
+              style={[
+                {
+                  width: '70%',
+                  marginVertical: 0,
+                  color: 'red',
+                  textAlign: 'center',
+                  fontSize: 14,
+                },
+              ]}>
+              + {item?.artists?.length - 1}
+            </Text>
+          </View>
+          </TouchableOpacity>
+        ) : null}
       </View>
     );
   };
@@ -558,6 +600,11 @@ const EventListing = props => {
           contentContainerStyle={{
             paddingBottom: getBottomSpace() + hp(15),
           }}
+        />
+        <ArtistListModal
+          isVisible={artistListModal}
+          onClose={() => setArtistListModal(false)}
+          data={artistListModalData}
         />
         {/* </ScrollView> */}
       </ImageBackground>

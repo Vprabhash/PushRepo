@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   Text,
   View,
@@ -21,9 +21,12 @@ import {COLORS, FONTS} from './constants';
 import Toast from 'react-native-simple-toast';
 import {logEvent, sendUXActivity} from '../utils/AddFirebaseEvent';
 import {createEventName} from '../utils/common';
+import ArtistListModal from './ArtistListModal';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
+  const [artistListModal, setArtistListModal] = useState(false);
+  const [artistListModalData, setArtistListModalData] = useState([]);
   const MenuData = [
     {
       menuIcon: ImagePath.watchIcon,
@@ -85,6 +88,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
       // menuTitleText: itemdata?.kidsFriendly || 'N/A',
     },
   ];
+
   const MenuDataRenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -283,7 +287,12 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
                 screen: 'ClubDetailScreen',
                 clubId: itemdata?._id,
               });
-              if (itemdata?.phoneNumber) {
+              if(itemdata?.phoneNumbers.length>1){
+                setArtistListModal(true)
+                setArtistListModalData(itemdata?.phoneNumbers)
+              }
+             else if (itemdata?.phoneNumber) {
+                console.log(itemdata,"hello");
                 Linking.openURL('tel:' + itemdata?.phoneNumber);
               } else {
                 Toast.showWithGravity(
@@ -328,6 +337,11 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
           </TouchableOpacity>
         )}
       </View>
+      <ArtistListModal
+          isVisible={artistListModal}
+          onClose={() => setArtistListModal(false)}
+          data={artistListModalData}
+        />
     </View>
   );
 };
