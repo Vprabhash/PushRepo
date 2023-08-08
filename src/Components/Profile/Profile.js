@@ -77,7 +77,7 @@ const Profile = ({navigation}) => {
         Linking.openURL('https://www.azzirevents.com/privacy_policy.html'),
     },
     {
-      Title: 'Support',
+      Title: 'Contact Us',
       Icon: ImagePath.rightIcon,
       onPress: () => {
         setIsSupportModalVisible(true);
@@ -166,7 +166,9 @@ const Profile = ({navigation}) => {
                 logOut();
               } else {
                 Toast.showWithGravity(
-                  res?.message || 'Something went wrong',
+                  typeof res?.message == 'string'
+                    ? res?.message
+                    : 'Something went wrong',
                   Toast.LONG,
                   Toast.BOTTOM,
                 );

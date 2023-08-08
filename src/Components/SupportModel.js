@@ -17,7 +17,6 @@ const SupportModal = ({isVisible, onClose}) => {
   };
 
   const openWhatsApp = () => {
-    // Replace '1234567890' with your WhatsApp number (including country code)
     Linking.openURL('http://api.whatsapp.com/send?phone=919819955551');
   };
 
@@ -32,7 +31,7 @@ const SupportModal = ({isVisible, onClose}) => {
           <TouchableOpacity onPress={onClose} style={styles.closeIconContainer}>
             <Image style={styles.closeIcon} source={ImagePath.closeIcon} />
           </TouchableOpacity>
-          <Text style={styles.welcomeText}>Get Support!</Text>
+          <Text style={styles.welcomeText}>Contact Us</Text>
           <Text style={styles.descriptionText}>
             For any assistance or queries, feel free to reach out to our support
             team via email or WhatsApp. We are here to help you!
