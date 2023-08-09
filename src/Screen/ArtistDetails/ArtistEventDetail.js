@@ -30,6 +30,7 @@ import UpcomingEventModal from '../../Components/UpcomingEventModal';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName, parseYouTubeLink} from '../../utils/common';
 import ArtistsList from '../../Components/ArtistsList';
+import ArtistListModal from '../../Components/ArtistListModal';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -45,6 +46,8 @@ const ArtistEventDetail = props => {
   ] = useState(true);
   const [Upcomingloading, setupcomingLoading] = useState(false);
   const [isEventModalVisible, setIsEventModalVisible] = useState(false);
+  const [artistListModal, setArtistListModal] = useState(false);
+  const [artistListModalData, setArtistListModalData] = useState([]);
   // const [dontCall, setDontCall] = useState(false);
 
   useEffect(() => {
@@ -195,15 +198,6 @@ const ArtistEventDetail = props => {
             }}>
             {item?.title}
           </Text>
-          {/* <Text
-            style={{
-              fontSize: 8,
-              color: COLORS.white,
-              fontFamily: FONTS.AxiformaBold,
-              marginBottom: hp(1.5),
-            }}>
-            By {item?.artists?.map(e => e?.name)?.join(', ')}
-          </Text> */}
           <Text style={[styles.singerName, {marginTop: 0}]}>By </Text>
           <View style={{width: '70%', flexDirection: 'row'}}>
             <ArtistsList artistData={item} navigation={props.navigation} />
@@ -335,12 +329,28 @@ const ArtistEventDetail = props => {
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
             {item?.artists?.length ? (
-              <View
+              <TouchableOpacity
+                disabled={
+                  item?.artists?.length === 1 &&
+                  item?.artists[0]?.type?.toLowerCase() === 'guest'
+                }
                 style={{
                   flexDirection: 'row',
                   marginTop: 10,
                   alignItems: 'center',
-                  marginBottom: 10,
+                }}
+                onPress={() => {
+                  if (item?.artists?.length > 1) {
+                    setArtistListModal(true);
+                    setArtistListModalData(item.artists);
+                  } else {
+                    if (item?.artists[0]?.type?.toLowerCase() === 'guest') {
+                      return;
+                    }
+                    props.navigation.navigate('ArtistEventDetail', {
+                      artistListDetail: item?.artists[0],
+                    });
+                  }
                 }}>
                 {item?.artists[0]?.images?.length &&
                 item?.artists[0]?.images[0] ? (
@@ -350,23 +360,50 @@ const ArtistEventDetail = props => {
                       width: 40,
                       borderRadius: 20,
                       resizeMode: 'contain',
-                      marginRight: 8,
+                      marginRight: 10,
                     }}
                     source={{uri: item?.artists[0]?.images[0]}}
                   />
+                ) : item?.artists?.length ? (
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      borderRadius: 20,
+                      resizeMode: 'contain',
+                      marginRight: 10,
+                      justifyContent: 'center',
+                      backgroundColor: COLORS.gray,
+                      overflow: 'hidden',
+                    }}>
+                    <Image
+                      source={
+                        item?.artists[0]?.type?.toLowerCase() === 'artist'
+                          ? ImagePath.placeholderSinger
+                          : item?.artists[0]?.type?.toLowerCase() === 'dj'
+                          ? ImagePath.placeholderDj
+                          : item?.artists[0]?.type?.toLowerCase() === 'guest'
+                          ? ImagePath.profile
+                          : null
+                      }
+                      style={{
+                        height: 15,
+                        width: 15,
+                        resizeMode: 'contain',
+                        alignSelf: 'center',
+                        opacity: 0.5,
+                      }}
+                    />
+                  </View>
                 ) : null}
                 <Text style={[styles.singerName, {marginLeft: 0}]}>By </Text>
                 <View style={{width: '70%', flexDirection: 'row'}}>
                   <ArtistsList
                     artistData={item}
                     navigation={props.navigation}
-                    style={[
-                      styles.singerName,
-                      {marginLeft: 0, textDecorationLine: 'none'},
-                    ]}
                   />
                 </View>
-              </View>
+              </TouchableOpacity>
             ) : null}
 
             <View
@@ -440,26 +477,7 @@ const ArtistEventDetail = props => {
                 {item?.artists?.length
                   ? item?.artists?.map(e => {
                       return (
-                        <Text
-                          style={[styles.singerName]}
-                          onPress={() => {
-                            props.navigation.navigate('ArtistEventDetail', {
-                              artistListDetail: e,
-                            });
-                            logEvent(
-                              `artist_detail_${createEventName(e?.name)}`,
-                              e,
-                            );
-                            sendUXActivity('Artists.view', {
-                              screen: 'ArtistDetailScreen',
-                              artistId: item?._id,
-                              name: item?.name,
-                              city: item?.address?.city,
-                              referer: 'ArtistDetailScreen',
-                            });
-                          }}>
-                          {e?.musicGenre}
-                        </Text>
+                        <Text style={[styles.singerName]}>{e?.musicGenre}</Text>
                       );
                     })
                   : null}
@@ -838,6 +856,12 @@ const ArtistEventDetail = props => {
           </View>
         </ScrollView>
       </ImageBackground>
+      <ArtistListModal
+        isVisible={artistListModal}
+        navigation={props.navigation}
+        onClose={() => setArtistListModal(false)}
+        data={artistListModalData}
+      />
       <UpcomingEventModal
         visible={isEventModalVisible}
         data={upcomingEvents}

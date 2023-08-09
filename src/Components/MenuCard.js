@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -26,7 +26,6 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
   const [artistListModal, setArtistListModal] = useState(false);
-  const [artistListModalData, setArtistListModalData] = useState([]);
   const MenuData = [
     {
       menuIcon: ImagePath.watchIcon,
@@ -228,7 +227,8 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
               if (itemdata?.whatsappNumber) {
                 Linking.openURL(
                   'http://api.whatsapp.com/send?phone=91' +
-                    itemdata?.whatsappNumber,
+                    itemdata?.whatsappNumber +
+                    `&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app`,
                 );
               } else {
                 Toast.showWithGravity(
@@ -257,7 +257,8 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
               if (itemdata?.whatsappNumber) {
                 Linking.openURL(
                   'http://api.whatsapp.com/send?phone=91' +
-                    itemdata?.whatsappNumber,
+                    itemdata?.whatsappNumber +
+                    `&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app`,
                 );
               } else {
                 Toast.showWithGravity(
@@ -287,12 +288,10 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
                 screen: 'ClubDetailScreen',
                 clubId: itemdata?._id,
               });
-              if(itemdata?.phoneNumbers.length>1){
-                setArtistListModal(true)
-                setArtistListModalData(itemdata?.phoneNumbers)
-              }
-             else if (itemdata?.phoneNumber) {
-                console.log(itemdata,"hello");
+              if (itemdata?.phoneNumbers.length > 1) {
+                setArtistListModal(true);
+              } else if (itemdata?.phoneNumber) {
+                console.log(itemdata, 'hello');
                 Linking.openURL('tel:' + itemdata?.phoneNumber);
               } else {
                 Toast.showWithGravity(
@@ -333,15 +332,16 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
               style={styles.btnIconDisabled}
               source={ImagePath.callIconDisabled}
             />
-            <Text style={[styles.buttonText, {}]}>Call</Text>
+            <Text style={styles.buttonText}>Call</Text>
           </TouchableOpacity>
         )}
       </View>
       <ArtistListModal
-          isVisible={artistListModal}
-          onClose={() => setArtistListModal(false)}
-          data={artistListModalData}
-        />
+        isVisible={artistListModal}
+        navigation={navigation}
+        onClose={() => setArtistListModal(false)}
+        data={itemdata?.phoneNumbers || []}
+      />
     </View>
   );
 };

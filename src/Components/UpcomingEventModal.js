@@ -23,8 +23,9 @@ const height = Dimensions.get('window').height;
 const UpcomingEventModal = ({
   visible = false,
   data = [],
-  onPress,
-  onPressCancel,
+  onPress = () => {},
+  onPressCancel = () => {},
+  onPressArtists = () => {},
 }) => {
   return (
     // <View style={styles.centeredView}>
@@ -106,16 +107,23 @@ const UpcomingEventModal = ({
                     </Text>
                   </View>
                   {item?.artists?.length ? (
-                    <View
+                    <TouchableOpacity
+                      disabled={item?.artists?.length > 0}
                       style={{
                         marginLeft: wp(2),
                         width: wp(35),
                         alignItems: 'flex-end',
+                      }}
+                      onPress={() => {
+                        // onPressArtists(item?.artists);
                       }}>
                       <Text style={styles.byAviEvents}>
-                        By {item?.artists?.map(e => e?.name)?.join(', ')}
+                        By {item?.artists[0]?.name}
+                        {item?.artists?.length > 1
+                          ? ` +${item?.artists?.length - 1}`
+                          : null}
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   ) : null}
                 </TouchableOpacity>
               );

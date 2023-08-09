@@ -33,7 +33,7 @@ export const FONTS = {
 export const COLORS = {
   primary: '#202020',
   white: '#FFFFFF',
-  black: '#000000',
+  black: '#101010',
   gray: '#EFEFEF',
   green: '#04BB00',
   red: '#FB2525',

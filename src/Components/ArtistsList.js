@@ -11,39 +11,43 @@ const ArtistsList = ({artistData, navigation, style}) => {
     return null;
   }
 
-  return artistData.artists.map((e, i) => (
+  return (
     <>
       <Text
-        key={i}
         style={[
           styles.singerName,
           {
-            textDecorationLine:
-              e?.type?.toLowerCase() === 'guest' ? 'none' : 'underline',
+            // textDecorationLine:
+            //   artistData?.artists[0]?.type?.toLowerCase() === 'guest'
+            //     ? 'none'
+            //     : 'underline',
             marginLeft: 0,
             marginTop: 0,
           },
           style,
         ]}
-        onPress={() => {
-          if (e?.type?.toLowerCase() === 'guest') {
-            return;
-          }
-          navigation.navigate('ArtistEventDetail', {
-            artistListDetail: e,
-          });
-        }}>
-        {i >= 1 ? <Text style={{textDecorationLine: 'none'}}>, </Text> : null}
-        {e?.name}
+        // onPress={() => {
+        //   if (artistData?.artists[0]?.type?.toLowerCase() === 'guest') {
+        //     return;
+        //   }
+        //   navigation.navigate('ArtistEventDetail', {
+        //     artistListDetail: artistData?.artists[0],
+        //   });
+        // }}
+      >
+        {artistData?.artists[0]?.name}
+        {artistData?.artists?.length > 1
+          ? ` +${artistData?.artists?.length - 1}`
+          : null}
       </Text>
     </>
-  ));
+  );
 };
 
 const styles = {
   singerName: {
     fontSize: 16,
-    fontFamily: FONTS.RobotoRegular,
+    fontFamily: FONTS.AxiformaBold,
     color: COLORS.black,
     marginTop: 6,
   },

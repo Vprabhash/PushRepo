@@ -38,6 +38,7 @@ import {useNavigation} from '@react-navigation/native';
 import {showFilter} from '../redux/reducers/isFilterOpenSlice';
 import {logEvent, sendUXActivity} from '../utils/AddFirebaseEvent';
 import {createEventName} from '../utils/common';
+import ArtistListModal from './ArtistListModal';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -50,6 +51,9 @@ const SearchScreen = props => {
   const [valuekey, setValuekey] = useState('');
   const [recommendation, setRecommendation] = useState(null);
   const [autoSuggestData, setAutoSuggestData] = useState([]);
+  const [artistListModal, setArtistListModal] = useState(false);
+  const [artistListModalData, setArtistListModalData] = useState([]);
+
   const animation = useSharedValue(0);
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
@@ -309,7 +313,7 @@ const SearchScreen = props => {
                 justifyContent: 'space-between',
               }}>
               {item?.musicGenre && item?.images ? (
-                <Text style={styles.listingText}>{`${item?.musicGenre}`}</Text>
+                <Text style={styles.listingText}>{item?.musicGenre}</Text>
               ) : (
                 <Text style={styles.listingText}>
                   {`${item?.locality}, ${item?.city}`}
@@ -413,11 +417,16 @@ const SearchScreen = props => {
           </View>
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
-            <View
+            <TouchableOpacity
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginVertical: 6,
+              }}
+              disabled={!item?.artists?.length > 1}
+              onPress={() => {
+                setArtistListModal(true);
+                setArtistListModalData(item.artists);
               }}>
               {Array.isArray(item?.artists) &&
               item?.artists?.length &&
@@ -471,10 +480,13 @@ const SearchScreen = props => {
                     styles.singerName,
                     {width: '70%', marginVertical: 0},
                   ]}>
-                  By {item?.artists?.map(e => e?.name)?.join(', ')}
+                  By {item?.artists[0]?.name}
+                  {item?.artists?.length > 1
+                    ? ` +${item?.artists?.length - 1}`
+                    : null}
                 </Text>
               ) : null}
-            </View>
+            </TouchableOpacity>
             <Text
               style={[
                 styles.singerName,
@@ -905,6 +917,12 @@ const SearchScreen = props => {
               ) : null
             }
             // ListEmptyComponent={EmptyListMessage}
+          />
+          <ArtistListModal
+            isVisible={artistListModal}
+            navigation={navigation}
+            onClose={() => setArtistListModal(false)}
+            data={artistListModalData}
           />
         </View>
       </ImageBackground>

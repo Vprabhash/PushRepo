@@ -246,70 +246,89 @@ const EventListing = props => {
           </View>
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginVertical: 2,
-                alignItems: 'center',
-              }}>
-              {Array.isArray(item?.artists) &&
-              item?.artists?.length &&
-              item?.artists[0]?.images?.length &&
-              item?.artists[0]?.images[0] ? (
-                 
-                    <Image
-                      style={{
-                        height: 30,
-                        width: 30,
-                        borderRadius: 20,
-                        resizeMode: 'contain',
-                        marginRight: 6,
-                      }}
-                      source={{uri: item?.artists[0]?.images[0]}}
-                    />
-              ) : item?.artists?.length ? (
-                <View
-                  style={{
-                    height: 30,
-                    width: 30,
-                    borderRadius: 20,
-                    resizeMode: 'contain',
-                    marginRight: 6,
-                    justifyContent: 'center',
-                    backgroundColor: COLORS.gray,
-                    overflow: 'hidden',
-                  }}>
-                  <Image
-                    source={
-                      item?.artists[0]?.type?.toLowerCase() === 'artist'
-                        ? ImagePath.placeholderSinger
-                        : item?.artists[0]?.type?.toLowerCase() === 'dj'
-                        ? ImagePath.placeholderDj
-                        : item?.artists[0]?.type?.toLowerCase() === 'guest'
-                        ? ImagePath.profile
-                        : null
+            {Array.isArray(item?.artists) && item?.artists?.length ? (
+              <TouchableOpacity
+                disabled={
+                  item?.artists?.length === 1 &&
+                  item?.artists[0]?.type?.toLowerCase() === 'guest'
+                }
+                style={{
+                  flexDirection: 'row',
+                  marginVertical: 2,
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  if (item?.artists?.length > 1) {
+                    setArtistListModal(true);
+                    setArtistListModalData(item.artists);
+                  } else {
+                    if (item?.artists[0]?.type?.toLowerCase() === 'guest') {
+                      return;
                     }
+                    props.navigation.navigate('ArtistEventDetail', {
+                      artistListDetail: item?.artists[0],
+                    });
+                  }
+                }}>
+                {item?.artists[0]?.images?.length &&
+                item?.artists[0]?.images[0] ? (
+                  <Image
                     style={{
-                      height: 10,
-                      width: 10,
+                      height: 30,
+                      width: 30,
+                      borderRadius: 20,
                       resizeMode: 'contain',
-                      alignSelf: 'center',
-                      opacity: 0.5,
+                      marginRight: 6,
                     }}
+                    source={{uri: item?.artists[0]?.images[0]}}
                   />
-                </View>
-              ) : null}
+                ) : item?.artists?.length ? (
+                  <View
+                    style={{
+                      height: 30,
+                      width: 30,
+                      borderRadius: 20,
+                      resizeMode: 'contain',
+                      marginRight: 6,
+                      justifyContent: 'center',
+                      backgroundColor: COLORS.gray,
+                      overflow: 'hidden',
+                    }}>
+                    <Image
+                      source={
+                        item?.artists[0]?.type?.toLowerCase() === 'artist'
+                          ? ImagePath.placeholderSinger
+                          : item?.artists[0]?.type?.toLowerCase() === 'dj'
+                          ? ImagePath.placeholderDj
+                          : item?.artists[0]?.type?.toLowerCase() === 'guest'
+                          ? ImagePath.profile
+                          : null
+                      }
+                      style={{
+                        height: 10,
+                        width: 10,
+                        resizeMode: 'contain',
+                        alignSelf: 'center',
+                        opacity: 0.5,
+                      }}
+                    />
+                  </View>
+                ) : null}
 
-              {item?.artists?.length ? (
-                <Text
-                  style={[
-                    styles.singerName,
-                    {width: '70%', marginVertical: 0},
-                  ]}>
-                  By {item?.artists?.map(e => e?.name)?.join(', ')}
-                </Text>
-              ) : null}
-            </View>
+                {item?.artists?.length ? (
+                  <Text
+                    style={[
+                      styles.singerName,
+                      {width: '70%', marginVertical: 0},
+                    ]}>
+                    By {item?.artists[0]?.name}{' '}
+                    {item?.artists?.length > 1 ? (
+                      <Text>+{item?.artists?.length - 1}</Text>
+                    ) : null}
+                  </Text>
+                ) : null}
+              </TouchableOpacity>
+            ) : null}
             <Text style={styles.listinhText}>
               {`8pm onwards`}
               {/* {item?.eventStartTime
@@ -368,135 +387,6 @@ const EventListing = props => {
                 </View>
               )}
             </View>
-          </View>
-        </TouchableOpacity>
-        {Array.isArray(item?.artists) && item?.artists?.length > 1 ? (
-           <TouchableOpacity
-           disabled={!item?.artists?.length > 1}
-           // style={{position:"relative"}}
-           onPress={() => {
-             setArtistListModal(true)
-              setArtistListModalData(item.artists);
-           }}>
-          <View
-            style={{
-              height: 30,
-              width: 30,
-              borderRadius: 20,
-              resizeMode: 'contain',
-              backgroundColor: '#00000060',
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              flexDirection: 'row',
-              bottom: 66,
-              left: 22,
-            }}>
-            <Text
-              style={[
-                {
-                  width: '70%',
-                  marginVertical: 0,
-                  color: 'red',
-                  textAlign: 'center',
-                  fontSize: 14,
-                },
-              ]}>
-              + {item?.artists?.length - 1}
-            </Text>
-          </View>
-          </TouchableOpacity>
-        ) : null}
-      </View>
-    );
-  };
-
-  const eventRenderItem = ({item, index}) => {
-    return (
-      <View style={{flex: 1, width: '50%', marginBottom: hp(3)}}>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.navigate('ArtistPlayingDetail', {
-              artistData: item,
-            });
-          }}
-          style={{
-            marginLeft: 15,
-            marginRight: index == 2 ? 15 : 0,
-            borderRadius: 10,
-            backgroundColor: '#FFFFFF',
-            elevation: 4,
-          }}>
-          {Array.isArray(item?.artists) &&
-          item?.artists?.length &&
-          item?.images[0] &&
-          typeof item?.images[0]?.path == 'string' ? (
-            <Image
-              style={{
-                height: hp(18),
-                width: wp(45),
-                resizeMode: 'cover',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-              }}
-              source={{uri: item?.images[0]?.path}}
-            />
-          ) : (
-            <View
-              style={{
-                height: hp(22),
-                width: wp(45),
-                resizeMode: 'cover',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-              }}
-            />
-          )}
-          <View style={{padding: wp(3), width: wp(38)}}>
-            <Text
-              style={[
-                styles.listinhHeading1,
-                {marginBottom: hp(0.5), width: wp(38)},
-              ]}>
-              {item.title}
-            </Text>
-            {item?.artists?.length ? (
-              <Text
-                style={[
-                  styles.singerName,
-                  {
-                    width: '100%',
-                    marginTop: 0,
-                  },
-                ]}>
-                By {item?.artists?.map(e => e?.name)?.join(', ')}
-              </Text>
-            ) : null}
-            <Text style={styles.listinhText}>
-              {item?.eventDate
-                ? moment(item?.eventDate).format('ddd, DD MMM')
-                : null}
-            </Text>
-            <Text style={styles.listinhText}>
-              {`${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
-                item?.eventEndTime,
-              ).format('hh:mm A')}`}
-            </Text>
-            <Text style={[styles.listinhText, {width: '98%'}]}>
-              {[item?.address?.locality || '', item?.address?.city || '']
-                .filter(e => e)
-                .join(', ')}
-            </Text>
-            <Text style={[styles.listingText, {marginTop: hp(2)}]}>
-              {'₹' + item?.price?.amount}
-            </Text>
-            <Text
-              style={[
-                styles.listinhText,
-                {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
-              ]}>
-              onwards
-            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -603,6 +493,7 @@ const EventListing = props => {
         />
         <ArtistListModal
           isVisible={artistListModal}
+          navigation={props.navigation}
           onClose={() => setArtistListModal(false)}
           data={artistListModalData}
         />

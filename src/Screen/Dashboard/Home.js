@@ -615,7 +615,10 @@ const Home = props => {
                   fontFamily: FONTS.AxiformaBold,
                   width: '80%',
                 }}>
-                By {item?.artists?.map(e => e?.name)?.join(', ')}
+                By {item?.artists[0]?.name}
+                {item?.artists?.length > 1
+                  ? ` +${item?.artists?.length - 1}`
+                  : null}
               </Text>
             </View>
           ) : null}

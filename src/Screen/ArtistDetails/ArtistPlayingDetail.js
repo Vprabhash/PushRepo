@@ -32,12 +32,14 @@ import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import ArtistsList from '../../Components/ArtistsList';
 import Toast from 'react-native-simple-toast';
 import {createEventName} from '../../utils/common';
+import ArtistListModal from '../../Components/ArtistListModal';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ArtistPlayingDetail = props => {
   const {artistData} = props?.route?.params;
   const [modalVisibleone, setModalVisibleone] = useState(false);
-
+  const [artistListModal, setArtistListModal] = useState(false);
+  const [artistListModalData, setArtistListModalData] = useState([]);
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -223,11 +225,31 @@ const ArtistPlayingDetail = props => {
                   </Text>
                 </View> */}
                 {artistData?.artists?.length ? (
-                  <View
+                  <TouchableOpacity
+                    disabled={
+                      artistData?.artists?.length === 1 &&
+                      artistData?.artists[0]?.type?.toLowerCase() === 'guest'
+                    }
                     style={{
                       flexDirection: 'row',
                       marginTop: 10,
                       alignItems: 'center',
+                    }}
+                    onPress={() => {
+                      if (artistData?.artists?.length > 1) {
+                        setArtistListModal(true);
+                        setArtistListModalData(artistData.artists);
+                      } else {
+                        if (
+                          artistData?.artists[0]?.type?.toLowerCase() ===
+                          'guest'
+                        ) {
+                          return;
+                        }
+                        props.navigation.navigate('ArtistEventDetail', {
+                          artistListDetail: artistData?.artists[0],
+                        });
+                      }
                     }}>
                     {artistData?.artists[0]?.images?.length &&
                     artistData?.artists[0]?.images[0] ? (
@@ -283,7 +305,7 @@ const ArtistPlayingDetail = props => {
                         navigation={props.navigation}
                       />
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 ) : null}
 
                 <View
@@ -303,7 +325,7 @@ const ArtistPlayingDetail = props => {
                   />
                   <View style={{flex: 0.7}}>
                     <Text style={styles.listinhHeading1}>
-                      {`${moment(artistData?.eventStartTime).format(
+                      {`${moment(artistData?.eventDate).format(
                         'ddd MMM DD',
                       )} at 8pm onwards`}
                       {/* ${moment(artistData?.eventStartTime).format(
@@ -407,22 +429,24 @@ const ArtistPlayingDetail = props => {
                   </View>
                 </View>
                 {/* <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 14,
-                alignItems: 'center',
-              }}>
-              <Image
-                style={{
-                  height: 17,
-                  tintColor: COLORS.black,
-                  width: 17,
-                  resizeMode: 'contain',
-                }}
-                source={ImagePath.play_pause}
-              />
-              <Text style={styles.listinhHeading1}>{'Live Music Concert'}</Text>
-            </View> */}
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 14,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{
+                      height: 17,
+                      tintColor: COLORS.black,
+                      width: 17,
+                      resizeMode: 'contain',
+                    }}
+                    source={ImagePath.play_pause}
+                  />
+                  <Text style={styles.listinhHeading1}>
+                    {'Live Music Concert'}
+                  </Text>
+                </View> */}
                 {artistData?.price?.amount && (
                   <TouchableOpacity
                     activeOpacity={0.5}
@@ -544,7 +568,8 @@ const ArtistPlayingDetail = props => {
                       if (artistData?.club?.whatsappNumber) {
                         Linking.openURL(
                           'http://api.whatsapp.com/send?phone=91' +
-                            artistData?.club?.whatsappNumber,
+                            artistData?.club?.whatsappNumber +
+                            `&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app`,
                         );
                       } else {
                         Toast.showWithGravity(
@@ -581,7 +606,8 @@ const ArtistPlayingDetail = props => {
                       if (artistData?.club?.whatsappNumber) {
                         Linking.openURL(
                           'http://api.whatsapp.com/send?phone=91' +
-                            artistData?.club?.whatsappNumber,
+                            artistData?.club?.whatsappNumber +
+                            `&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app`,
                         );
                       } else {
                         Toast.showWithGravity(
@@ -730,6 +756,12 @@ const ArtistPlayingDetail = props => {
               will open at 6:00 PM, and the show will start at 8:00 PM.{' '}
             </Text>
           </View> */}
+          <ArtistListModal
+            isVisible={artistListModal}
+            navigation={props.navigation}
+            onClose={() => setArtistListModal(false)}
+            data={artistListModalData}
+          />
         </ScrollView>
       </ImageBackground>
     </View>

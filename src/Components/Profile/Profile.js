@@ -88,17 +88,16 @@ const Profile = ({navigation}) => {
       Icon: ImagePath.rightIcon,
       onPress: () => {
         Linking.openURL(
-          'http://api.whatsapp.com/send?phone=91' +
-          '9819955551',
+          'http://api.whatsapp.com/send?phone=919819955551&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app',
         );
       },
-    },{
+    },
+    {
       Title: 'Artist Registration',
       Icon: ImagePath.rightIcon,
       onPress: () => {
         Linking.openURL(
-          'http://api.whatsapp.com/send?phone=91' +
-            '9819955551',
+          'http://api.whatsapp.com/send?phone=919819955551&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app',
         );
       },
     },

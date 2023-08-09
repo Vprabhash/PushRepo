@@ -38,6 +38,7 @@ import UpcomingEventModal from '../../Components/UpcomingEventModal';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import ArtistsList from '../../Components/ArtistsList';
 import {createEventName} from '../../utils/common';
+import ArtistListModal from '../../Components/ArtistListModal';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const ClubDetails = props => {
@@ -53,6 +54,8 @@ const ClubDetails = props => {
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
   const [isEventModalVisible, setIsEventModalVisible] = useState(false);
+  const [artistListModal, setArtistListModal] = useState(false);
+  const [artistListModalData, setArtistListModalData] = useState([]);
   const scrollRef = useRef(null);
   const detailData = props?.route?.params?.listDetail;
   const scrollToEnd = () => {
@@ -294,7 +297,7 @@ const ClubDetails = props => {
               clubName: item?.club?.name,
               locality: item?.club?.locality,
               city: item?.club?.city,
-              referer: 'ClubDetails',
+              referer: 'ArtistDetailScreen',
             });
           }}
           style={{
@@ -303,8 +306,7 @@ const ClubDetails = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {Array.isArray(item?.images) &&
-          item?.images?.length &&
+          {item?.images?.length &&
           item?.images[0] &&
           typeof item?.images[0]?.path == 'string' ? (
             <FastImage
@@ -314,7 +316,7 @@ const ClubDetails = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{uri: item?.images[0]?.path}}
+              source={{uri: item.images[0]?.path}}
             />
           ) : (
             <View
@@ -327,50 +329,64 @@ const ClubDetails = props => {
               }}
             />
           )}
-          <View
+          {/* <View
+          style={{
+            height: 39,
+            minWidth: 32,
+            justifyContent: 'center',
+            borderRadius: 10,
+            backgroundColor: '#FFFFFF',
+            position: 'absolute',
+            top: 8,
+            right: 8,
+          }}>
+          <Text
             style={{
-              height: 39,
-              minWidth: 32,
-              justifyContent: 'center',
-              borderRadius: 10,
-              backgroundColor: '#FFFFFF',
-              position: 'absolute',
-              top: 8,
-              right: 8,
+              color: '#666666',
+              textAlign: 'center',
+              fontFamily: FONTS.AxiformaBold,
+              fontSize: 12,
             }}>
-            <Text
-              style={{
-                color: '#666666',
-                textAlign: 'center',
-                fontFamily: FONTS.AxiformaBold,
-                fontSize: 12,
-              }}>
-              {moment(item?.eventDate).format('DD')}
-            </Text>
-            <Text
-              style={{
-                color: '#666666',
-                textAlign: 'center',
-                fontFamily: FONTS.AxiformaRegular,
-                fontSize: 12,
-                textTransform: 'uppercase',
-              }}>
-              {moment(item?.eventDate).format('MMM')}
-            </Text>
-          </View>
+            {moment(item?.eventDate).format('DD')}
+          </Text>
+          <Text
+            style={{
+              color: '#666666',
+              textAlign: 'center',
+              fontFamily: FONTS.AxiformaRegular,
+              fontSize: 12,
+              textTransform: 'uppercase',
+            }}>
+            {moment(item?.eventDate).format('MMM')}
+          </Text>
+        </View> */}
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
             {item?.artists?.length ? (
-              <View
+              <TouchableOpacity
+                disabled={
+                  item?.artists?.length === 1 &&
+                  item?.artists[0]?.type?.toLowerCase() === 'guest'
+                }
                 style={{
                   flexDirection: 'row',
                   marginTop: 10,
                   alignItems: 'center',
-                  marginBottom: 10,
-                  marginRight: 8,
+                }}
+                onPress={() => {
+                  if (item?.artists?.length > 1) {
+                    setArtistListModal(true);
+                    setArtistListModalData(item.artists);
+                  } else {
+                    if (item?.artists[0]?.type?.toLowerCase() === 'guest') {
+                      return;
+                    }
+                    props.navigation.navigate('ArtistEventDetail', {
+                      artistListDetail: item?.artists[0],
+                    });
+                  }
                 }}>
-                {Array.isArray(item?.artists[0]?.images) &&
-                item?.artists[0]?.images?.length &&
+                {item?.artists[0]?.images?.length &&
                 item?.artists[0]?.images[0] ? (
                   <Image
                     style={{
@@ -378,7 +394,7 @@ const ClubDetails = props => {
                       width: 40,
                       borderRadius: 20,
                       resizeMode: 'contain',
-                      marginRight: 5,
+                      marginRight: 10,
                     }}
                     source={{uri: item?.artists[0]?.images[0]}}
                   />
@@ -389,7 +405,7 @@ const ClubDetails = props => {
                       width: 40,
                       borderRadius: 20,
                       resizeMode: 'contain',
-                      marginRight: 5,
+                      marginRight: 10,
                       justifyContent: 'center',
                       backgroundColor: COLORS.gray,
                       overflow: 'hidden',
@@ -414,60 +430,28 @@ const ClubDetails = props => {
                     />
                   </View>
                 ) : null}
-                <Text style={[styles.singerName, {marginLeft: 0}]}> By </Text>
+                <Text style={[styles.singerName, {marginLeft: 0}]}>By </Text>
                 <View style={{width: '70%', flexDirection: 'row'}}>
-                  {/* {item?.artists?.length
-                    ? item?.artists?.map(e => {
-                        return (
-                          <Text
-                            style={[
-                              styles.singerName,
-                              {
-                                textDecorationLine: 'underline',
-                                marginLeft: 0,
-                              },
-                            ]}
-                            onPress={() => {
-                              logEvent('artist_detail', e?.name);
-                              props.navigation.navigate('ArtistEventDetail', {
-                                artistListDetail: e,
-                              });
-                            }}>
-                            {e?.name}
-                          </Text>
-                        );
-                      })
-                    : null} */}
                   <ArtistsList
                     artistData={item}
                     navigation={props.navigation}
                   />
                 </View>
-              </View>
+              </TouchableOpacity>
             ) : null}
-            <Text style={[styles.listinhText, {fontSize: 14}]}>
-              {`8pm onwards`}
-              {/* {item?.eventStartTime
-                ? `${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
-                    item?.eventEndTime,
-                  ).format('hh:mm A')}`
-                : `8pm onwards`} */}
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              {Array.isArray(item?.artists) &&
-              item?.artists?.length &&
-              item?.artists?.filter(e => e?.musicGenre)?.length ? (
+
+            {item?.artists?.length ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
                 <View
                   style={{
                     flexDirection: 'row',
                     marginTop: 10,
-                    width: '70%',
-                    alignItems: 'center',
+                    width: item?.price?.amount ? '70%' : '90%',
                   }}>
                   <Image
                     style={{
@@ -479,50 +463,34 @@ const ClubDetails = props => {
                     }}
                     source={ImagePath.menuUser3}
                   />
-                  {item?.artists?.length
-                    ? item?.artists?.map(e => {
-                        return (
-                          <Text
-                            key={e?._id?.toString()}
-                            style={[styles.singerName]}
-                            onPress={() => {
-                              props.navigation.navigate('ArtistEventDetail', {
-                                artistListDetail: e,
-                              });
-                              logEvent(
-                                `artist_detail_${createEventName(e?.name)}`,
-                                e,
-                              );
-                              sendUXActivity('Artists.view', {
-                                screen: 'ArtistDetailScreen',
-                                artistId: e?._id,
-                                name: e?.name,
-                                city: e?.address?.city,
-                                referer: 'ClubDetails',
-                              });
-                            }}>
-                            {e?.musicGenre}
-                          </Text>
-                        );
-                      })
-                    : null}
+
+                  {item?.artists?.map(e => {
+                    return (
+                      <Text style={[styles.singerName]}>{e?.musicGenre}</Text>
+                    );
+                  })}
                 </View>
-              ) : null}
-              {item?.price?.amount && (
-                <View style={{marginTop: -10, alignItems: 'center'}}>
-                  <Text style={[styles.listingText, {color: COLORS.black}]}>
-                    {'₹' + item?.price?.amount}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.listinhText,
-                      {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
-                    ]}>
-                    onwards
-                  </Text>
-                </View>
-              )}
-            </View>
+                {item?.price?.amount && (
+                  <View
+                    style={{
+                      marginTop: -10,
+                      alignItems: 'center',
+                      width: '25%',
+                    }}>
+                    <Text style={[styles.listingText]}>
+                      {'₹' + item?.price?.amount}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.listinhText,
+                        {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+                      ]}>
+                      onwards
+                    </Text>
+                  </View>
+                )}
+              </View>
+            ) : null}
           </View>
         </TouchableOpacity>
       </View>
@@ -778,9 +746,10 @@ const ClubDetails = props => {
           </Text>
           <FlatList
             data={
-              haveTodaysEvent()?.length
-                ? haveTodaysEvent()
-                : events?.slice(0, 1)
+              // haveTodaysEvent()?.length
+              //   ? haveTodaysEvent()
+              //   :
+              events?.slice(0, 1)
             }
             keyExtractor={(_, i) => i.toString()}
             renderItem={_renderItem}
@@ -976,11 +945,26 @@ const ClubDetails = props => {
                 referer: 'ClubDetails',
               });
             }}
+            onPressArtists={e => {
+              if (e?.length) {
+                if (e?.length === 1 && e[0]?.type?.toLowerCase() === 'guest') {
+                  return;
+                }
+                setArtistListModal(true);
+                setArtistListModalData(e);
+              }
+            }}
             onPressCancel={() => {
               setIsEventModalVisible(false);
             }}
           />
         </ScrollView>
+        <ArtistListModal
+          isVisible={artistListModal}
+          navigation={props.navigation}
+          onClose={() => setArtistListModal(false)}
+          data={artistListModalData}
+        />
       </ImageBackground>
     </View>
   );
