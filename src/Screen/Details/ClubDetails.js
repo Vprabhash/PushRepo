@@ -316,7 +316,7 @@ const ClubDetails = props => {
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
               }}
-              source={{uri: item.images[0]?.path}}
+              source={{uri: item?.images[0]?.path}}
             />
           ) : (
             <View
@@ -440,13 +440,13 @@ const ClubDetails = props => {
               </TouchableOpacity>
             ) : null}
 
-            {item?.artists?.length ? (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              {item?.genres?.length ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -463,23 +463,25 @@ const ClubDetails = props => {
                     }}
                     source={ImagePath.menuUser3}
                   />
-
-                  {item?.artists?.map(e => {
-                    return (
-                      <Text style={[styles.singerName]}>{e?.musicGenre}</Text>
-                    );
-                  })}
+                  <Text
+                    style={[
+                      styles.singerName,
+                      {width: item?.price?.amount ? '70%' : '90%'},
+                    ]}>
+                    {item?.genres?.join(', ')}
+                  </Text>
                 </View>
-                {item?.price?.amount && (
-                  <View
-                    style={{
-                      marginTop: -10,
-                      alignItems: 'center',
-                      width: '25%',
-                    }}>
-                    <Text style={[styles.listingText]}>
-                      {'₹' + item?.price?.amount}
-                    </Text>
+              ) : null}
+              {item?.price?.amount && (
+                <View
+                  style={{
+                    alignItems: 'flex-end',
+                    width: item?.genres?.length ? '30%' : '90%',
+                    flex: 1,
+                  }}>
+                  <Text style={[styles.listingText, {textAlign: 'center'}]}>
+                    {'₹' + item?.price?.amount}
+                    {'\n'}
                     <Text
                       style={[
                         styles.listinhText,
@@ -487,10 +489,10 @@ const ClubDetails = props => {
                       ]}>
                       onwards
                     </Text>
-                  </View>
-                )}
-              </View>
-            ) : null}
+                  </Text>
+                </View>
+              )}
+            </View>
           </View>
         </TouchableOpacity>
       </View>

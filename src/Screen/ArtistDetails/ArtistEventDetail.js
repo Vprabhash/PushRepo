@@ -463,37 +463,52 @@ const ArtistEventDetail = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row', marginTop: 10}}>
-                <Image
+              {item?.genres?.length ? (
+                <View
                   style={{
-                    height: 17,
-                    width: 17,
-                    tintColor: '#D200FD',
-                    resizeMode: 'contain',
-                    marginRight: 2,
-                  }}
-                  source={ImagePath.menuUser3}
-                />
-                {item?.artists?.length
-                  ? item?.artists?.map(e => {
-                      return (
-                        <Text style={[styles.singerName]}>{e?.musicGenre}</Text>
-                      );
-                    })
-                  : null}
-              </View>
-              {/* <View style={{marginTop: -10, alignItems: 'center'}}>
-                <Text style={[styles.listingText, {color: COLORS.black}]}>
-                  {'₹' + item?.price?.amount}
-                </Text>
-                <Text
-                  style={[
-                    styles.listinhText,
-                    {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
-                  ]}>
-                  onwards
-                </Text>
-              </View> */}
+                    flexDirection: 'row',
+                    marginTop: 10,
+                    width: item?.price?.amount ? '70%' : '90%',
+                  }}>
+                  <Image
+                    style={{
+                      height: 17,
+                      width: 17,
+                      tintColor: '#D200FD',
+                      resizeMode: 'contain',
+                      marginRight: 2,
+                    }}
+                    source={ImagePath.menuUser3}
+                  />
+                  <Text
+                    style={[
+                      styles.singerName,
+                      {width: item?.price?.amount ? '70%' : '90%'},
+                    ]}>
+                    {item?.genres?.join(', ')}
+                  </Text>
+                </View>
+              ) : null}
+              {item?.price?.amount && (
+                <View
+                  style={{
+                    alignItems: 'flex-end',
+                    width: item?.genres?.length ? '30%' : '90%',
+                    flex: 1,
+                  }}>
+                  <Text style={[styles.listingText, {textAlign: 'center'}]}>
+                    {'₹' + item?.price?.amount}
+                    {'\n'}
+                    <Text
+                      style={[
+                        styles.listingText,
+                        {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+                      ]}>
+                      onwards
+                    </Text>
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
         </TouchableOpacity>
