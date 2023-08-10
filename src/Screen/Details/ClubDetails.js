@@ -748,10 +748,9 @@ const ClubDetails = props => {
           </Text>
           <FlatList
             data={
-              // haveTodaysEvent()?.length
-              //   ? haveTodaysEvent()
-              //   :
-              events?.slice(0, 1)
+              haveTodaysEvent()?.length
+                ? haveTodaysEvent()
+                : events?.slice(0, 1)
             }
             keyExtractor={(_, i) => i.toString()}
             renderItem={_renderItem}
