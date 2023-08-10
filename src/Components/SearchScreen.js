@@ -37,7 +37,7 @@ import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {showFilter} from '../redux/reducers/isFilterOpenSlice';
 import {logEvent, sendUXActivity} from '../utils/AddFirebaseEvent';
-import {createEventName} from '../utils/common';
+import {createEventName, formatTimeRange} from '../utils/common';
 import ArtistListModal from './ArtistListModal';
 
 const width = Dimensions.get('window').width;
@@ -346,7 +346,7 @@ const SearchScreen = props => {
               screen: 'EventDetailScreen',
               eventId: item?._id,
               name: item?.title,
-              eventDate: item?.eventDate,
+              eventDate: item?.eventStartTime,
               clubId: item?.club?._id,
               clubName: item?.club?.name,
               locality: item?.club?.locality,
@@ -402,7 +402,7 @@ const SearchScreen = props => {
                 fontFamily: FONTS.AxiformaBold,
                 fontSize: 12,
               }}>
-              {moment(item?.eventDate).format('DD')}
+              {moment(item?.eventStartTime).format('DD')}
             </Text>
             <Text
               style={{
@@ -412,7 +412,7 @@ const SearchScreen = props => {
                 fontSize: 12,
                 textTransform: 'uppercase',
               }}>
-              {moment(item?.eventDate).format('MMM')}
+              {moment(item?.eventStartTime).format('MMM')}
             </Text>
           </View>
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
@@ -492,12 +492,7 @@ const SearchScreen = props => {
                 styles.singerName,
                 {fontFamily: FONTS.AxiformaRegular, marginTop: 0},
               ]}>
-              {`8pm onwards`}
-              {/* {item?.eventStartTime
-                ? `${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
-                    item?.eventEndTime,
-                  ).format('hh:mm A')}`
-                : `8pm onwards`} */}
+              {formatTimeRange(item?.eventStartTime, item?.eventEndTime)}
             </Text>
             <View
               style={{

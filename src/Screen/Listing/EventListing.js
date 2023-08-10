@@ -33,7 +33,7 @@ import moment from 'moment';
 import {useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
-import {createEventName} from '../../utils/common';
+import {createEventName, formatTimeRange} from '../../utils/common';
 import ArtistListModal from '../../Components/ArtistListModal';
 
 const width = Dimensions.get('window').width;
@@ -175,7 +175,7 @@ const EventListing = props => {
               screen: 'EventDetailScreen',
               eventId: item?._id,
               name: item?.title,
-              eventDate: item?.eventDate,
+              eventDate: item?.eventStartTime,
               clubId: item?.club?._id,
               clubName: item?.club?.name,
               locality: item?.club?.locality,
@@ -231,7 +231,7 @@ const EventListing = props => {
                 fontFamily: FONTS.AxiformaBold,
                 fontSize: 12,
               }}>
-              {moment(item?.eventDate).format('DD')}
+              {moment(item?.eventStartTime).format('DD')}
             </Text>
             <Text
               style={{
@@ -241,7 +241,7 @@ const EventListing = props => {
                 fontSize: 12,
                 textTransform: 'uppercase',
               }}>
-              {moment(item?.eventDate).format('MMM')}
+              {moment(item?.eventStartTime).format('MMM')}
             </Text>
           </View>
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
@@ -330,12 +330,7 @@ const EventListing = props => {
               </TouchableOpacity>
             ) : null}
             <Text style={styles.listinhText}>
-              {`8pm onwards`}
-              {/* {item?.eventStartTime
-                ? `${moment(item?.eventStartTime).format('hh:mm A')} - ${moment(
-                    item?.eventEndTime,
-                  ).format('hh:mm A')}`
-                : `8pm onwards`} */}
+              {formatTimeRange(item?.eventStartTime, item?.eventEndTime)}
             </Text>
             <View
               style={{
@@ -359,7 +354,7 @@ const EventListing = props => {
                       clubId: item?.club?._id,
                       name: item?.club?.name,
                       eventId: item?._id,
-                      eventDate: item?.eventDate,
+                      eventDate: item?.eventStartTime,
                       locality: item?.club?.locality,
                       city: item?.club?.city,
                       referer: 'EventsList',

@@ -18,6 +18,7 @@ import {COLORS, FONTS} from './constants';
 import moment from 'moment';
 import ImagePath from '../assets/ImagePath';
 import FastImage from 'react-native-fast-image';
+import {formatTimeRange} from '../utils/common';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const UpcomingEventModal = ({
@@ -99,11 +100,17 @@ const UpcomingEventModal = ({
                         {item?.title}
                       </Text>
                       {'\n'}
-                      {item?.eventDate
-                        ? moment(item?.eventDate).format('DD MMMM, YYYY')
+                      {item?.eventStartTime
+                        ? moment
+                            .utc(item?.eventStartTime)
+                            .local()
+                            .format('DD MMMM, YYYY')
                         : null}
                       {'\n'}
-                      8pm onwards
+                      {formatTimeRange(
+                        item?.eventStartTime,
+                        item?.eventEndTime,
+                      )}
                     </Text>
                   </View>
                   {item?.artists?.length ? (

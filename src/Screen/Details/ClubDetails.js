@@ -276,7 +276,7 @@ const ClubDetails = props => {
       return [];
     }
 
-    return events.filter(e => isTodaysEvent(e.eventDate));
+    return events.filter(e => isTodaysEvent(e.eventStartTime));
   };
 
   const _renderItem = ({item, index}) => {
@@ -292,7 +292,7 @@ const ClubDetails = props => {
               screen: 'EventDetailScreen',
               eventId: item?._id,
               name: item?.title,
-              eventDate: item?.eventDate,
+              eventDate: item?.eventStartTime,
               clubId: item?.club?._id,
               clubName: item?.club?.name,
               locality: item?.club?.locality,
@@ -347,7 +347,7 @@ const ClubDetails = props => {
               fontFamily: FONTS.AxiformaBold,
               fontSize: 12,
             }}>
-            {moment(item?.eventDate).format('DD')}
+            {moment(item?.eventStartTime).format('DD')}
           </Text>
           <Text
             style={{
@@ -357,7 +357,7 @@ const ClubDetails = props => {
               fontSize: 12,
               textTransform: 'uppercase',
             }}>
-            {moment(item?.eventDate).format('MMM')}
+            {moment(item?.eventStartTime).format('MMM')}
           </Text>
         </View> */}
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
@@ -937,7 +937,7 @@ const ClubDetails = props => {
                 screen: 'EventDetailScreen',
                 eventId: e?._id,
                 name: e?.title,
-                eventDate: e?.eventDate,
+                eventDate: e?.eventStartTime,
                 clubId: e?.club?._id,
                 clubName: e?.club?.name,
                 locality: e?.club?.locality,

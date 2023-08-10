@@ -31,7 +31,7 @@ import ImageView from 'react-native-image-viewing';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import ArtistsList from '../../Components/ArtistsList';
 import Toast from 'react-native-simple-toast';
-import {createEventName} from '../../utils/common';
+import {createEventName, formatTimeRange} from '../../utils/common';
 import ArtistListModal from '../../Components/ArtistListModal';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -180,7 +180,7 @@ const ArtistPlayingDetail = props => {
                         screen: 'ClubDetailScreen',
                         clubId: artistData?.club?._id,
                         eventId: artistData?._id,
-                        eventDate: artistData?.eventDate,
+                        eventDate: artistData?.eventStartTime,
                         name: artistData?.club?.name,
                         locality: artistData?.club?.locality,
                         city: artistData?.club?.city,
@@ -323,16 +323,15 @@ const ArtistPlayingDetail = props => {
                     }}
                     source={ImagePath.watchIcon}
                   />
-                  <View style={{flex: 0.7}}>
+                  <View style={{flex: 1}}>
                     <Text style={styles.listinhHeading1}>
-                      {`${moment(artistData?.eventDate).format(
+                      {`${moment(artistData?.eventStartTime).format(
                         'ddd MMM DD',
-                      )} at 8pm onwards`}
-                      {/* ${moment(artistData?.eventStartTime).format(
-                        'hh:mm A',
-                      )} to ${moment(artistData?.eventEndTime).format(
-                        'hh:mm A',
-                      ) */}
+                      )} at ${formatTimeRange(
+                        artistData?.eventStartTime,
+                        artistData?.eventEndTime,
+                        false,
+                      )}`}
                     </Text>
                   </View>
                 </View>
@@ -409,7 +408,7 @@ const ArtistPlayingDetail = props => {
                             screen: 'ClubDetailScreen',
                             clubId: artistData?.club?._id,
                             eventId: artistData?._id,
-                            eventDate: artistData?.eventDate,
+                            eventDate: artistData?.eventStartTime,
                             name: artistData?.club?.name,
                             locality: artistData?.club?.locality,
                             city: artistData?.club?.city,
@@ -530,7 +529,7 @@ const ArtistPlayingDetail = props => {
                       screen: 'EventDetailScreen',
                       clubId: artistData?.club?._id,
                       eventId: artistData?._id,
-                      eventDate: artistData?.eventDate,
+                      eventDate: artistData?.eventStartTime,
                       name: artistData?.club?.name,
                       locality: artistData?.club?.locality,
                       city: artistData?.club?.city,
@@ -559,7 +558,7 @@ const ArtistPlayingDetail = props => {
                         screen: 'EventDetailScreen',
                         clubId: artistData?.club?._id,
                         eventId: artistData?._id,
-                        eventDate: artistData?.eventDate,
+                        eventDate: artistData?.eventStartTime,
                         name: artistData?.club?.name,
                         locality: artistData?.club?.locality,
                         city: artistData?.club?.city,
@@ -597,7 +596,7 @@ const ArtistPlayingDetail = props => {
                         screen: 'EventDetailScreen',
                         clubId: artistData?.club?._id,
                         eventId: artistData?._id,
-                        eventDate: artistData?.eventDate,
+                        eventDate: artistData?.eventStartTime,
                         name: artistData?.club?.name,
                         locality: artistData?.club?.locality,
                         city: artistData?.club?.city,
@@ -639,7 +638,7 @@ const ArtistPlayingDetail = props => {
                         screen: 'EventDetailScreen',
                         clubId: artistData?.club?._id,
                         eventId: artistData?._id,
-                        eventDate: artistData?.eventDate,
+                        eventDate: artistData?.eventStartTime,
                         name: artistData?.club?.name,
                         locality: artistData?.club?.locality,
                         city: artistData?.club?.city,
@@ -673,7 +672,7 @@ const ArtistPlayingDetail = props => {
                         screen: 'EventDetailScreen',
                         clubId: artistData?.club?._id,
                         eventId: artistData?._id,
-                        eventDate: artistData?.eventDate,
+                        eventDate: artistData?.eventStartTime,
                         name: artistData?.club?.name,
                         locality: artistData?.club?.locality,
                         city: artistData?.club?.city,

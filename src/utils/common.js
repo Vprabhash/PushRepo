@@ -1,4 +1,5 @@
 import {PixelRatio} from 'react-native';
+import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 
@@ -94,3 +95,24 @@ export function parseYouTubeLink(youtubeLink) {
 export function createEventName(eventName) {
   return eventName.toLowerCase().split(' ').join('_');
 }
+
+export const formatTimeRange = (start, end, dash = true) => {
+  const localStart = start ? moment.utc(start).local() : null;
+  const localEnd = end ? moment.utc(end).local() : null;
+
+  if (!localStart && !localEnd) {
+    return '8pm onwards';
+  } else if (localStart && !localEnd) {
+    return `${localStart.format(
+      'h' + (localStart.minutes() === 0 ? '' : ':mm') + ' a',
+    )} onwards`;
+  } else if (!localStart && localEnd) {
+    return '8pm onwards';
+  } else {
+    const startFormat = localStart.minutes() === 0 ? 'h' : 'hh:mm';
+    const endFormat = localEnd.minutes() === 0 ? 'h' : 'hh:mm';
+    return `${localStart.format(startFormat + ' a')} ${
+      dash ? '-' : 'to'
+    } ${localEnd.format(endFormat + ' a')}`;
+  }
+};
