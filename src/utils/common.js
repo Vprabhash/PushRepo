@@ -101,13 +101,13 @@ export const formatTimeRange = (start, end, dash = true) => {
   const localEnd = end ? moment.utc(end).local() : null;
 
   if (!localStart && !localEnd) {
-    return '8pm onwards';
+    return '8 pm onwards';
   } else if (localStart && !localEnd) {
     return `${localStart.format(
       'h' + (localStart.minutes() === 0 ? '' : ':mm') + ' a',
     )} onwards`;
   } else if (!localStart && localEnd) {
-    return '8pm onwards';
+    return '8 pm onwards';
   } else {
     const startFormat = localStart.minutes() === 0 ? 'h' : 'hh:mm';
     const endFormat = localEnd.minutes() === 0 ? 'h' : 'hh:mm';
