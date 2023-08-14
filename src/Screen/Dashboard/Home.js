@@ -77,6 +77,7 @@ const Home = props => {
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
   );
+
   const spotLightList = async () => {
     const data = await dispatch(spotLightApi()).then(data => {
       console.log('------spotLightList data--------', data.payload);
@@ -273,9 +274,10 @@ const Home = props => {
   ];
   const [clubsSpotlight, setClubsSpotlight] = useState([]);
   const [artistsSpotlight, setArtistsSpotlight] = useState([]);
+
   const fetchClubsSpotlight = () => {
     ApiCall(
-      `api/clubs?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`,
+      `api/clubs?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}&ordered=1`,
       'GET',
     ).then(res => {
       setClubsSpotlight(res?.data);
@@ -283,7 +285,7 @@ const Home = props => {
   };
   const fetchArtistSpotlight = () => {
     ApiCall(
-      `api/artists?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}`,
+      `api/artists?isFeatured=true&city=${selectedCity}&userBaseCity=${userBaseCity}&ordered=1`,
       'GET',
     ).then(res => {
       setArtistsSpotlight(res?.data);
@@ -416,7 +418,7 @@ const Home = props => {
     queryParams.append('upcoming', 1);
     queryParams.append('page', eventPage);
     queryParams.append('city', selectedCity);
-    const res = await ApiCall(`api/events?${queryParams}`, 'GET');
+    const res = await ApiCall(`api/events?${queryParams}&ordered=1`, 'GET');
     if (Array.isArray(res?.data)) {
       if (page === 0) {
         setUpcomingEvents(res?.data);
@@ -824,7 +826,7 @@ const Home = props => {
       ApiCall(
         `api/nearby-clubs?coordinates=${locationLatLong?.latitude || ''}${
           locationLatLong?.latitude ? ',' : ''
-        }${locationLatLong?.longitude || ''}&radius=5000&sort_dir=desc`, //${19.136326},${72.82766}
+        }${locationLatLong?.longitude || ''}&radius=5000&sort_dir=desc&ordered=1`, //${19.136326},${72.82766}
         'GET',
       ).then(res => {
         if (res?.data?.length) {
