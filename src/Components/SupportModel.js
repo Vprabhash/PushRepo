@@ -13,10 +13,12 @@ import {COLORS, FONTS} from './constants';
 
 const SupportModal = ({isVisible, onClose}) => {
   const sendEmail = () => {
+    onClose();
     Linking.openURL('mailto:info@azzirevents.com');
   };
 
   const openWhatsApp = () => {
+    onClose();
     Linking.openURL(
       'http://api.whatsapp.com/send?phone=919819955551&text=I%20have%20a%20query%20%2F%20feedback%20regarding%20the%20AZZIR%20App',
     );
