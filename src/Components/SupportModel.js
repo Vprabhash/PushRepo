@@ -18,7 +18,7 @@ const SupportModal = ({isVisible, onClose}) => {
 
   const openWhatsApp = () => {
     Linking.openURL(
-      'http://api.whatsapp.com/send?phone=919819955551&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app',
+      'http://api.whatsapp.com/send?phone=919819955551&text=I%20have%20a%20query%20%2F%20feedback%20regarding%20the%20AZZIR%20App',
     );
   };
 

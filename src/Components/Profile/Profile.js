@@ -88,7 +88,7 @@ const Profile = ({navigation}) => {
       Icon: ImagePath.rightIcon,
       onPress: () => {
         Linking.openURL(
-          'http://api.whatsapp.com/send?phone=919819955551&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app',
+          'http://api.whatsapp.com/send?phone=919819955551&text=Hey%20There%2C%0A%0AI%20am%20looking%20to%20get%20my%20club%20listed%20on%20the%20Azzir%20App',
         );
       },
     },
@@ -97,7 +97,7 @@ const Profile = ({navigation}) => {
       Icon: ImagePath.rightIcon,
       onPress: () => {
         Linking.openURL(
-          'http://api.whatsapp.com/send?phone=919819955551&text=Hey%20there%2C%0A%0AI%20am%20reaching%20out%20to%20enquire%20via%20the%20AZZIR%20app',
+          'http://api.whatsapp.com/send?phone=919819955551&text=Hey%20There%2C%0A%0AI%20am%20looking%20to%20get%20the%20artist%20registration%20%2F%20listing%20done%20on%20the%20AZZIR%20App',
         );
       },
     },
