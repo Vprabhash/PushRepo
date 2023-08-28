@@ -826,7 +826,9 @@ const Home = props => {
       ApiCall(
         `api/nearby-clubs?coordinates=${locationLatLong?.latitude || ''}${
           locationLatLong?.latitude ? ',' : ''
-        }${locationLatLong?.longitude || ''}&radius=5000&sort_dir=desc&ordered=1`, //${19.136326},${72.82766}
+        }${
+          locationLatLong?.longitude || ''
+        }&radius=5000&sort_dir=desc&ordered=1`, //${19.136326},${72.82766}
         'GET',
       ).then(res => {
         if (res?.data?.length) {
@@ -1031,7 +1033,7 @@ const Home = props => {
                           styles.titleText1,
                           {marginHorizontal: 30, textAlign: 'center'},
                         ]}>
-                        AZZIR needs to detect you location to show the clubs
+                        AZZIR needs to detect your location to show the clubs
                         near you.
                       </Text>
                       <View
