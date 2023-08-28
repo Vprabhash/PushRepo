@@ -291,7 +291,6 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
               if (itemdata?.phoneNumbers.length > 1) {
                 setArtistListModal(true);
               } else if (itemdata?.phoneNumber) {
-                console.log(itemdata, 'hello');
                 Linking.openURL('tel:' + itemdata?.phoneNumber);
               } else {
                 Toast.showWithGravity(
@@ -303,7 +302,7 @@ const MenuCard = ({navigation, itemdata, scrollToEnd}, props) => {
             }}
             style={[styles.btnmain, {borderBottomRightRadius: 10}]}>
             <Image style={styles.btnIcon} source={ImagePath.callIcon} />
-            <Text style={[styles.buttonText, {}]}>Call</Text>
+            <Text style={styles.buttonText}>Call</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity

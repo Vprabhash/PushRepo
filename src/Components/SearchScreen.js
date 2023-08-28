@@ -204,7 +204,7 @@ const SearchScreen = props => {
               </>
             ) : (
               <>
-                {item?.images?.length ? (
+                {Array.isArray(item?.images) && item?.images?.length ? (
                   <Image
                     style={{
                       height: hp(29),
@@ -442,7 +442,7 @@ const SearchScreen = props => {
                   }}
                   source={{uri: item?.artists[0]?.images[0]}}
                 />
-              ) : item?.artists?.length ? (
+              ) : Array.isArray(item?.artists) && item?.artists?.length ? (
                 <View
                   style={{
                     height: 30,
@@ -474,7 +474,7 @@ const SearchScreen = props => {
                   />
                 </View>
               ) : null}
-              {item?.artists?.length ? (
+              {Array.isArray(item?.artists) && item?.artists?.length ? (
                 <Text
                   style={[
                     styles.singerName,

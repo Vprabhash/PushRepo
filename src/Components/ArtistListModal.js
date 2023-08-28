@@ -45,7 +45,9 @@ const ArtistListModal = ({isVisible, onClose, data, navigation}) => {
             });
           }
         }}>
-        {item?.images?.length && item?.images[0] ? (
+        {Array.isArray(item?.images) &&
+        item?.images?.length &&
+        item?.images[0] ? (
           <Image style={styles.imageWrapper} source={{uri: item?.images[0]}} />
         ) : item?.type ? (
           <View style={styles.imageWrapper}>
@@ -106,7 +108,9 @@ const ArtistListModal = ({isVisible, onClose, data, navigation}) => {
             <Image style={styles.closeIcon} source={ImagePath.closeIcon} />
           </TouchableOpacity>
           <Text style={styles.labelText}>
-            {data?.length && data[0]?.name ? 'Artists' : 'Contacts'}
+            {Array.isArray(data?.length) && data?.length && data[0]?.name
+              ? 'Artists'
+              : 'Contacts'}
           </Text>
           <View style={{maxHeight: 250, marginTop: hp(1)}}>
             <FlatList

@@ -120,7 +120,9 @@ const Otp = props => {
           }
         } else {
           Toast.showWithGravity(
-            res?.errors?.length && res?.errors[0]?.msg
+            Array.isArray(res?.errors) &&
+              res?.errors?.length &&
+              res?.errors[0]?.msg
               ? res?.errors[0]?.msg
               : 'Something went wrong',
             Toast.LONG,

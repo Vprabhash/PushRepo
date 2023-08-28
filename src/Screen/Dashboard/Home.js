@@ -142,7 +142,7 @@ const Home = props => {
       .then(res => {
         console.log('Current city:', res);
         // const currentCity = getData('currentCity');
-        if (res?.data?.length) {
+        if (Array.isArray(res?.data) && res?.data?.length) {
           if (
             res?.data?.some(e => e?.name === selectedCity) == false &&
             !isSelected &&
@@ -194,7 +194,7 @@ const Home = props => {
             .then(response => response.json())
             .then(data => {
               dispatch(addCoordinates(obj));
-              if (data?.results && data?.results?.length > 0) {
+              if (Array.isArray(data?.results) && data?.results?.length > 0) {
                 const addressComponents = data?.results[0]?.address_components;
                 // const city = getData('currentCity');
                 for (const component of addressComponents) {
@@ -467,7 +467,8 @@ const Home = props => {
             artistData: item,
           });
         }}>
-        {item?.images?.length &&
+        {Array.isArray(item?.images) &&
+        item?.images?.length &&
         item?.images[0] &&
         typeof item?.images[0]?.path == 'string' ? (
           <FastImage
@@ -558,7 +559,7 @@ const Home = props => {
             }}>
             {item?.title}
           </Text>
-          {item?.artists?.length ? (
+          {Array.isArray(item?.artists) && item?.artists?.length ? (
             <View
               style={{
                 flexDirection: 'row',
@@ -756,7 +757,8 @@ const Home = props => {
           overflow: 'hidden',
           borderRadius: 10,
         }}>
-        {item?.media?.ambienceImages?.length ? (
+        {Array.isArray(item?.media?.ambienceImages) &&
+        item?.media?.ambienceImages?.length ? (
           <FastImage
             style={{
               height: hp(26),
@@ -831,7 +833,7 @@ const Home = props => {
         }&radius=5000&sort_dir=desc&ordered=1`, //${19.136326},${72.82766}
         'GET',
       ).then(res => {
-        if (res?.data?.length) {
+        if (Array.isArray(res?.data) && res?.data?.length) {
           setClubNearby(res?.data);
         }
       });
@@ -853,7 +855,8 @@ const Home = props => {
           borderRadius: 10,
           overflow: 'hidden',
         }}>
-        {item?.media?.ambienceImages?.length ? (
+        {Array.isArray(item?.media?.ambienceImages) &&
+        item?.media?.ambienceImages?.length ? (
           <FastImage
             style={{
               height: hp(20),
@@ -1147,7 +1150,7 @@ const Home = props => {
               <Text style={styles.cardText}> Coming Soon </Text>
             </View>
           </View> */}
-          {upcomingEvents && upcomingEvents?.length ? (
+          {Array.isArray(upcomingEvents) && upcomingEvents?.length ? (
             <FlatList
               horizontal
               data={upcomingEvents}

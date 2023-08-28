@@ -193,7 +193,7 @@ const ArtistDetail = props => {
               referer: 'ArtistsList',
             });
           }}>
-          {item?.images?.length ? (
+          {Array.isArray(item?.images) && item?.images?.length ? (
             <FastImage
               style={{
                 height: hp(29),

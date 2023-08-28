@@ -224,7 +224,8 @@ const ArtistPlayingDetail = props => {
                     </Text>
                   </Text>
                 </View> */}
-                {artistData?.artists?.length ? (
+                {Array.isArray(artistData?.artists) &&
+                artistData?.artists?.length ? (
                   <TouchableOpacity
                     disabled={
                       artistData?.artists?.length === 1 &&
@@ -706,7 +707,7 @@ const ArtistPlayingDetail = props => {
           <ImageView
             visible={modalVisibleone}
             images={
-              artistData?.images?.length
+              Array.isArray(artistData?.images) && artistData?.images?.length
                 ? artistData?.images?.map(e => ({
                     uri: e?.path,
                   }))

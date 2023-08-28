@@ -447,7 +447,7 @@ const EventListing = props => {
                 <Text style={styles.cardText}>Events near me</Text>
                 <Image style={styles.hedingImg} source={ImagePath.rightLine} />
               </View>
-              {nearByEvents?.length ? (
+              {Array.isArray(nearByEvents) && nearByEvents?.length ? (
                 <FlatList
                   horizontal
                   data={nearByEvents}

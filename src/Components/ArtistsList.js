@@ -36,7 +36,7 @@ const ArtistsList = ({artistData, navigation, style}) => {
         // }}
       >
         {artistData?.artists[0]?.name}
-        {artistData?.artists?.length > 1
+        {Array.isArray(artistData?.artists) && artistData?.artists?.length > 1
           ? ` +${artistData?.artists?.length - 1}`
           : null}
       </Text>

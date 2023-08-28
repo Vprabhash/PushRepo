@@ -51,7 +51,7 @@ const CitySelector = ({
   const fetchCities = () => {
     try {
       ApiCall('api/cities', 'GET').then(res => {
-        if (res?.data?.length) {
+        if (Array.isArray(res?.data) && res?.data?.length) {
           let temp = res?.data?.map(e => ({
             label: e.name,
             value: e.name,

@@ -113,7 +113,7 @@ const UpcomingEventModal = ({
                       )}
                     </Text>
                   </View>
-                  {item?.artists?.length ? (
+                  {Array.isArray(item?.artists) && item?.artists?.length ? (
                     <TouchableOpacity
                       disabled={item?.artists?.length > 0}
                       style={{

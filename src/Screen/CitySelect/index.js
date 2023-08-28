@@ -67,7 +67,7 @@ const CitySelect = props => {
             .then(response => response.json())
             .then(data => {
               dispatch(addCoordinates(obj));
-              if (data?.results && data?.results?.length > 0) {
+              if (Array.isArray(data?.results) && data?.results?.length > 0) {
                 const addressComponents = data?.results[0]?.address_components;
                 for (const component of addressComponents) {
                   if (component.types.includes('locality')) {

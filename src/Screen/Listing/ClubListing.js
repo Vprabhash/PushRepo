@@ -262,7 +262,7 @@ const ClubListing = ({navigation, route}) => {
           elevation: 4,
         }}>
         <View>
-          {item?.media?.ambienceImages &&
+          {Array.isArray(item?.media?.ambienceImages) &&
           item?.media?.ambienceImages?.length ? (
             <FastImage
               style={{

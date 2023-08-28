@@ -175,7 +175,7 @@ const ClubDetails = props => {
         setEvents(res?.data);
         setDontCall(false);
       } else {
-        if (res?.data?.length) {
+        if (Array.isArray(res?.data) && res?.data?.length) {
           setEvents([...events, ...res?.data]);
         } else {
           setDontCall(true);
@@ -199,7 +199,8 @@ const ClubDetails = props => {
           borderRadius: 10,
           overflow: 'hidden',
         }}>
-        {item?.media?.ambienceImages?.length ? (
+        {Array.isArray(item?.media?.ambienceImages) &&
+        item?.media?.ambienceImages?.length ? (
           <Image
             style={{
               height: hp(20),
@@ -306,7 +307,8 @@ const ClubDetails = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {item?.images?.length &&
+          {Array.isArray(item?.images) &&
+          item?.images?.length &&
           item?.images[0] &&
           typeof item?.images[0]?.path == 'string' ? (
             <FastImage
@@ -362,7 +364,7 @@ const ClubDetails = props => {
         </View> */}
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
-            {item?.artists?.length ? (
+            {Array.isArray(item?.artists) && item?.artists?.length ? (
               <TouchableOpacity
                 disabled={
                   item?.artists?.length === 1 &&
@@ -446,7 +448,7 @@ const ClubDetails = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              {item?.genres?.length ? (
+              {Array.isArray(item?.genres) && item?.genres?.length ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -476,7 +478,10 @@ const ClubDetails = props => {
                 <View
                   style={{
                     alignItems: 'flex-end',
-                    width: item?.genres?.length ? '30%' : '90%',
+                    width:
+                      Array.isArray(item?.genres) && item?.genres?.length
+                        ? '30%'
+                        : '90%',
                     flex: 1,
                   }}>
                   <Text style={[styles.listingText, {textAlign: 'center'}]}>
@@ -557,9 +562,12 @@ const ClubDetails = props => {
 
           <ImageView
             images={
-              detailData?.media?.ambienceImages?.map(e => ({
-                uri: e,
-              })) || []
+              Array.isArray(detailData?.media?.ambienceImages) &&
+              detailData?.media?.ambienceImages?.length
+                ? detailData?.media?.ambienceImages?.map(e => ({
+                    uri: e,
+                  }))
+                : []
             }
             imageIndex={0}
             visible={modalVisibleone}
@@ -629,7 +637,8 @@ const ClubDetails = props => {
                   }}
                 />
               }>
-              {detailData?.media?.ambienceImages?.length ? (
+              {Array.isArray(detailData?.media?.ambienceImages) &&
+              detailData?.media?.ambienceImages?.length ? (
                 detailData?.media?.ambienceImages?.slice(0, 6)?.map(item => (
                   <View style={styles.slide}>
                     <Image style={styles.slideImg} source={{uri: item}} />
@@ -771,7 +780,7 @@ const ClubDetails = props => {
               </View>
             }
           />
-          {events?.length ? (
+          {Array.isArray(events?.length) && events?.length ? (
             <TouchableOpacity
               style={{alignSelf: 'center', marginTop: 20}}
               onPress={() => setIsEventModalVisible(true)}>
@@ -811,9 +820,12 @@ const ClubDetails = props => {
           <ScrollView style={{flexDirection: 'row'}} horizontal>
             <ImageView
               images={
-                detailData?.media?.drinkMenuImages?.map(e => ({
-                  uri: e,
-                })) || []
+                Array.isArray(detailData?.media?.drinkMenuImages) &&
+                detailData?.media?.drinkMenuImages?.length
+                  ? detailData?.media?.drinkMenuImages?.map(e => ({
+                      uri: e,
+                    }))
+                  : []
               }
               imageIndex={0}
               visible={modalVisible}
@@ -831,11 +843,14 @@ const ClubDetails = props => {
             <View
               style={{
                 marginLeft: 20,
-                marginRight: detailData?.media?.drinkMenuImages?.length
-                  ? 15
-                  : 0,
+                marginRight:
+                  Array.isArray(detailData?.media?.drinkMenuImages) &&
+                  detailData?.media?.drinkMenuImages?.length
+                    ? 15
+                    : 0,
               }}>
-              {detailData?.media?.drinkMenuImages?.length ? (
+              {Array.isArray(detailData?.media?.drinkMenuImages) &&
+              detailData?.media?.drinkMenuImages?.length ? (
                 <>
                   <TouchableOpacity
                     onPress={() => {
@@ -861,9 +876,12 @@ const ClubDetails = props => {
             </View>
             <ImageView
               images={
-                detailData?.media?.foodMenuImages?.map(e => ({
-                  uri: e,
-                })) || []
+                Array.isArray(detailData?.media?.foodMenuImages) &&
+                detailData?.media?.foodMenuImages?.length
+                  ? detailData?.media?.foodMenuImages?.map(e => ({
+                      uri: e,
+                    }))
+                  : []
               }
               imageIndex={0}
               visible={modalVisibletwo}
@@ -878,7 +896,8 @@ const ClubDetails = props => {
               }}
             />
             <View style={{marginRight: 20}}>
-              {detailData?.media?.foodMenuImages?.length ? (
+              {Array.isArray(detailData?.media?.foodMenuImages) &&
+              detailData?.media?.foodMenuImages?.length ? (
                 <>
                   <TouchableOpacity
                     onPress={() => {

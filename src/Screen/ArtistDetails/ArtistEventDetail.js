@@ -65,7 +65,7 @@ const ArtistEventDetail = props => {
         setUpcomingEvents(res?.data);
         // setDontCall(false);
       } else {
-        if (res?.data?.length) {
+        if (Array.isArray(res?.data) && res?.data?.length) {
           setUpcomingEvents([...upcomingEvents, ...res?.data]);
         } else {
           // setDontCall(true);
@@ -111,7 +111,8 @@ const ArtistEventDetail = props => {
             artistData: item,
           });
         }}>
-        {item?.artists?.length &&
+        {Array.isArray(item?.artists) &&
+        item?.artists?.length &&
         item?.artists[0]?.images?.length &&
         item?.artists[0]?.images[0] &&
         typeof item?.artists[0]?.images[0] == 'string' ? (
@@ -272,7 +273,8 @@ const ArtistEventDetail = props => {
             backgroundColor: '#FFFFFF',
             elevation: 4,
           }}>
-          {item?.images?.length &&
+          {Array.isArray(item?.images) &&
+          item?.images?.length &&
           item?.images[0] &&
           typeof item?.images[0]?.path == 'string' ? (
             <FastImage
@@ -328,7 +330,7 @@ const ArtistEventDetail = props => {
           </View> */}
           <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
             <Text style={styles.listinhHeading}>{item.title}</Text>
-            {item?.artists?.length ? (
+            {Array.isArray(item?.artists) && item?.artists?.length ? (
               <TouchableOpacity
                 disabled={
                   item?.artists?.length === 1 &&
@@ -463,7 +465,7 @@ const ArtistEventDetail = props => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              {item?.genres?.length ? (
+              {Array.isArray(item?.genres) && item?.genres?.length ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -493,7 +495,10 @@ const ArtistEventDetail = props => {
                 <View
                   style={{
                     alignItems: 'flex-end',
-                    width: item?.genres?.length ? '30%' : '90%',
+                    width:
+                      Array.isArray(item?.genres) && item?.genres?.length
+                        ? '30%'
+                        : '90%',
                     flex: 1,
                   }}>
                   <Text style={[styles.listingText, {textAlign: 'center'}]}>
@@ -563,7 +568,8 @@ const ArtistEventDetail = props => {
                 elevation: 4,
               }}>
               <TouchableOpacity activeOpacity={0.7}>
-                {detailData?.images?.length ? (
+                {Array.isArray(detailData?.images) &&
+                detailData?.images?.length ? (
                   <Image
                     style={{
                       height: hp(29),
