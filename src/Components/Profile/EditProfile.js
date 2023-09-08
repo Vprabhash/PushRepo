@@ -48,24 +48,14 @@ const EditProfile = props => {
       setLoading(true);
       const res = await ApiCall('api/user', 'POST', JSON.stringify(data));
       if (res.ok == true) {
-        Toast.showWithGravity(
-          typeof res?.message == 'string'
-            ? res?.message
-            : 'Something went wrong',
-          Toast.LONG,
-          Toast.BOTTOM,
-        );
         props.route?.params?.refresh();
         navigation.goBack();
-      } else {
-        Toast.showWithGravity(
-          typeof res?.message == 'string'
-            ? res?.message
-            : 'Something went wrong',
-          Toast.LONG,
-          Toast.BOTTOM,
-        );
       }
+      Toast.showWithGravity(
+        res?.message || res?.data?.message || 'Something went wrong',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
     } catch (error) {
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     } finally {
@@ -154,6 +144,7 @@ const EditProfile = props => {
           <Text style={styles.labels}>Phone number</Text>
           <CustomTextInput
             // marginTop={10}
+            maxLength={10}
             title="Phone Number"
             onChangeText={text => {
               setNumber(text);

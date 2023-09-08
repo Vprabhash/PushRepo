@@ -1,7 +1,16 @@
-import React, { memo } from "react";
-import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { FONTS } from "../constants";
+import React, {memo} from 'react';
+import {
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {FONTS} from '../constants';
 
 const CustomTextInput = ({
   title,
@@ -15,9 +24,10 @@ const CustomTextInput = ({
   returnKeyType,
   onChangeText,
   secureTextEntry,
-  editable
+  editable,
+  maxLength,
 }) => {
-  const containerStyle = { ...styles.inputMain, marginTop };
+  const containerStyle = {...styles.inputMain, marginTop};
 
   return (
     <View style={containerStyle}>
@@ -33,6 +43,7 @@ const CustomTextInput = ({
         keyboardType={keyboardType}
         returnKeyType={returnKeyType}
         editable={editable}
+        maxLength={maxLength}
       />
       {iconPath && (
         <TouchableOpacity activeOpacity={0.5} onPress={onClickEye}>
@@ -48,22 +59,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor:'rgba(0, 0, 0, 0.5);',
+    borderBottomColor: 'rgba(0, 0, 0, 0.5);',
     paddingHorizontal: wp(2),
     height: hp(6),
   },
   textInput: {
-    fontFamily:FONTS.RobotoRegular,
+    fontFamily: FONTS.RobotoRegular,
     fontSize: 16,
     padding: 0,
     height: hp(6),
     flex: 1,
-    color: "#000000",
+    color: '#000000',
   },
   iconStyle: {
     tintColor: '#000000',
     width: 18,
-    resizeMode: "contain",
+    resizeMode: 'contain',
     height: 18,
   },
 });

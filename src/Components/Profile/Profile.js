@@ -139,13 +139,17 @@ const Profile = ({navigation}) => {
         setUserProfileData(res?.data);
         setimg(res?.data?.avatarUrl);
       } else {
+        if (res?.message === 'jwt expired') {
+          logOut();
+        }
         Toast.showWithGravity(
-          res?.data?.message || 'Something went wrong',
+          res?.message || res?.data?.message || 'Something went wrong',
           Toast.LONG,
           Toast.BOTTOM,
         );
       }
     } catch (error) {
+      console.log(error, 'this is an error');
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
