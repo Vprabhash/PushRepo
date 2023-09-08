@@ -588,6 +588,8 @@ const SearchScreen = props => {
         return ImagePath.menuUser3;
       case 'artist':
         return ImagePath.artistIcon;
+      case 'singer':
+        return ImagePath.artistIcon;
       case 'club':
         return ImagePath.clubActive;
       case 'dj':
@@ -595,7 +597,7 @@ const SearchScreen = props => {
       case 'event':
         return ImagePath.calendarIcon;
       default:
-        return null;
+        return ImagePath.star_logo;
     }
   };
 
