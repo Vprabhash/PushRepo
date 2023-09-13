@@ -1344,7 +1344,7 @@ const FilterScreen = ({
             style={[styles.closeBtn, {backgroundColor: COLORS.green}]}
             onPress={() => {
               var tempdata = [];
-              for (var i = 0; i < localities.length; i++) {
+              for (var i = 0; i < localities?.length; i++) {
                 if (localities[i].checked == true) {
                   // var detaisl = {};
                   // detaisl = localities[i].value;
@@ -1352,7 +1352,7 @@ const FilterScreen = ({
                 }
               }
               var tempdataGenres = [];
-              for (var i = 0; i < generes.length; i++) {
+              for (var i = 0; i < generes?.length; i++) {
                 if (generes[i].checked == true) {
                   // var detaisl = {};
                   // detaisl = generes[i].value;
