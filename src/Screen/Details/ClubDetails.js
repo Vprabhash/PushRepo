@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   BackHandler,
   Platform,
+  Share,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -516,7 +517,7 @@ const ClubDetails = props => {
             elevation: 10,
             paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
             paddingBottom: 14,
-            paddingLeft: 10,
+            paddingHorizontal: 10,
           }}>
           <Header
             Back_Arrow={ImagePath.goBack}
@@ -528,6 +529,15 @@ const ClubDetails = props => {
               // props.navigation.navigate('ClubListing', {
               //   screenName: 'ClubListing',
               // });
+            }}
+            onShareClick={() => {
+              Share.share({
+                message: `Explore ${detailData?.name} located at ${
+                  detailData?.address
+                }.\n\nFind them on Google Maps: ${
+                  detailData?.googleMapLink
+                }.\n\nDownload the Azzir app: ${'https://azzirevents.page.link/app'}`,
+              });
             }}
           />
         </View>
@@ -576,8 +586,8 @@ const ClubDetails = props => {
             FooterComponent={({imageIndex}) => {
               return (
                 <Text style={styles.imageView}>
-                  ({imageIndex + 1} /{detailData?.media?.ambienceImages?.length}
-                  )
+                  ({imageIndex + 1} /{' '}
+                  {detailData?.media?.ambienceImages?.length})
                 </Text>
               );
             }}

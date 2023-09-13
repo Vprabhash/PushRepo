@@ -14,6 +14,7 @@ import {
   Pressable,
   Platform,
   Linking,
+  Share,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -52,7 +53,7 @@ const ArtistPlayingDetail = props => {
             elevation: 10,
             paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 46,
             paddingBottom: 14,
-            paddingLeft: 10,
+            paddingHorizontal: 10,
           }}>
           <Header
             Back_Arrow={ImagePath.goBack}
@@ -64,6 +65,17 @@ const ArtistPlayingDetail = props => {
               // props.navigation.navigate('ClubListing', {
               //   screenName: 'ClubListing',
               // });
+            }}
+            onShareClick={() => {
+              Share.share({
+                message: `Join ${artistData?.title} event at ${
+                  artistData?.club?.name
+                }, located at ${
+                  artistData?.club?.address
+                }.\n\nFind the location on Google Maps: ${
+                  artistData?.club?.googleMapLink
+                }.\n\nDownload the Azzir app: ${'https://azzirevents.page.link/app'}`,
+              });
             }}
           />
         </View>

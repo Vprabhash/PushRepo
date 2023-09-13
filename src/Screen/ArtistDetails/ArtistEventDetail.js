@@ -13,6 +13,7 @@ import {
   FlatList,
   ActivityIndicator,
   Pressable,
+  Share,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -548,6 +549,13 @@ const ArtistEventDetail = props => {
             iconWidth={30}
             onclick={() => {
               props.navigation.goBack();
+            }}
+            onShareClick={() => {
+              Share.share({
+                message: `Check out ${
+                  detailData?.name
+                }'s details on Azzir app: ${'https://azzirevents.page.link/app'}`,
+              });
             }}
           />
         </View>

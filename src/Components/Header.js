@@ -25,7 +25,7 @@ const Header = props => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        // marginTop: hp(7),
+        marginTop: 7,
         // marginHorizontal: 10,
         // paddingBottom: 5,
       }}>
@@ -80,11 +80,7 @@ const Header = props => {
               // onChangeText={onChangeText}
               // value={value}
             />
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
-                ('');
-              }}>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
               <Image
                 source={props.searchIcon}
                 style={[styles.iconStyle, {tintColor: '#A3A3A3'}]}
@@ -93,19 +89,28 @@ const Header = props => {
           </View>
         )}
       </View>
-      <TouchableOpacity
-        style={{flex: 0.3, alignItems: 'flex-end'}}
-        onPress={props.onProfileClick}>
-        <Image
-          style={{
-            width: 30,
-            height: 30,
-            resizeMode: 'contain',
-            borderRadius: 30,
-          }}
-          source={props.profileIcon}
-        />
-      </TouchableOpacity>
+      {props.profileIcon && (
+        <TouchableOpacity
+          style={{flex: 0.3, alignItems: 'flex-end'}}
+          onPress={props.onProfileClick}>
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+              resizeMode: 'contain',
+              borderRadius: 30,
+            }}
+            source={props.profileIcon}
+          />
+        </TouchableOpacity>
+      )}
+      {props.onShareClick && (
+        <TouchableOpacity
+          style={styles.shareWrapper}
+          onPress={props.onShareClick}>
+          <Image source={ImagePath.shareIcon} style={styles.shareIcon} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -140,5 +145,16 @@ const styles = StyleSheet.create({
     width: 18,
     resizeMode: 'contain',
     height: 18,
+  },
+  shareIcon: {
+    height: 18,
+    width: 18,
+    resizeMode: 'contain',
+    tintColor: COLORS.primary,
+  },
+  shareWrapper: {
+    marginRight: 8,
+    zIndex: 999999,
+    borderRadius: 50,
   },
 });

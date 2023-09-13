@@ -13,19 +13,20 @@ import {
   TextInput,
   Platform,
   Pressable,
+  Share,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import ImagePath from '../../assets/ImagePath';
 import Toast from 'react-native-simple-toast';
+import ImagePath from '../../assets/ImagePath';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import FilterScreen from '../../Components/Filter/FilterScreen';
 import HeaderCitySearch from '../../Components/HeaderCitySearch';
-import {useSelector} from 'react-redux';
 import {
   getBottomSpace,
   getStatusBarHeight,

@@ -107,4 +107,5 @@ export default {
   clubImage: require('./Image/clubImage.png'),
   placeholderDj: require('./Image/placeholderDj.png'),
   placeholderSinger: require('./Image/placeholderSinger.png'),
+  shareIcon: require('./Image/share.png'),
 };
