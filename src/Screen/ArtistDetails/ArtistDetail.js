@@ -33,6 +33,7 @@ import {
 } from 'react-native-iphone-screen-helper';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName} from '../../utils/common';
+import HeartIcon from '../../Components/HeartIcon';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -173,6 +174,7 @@ const ArtistDetail = props => {
   const artistListRenderItem = ({item, index}) => {
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
+           <HeartIcon />
         <TouchableOpacity
           activeOpacity={0.85}
           style={{
@@ -195,6 +197,8 @@ const ArtistDetail = props => {
             });
           }}>
           {Array.isArray(item?.images) && item?.images?.length ? (
+            <>
+         
             <FastImage
               style={{
                 height: hp(29),
@@ -206,6 +210,8 @@ const ArtistDetail = props => {
                 uri: item?.images[0],
               }}
             />
+            </>
+            
           ) : (
             <View
               style={{

@@ -60,6 +60,7 @@ import {
 import {getData} from '../../Components/Helper';
 import LinearGradient from 'react-native-linear-gradient';
 import {createEventName, formatTimeRange} from '../../utils/common';
+import HeartIcon from '../../Components/HeartIcon';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -372,6 +373,7 @@ const Home = props => {
         borderRadius: 10,
         overflow: 'hidden',
       }}>
+       <HeartIcon /> 
       <FastImage
         style={{
           height: wp(28),
@@ -737,6 +739,8 @@ const Home = props => {
   ]);
   const SpotlightData_RenderItem = ({item, index}) => {
     return (
+      <>
+      <HeartIcon />
       <TouchableOpacity
         onPress={() => {
           logEvent(`club_detail_${createEventName(item?.name)}`, item);
@@ -820,6 +824,7 @@ const Home = props => {
           </Text>
         </LinearGradient>
       </TouchableOpacity>
+      </>
     );
   };
   const clubsNearbyDataApi = () => {

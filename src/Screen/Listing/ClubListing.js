@@ -36,6 +36,7 @@ import {useRoute} from '@react-navigation/native';
 import {showFilter} from '../../redux/reducers/isFilterOpenSlice';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName} from '../../utils/common';
+import HeartIcon from '../../Components/HeartIcon';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -239,6 +240,8 @@ const ClubListing = ({navigation, route}) => {
 
   const _renderItem = ({item, index}) => {
     return (
+      <>
+      <HeartIcon />
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ClubDetails', {listDetail: item});
@@ -264,6 +267,8 @@ const ClubListing = ({navigation, route}) => {
         <View>
           {Array.isArray(item?.media?.ambienceImages) &&
           item?.media?.ambienceImages?.length ? (
+           
+            
             <FastImage
               style={{
                 height: hp(29),
@@ -276,6 +281,7 @@ const ClubListing = ({navigation, route}) => {
                 uri: item?.media?.ambienceImages[0],
               }}
             />
+            
           ) : (
             <View
               style={{
@@ -347,6 +353,7 @@ const ClubListing = ({navigation, route}) => {
           </View>
         </View>
       </TouchableOpacity>
+      </>
     );
   };
 
