@@ -163,233 +163,7 @@ const EventListing = props => {
     }
   };
 
-  const _renderItem = ({item, index}) => {
-    return (
-      <View style={{width: wp(100), position: 'relative'}}>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.navigate('ArtistPlayingDetail', {
-              artistData: item,
-            });
-            logEvent(`event_detail_${createEventName(item?.title)}`, item);
-            sendUXActivity('events.view', {
-              screen: 'EventDetailScreen',
-              eventId: item?._id,
-              name: item?.title,
-              eventDate: item?.eventStartTime,
-              clubId: item?.club?._id,
-              clubName: item?.club?.name,
-              locality: item?.club?.locality,
-              city: item?.club?.city,
-              referer: 'EventsList',
-            });
-          }}
-          style={{
-            marginHorizontal: 15,
-            borderRadius: 10,
-            backgroundColor: '#FFFFFF',
-            elevation: 4,
-          }}>
-          {Array.isArray(item?.images) &&
-          item?.images?.length &&
-          item?.images[0] &&
-          typeof item?.images[0]?.path == 'string' ? (
-            <FastImage
-              style={{
-                height: hp(29),
-                width: '100%',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-              }}
-              source={{uri: item?.images[0]?.path}}
-            />
-          ) : (
-            <View
-              style={{
-                height: hp(29),
-                width: '100%',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-                backgroundColor: COLORS.gray,
-              }}
-            />
-          )}
-          <HeartIcon style={{top: '4%', right: '4%'}} endpoint={`api/user/likes/events/${item._id}`} item={item}/>
-          <View
-            style={{
-              height: 39,
-              minWidth: 32,
-              justifyContent: 'center',
-              borderRadius: 10,
-              backgroundColor: '#FFFFFF',
-              position: 'absolute',
-              top: 8,
-              // right: 8,
-              left: 8,
-            }}>
-            <Text
-              style={{
-                color: '#666666',
-                textAlign: 'center',
-                fontFamily: FONTS.AxiformaBold,
-                fontSize: 12,
-              }}>
-              {moment(item?.eventStartTime).format('DD')}
-            </Text>
-            <Text
-              style={{
-                color: '#666666',
-                textAlign: 'center',
-                fontFamily: FONTS.AxiformaRegular,
-                fontSize: 12,
-                textTransform: 'uppercase',
-              }}>
-              {moment(item?.eventStartTime).format('MMM')}
-            </Text>
-          </View>
-          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
-            <Text style={styles.listinhHeading}>{item.title}</Text>
-            {Array.isArray(item?.artists) && item?.artists?.length ? (
-              <TouchableOpacity
-                disabled={
-                  item?.artists?.length === 1 &&
-                  item?.artists[0]?.type?.toLowerCase() === 'guest'
-                }
-                style={{
-                  flexDirection: 'row',
-                  marginVertical: 2,
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  if (item?.artists?.length > 1) {
-                    setArtistListModal(true);
-                    setArtistListModalData(item.artists);
-                  } else {
-                    if (item?.artists[0]?.type?.toLowerCase() === 'guest') {
-                      return;
-                    }
-                    props.navigation.navigate('ArtistEventDetail', {
-                      artistListDetail: item?.artists[0],
-                    });
-                  }
-                }}>
-                {item?.artists[0]?.images?.length &&
-                item?.artists[0]?.images[0] ? (
-                  <Image
-                    style={{
-                      height: 30,
-                      width: 30,
-                      borderRadius: 20,
-                      resizeMode: 'contain',
-                      marginRight: 6,
-                    }}
-                    source={{uri: item?.artists[0]?.images[0]}}
-                  />
-                ) : item?.artists?.length ? (
-                  <View
-                    style={{
-                      height: 30,
-                      width: 30,
-                      borderRadius: 20,
-                      resizeMode: 'contain',
-                      marginRight: 6,
-                      justifyContent: 'center',
-                      backgroundColor: COLORS.gray,
-                      overflow: 'hidden',
-                    }}>
-                    <Image
-                      source={
-                        item?.artists[0]?.type?.toLowerCase() === 'artist'
-                          ? ImagePath.placeholderSinger
-                          : item?.artists[0]?.type?.toLowerCase() === 'dj'
-                          ? ImagePath.placeholderDj
-                          : item?.artists[0]?.type?.toLowerCase() === 'guest'
-                          ? ImagePath.profile
-                          : null
-                      }
-                      style={{
-                        height: 10,
-                        width: 10,
-                        resizeMode: 'contain',
-                        alignSelf: 'center',
-                        opacity: 0.5,
-                      }}
-                    />
-                  </View>
-                ) : null}
 
-                {item?.artists?.length ? (
-                  <Text
-                    style={[
-                      styles.singerName,
-                      {width: '70%', marginVertical: 0},
-                    ]}>
-                    By {item?.artists[0]?.name}{' '}
-                    {item?.artists?.length > 1 ? (
-                      <Text>+{item?.artists?.length - 1}</Text>
-                    ) : null}
-                  </Text>
-                ) : null}
-              </TouchableOpacity>
-            ) : null}
-            <Text style={styles.listinhText}>
-              {formatTimeRange(item?.eventStartTime, item?.eventEndTime)}
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text style={[styles.listingText, {width: '70%'}]}>
-                <Text
-                  style={[styles.listingText]}
-                  onPress={() => {
-                    props.navigation.navigate('ClubDetails', {
-                      listDetail: item?.club,
-                    });
-                    logEvent(
-                      `club_detail_${createEventName(item?.club?.name)}`,
-                      item?.club,
-                    );
-                    sendUXActivity('clubs.view', {
-                      screen: 'ClubDetailScreen',
-                      clubId: item?.club?._id,
-                      name: item?.club?.name,
-                      eventId: item?._id,
-                      eventDate: item?.eventStartTime,
-                      locality: item?.club?.locality,
-                      city: item?.club?.city,
-                      referer: 'EventsList',
-                    });
-                  }}>
-                  {item?.club?.name}
-                </Text>
-                {'\n'}
-                {[item?.club?.locality || '', item?.address?.city || '']
-                  .filter(e => e)
-                  .join(', ')}
-              </Text>
-              {item?.price?.amount && (
-                <View style={{marginTop: -10, alignItems: 'center'}}>
-                  <Text style={[styles.listingText]}>
-                    {'₹' + item?.price?.amount}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.listinhText,
-                      {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
-                    ]}>
-                    onwards
-                  </Text>
-                </View>
-              )}
-            </View>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  };
 
   const EmptyListMessage = () => {
     return (
@@ -441,7 +215,7 @@ const EventListing = props => {
         <FlatList
           ref={flatListRef}
           data={events}
-          renderItem={_renderItem}
+          renderItem={(item)=>_renderEventItem(item, props.navigation,setArtistListModal,logEvent, sendUXActivity)}
           nestedScrollEnabled
           ListHeaderComponent={
             <>
@@ -454,7 +228,7 @@ const EventListing = props => {
                 <FlatList
                   horizontal
                   data={nearByEvents}
-                  renderItem={_renderItem}
+                  renderItem={(item)=>_renderEventItem(item,props.navigation,setArtistListModal,logEvent, sendUXActivity)}
                   keyExtractor={(_, i) => i.toString()}
                   showsHorizontalScrollIndicator={false}
                 />
@@ -497,6 +271,234 @@ const EventListing = props => {
         />
         {/* </ScrollView> */}
       </ImageBackground>
+    </View>
+  );
+};
+
+export const _renderEventItem = ({item, index},navigation,setArtistListModal,logEvent, sendUXActivity) => {
+  return (
+    <View style={{width: wp(100), position: 'relative'}}>
+      <TouchableOpacity
+        onPress={() => {
+        navigation.navigate('ArtistPlayingDetail', {
+            artistData: item,
+          });
+          logEvent(`event_detail_${createEventName(item?.title)}`, item);
+          sendUXActivity('events.view', {
+            screen: 'EventDetailScreen',
+            eventId: item?._id,
+            name: item?.title,
+            eventDate: item?.eventStartTime,
+            clubId: item?.club?._id,
+            clubName: item?.club?.name,
+            locality: item?.club?.locality,
+            city: item?.club?.city,
+            referer: 'EventsList',
+          });
+        }}
+        style={{
+          marginHorizontal: 15,
+          borderRadius: 10,
+          backgroundColor: '#FFFFFF',
+          elevation: 4,
+        }}>
+        {Array.isArray(item?.images) &&
+        item?.images?.length &&
+        item?.images[0] &&
+        typeof item?.images[0]?.path == 'string' ? (
+          <FastImage
+            style={{
+              height: hp(29),
+              width: '100%',
+              borderTopRightRadius: 10,
+              borderTopLeftRadius: 10,
+            }}
+            source={{uri: item?.images[0]?.path}}
+          />
+        ) : (
+          <View
+            style={{
+              height: hp(29),
+              width: '100%',
+              borderTopRightRadius: 10,
+              borderTopLeftRadius: 10,
+              backgroundColor: COLORS.gray,
+            }}
+          />
+        )}
+        <HeartIcon style={{top: '4%', right: '4%'}} endpoint={`api/user/likes/events/${item._id}`} item={item}/>
+        <View
+          style={{
+            height: 39,
+            minWidth: 32,
+            justifyContent: 'center',
+            borderRadius: 10,
+            backgroundColor: '#FFFFFF',
+            position: 'absolute',
+            top: 8,
+            // right: 8,
+            left: 8,
+          }}>
+          <Text
+            style={{
+              color: '#666666',
+              textAlign: 'center',
+              fontFamily: FONTS.AxiformaBold,
+              fontSize: 12,
+            }}>
+            {moment(item?.eventStartTime).format('DD')}
+          </Text>
+          <Text
+            style={{
+              color: '#666666',
+              textAlign: 'center',
+              fontFamily: FONTS.AxiformaRegular,
+              fontSize: 12,
+              textTransform: 'uppercase',
+            }}>
+            {moment(item?.eventStartTime).format('MMM')}
+          </Text>
+        </View>
+        <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+          <Text style={styles.listinhHeading}>{item.title}</Text>
+          {Array.isArray(item?.artists) && item?.artists?.length ? (
+            <TouchableOpacity
+              disabled={
+                item?.artists?.length === 1 &&
+                item?.artists[0]?.type?.toLowerCase() === 'guest'
+              }
+              style={{
+                flexDirection: 'row',
+                marginVertical: 2,
+                alignItems: 'center',
+              }}
+              onPress={() => {
+                if (item?.artists?.length > 1) {
+                  setArtistListModal(true);
+                  setArtistListModalData(item.artists);
+                } else {
+                  if (item?.artists[0]?.type?.toLowerCase() === 'guest') {
+                    return;
+                  }
+                  navigation.navigate('ArtistEventDetail', {
+                    artistListDetail: item?.artists[0],
+                  });
+                }
+              }}>
+              {item?.artists[0]?.images?.length &&
+              item?.artists[0]?.images[0] ? (
+                <Image
+                  style={{
+                    height: 30,
+                    width: 30,
+                    borderRadius: 20,
+                    resizeMode: 'contain',
+                    marginRight: 6,
+                  }}
+                  source={{uri: item?.artists[0]?.images[0]}}
+                />
+              ) : item?.artists?.length ? (
+                <View
+                  style={{
+                    height: 30,
+                    width: 30,
+                    borderRadius: 20,
+                    resizeMode: 'contain',
+                    marginRight: 6,
+                    justifyContent: 'center',
+                    backgroundColor: COLORS.gray,
+                    overflow: 'hidden',
+                  }}>
+                  <Image
+                    source={
+                      item?.artists[0]?.type?.toLowerCase() === 'artist'
+                        ? ImagePath.placeholderSinger
+                        : item?.artists[0]?.type?.toLowerCase() === 'dj'
+                        ? ImagePath.placeholderDj
+                        : item?.artists[0]?.type?.toLowerCase() === 'guest'
+                        ? ImagePath.profile
+                        : null
+                    }
+                    style={{
+                      height: 10,
+                      width: 10,
+                      resizeMode: 'contain',
+                      alignSelf: 'center',
+                      opacity: 0.5,
+                    }}
+                  />
+                </View>
+              ) : null}
+
+              {item?.artists?.length ? (
+                <Text
+                  style={[
+                    styles.singerName,
+                    {width: '70%', marginVertical: 0},
+                  ]}>
+                  By {item?.artists[0]?.name}{' '}
+                  {item?.artists?.length > 1 ? (
+                    <Text>+{item?.artists?.length - 1}</Text>
+                  ) : null}
+                </Text>
+              ) : null}
+            </TouchableOpacity>
+          ) : null}
+          <Text style={styles.listinhText}>
+            {formatTimeRange(item?.eventStartTime, item?.eventEndTime)}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={[styles.listingText, {width: '70%'}]}>
+              <Text
+                style={[styles.listingText]}
+                onPress={() => {
+                  navigation.navigate('ClubDetails', {
+                    listDetail: item?.club,
+                  });
+                  logEvent(
+                    `club_detail_${createEventName(item?.club?.name)}`,
+                    item?.club,
+                  );
+                  sendUXActivity('clubs.view', {
+                    screen: 'ClubDetailScreen',
+                    clubId: item?.club?._id,
+                    name: item?.club?.name,
+                    eventId: item?._id,
+                    eventDate: item?.eventStartTime,
+                    locality: item?.club?.locality,
+                    city: item?.club?.city,
+                    referer: 'EventsList',
+                  });
+                }}>
+                {item?.club?.name}
+              </Text>
+              {'\n'}
+              {[item?.club?.locality || '', item?.address?.city || '']
+                .filter(e => e)
+                .join(', ')}
+            </Text>
+            {item?.price?.amount && (
+              <View style={{marginTop: -10, alignItems: 'center'}}>
+                <Text style={[styles.listingText]}>
+                  {'₹' + item?.price?.amount}
+                </Text>
+                <Text
+                  style={[
+                    styles.listinhText,
+                    {marginTop: 0, fontFamily: FONTS.AxiformaRegular},
+                  ]}>
+                  onwards
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };

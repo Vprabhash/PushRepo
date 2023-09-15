@@ -171,97 +171,7 @@ const ArtistDetail = props => {
     );
   };
 
-  const artistListRenderItem = ({item, index}) => {
-    return (
-      <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
-        <HeartIcon style={{top: '4%', right: '8%'}} endpoint={`api/user/likes/artist/${item._id}`} item={item}/>
-        <TouchableOpacity
-          activeOpacity={0.85}
-          style={{
-            marginHorizontal: 15,
-            borderRadius: 10,
-            backgroundColor: '#FFFFFF',
-            elevation: 4,
-          }}
-          onPress={() => {
-            props.navigation.navigate('ArtistEventDetail', {
-              artistListDetail: item,
-            });
-            logEvent(`artist_detail_${createEventName(item?.name)}`, item);
-            sendUXActivity('Artists.view', {
-              screen: 'ArtistDetailScreen',
-              artistId: item?._id,
-              name: item?.name,
-              city: item?.address?.city,
-              referer: 'ArtistsList',
-            });
-          }}>
-          {Array.isArray(item?.images) && item?.images?.length ? (
-            <>
-              <FastImage
-                style={{
-                  height: hp(29),
-                  width: '100%',
-                  borderTopRightRadius: 10,
-                  borderTopLeftRadius: 10,
-                }}
-                source={{
-                  uri: item?.images[0],
-                }}
-              />
-            </>
-          ) : (
-            <View
-              style={{
-                height: hp(29),
-                width: '100%',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-                justifyContent: 'center',
-                backgroundColor: COLORS.gray,
-                overflow: 'hidden',
-              }}>
-              <Image
-                source={
-                  item?.type?.toLowerCase() === 'artist'
-                    ? ImagePath.placeholderSinger
-                    : item?.type?.toLowerCase() === 'dj'
-                    ? ImagePath.placeholderDj
-                    : item?.type?.toLowerCase() === 'guest'
-                    ? ImagePath.profile
-                    : ImagePath.clubActive
-                }
-                style={{
-                  height: '50%',
-                  width: '50%',
-                  resizeMode: 'contain',
-                  alignSelf: 'center',
-                  opacity: 0.5,
-                }}
-              />
-            </View>
-          )}
-          <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
-            <View>
-              <Text style={styles.listinhHeading}>{item?.name}</Text>
-            </View>
-            {item?.type && (
-              <Text
-                style={[
-                  styles.listingText,
-                  {marginVertical: hp(0.3), textTransform: 'uppercase'},
-                ]}>
-                {item?.type?.toLowerCase() === 'artist' ? 'SINGER' : item?.type}
-              </Text>
-            )}
-            <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-              {item?.musicGenre}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+ 
 
   const onPressApply = data => {
     setPage(0);
@@ -474,7 +384,7 @@ const ArtistDetail = props => {
             <FlatList
               ref={flatListRef}
               data={artistList}
-              renderItem={artistListRenderItem}
+              renderItem={(item)=>artistListRenderItem(item, HeartIcon,props.navigation,logEvent,sendUXActivity)}
               ListFooterComponent={renderFooter}
               onEndReachedThreshold={0.3}
               onMomentumScrollBegin={() => {
@@ -492,6 +402,100 @@ const ArtistDetail = props => {
     </View>
   );
 };
+
+
+export const artistListRenderItem = ({item, index}, HeartIcon, navigation,logEvent, sendUXActivity) => {
+  return (
+    <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
+      <HeartIcon style={{top: '4%', right: '8%'}} endpoint={`api/user/likes/artist/${item._id}`} item={item}/>
+      <TouchableOpacity
+        activeOpacity={0.85}
+        style={{
+          marginHorizontal: 15,
+          borderRadius: 10,
+          backgroundColor: '#FFFFFF',
+          elevation: 4,
+        }}
+        onPress={() => {
+          navigation?.navigate('ArtistEventDetail', {
+            artistListDetail: item,
+          });
+          logEvent(`artist_detail_${createEventName(item?.name)}`, item);
+          sendUXActivity('Artists.view', {
+            screen: 'ArtistDetailScreen',
+            artistId: item?._id,
+            name: item?.name,
+            city: item?.address?.city,
+            referer: 'ArtistsList',
+          });
+        }}>
+        {Array.isArray(item?.images) && item?.images?.length ? (
+          <>
+            <FastImage
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+              source={{
+                uri: item?.images[0],
+              }}
+            />
+          </>
+        ) : (
+          <View
+            style={{
+              height: hp(29),
+              width: '100%',
+              borderTopRightRadius: 10,
+              borderTopLeftRadius: 10,
+              justifyContent: 'center',
+              backgroundColor: COLORS.gray,
+              overflow: 'hidden',
+            }}>
+            <Image
+              source={
+                item?.type?.toLowerCase() === 'artist'
+                  ? ImagePath.placeholderSinger
+                  : item?.type?.toLowerCase() === 'dj'
+                  ? ImagePath.placeholderDj
+                  : item?.type?.toLowerCase() === 'guest'
+                  ? ImagePath.profile
+                  : ImagePath.clubActive
+              }
+              style={{
+                height: '50%',
+                width: '50%',
+                resizeMode: 'contain',
+                alignSelf: 'center',
+                opacity: 0.5,
+              }}
+            />
+          </View>
+        )}
+        <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+          <View>
+            <Text style={styles.listinhHeading}>{item?.name}</Text>
+          </View>
+          {item?.type && (
+            <Text
+              style={[
+                styles.listingText,
+                {marginVertical: hp(0.3), textTransform: 'uppercase'},
+              ]}>
+              {item?.type?.toLowerCase() === 'artist' ? 'SINGER' : item?.type}
+            </Text>
+          )}
+          <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+            {item?.musicGenre}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 export default ArtistDetail;
 const styles = StyleSheet.create({
   filtersText: {

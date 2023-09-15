@@ -2,9 +2,10 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import ImagePath from '../assets/ImagePath';
 import ApiCall from '../redux/CommanApi';
+import { COLORS } from './constants';
 
 const HeartIcon = ({state, setState, style, size, item, endpoint}) => {
-  const [heart, setHeart] = useState(false);
+  const [heart, setHeart] = useState(!false);
   const handleOnPress = async status => {
     setHeart(!status);
     const url = status ? endpoint : endpoint.replace('likes', 'dislikes');
@@ -19,7 +20,7 @@ const HeartIcon = ({state, setState, style, size, item, endpoint}) => {
         onPress={() => handleOnPress(heart)}>
         <Image
           source={heart ? ImagePath.emptyHeart : ImagePath.filledHeart}
-          style={styles.iconStyle(size)}
+          style={styles.iconStyle(size, heart)}
         />
       </TouchableOpacity>
     </View>
@@ -36,8 +37,8 @@ const styles = StyleSheet.create({
     right: '6%',
     ...style,
   }),
-  iconStyle: size => ({
-    tintColor: '#fff',
+  iconStyle: (size,status) => ({
+    tintColor:status? COLORS.white:COLORS.red,
     width: 30,
     resizeMode: 'contain',
     height: 30,

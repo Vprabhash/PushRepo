@@ -37,10 +37,11 @@ import {showFilter} from '../../redux/reducers/isFilterOpenSlice';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName} from '../../utils/common';
 import HeartIcon from '../../Components/HeartIcon';
-import { SwipeItem } from 'react-native-swipe-item';
+import {SwipeItem} from 'react-native-swipe-item';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
 const ClubListing = ({navigation, route}) => {
   const dispatch = useDispatch();
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
@@ -239,125 +240,6 @@ const ClubListing = ({navigation, route}) => {
     }
   };
 
-  const _renderItem = ({item, index}) => {
-    return (
-      <>
-      <HeartIcon  style={{top:'4%', right:'8%'}} endpoint={`api/user/likes/clubs/${item._id}`} item={item}/>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('ClubDetails', {listDetail: item});
-          logEvent(`club_detail_${createEventName(item?.name)}`, item);
-          sendUXActivity('clubs.view', {
-            screen: 'ClubDetailScreen',
-            clubId: item?._id,
-            name: item?.name,
-            locality: item?.locality,
-            city: item?.city,
-            referer: 'ClubList',
-          });
-        }}
-        activeOpacity={0.7}
-        style={{
-          flex: 1,
-          marginHorizontal: 15,
-          borderRadius: 10,
-          backgroundColor: '#FFFFFF',
-          marginBottom: hp(3),
-          elevation: 4,
-        }}>
-        <View>
-          {Array.isArray(item?.media?.ambienceImages) &&
-          item?.media?.ambienceImages?.length ? (
-           
-            
-            <FastImage
-              style={{
-                height: hp(29),
-                width: '100%',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-                resizeMode: 'cover',
-              }}
-              source={{
-                uri: item?.media?.ambienceImages[0],
-              }}
-            />
-            
-          ) : (
-            <View
-              style={{
-                height: hp(29),
-                width: '100%',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-              }}
-            />
-          )}
-        </View>
-        <Image
-          style={{
-            height: 20,
-            width: 20,
-            resizeMode: 'contain',
-            position: 'absolute',
-            top: 10,
-            right: 10,
-          }}
-          source={item.heartIcon}
-        />
-        <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.listinhHeading}>{item?.name}</Text>
-            <LinearGradient
-              style={{
-                flexDirection: 'row',
-                height: 24,
-                width: 40,
-                borderRadius: 5,
-                justifyContent: 'center',
-                backgroundColor: 'red',
-                alignItems: 'center',
-              }}
-              start={{x: 0.3, y: 0.4}}
-              colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
-              <Image
-                style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
-                source={ImagePath.star}
-              />
-              <Text
-                style={{
-                  fontFamily: FONTS.RobotoBold,
-                  color: '#FFFFFF',
-                  fontSize: 12,
-                }}>
-                {item?.zomatoRating || '-'}
-              </Text>
-            </LinearGradient>
-          </View>
-          <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
-            Restrobar
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <Text style={styles.listingText}>
-              {`${item?.locality}, ${item?.city}`}
-            </Text>
-            {item?.cost ? (
-              <Text style={styles.listingText} numberOfLines={1}>
-                ₹{item?.cost}
-              </Text>
-            ) : null}
-          </View>
-        </View>
-      </TouchableOpacity>
-      </>
-    );
-  };
-
   const EmptyListMessage = () => {
     return <Text style={styles.noDataText}>No Clubs Found</Text>;
   };
@@ -467,7 +349,15 @@ const ClubListing = ({navigation, route}) => {
             <FlatList
               ref={flatListRef}
               data={clubs}
-              renderItem={_renderItem}
+              renderItem={item =>
+                _renderItemClub(
+                  item,
+                  HeartIcon,
+                  navigation,
+                  logEvent,
+                  sendUXActivity,
+                )
+              }
               keyExtractor={(_, index) => index.toString()}
               ListFooterComponent={renderFooter}
               onEndReachedThreshold={0.3}
@@ -487,6 +377,135 @@ const ClubListing = ({navigation, route}) => {
     </View>
   );
 };
+
+export const _renderItemClub = (
+  {item, index},
+  HeartIcon,
+  navigation,
+  logEvent,
+  sendUXActivity,
+) => {
+  return (
+    <>
+      <HeartIcon
+        style={{top: '4%', right: '8%'}}
+        endpoint={`api/user/likes/clubs/${item?._id}`}
+        item={item}
+      />
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('ClubDetails', {listDetail: item});
+          logEvent(`club_detail_${createEventName(item?.name)}`, item);
+          sendUXActivity('clubs.view', {
+            screen: 'ClubDetailScreen',
+            clubId: item?._id,
+            name: item?.name,
+            locality: item?.locality,
+            city: item?.city,
+            referer: 'ClubList',
+          });
+        }}
+        activeOpacity={0.7}
+        style={{
+          flex: 1,
+          marginHorizontal: 15,
+          borderRadius: 10,
+          backgroundColor: '#FFFFFF',
+          marginBottom: hp(3),
+          elevation: 4,
+        }}>
+        <View>
+          {Array.isArray(item?.media?.ambienceImages) &&
+          item?.media?.ambienceImages?.length ? (
+            <FastImage
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+                resizeMode: 'cover',
+              }}
+              source={{
+                uri: item?.media?.ambienceImages[0],
+              }}
+            />
+          ) : (
+            <View
+              style={{
+                height: hp(29),
+                width: '100%',
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10,
+              }}
+            />
+          )}
+        </View>
+        {item?.heartIcon ? (
+          <Image
+            style={{
+              height: 20,
+              width: 20,
+              resizeMode: 'contain',
+              position: 'absolute',
+              top: 10,
+              right: 10,
+            }}
+            source={item?.heartIcon}
+          />
+        ) : null}
+        <View style={{paddingHorizontal: wp(2), paddingVertical: hp(1)}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.listinhHeading}>{item?.name}</Text>
+            <LinearGradient
+              style={{
+                flexDirection: 'row',
+                height: 24,
+                width: 40,
+                borderRadius: 5,
+                justifyContent: 'center',
+                backgroundColor: 'red',
+                alignItems: 'center',
+              }}
+              start={{x: 0.3, y: 0.4}}
+              colors={['rgba(254, 0, 182, 1)', 'rgba(1, 172, 203, 1)']}>
+              <Image
+                style={{height: 10, width: 10, tintColor: '#FFFFFF'}}
+                source={ImagePath.star}
+              />
+              <Text
+                style={{
+                  fontFamily: FONTS.RobotoBold,
+                  color: '#FFFFFF',
+                  fontSize: 12,
+                }}>
+                {item?.zomatoRating || '-'}
+              </Text>
+            </LinearGradient>
+          </View>
+          <Text style={[styles.listingText, {marginVertical: hp(0.3)}]}>
+            Restrobar
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styles.listingText}>
+              {`${item?.locality}, ${item?.city}`}
+            </Text>
+            {item?.cost ? (
+              <Text style={styles.listingText} numberOfLines={1}>
+                ₹{item?.cost}
+              </Text>
+            ) : null}
+          </View>
+        </View>
+      </TouchableOpacity>
+    </>
+  );
+};
+
 export default ClubListing;
 const styles = StyleSheet.create({
   filtersText: {
