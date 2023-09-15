@@ -35,6 +35,7 @@ import Toast from 'react-native-simple-toast';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName, formatTimeRange} from '../../utils/common';
 import ArtistListModal from '../../Components/ArtistListModal';
+import HeartIcon from '../../Components/HeartIcon';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -213,6 +214,7 @@ const EventListing = props => {
               }}
             />
           )}
+          <HeartIcon style={{top: '4%', right: '4%'}} endpoint={`api/user/likes/events/${item._id}`} item={item}/>
           <View
             style={{
               height: 39,
@@ -222,7 +224,8 @@ const EventListing = props => {
               backgroundColor: '#FFFFFF',
               position: 'absolute',
               top: 8,
-              right: 8,
+              // right: 8,
+              left: 8,
             }}>
             <Text
               style={{

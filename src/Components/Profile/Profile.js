@@ -44,6 +44,13 @@ const Profile = ({navigation}) => {
       },
     },
     {
+      Title: 'Favourites',
+      Icon: ImagePath.rightIcon,
+      onPress: () => {
+        navigation.navigate('Favorites', {refresh: userProfile});
+      },
+    },
+    {
       Title: 'Reset Password',
       Icon: ImagePath.rightIcon,
 

@@ -373,7 +373,7 @@ const Home = props => {
         borderRadius: 10,
         overflow: 'hidden',
       }}>
-       <HeartIcon /> 
+       <HeartIcon size={{height:25,width:25}} endpoint={`api/user/likes/artist/${item._id}`} item={item} /> 
       <FastImage
         style={{
           height: wp(28),
@@ -493,7 +493,7 @@ const Home = props => {
             }}
           />
         )}
-
+        <HeartIcon  style={{top:'4%', right:'4%'}} size={{height:25,width:25}} endpoint={`api/user/likes/events/${item._id}`} item={item}/>
         <View
           style={{
             height: 39,
@@ -503,7 +503,8 @@ const Home = props => {
             backgroundColor: '#FFFFFF',
             position: 'absolute',
             top: 8,
-            right: 8,
+            // right: 8,
+            left:8
           }}>
           <Text
             style={{
@@ -740,7 +741,7 @@ const Home = props => {
   const SpotlightData_RenderItem = ({item, index}) => {
     return (
       <>
-      <HeartIcon />
+      <HeartIcon endpoint={`api/user/likes/clubs/${item._id}`} item={item}/>
       <TouchableOpacity
         onPress={() => {
           logEvent(`club_detail_${createEventName(item?.name)}`, item);
@@ -1155,6 +1156,7 @@ const Home = props => {
               <Text style={styles.cardText}> Coming Soon </Text>
             </View>
           </View> */}
+         
           {Array.isArray(upcomingEvents) && upcomingEvents?.length ? (
             <FlatList
               horizontal

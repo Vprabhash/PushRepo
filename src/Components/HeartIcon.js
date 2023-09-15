@@ -1,28 +1,25 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import ImagePath from '../assets/ImagePath';
-import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-  } from 'react-native-responsive-screen';
+import ApiCall from '../redux/CommanApi';
 
-const HeartIcon = ({state, setState, onPress}) => {
-  const [heart, setHeart] = useState(true);
+const HeartIcon = ({state, setState, style, size, item, endpoint}) => {
+  const [heart, setHeart] = useState(false);
+  const handleOnPress = async status => {
+    setHeart(!status);
+    const url = status ? endpoint : endpoint.replace('likes', 'dislikes');
+    console.log(url, 'posting====');
+    const res = await ApiCall(url, 'POST');
+    console.log(res);
+  };
   return (
-    <View
-      style={{
-        zIndex: 9,
-        position: 'absolute',
-        top: '6%',
-        bottom: 0,
-        // left:0,
-        right: '6%',
-       
-      }}>
-      <TouchableOpacity activeOpacity={0.5} onPress={() => setHeart(!heart)}>
+    <View style={styles.iconContainer(style)}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => handleOnPress(heart)}>
         <Image
           source={heart ? ImagePath.emptyHeart : ImagePath.filledHeart}
-          style={styles.iconStyle}
+          style={styles.iconStyle(size)}
         />
       </TouchableOpacity>
     </View>
@@ -32,10 +29,18 @@ const HeartIcon = ({state, setState, onPress}) => {
 export default HeartIcon;
 
 const styles = StyleSheet.create({
-  iconStyle: {
+  iconContainer: style => ({
+    zIndex: 9,
+    position: 'absolute',
+    top: '6%',
+    right: '6%',
+    ...style,
+  }),
+  iconStyle: size => ({
     tintColor: '#fff',
     width: 30,
     resizeMode: 'contain',
     height: 30,
-  },
+    ...size,
+  }),
 });

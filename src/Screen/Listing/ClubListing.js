@@ -37,6 +37,7 @@ import {showFilter} from '../../redux/reducers/isFilterOpenSlice';
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName} from '../../utils/common';
 import HeartIcon from '../../Components/HeartIcon';
+import { SwipeItem } from 'react-native-swipe-item';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -241,7 +242,7 @@ const ClubListing = ({navigation, route}) => {
   const _renderItem = ({item, index}) => {
     return (
       <>
-      <HeartIcon />
+      <HeartIcon  style={{top:'4%', right:'8%'}} endpoint={`api/user/likes/clubs/${item._id}`} item={item}/>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ClubDetails', {listDetail: item});

@@ -23,6 +23,7 @@ import Profile from '../Components/Profile/Profile';
 import EditProfile from '../Components/Profile/EditProfile';
 import SearchScreen from '../Components/SearchScreen';
 import CitySelect from '../Screen/CitySelect';
+import Favorites from '../Components/Favorites/Favorites';
 
 const Stack = createNativeStackNavigator();
 
@@ -132,6 +133,11 @@ function Routes() {
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="Favorites"
+          component={Favorites}
           options={{headerShown: false}}
         />
         <Stack.Screen

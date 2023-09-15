@@ -174,7 +174,7 @@ const ArtistDetail = props => {
   const artistListRenderItem = ({item, index}) => {
     return (
       <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
-           <HeartIcon />
+        <HeartIcon style={{top: '4%', right: '8%'}} endpoint={`api/user/likes/artist/${item._id}`} item={item}/>
         <TouchableOpacity
           activeOpacity={0.85}
           style={{
@@ -198,20 +198,18 @@ const ArtistDetail = props => {
           }}>
           {Array.isArray(item?.images) && item?.images?.length ? (
             <>
-         
-            <FastImage
-              style={{
-                height: hp(29),
-                width: '100%',
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10,
-              }}
-              source={{
-                uri: item?.images[0],
-              }}
-            />
+              <FastImage
+                style={{
+                  height: hp(29),
+                  width: '100%',
+                  borderTopRightRadius: 10,
+                  borderTopLeftRadius: 10,
+                }}
+                source={{
+                  uri: item?.images[0],
+                }}
+              />
             </>
-            
           ) : (
             <View
               style={{
