@@ -71,7 +71,6 @@ const CitySelect = props => {
                 const addressComponents = data?.results[0]?.address_components;
                 for (const component of addressComponents) {
                   if (component.types.includes('locality')) {
-                    console.log('Current city:', component.long_name);
                     dispatch(currentCity(component.long_name));
                     dispatch(userCurrentCity(component.long_name));
                     break;

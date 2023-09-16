@@ -36,6 +36,7 @@ import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName, formatTimeRange} from '../../utils/common';
 import ArtistListModal from '../../Components/ArtistListModal';
 import HeartIcon from '../../Components/HeartIcon';
+import {Calendar} from 'react-native-calendars';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -58,6 +59,7 @@ const EventListing = props => {
   const [eventData, setEventData] = useState(null);
   const [artistListModal, setArtistListModal] = useState(false);
   const [artistListModalData, setArtistListModalData] = useState([]);
+  const [filterComponent, setFilterComponent] = useState(false);
 
   useEffect(() => {
     setPage(0);
@@ -163,8 +165,6 @@ const EventListing = props => {
     }
   };
 
-
-
   const EmptyListMessage = () => {
     return (
       <Text style={styles.noDataText}>
@@ -200,25 +200,43 @@ const EventListing = props => {
             }}
           />
         </View>
-        {/* <ScrollView
+        <View
           style={{
-            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginHorizontal: 15,
           }}>
-          <StatusBar
-            barStyle="dark-content"
-            hidden={false}
-            backgroundColor="transparent"
-            translucent={true}
-          />
-
-           */}
+          <TouchableOpacity
+            style={[
+              styles.fllter,
+              {
+                borderWidth: 1,
+                borderColor: COLORS.primary,
+              },
+            ]}
+            activeOpacity={0.5}
+            onPress={() => {
+              setFilterComponent(true);
+            }}>
+            <Image source={ImagePath.settingIcon} style={styles.iconStyle} />
+            <Text style={styles.filtersText}>Filters</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           ref={flatListRef}
           data={events}
-          renderItem={(item)=>_renderEventItem(item, props.navigation,setArtistListModal,setArtistListModalData)}
+          renderItem={item =>
+            _renderEventItem(
+              item,
+              props.navigation,
+              setArtistListModal,
+              setArtistListModalData,
+            )
+          }
           nestedScrollEnabled
           ListHeaderComponent={
             <>
+              <Calendar />
               <View style={[styles.hedingTextMain, {marginTop: 10}]}>
                 <Image style={styles.hedingImg} source={ImagePath.rightLine1} />
                 <Text style={styles.cardText}>Events near me</Text>
@@ -228,7 +246,14 @@ const EventListing = props => {
                 <FlatList
                   horizontal
                   data={nearByEvents}
-                  renderItem={(item)=>_renderEventItem(item,props.navigation,setArtistListModal,setArtistListModalData)}
+                  renderItem={item =>
+                    _renderEventItem(
+                      item,
+                      props.navigation,
+                      setArtistListModal,
+                      setArtistListModalData,
+                    )
+                  }
                   keyExtractor={(_, i) => i.toString()}
                   showsHorizontalScrollIndicator={false}
                 />
@@ -269,18 +294,22 @@ const EventListing = props => {
           onClose={() => setArtistListModal(false)}
           data={artistListModalData}
         />
-        {/* </ScrollView> */}
       </ImageBackground>
     </View>
   );
 };
 
-export const _renderEventItem = ({item},navigation,setArtistListModal, setArtistListModalData) => {
+export const _renderEventItem = (
+  {item},
+  navigation,
+  setArtistListModal,
+  setArtistListModalData,
+) => {
   return (
     <View style={{width: wp(100), position: 'relative'}}>
       <TouchableOpacity
         onPress={() => {
-        navigation.navigate('ArtistPlayingDetail', {
+          navigation.navigate('ArtistPlayingDetail', {
             artistData: item,
           });
           logEvent(`event_detail_${createEventName(item?.title)}`, item);
@@ -326,7 +355,11 @@ export const _renderEventItem = ({item},navigation,setArtistListModal, setArtist
             }}
           />
         )}
-        <HeartIcon style={{top: '4%', right: '4%'}} endpoint={`api/user/likes/events/${item._id}`} item={item}/>
+        <HeartIcon
+          style={{top: '4%', right: '4%'}}
+          endpoint={`api/user/likes/events/${item._id}`}
+          item={item}
+        />
         <View
           style={{
             height: 39,
@@ -564,5 +597,31 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.RobotoRegular,
     color: '#575757',
+  },
+  filtersText: {
+    marginLeft: 8,
+    fontSize: 12,
+    color: COLORS.black,
+    fontFamily: FONTS.RobotoMedium,
+  },
+  fllter: {
+    backgroundColor: COLORS.white,
+    flexDirection: 'row',
+    alignItems: 'center',
+    // justifyContent: 'space-between',
+    elevation: 9,
+    width: wp(25),
+    marginBottom: 20,
+    // marginHorizontal: 15,
+    borderRadius: 8,
+    paddingHorizontal: wp(4),
+    paddingVertical: 7,
+    zIndex: 9,
+  },
+  iconStyle: {
+    tintColor: COLORS.primary,
+    width: 18,
+    resizeMode: 'contain',
+    height: 18,
   },
 });

@@ -141,7 +141,6 @@ const Home = props => {
   const isCheckLocation = () => {
     ApiCall('api/cities', 'GET')
       .then(res => {
-        console.log('Current city:', res);
         // const currentCity = getData('currentCity');
         if (Array.isArray(res?.data) && res?.data?.length) {
           if (
@@ -373,7 +372,11 @@ const Home = props => {
         borderRadius: 10,
         overflow: 'hidden',
       }}>
-       <HeartIcon size={{height:25,width:25}} endpoint={`api/user/likes/artist/${item._id}`} item={item} /> 
+      <HeartIcon
+        size={{height: 25, width: 25}}
+        endpoint={`api/user/likes/artist/${item._id}`}
+        item={item}
+      />
       <FastImage
         style={{
           height: wp(28),
@@ -493,7 +496,12 @@ const Home = props => {
             }}
           />
         )}
-        <HeartIcon  style={{top:'4%', right:'4%'}} size={{height:25,width:25}} endpoint={`api/user/likes/events/${item._id}`} item={item}/>
+        <HeartIcon
+          style={{top: '4%', right: '4%'}}
+          size={{height: 25, width: 25}}
+          endpoint={`api/user/likes/events/${item._id}`}
+          item={item}
+        />
         <View
           style={{
             height: 39,
@@ -504,7 +512,7 @@ const Home = props => {
             position: 'absolute',
             top: 8,
             // right: 8,
-            left:8
+            left: 8,
           }}>
           <Text
             style={{
@@ -741,90 +749,90 @@ const Home = props => {
   const SpotlightData_RenderItem = ({item, index}) => {
     return (
       <>
-      <HeartIcon endpoint={`api/user/likes/clubs/${item._id}`} item={item}/>
-      <TouchableOpacity
-        onPress={() => {
-          logEvent(`club_detail_${createEventName(item?.name)}`, item);
-          sendUXActivity('clubs.view', {
-            screen: 'ClubDetailScreen',
-            clubId: item?._id,
-            name: item?.name,
-            locality: item?.locality,
-            city: item?.city,
-            referer: 'ClubsInSpotLight',
-          });
-          props.navigation.push('ClubDetails', {listDetail: item});
-        }}
-        style={{
-          marginLeft: wp(2.5),
-          marginRight: index == 0 ? 15 : 15,
-          marginLeft: index == 0 ? 15 : 0,
-          overflow: 'hidden',
-          borderRadius: 10,
-        }}>
-        {Array.isArray(item?.media?.ambienceImages) &&
-        item?.media?.ambienceImages?.length ? (
-          <FastImage
-            style={{
-              height: hp(26),
-              width: wp(83),
-              resizeMode: 'cover',
-              borderRadius: 10,
-            }}
-            source={{uri: item?.media?.ambienceImages[0] || ''}}
-          />
-        ) : (
-          <View
-            style={{
-              height: hp(26),
-              width: wp(83),
-              resizeMode: 'cover',
-              borderRadius: 10,
-              backgroundColor: COLORS.primary,
-            }}
-          />
-        )}
-        <LinearGradient
-          colors={['transparent', '#0d0d0d']}
+        <HeartIcon endpoint={`api/user/likes/clubs/${item._id}`} item={item} />
+        <TouchableOpacity
+          onPress={() => {
+            logEvent(`club_detail_${createEventName(item?.name)}`, item);
+            sendUXActivity('clubs.view', {
+              screen: 'ClubDetailScreen',
+              clubId: item?._id,
+              name: item?.name,
+              locality: item?.locality,
+              city: item?.city,
+              referer: 'ClubsInSpotLight',
+            });
+            props.navigation.push('ClubDetails', {listDetail: item});
+          }}
           style={{
-            width: '100%',
-            position: 'absolute',
-            paddingLeft: 15,
-            paddingBottom: 15,
-            bottom: 0,
+            marginLeft: wp(2.5),
+            marginRight: index == 0 ? 15 : 15,
+            marginLeft: index == 0 ? 15 : 0,
             overflow: 'hidden',
+            borderRadius: 10,
           }}>
-          <Text
+          {Array.isArray(item?.media?.ambienceImages) &&
+          item?.media?.ambienceImages?.length ? (
+            <FastImage
+              style={{
+                height: hp(26),
+                width: wp(83),
+                resizeMode: 'cover',
+                borderRadius: 10,
+              }}
+              source={{uri: item?.media?.ambienceImages[0] || ''}}
+            />
+          ) : (
+            <View
+              style={{
+                height: hp(26),
+                width: wp(83),
+                resizeMode: 'cover',
+                borderRadius: 10,
+                backgroundColor: COLORS.primary,
+              }}
+            />
+          )}
+          <LinearGradient
+            colors={['transparent', '#0d0d0d']}
             style={{
-              fontSize: 20,
-              color: COLORS.white,
-              fontFamily: FONTS.AxiformaSemiBold,
+              width: '100%',
+              position: 'absolute',
+              paddingLeft: 15,
+              paddingBottom: 15,
+              bottom: 0,
+              overflow: 'hidden',
             }}>
-            {item.name}
-          </Text>
-          <Text
-            style={[
-              {
+            <Text
+              style={{
+                fontSize: 20,
                 color: COLORS.white,
-                fontSize: 12,
-                fontFamily: FONTS.AxiformaMedium,
-              },
-            ]}>
-            {/* {item.musicGenre} */}
-            Restrobar
-          </Text>
-          <Text
-            style={[
-              {
-                fontSize: 10,
-                color: COLORS.white,
-                fontFamily: FONTS.AxiformaRegular,
-              },
-            ]}>
-            {item.locality}, {item.city}
-          </Text>
-        </LinearGradient>
-      </TouchableOpacity>
+                fontFamily: FONTS.AxiformaSemiBold,
+              }}>
+              {item.name}
+            </Text>
+            <Text
+              style={[
+                {
+                  color: COLORS.white,
+                  fontSize: 12,
+                  fontFamily: FONTS.AxiformaMedium,
+                },
+              ]}>
+              {/* {item.musicGenre} */}
+              Restrobar
+            </Text>
+            <Text
+              style={[
+                {
+                  fontSize: 10,
+                  color: COLORS.white,
+                  fontFamily: FONTS.AxiformaRegular,
+                },
+              ]}>
+              {item.locality}, {item.city}
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
       </>
     );
   };
@@ -1156,7 +1164,7 @@ const Home = props => {
               <Text style={styles.cardText}> Coming Soon </Text>
             </View>
           </View> */}
-         
+
           {Array.isArray(upcomingEvents) && upcomingEvents?.length ? (
             <FlatList
               horizontal

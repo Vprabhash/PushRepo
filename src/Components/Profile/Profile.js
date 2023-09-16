@@ -150,13 +150,12 @@ const Profile = ({navigation}) => {
           logOut();
         }
         Toast.showWithGravity(
-          res?.message || res?.data?.message || 'Something went wrong',
+          'Session expired - please login again',
           Toast.LONG,
           Toast.BOTTOM,
         );
       }
     } catch (error) {
-      console.log(error, 'this is an error');
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     }
   };
