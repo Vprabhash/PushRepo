@@ -12,25 +12,18 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import Toast from 'react-native-simple-toast';
-import {useDispatch, useSelector} from 'react-redux';
 import ImagePath from '../../assets/ImagePath';
-import CustomTextInput from '../../Components/TextInput_And_Button/CustomTextInput';
-import CustomButton from '../../Components/TextInput_And_Button/CustomButton';
 import {COLORS, FONTS} from '../../Components/constants';
 import ApiCall from '../../redux/CommanApi';
 import Header from '../Header';
-import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getStatusBarHeight} from 'react-native-iphone-screen-helper';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-screen-helper';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import FastImage from 'react-native-fast-image';
-import LinearGradient from 'react-native-linear-gradient';
-import moment from 'moment';
-import {formatTimeRange} from '../../utils/common';
 import HeartIcon from '../HeartIcon';
 import {_renderItemClub} from '../../Screen/Listing/ClubListing';
 import {artistListRenderItem} from '../../Screen/ArtistDetails/ArtistDetail';
@@ -42,7 +35,7 @@ const height = Dimensions.get('window').height;
 
 const Favorites = ({navigation, route}) => {
   const [data, setData] = useState([]);
-  const [selectedTab, setSelectedTab] = useState('artists');
+  const [selectedTab, setSelectedTab] = useState('clubs');
   useEffect(() => {
     getFavorites();
   }, []);
@@ -87,7 +80,7 @@ const Favorites = ({navigation, route}) => {
           translucent={true}
         />
         <View style={{flexDirection: 'row'}}>
-          {['clubs','artists',  'events'].map((tab, i) => (
+          {['clubs', 'artists', 'events'].map((tab, i) => (
             <View
               style={{
                 marginTop: 20,
@@ -124,12 +117,19 @@ const Favorites = ({navigation, route}) => {
           ))}
         </View>
         <FlatList
+          nestedScrollEnabled
           data={data[selectedTab]}
           renderItem={item =>
             _renderItem(item, navigation, logEvent, sendUXActivity, selectedTab)
           }
           keyExtractor={item => item._id.toString()}
           ListEmptyComponent={<EmptyListMessage />}
+          ItemSeparatorComponent={() =>
+            selectedTab === 'events' && <View style={{height: 20}} />
+          }
+          contentContainerStyle={{
+            paddingBottom: getBottomSpace() + hp(15),
+          }}
         />
       </ImageBackground>
     </View>

@@ -215,7 +215,7 @@ const EventListing = props => {
         <FlatList
           ref={flatListRef}
           data={events}
-          renderItem={(item)=>_renderEventItem(item, props.navigation,setArtistListModal,logEvent, sendUXActivity)}
+          renderItem={(item)=>_renderEventItem(item, props.navigation,setArtistListModal,setArtistListModalData)}
           nestedScrollEnabled
           ListHeaderComponent={
             <>
@@ -228,7 +228,7 @@ const EventListing = props => {
                 <FlatList
                   horizontal
                   data={nearByEvents}
-                  renderItem={(item)=>_renderEventItem(item,props.navigation,setArtistListModal,logEvent, sendUXActivity)}
+                  renderItem={(item)=>_renderEventItem(item,props.navigation,setArtistListModal,setArtistListModalData)}
                   keyExtractor={(_, i) => i.toString()}
                   showsHorizontalScrollIndicator={false}
                 />
@@ -275,7 +275,7 @@ const EventListing = props => {
   );
 };
 
-export const _renderEventItem = ({item, index},navigation,setArtistListModal,logEvent, sendUXActivity) => {
+export const _renderEventItem = ({item},navigation,setArtistListModal, setArtistListModalData) => {
   return (
     <View style={{width: wp(100), position: 'relative'}}>
       <TouchableOpacity
