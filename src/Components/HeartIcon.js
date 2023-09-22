@@ -4,7 +4,7 @@ import ImagePath from '../assets/ImagePath';
 import ApiCall from '../redux/CommanApi';
 import {COLORS} from './constants';
 
-const HeartIcon = ({isLiked = true, style, size, item, endpoint}) => {
+const HeartIcon = ({isLiked = true, style, size, item, endpoint,HandlePress}) => {
   const [heart, setHeart] = useState(isLiked);
   const handleOnPress = async () => {
     setHeart(!heart);
@@ -20,12 +20,16 @@ const HeartIcon = ({isLiked = true, style, size, item, endpoint}) => {
     }
   };
 
+  const value=(HandlePress)=>{
+return (HandlePress!=undefined)?isLiked:heart
+  }
+
   return (
     <View style={styles.iconContainer(style)}>
-      <TouchableOpacity activeOpacity={0.5} onPress={handleOnPress}>
+      <TouchableOpacity activeOpacity={0.5} onPress={(HandlePress!=undefined)?HandlePress:handleOnPress}>
         <Image
-          source={heart ? ImagePath.emptyHeart : ImagePath.filledHeart}
-          style={styles.iconStyle(size, heart)}
+          source={value(HandlePress) ? ImagePath.emptyHeart : ImagePath.filledHeart}
+          style={styles.iconStyle(size, value(HandlePress))}
         />
       </TouchableOpacity>
     </View>

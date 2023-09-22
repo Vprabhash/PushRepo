@@ -39,6 +39,7 @@ import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName} from '../../utils/common';
 import HeartIcon from '../../Components/HeartIcon';
 import {SwipeItem} from 'react-native-swipe-item';
+import { clubsList } from '../../redux/reducers/clubList';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -48,13 +49,14 @@ const ClubListing = ({navigation, route}) => {
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
   const isFilterOpen = useSelector(state => state.isFilterOpen.isFilterOpen);
+  const clubsListData = useSelector(state => state.clubs.clubs);
   const flatListRef = useRef(null);
 
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const locationLatLong = useSelector(
     state => state.clubLocation.locationLatLong,
   );
-  const [clubs, setClubs] = useState([]);
+  const [clubs, setClubs] = useState(clubsListData);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -178,7 +180,9 @@ const ClubListing = ({navigation, route}) => {
         if (Array.isArray(res?.data)) {
           if (page === 0) {
             // if (res?.status !== 'fallback-data') {
-            setClubs(res?.data);
+            let info=res?.data.map((e)=>{return {...e,islike:false}})
+            dispatch(clubsList(info));
+            setClubs(info);
             // } else {
             //   setClubs([]);
             // }
@@ -186,7 +190,10 @@ const ClubListing = ({navigation, route}) => {
           } else {
             if (res?.data?.length) {
               // if (res?.status !== 'fallback-data') {
-              setClubs([...clubs, ...res?.data]);
+           
+              let info=res?.data.map((e)=>{return {...e,islike:false}})
+              dispatch(clubsList([...clubs, ...info]));
+              setClubs([...clubs, ...info]);
               // }
             } else {
               setDontCall(true);
@@ -357,6 +364,9 @@ const ClubListing = ({navigation, route}) => {
                   navigation,
                   logEvent,
                   sendUXActivity,
+                  setClubs,
+                  clubs,
+                  dispatch
                 )
               }
               keyExtractor={(_, index) => index.toString()}
@@ -385,6 +395,9 @@ export const _renderItemClub = (
   navigation,
   logEvent,
   sendUXActivity,
+  setClubs,
+  clubs,
+  dispatch
 ) => {
   return (
     <>
@@ -392,6 +405,14 @@ export const _renderItemClub = (
         style={{top: '4%', right: '8%'}}
         endpoint={`api/user/likes/clubs/${item?._id}`}
         item={item}
+        isLiked={!item.islike}
+        HandlePress={()=>{
+          console.log(clubs[index].islike)
+          clubs[index].islike=!clubs[index].islike;
+          console.log(clubs[index].islike)
+          dispatch(clubsList([...clubs]));
+          setClubs([...clubs])
+        }}
       />
       <TouchableOpacity
         onPress={() => {
