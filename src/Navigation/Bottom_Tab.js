@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, SafeAreaView} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ImagePath from '../assets/ImagePath';
@@ -10,7 +17,7 @@ import ArtistDetail from '../Screen/ArtistDetails/ArtistDetail';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ClubDetails from '../Screen/Details/ClubDetails';
 import Profile from '../Components/Profile/Profile';
-import {FONTS} from '../Components/constants';
+import {COLORS, FONTS} from '../Components/constants';
 import ArtistEventDetail from '../Screen/ArtistDetails/ArtistEventDetail';
 import ArtistPlayingDetail from '../Screen/ArtistDetails/ArtistPlayingDetail';
 import {getBottomSpace, isIphoneX} from 'react-native-iphone-screen-helper';
@@ -67,7 +74,7 @@ function BottomTab() {
     <Tab.Navigator
       safeAreaInsets={{bottom: 0}}
       screenOptions={({focused}) => ({
-        tabBarActiveTintColor: '#9700AF',
+        tabBarActiveTintColor: COLORS.purple,
         tabBarInactiveTintColor: '#000',
         tabBarStyle: {
           elevation: 3,
@@ -112,7 +119,7 @@ function BottomTab() {
             <Image
               style={[
                 styles.tab_Icon,
-                {tintColor: focused ? '#9700AF' : 'black'},
+                {tintColor: focused ? COLORS.purple : COLORS.black},
               ]}
               source={focused ? ImagePath.clubActive : ImagePath.clubActive}
             />
@@ -129,7 +136,7 @@ function BottomTab() {
             <Image
               style={[
                 styles.tab_Icon,
-                {tintColor: focused ? '#9700AF' : 'black'},
+                {tintColor: focused ? COLORS.purple : COLORS.black},
               ]}
               source={focused ? ImagePath.artistIcon : ImagePath.artistIcon}
             />
@@ -146,7 +153,7 @@ function BottomTab() {
             <Image
               style={[
                 styles.tab_Icon,
-                {tintColor: focused ? '#9700AF' : 'black'},
+                {tintColor: focused ? COLORS.purple : COLORS.black},
               ]}
               source={focused ? ImagePath.calendarIcon : ImagePath.calendarIcon}
             />
@@ -163,7 +170,7 @@ function BottomTab() {
             <Image
               style={[
                 styles.tab_Icon,
-                {tintColor: focused ? '#9700AF' : 'black'},
+                {tintColor: focused ? COLORS.purple : COLORS.black},
               ]}
               source={focused ? ImagePath.profile : ImagePath.profile}
             />
