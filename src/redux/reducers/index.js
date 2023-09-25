@@ -9,6 +9,7 @@ import citySelectorSlice from './citySelectorSlice';
 import loaderSlice from './loaderSlice';
 import isFilterOpenSlice from './isFilterOpenSlice';
 import clubsListSlice from './clubList'
+import artistListSlice from './artistList'
 const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   citySelector: citySelectorSlice,
   loader: loaderSlice,
   isFilterOpen: isFilterOpenSlice,
-  clubs:clubsListSlice
+  clubs:clubsListSlice,
+  artistList:artistListSlice
 });
 
 export default rootReducer;

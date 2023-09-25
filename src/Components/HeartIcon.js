@@ -14,6 +14,9 @@ const HeartIcon = ({isLiked = true, style, size, item, endpoint,HandlePress}) =>
     try {
       const res = await ApiCall(url, 'POST');
       console.log('Response:', res);
+      if(HandlePress!=undefined && res){
+        HandlePress()
+      }
     } catch (error) {
       console.error('Error:', error);
       setHeart(isLiked);
@@ -26,7 +29,7 @@ return (HandlePress!=undefined)?isLiked:heart
 
   return (
     <View style={styles.iconContainer(style)}>
-      <TouchableOpacity activeOpacity={0.5} onPress={(HandlePress!=undefined)?HandlePress:handleOnPress}>
+      <TouchableOpacity activeOpacity={0.5} onPress={handleOnPress}>
         <Image
           source={value(HandlePress) ? ImagePath.emptyHeart : ImagePath.filledHeart}
           style={styles.iconStyle(size, value(HandlePress))}

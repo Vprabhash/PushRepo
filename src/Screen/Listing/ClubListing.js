@@ -39,7 +39,7 @@ import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName} from '../../utils/common';
 import HeartIcon from '../../Components/HeartIcon';
 import {SwipeItem} from 'react-native-swipe-item';
-import { clubsList } from '../../redux/reducers/clubList';
+import {clubsList} from '../../redux/reducers/clubList';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -180,7 +180,13 @@ const ClubListing = ({navigation, route}) => {
         if (Array.isArray(res?.data)) {
           if (page === 0) {
             // if (res?.status !== 'fallback-data') {
-            let info=res?.data.map((e)=>{return {...e,islike:false}})
+            let info = res?.data.map(e => {
+              if (e?.meta) {
+                return e;
+              } else {
+                return {...e, meta: {isLiked: false}};
+              }
+            });
             dispatch(clubsList(info));
             setClubs(info);
             // } else {
@@ -190,8 +196,14 @@ const ClubListing = ({navigation, route}) => {
           } else {
             if (res?.data?.length) {
               // if (res?.status !== 'fallback-data') {
-           
-              let info=res?.data.map((e)=>{return {...e,islike:false}})
+
+              let info = res?.data.map(e => {
+                if (e?.meta) {
+                  return e;
+                } else {
+                  return {...e, meta: {isLiked: false}};
+                }
+              });
               dispatch(clubsList([...clubs, ...info]));
               setClubs([...clubs, ...info]);
               // }
@@ -397,7 +409,10 @@ export const _renderItemClub = (
   sendUXActivity,
   setClubs,
   clubs,
-  dispatch
+  dispatch,
+  selectedTab,
+  data,
+  setData
 ) => {
   return (
     <>
@@ -405,13 +420,23 @@ export const _renderItemClub = (
         style={{top: '4%', right: '8%'}}
         endpoint={`api/user/likes/clubs/${item?._id}`}
         item={item}
-        isLiked={!item.islike}
-        HandlePress={()=>{
-          console.log(clubs[index].islike)
-          clubs[index].islike=!clubs[index].islike;
-          console.log(clubs[index].islike)
-          dispatch(clubsList([...clubs]));
-          setClubs([...clubs])
+        isLiked={!item?.meta?.isLiked}
+        HandlePress={() => {
+          if(selectedTab){
+            let info =data[selectedTab]?.filter((e,i)=>i!=index);
+            let infodata=data;
+            infodata[selectedTab]=info;
+            setData({...infodata})
+          }else{
+            let info =clubs?.map((e,i)=>{
+              if(i==index){
+                return {...e,meta:{isLiked:!item.meta.isLiked}};
+              }
+              return e;
+            });
+            dispatch(clubsList([...info]));
+            setClubs([...info]);
+          }   
         }}
       />
       <TouchableOpacity

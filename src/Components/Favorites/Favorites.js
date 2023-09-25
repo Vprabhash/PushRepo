@@ -39,11 +39,28 @@ const Favorites = ({navigation, route}) => {
   useEffect(() => {
     getFavorites();
   }, []);
+
+  const MapData=(data)=>{
+    let info = data?.map(e => {
+      if (e?.meta) {
+        return e;
+      } else {
+        return {...e, meta:{ isLiked:true }};
+      }
+    });
+    return info
+  }
+
   const getFavorites = async () => {
     console.log('called');
     const {data} = await ApiCall('api/user/activities/likes', 'GET');
-    setData(data);
-    // console.log(data, 'favorites data===');
+    let info ={
+      artists:MapData(data?.artists),
+      clubs:MapData(data?.clubs),
+      events:MapData(data?.events)
+    }
+    setData(info);
+    console.log(info, 'favorites data===');
   };
 
   const EmptyListMessage = () => {
@@ -120,7 +137,7 @@ const Favorites = ({navigation, route}) => {
           nestedScrollEnabled
           data={data[selectedTab]}
           renderItem={item =>
-            _renderItem(item, navigation, logEvent, sendUXActivity, selectedTab)
+            _renderItem(item, navigation, logEvent, sendUXActivity,selectedTab,data,setData)
           }
           keyExtractor={item => item._id.toString()}
           ListEmptyComponent={<EmptyListMessage />}
@@ -144,6 +161,8 @@ const _renderItem = (
   logEvent,
   sendUXActivity,
   selectedTab,
+  data,
+  setData
 ) => {
   if (selectedTab === 'clubs') {
     return _renderItemClub(
@@ -152,6 +171,12 @@ const _renderItem = (
       navigation,
       logEvent,
       sendUXActivity,
+      undefined,
+      undefined,
+      undefined,
+      selectedTab,
+      data,
+      setData
     );
   }
   if (selectedTab === 'artists') {
@@ -161,10 +186,20 @@ const _renderItem = (
       navigation,
       logEvent,
       sendUXActivity,
+      undefined,
+      undefined,
+      undefined,
+      selectedTab,
+      data,
+      setData
     );
   }
   if (selectedTab === 'events') {
-    return _renderEventItem(item, navigation, '', logEvent, sendUXActivity);
+    return _renderEventItem(item, navigation, '', logEvent, sendUXActivity,undefined,
+    undefined,
+    undefined,selectedTab,
+    data,
+    setData);
   }
 };
 

@@ -19,7 +19,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import Toast from 'react-native-simple-toast';
 import ImagePath from '../../assets/ImagePath';
@@ -34,13 +34,17 @@ import {
 import {logEvent, sendUXActivity} from '../../utils/AddFirebaseEvent';
 import {createEventName} from '../../utils/common';
 import HeartIcon from '../../Components/HeartIcon';
+import { artistDataList } from '../../redux/reducers/artistList';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
+
 const ArtistDetail = props => {
+  const dispatch = useDispatch();
   const selectedCity = useSelector(state => state.citySelector.selectedCity);
   const userBaseCity = useSelector(state => state.citySelector.userBaseCity);
+  const artistListDatainfo = useSelector(state => state?.artistList?.artist);
   const [
     onEndReachedCalledDuringMomentum,
     setonEndReachedCalledDuringMomentum,
@@ -117,10 +121,27 @@ const ArtistDetail = props => {
       const res = await ApiCall(`api/artists?${queryParams}`, 'GET');
       if (Array.isArray(res?.data)) {
         if (page === 0) {
-          setArtistList(res?.data);
+          let info = res?.data?.map(e => {
+            if (e?.meta) {
+              return e;
+            } else {
+              return {...e, meta:{isLiked:false}};
+            }
+          });
+          dispatch(artistDataList(info));
+          setArtistList(info);
         } else {
           if (res?.data?.length) {
-            setArtistList([...artistList, ...res?.data]);
+            let info = res?.data?.map(e => {
+              if (e?.meta) {
+                return e;
+              } else {
+                return {...e, meta:{ isLiked:false }};
+              }
+            });
+            dispatch(artistDataList([...artistList, ...info]));
+            setArtistList([...artistList, ...info]);
+            // setArtistList([...artistList, ...res?.data]);
           } else {
             setDontCall(true);
           }
@@ -130,6 +151,7 @@ const ArtistDetail = props => {
         Toast.showWithGravity('Something went wrong', Toast.LONG, Toast.BOTTOM);
       }
     } catch (error) {
+      console.log(error?.message,"==error?.message==error?.message");
       setDontCall(true);
       Toast.showWithGravity(error?.message, Toast.LONG, Toast.BOTTOM);
     } finally {
@@ -384,7 +406,8 @@ const ArtistDetail = props => {
             <FlatList
               ref={flatListRef}
               data={artistList}
-              renderItem={(item)=>artistListRenderItem(item, HeartIcon,props.navigation,logEvent,sendUXActivity)}
+              renderItem={(item)=>artistListRenderItem(item, HeartIcon,props.navigation,logEvent,sendUXActivity,setArtistList,
+                artistList,dispatch)}
               ListFooterComponent={renderFooter}
               onEndReachedThreshold={0.3}
               onMomentumScrollBegin={() => {
@@ -404,10 +427,32 @@ const ArtistDetail = props => {
 };
 
 
-export const artistListRenderItem = ({item, index}, HeartIcon, navigation,logEvent, sendUXActivity) => {
+export const artistListRenderItem = ({item, index}, HeartIcon, navigation,logEvent, sendUXActivity,setArtistList,
+  artistList,dispatch,selectedTab,
+  data,
+  setData) => {
   return (
     <View style={{flex: 1, width: '100%', paddingBottom: hp(3)}}>
-      <HeartIcon style={{top: '4%', right: '8%'}} endpoint={`api/user/likes/artist/${item._id}`} item={item}/>
+      <HeartIcon style={{top: '4%', right: '8%'}} endpoint={`api/user/likes/artist/${item._id}`} item={item} 
+           isLiked={!item?.meta?.isLiked}
+           HandlePress={() => {
+            if(selectedTab){
+              let info =data[selectedTab]?.filter((e,i)=>i!=index);
+              let infodata=data;
+              infodata[selectedTab]=info;
+              setData({...infodata})
+            }else{
+            let info =artistList?.map((e,i)=>{
+              if(i==index){
+                return {...e,meta:{isLiked:!item.meta.isLiked}};
+              }
+              return e;
+            });
+             dispatch(artistDataList([...info]));
+             setArtistList([...info]);
+          }
+           }}
+      />
       <TouchableOpacity
         activeOpacity={0.85}
         style={{
