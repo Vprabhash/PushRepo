@@ -108,7 +108,7 @@ const ArtistListModal = ({isVisible, onClose, data, navigation}) => {
             <Image style={styles.closeIcon} source={ImagePath.closeIcon} />
           </TouchableOpacity>
           <Text style={styles.labelText}>
-            {Array.isArray(data?.length) && data?.length && data[0]?.name
+            {Array.isArray(data) && data?.length && data[0]?.name
               ? 'Artists'
               : 'Contacts'}
           </Text>
