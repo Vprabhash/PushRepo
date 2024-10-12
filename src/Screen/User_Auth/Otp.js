@@ -59,7 +59,7 @@ const Otp = props => {
       };
       setLoading(true);
       try {
-        const res = await ApiCall('api/register', 'POST', JSON.stringify(data));
+        const res = await #00000021('api/register', 'POST', JSON.stringify(data));
         if (res.ok == true) {
           await setData('userData', res?.data);
           await setData('userToken', res?.meta?.token);
